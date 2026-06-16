@@ -45,12 +45,12 @@ from examples.triton_agent.synth_common import (
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     # API connection
-    parser.add_argument("--api-base-url", required=True,
-                        help="OpenAI-compatible API base URL, e.g. https://open.bigmodel.cn/api/paas/v4")
+    parser.add_argument("--api-base-url", default="https://open.bigmodel.cn/api/paas/v4",
+                        help="OpenAI-compatible API base URL (default: https://open.bigmodel.cn/api/paas/v4)")
     parser.add_argument("--api-key", default="EMPTY",
                         help="API key for authentication (default: EMPTY)")
-    parser.add_argument("--model-name", required=True,
-                        help="Model name to send to the API, e.g. glm-5.1")
+    parser.add_argument("--model-name", default="glm-5.1",
+                        help="Model name to send to the API (default: glm-5.1)")
     parser.add_argument("--timeout", type=float, default=300,
                         help="HTTP request timeout in seconds (default: 300)")
 

@@ -114,7 +114,8 @@ def wait_for_vllm(port: int = 5000, timeout: int = 300) -> bool:
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--model-path", required=True, help="Path to local model weights")
+    parser.add_argument("--model-path", default="/path/to/Qwen3-Coder-30B-A3B-Instruct",
+                        help="Path to local model weights (default: /path/to/Qwen3-Coder-30B-A3B-Instruct)")
     parser.add_argument("--tp-size", type=int, default=8, help="Tensor parallel size (default: 8)")
     parser.add_argument("--max-model-len", type=int, default=40960, help="Max model context length")
     parser.add_argument("--gpu-memory-utilization", type=float, default=0.80, help="vLLM GPU memory utilization")
