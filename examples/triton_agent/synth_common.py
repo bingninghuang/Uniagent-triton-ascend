@@ -28,7 +28,7 @@ from uni_agent.interaction import (
 )
 from uni_agent.interaction.model import OpenAICompatibleChatModel
 from uni_agent.tools import ToolConfig
-from uni_agent.deployment import LocalDeploymentConfig
+from uni_agent.deployment import LocalAttachDeploymentConfig
 
 # Reuse reward evaluation from the Triton agent.
 from examples.triton_agent.reward import (
@@ -46,6 +46,11 @@ WORKSPACE_ROOT = SCRIPT_DIR / "workspace"
 BENCHMARK_ROOT = SCRIPT_DIR / "benchmarks" / "NPUKernelBench"
 
 DEFAULT_SANDBOX_IMAGE = os.environ.get("TRITON_CLAUDE_IMAGE", "triton-claude-code-env:latest")
+
+# Attach-mode defaults (for connecting to an existing swerex server)
+DEFAULT_ATTACH_HOST = os.environ.get("TRITON_ATTACH_HOST", "http://127.0.0.1")
+DEFAULT_ATTACH_PORT = int(os.environ.get("TRITON_ATTACH_PORT", "8000"))
+DEFAULT_ATTACH_AUTH_TOKEN = os.environ.get("TRITON_ATTACH_AUTH_TOKEN", "mytoken123")
 DEFAULT_WORKSPACE_DIR = "/opt/workspace/agent_workdir"
 DEFAULT_TOOL_PARSER = "qwen3_coder"
 
@@ -382,10 +387,16 @@ def build_messages(task: dict[str, Any]) -> list[dict[str, str]]:
 
 def create_sandbox_env(
     run_id: str,
-    image: str = DEFAULT_SANDBOX_IMAGE,
     device_ids: str = "",
+    attach_host: str = DEFAULT_ATTACH_HOST,
+    attach_port: int = DEFAULT_ATTACH_PORT,
+    attach_auth_token: str = DEFAULT_ATTACH_AUTH_TOKEN,
 ) -> AgentEnv:
-    """Create an AgentEnv with a local Docker sandbox (NPU-enabled)."""
+    """Create an AgentEnv by attaching to an existing swerex server.
+
+    Connects to a pre-started Docker container running swerex.server via HTTP,
+    instead of launching a new container (which requires docker access).
+    """
     env_variables: dict[str, str] = {
         "PIP_PROGRESS_BAR": "off",
         "GIT_PAGER": "cat",
@@ -404,25 +415,13 @@ def create_sandbox_env(
     return AgentEnv(
         run_id=run_id,
         env_config=AgentEnvConfig(
-            deployment=LocalDeploymentConfig(
-                type="local",
-                image=image,
-                command="exec python3 -m swerex.server --host 0.0.0.0 --port {port} --auth-token {token}",
+            deployment=LocalAttachDeploymentConfig(
+                type="local_attach",
+                host=attach_host,
+                port=attach_port,
+                auth_token=attach_auth_token,
                 timeout=600,
                 startup_timeout=600,
-                container_runtime="docker",
-                extra_run_args=[
-                    "--ipc=host",
-                    "--privileged",
-                    "--add-host", "host.docker.internal:host-gateway",
-                    "-v", "/dev:/dev",
-                    "-v", "/usr/local/Ascend/driver:/usr/local/Ascend/driver:ro",
-                    "-v", "/usr/local/Ascend/firmware:/usr/local/Ascend/firmware:ro",
-                    "-v", "/usr/local/dcmi:/usr/local/dcmi:ro",
-                    "-v", "/usr/local/bin/npu-smi:/usr/local/bin/npu-smi:ro",
-                    "-v", "/etc/ascend_install.info:/etc/ascend_install.info:ro",
-                    "-v", "/tmp/shared_npu_lock:/shared/device-locks",
-                ],
             ),
             env_variables=env_variables,
         ),
