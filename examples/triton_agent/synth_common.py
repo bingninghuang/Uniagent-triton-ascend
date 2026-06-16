@@ -452,7 +452,9 @@ async def run_one_task(
     run_id = f"synth_{op_name}_{uuid.uuid4().hex[:8]}"
 
     # 1. Setup host workspace
-    host_workdir = Path(tempfile.mkdtemp(prefix=f"synth-{op_name}-", dir=SCRIPT_DIR / "workspace_temp"))
+    workspace_temp_dir = SCRIPT_DIR / "workspace_temp"
+    workspace_temp_dir.mkdir(parents=True, exist_ok=True)
+    host_workdir = Path(tempfile.mkdtemp(prefix=f"synth-{op_name}-", dir=workspace_temp_dir))
     try:
         setup_workspace(task, host_workdir)
 
