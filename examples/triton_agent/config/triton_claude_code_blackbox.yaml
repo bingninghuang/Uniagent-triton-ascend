@@ -1,0 +1,117 @@
+# PPO/GRPO trainer config for Triton Claude Code blackbox rollouts.
+#
+# Requires a verl/uni-agent branch that provides:
+#   - uni_agent.trainer.framework.entry.AgentFrameworkRolloutAdapter
+#   - uni_agent.trainer.framework.framework.OpenAICompatibleAgentFramework
+#   - GatewayServingRuntime / OpenAI-compatible session runtime
+
+hydra:
+  searchpath:
+    - pkg://verl.trainer.config
+
+defaults:
+  - ppo_trainer
+  - override model_engine: megatron
+  - _self_
+
+actor_rollout_ref:
+  hybrid_engine: true
+  nccl_timeout: 9600
+
+  model:
+    path: ???
+    trust_remote_code: true
+
+  rollout:
+    name: vllm
+    mode: async
+    prompt_length: 4096
+    response_length: 8192
+    max_model_len: 12288
+    temperature: 1.0
+    top_p: 1.0
+    n: 1
+    tensor_model_parallel_size: 2
+    gpu_memory_utilization: 0.7
+    calculate_log_probs: true
+    free_cache_engine: true
+
+    multi_turn:
+      enable: true
+      max_assistant_turns: 1
+      max_parallel_calls: 1
+
+    agent:
+      num_workers: 8
+      agent_loop_manager_class: uni_agent.trainer.framework.entry.AgentFrameworkRolloutAdapter
+
+    custom:
+      agent_framework:
+        framework_class_fqn: examples.triton_agent.framework.TritonClaudeCodeFramework
+        agent_runner_fqn: examples.triton_agent.claude_code_agent_runner.triton_claude_code_runner
+        gateway_tool_parser: null
+        gateway_count: 1
+        completion_timeout_seconds: 1800
+        max_concurrent_sessions: 2
+        agent_runner_kwargs:
+          agent_config_path: examples/triton_agent/agent_config_claude_code.yaml
+
+  actor:
+    use_dynamic_bsz: true
+    use_kl_loss: false
+    kl_loss_coef: 0.0
+    clip_ratio_low: 0.2
+    clip_ratio_high: 0.28
+    loss_agg_mode: token-mean
+
+data:
+  train_files: ???
+  val_files: ???
+  max_prompt_length: 4096
+  max_response_length: 8192
+  train_batch_size: 8
+  val_batch_size: 8
+  return_raw_chat: true
+  trust_remote_code: true
+  custom_cls:
+    path: pkg://examples.triton_agent.dataset
+    name: TritonKernelBenchDataset
+
+algorithm:
+  gamma: 1.0
+  lam: 1.0
+  adv_estimator: grpo
+  use_kl_in_reward: false
+  kl_ctrl:
+    type: fixed
+    kl_coef: 0.0
+
+reward:
+  custom_reward_function:
+    path: pkg://examples/triton_agent.reward
+    name: compute_score
+
+trainer:
+  nnodes: 1
+  n_gpus_per_node: 8
+  total_epochs: 100
+  project_name: triton_claude_code
+  experiment_name: triton_claude_code
+  logger:
+    - console
+  device: npu
+  balance_batch: false
+  val_before_train: true
+  val_only: false
+  save_freq: 10
+  test_freq: 10
+  default_local_dir: checkpoints/triton_claude_code
+  resume_mode: auto
+
+ray_kwargs:
+  ray_init:
+    log_to_driver: true
+    runtime_env:
+      env_vars:
+        TRANSFER_QUEUE_ENABLE: ""
+        HYDRA_FULL_ERROR: "1"
