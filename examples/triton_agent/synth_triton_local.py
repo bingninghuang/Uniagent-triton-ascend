@@ -200,7 +200,6 @@ async def async_main(args: argparse.Namespace) -> int:
                 output_dir=task_output_dir,
                 max_turns=args.max_turns,
                 action_timeout=args.action_timeout,
-                sandbox_image=args.sandbox_image,
                 device_ids=args.eval_device_ids,
             )
             results.append(result)

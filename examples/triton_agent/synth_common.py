@@ -440,7 +440,6 @@ async def run_one_task(
     output_dir: str = "",
     max_turns: int = 50,
     action_timeout: int = 300,
-    sandbox_image: str = DEFAULT_SANDBOX_IMAGE,
     device_ids: str = "",
 ) -> dict[str, Any]:
     """Run one Triton operator task through the agent interaction loop.
@@ -471,7 +470,7 @@ async def run_one_task(
         chat_model.set_tools_schemas(tools_manager.tools_schemas)
 
         # 3. Create sandbox env
-        env = create_sandbox_env(run_id, image=sandbox_image, device_ids=device_ids)
+        env = create_sandbox_env(run_id, device_ids=device_ids)
 
         # 4. Build messages
         messages = build_messages(task)
