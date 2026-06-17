@@ -224,12 +224,18 @@ class OpenAICompatibleChatModel:
             self.sampling_params = {}
         if not hasattr(self, "timeout"):
             self.timeout = 300
+        if not hasattr(self, "verify_ssl"):
+            self.verify_ssl = True
         self.base_url = self.base_url.rstrip("/")
         self.loop = get_event_loop()
 
         from openai import AsyncOpenAI
 
-        self.client = AsyncOpenAI(api_key=self.api_key, base_url=self.base_url, timeout=self.timeout)
+        client_kwargs = {"api_key": self.api_key, "base_url": self.base_url, "timeout": self.timeout}
+        if not self.verify_ssl:
+            import httpx
+            client_kwargs["http_client"] = httpx.AsyncClient(verify=False)
+        self.client = AsyncOpenAI(**client_kwargs)
 
     def set_tools_schemas(self, tools_schemas: list[dict]) -> None:
         self.tools_schemas = tools_schemas

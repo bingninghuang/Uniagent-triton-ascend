@@ -53,6 +53,8 @@ def parse_args() -> argparse.Namespace:
                         help="Model name to send to the API (default: glm-5.1)")
     parser.add_argument("--timeout", type=float, default=300,
                         help="HTTP request timeout in seconds (default: 300)")
+    parser.add_argument("--verify-ssl", action="store_true",
+                        help="Verify TLS certificates (default: disabled, needed for some self-signed/proxied APIs)")
 
     # Task selection
     parser.add_argument("--dataset", default=str(SCRIPT_DIR / "benchmarks" / "NPUKernelBench"),
@@ -91,6 +93,7 @@ async def async_main(args: argparse.Namespace) -> int:
             "max_tokens": args.max_tokens,
         },
         timeout=args.timeout,
+        verify_ssl=args.verify_ssl,
     )
     print(f"[synth] Connected to {args.api_base_url} model={args.model_name}")
 

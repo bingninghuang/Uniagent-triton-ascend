@@ -513,7 +513,9 @@ async def run_one_task(
             }
             reward_score = 0.0
             eval_result = {"eval_completed": False, "reward": 0.0, "error": str(exc)}
-            print(f"[synth] ERROR op={op_name}: {exc}")
+            import traceback
+            print(f"[synth] ERROR op={op_name}: {type(exc).__name__}: {exc}")
+            traceback.print_exc()
         finally:
             try:
                 await env.close()
@@ -528,6 +530,18 @@ async def run_one_task(
         if num_turns > 0:
             last = interaction_result["trajectory"][-1]
             exit_reason = getattr(last, "exit_reason", "unknown")
+            # Debug: dump trajectory + last messages to help diagnose unknown_error
+            if exit_reason in ("unknown_error", "format_error", "token_limit"):
+                print(f"[synth] DEBUG trajectory for {op_name}:")
+                for i, step in enumerate(interaction_result["trajectory"]):
+                    print(f"  step {i+1}: exit_reason={getattr(step, 'exit_reason', '?')} "
+                          f"response_len={len(getattr(step, 'response', '') or '')} "
+                          f"tool_results={len(getattr(step, 'tool_results', []) or [])}")
+                msgs = interaction_result.get("messages", [])
+                for m in msgs[-3:]:
+                    role = m.get("role", "?")
+                    content = (m.get("content") or "")[:500]
+                    print(f"  [{role}] {content}")
 
         # Extract reward breakdown
         reward_breakdown = {}
@@ -561,7 +575,7 @@ async def run_one_task(
         if output_dir:
             from examples.triton_agent.reward import archive_text_artifacts
             try:
-                archive_text_artifacts(
+                await archive_text_artifacts(
                     env, metadata, output_dir, workspace_dir=workspace_dir,
                 )
             except Exception:
