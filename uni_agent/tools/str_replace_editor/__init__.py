@@ -67,4 +67,7 @@ class StrReplaceEditorTool(AbstractTool):
         )
 
     def get_install_command(self) -> str:
-        return "python -m pip install 'tree-sitter==0.21.3' || true && python -m pip install 'tree-sitter-languages' || true"
+        return (
+            "python -m pip install --timeout 5 --retries 0 'tree-sitter==0.21.3' || true && "
+            "python -m pip install --timeout 5 --retries 0 'tree-sitter-languages' || true"
+        )
