@@ -7,7 +7,7 @@ trajectories in Docker sandboxes. No RL training is involved.
 
 Usage:
     # Start from the repo root so that examples/ and uni_agent/ are importable.
-    cd /path/to/uni-agent-claudecode
+    cd /path/to/UniAgent-Triton-Ascend
 
     python examples/triton_agent/synth_triton_local.py \
         --model-path /path/to/Qwen3-Coder-30B-A3B-Instruct \

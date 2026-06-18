@@ -45,7 +45,7 @@ SCRIPT_DIR = Path(__file__).resolve().parent
 WORKSPACE_ROOT = SCRIPT_DIR / "workspace"
 BENCHMARK_ROOT = SCRIPT_DIR / "benchmarks" / "NPUKernelBench"
 
-DEFAULT_SANDBOX_IMAGE = os.environ.get("TRITON_CLAUDE_IMAGE", "triton-claude-code-env:latest")
+DEFAULT_SANDBOX_IMAGE = os.environ.get("TRITON_SANDBOX_IMAGE", "triton-operator-env:latest")
 
 # Attach-mode defaults (for connecting to an existing swerex server)
 DEFAULT_ATTACH_HOST = os.environ.get("TRITON_ATTACH_HOST", "http://127.0.0.1")
@@ -55,7 +55,7 @@ DEFAULT_WORKSPACE_DIR = "/opt/workspace/agent_workdir"
 DEFAULT_TOOL_PARSER = "qwen3_coder"
 
 # ---------------------------------------------------------------------------
-# Task loading (adapted from prepare_kernelbench_claude_code_data.py)
+# Task loading
 # ---------------------------------------------------------------------------
 
 
@@ -209,6 +209,9 @@ The implementation must match the reference outputs for all provided test cases.
 
 Important rules:
 - Work from the current workspace directory.
+- Preferred workspace root: `/opt/workspace/agent_workdir`.
+- Use this workspace root when an absolute path is needed.
+- Relative paths such as `INSTRUCTIONS.md` and `src/...` are valid after checking `pwd`.
 - Read `src/{op_name}.py` before coding.
 - Use local files only. Do not fetch code from the internet.
 - Implement `ModelNew` in `src/{op_name}_triton_ascend_impl.py`.
@@ -219,11 +222,11 @@ Important rules:
 
 Validation commands:
 1. AST check:
-   `python3 .claude/skills/triton-op-verifier/scripts/validate_triton_impl.py src/{op_name}_triton_ascend_impl.py --json`
+   `python3 tools/triton-op-verifier/scripts/validate_triton_impl.py src/{op_name}_triton_ascend_impl.py --json`
 2. Stage files:
    `mkdir -p output/verify && cp src/{op_name}.py output/verify/{op_name}_torch.py && cp src/{op_name}_triton_ascend_impl.py output/verify/{op_name}_triton_ascend_impl.py && {{ cp src/*.json src/*.jsonl output/verify/ 2>/dev/null || true; }}`
 3. Verify correctness:
-   `PY="${{OPERATOR_PYTHON:-/opt/conda/envs/evaluator-py311/bin/python}}" && bash tools/run_npu_command.sh "$PY" .claude/skills/triton-op-verifier/scripts/verify.py --op_name {op_name} --verify_dir output/verify --triton_impl_name triton_ascend_impl --timeout 900 --output output/verify/verify_result.json`
+   `PY="${{OPERATOR_PYTHON:-/opt/conda/envs/evaluator-py311/bin/python}}" && bash tools/run_npu_command.sh "$PY" tools/triton-op-verifier/scripts/verify.py --op_name {op_name} --verify_dir output/verify --triton_impl_name triton_ascend_impl --timeout 900 --output output/verify/verify_result.json`
 
 If verification fails:
 - Prefer `output/verify/verify_result_summary.json` if it exists.
@@ -333,7 +336,7 @@ Available tools:
 - submit: finish the task after verification passes
 
 Workflow:
-1. Confirm the current directory contains INSTRUCTIONS.md.
+1. Confirm the current directory contains INSTRUCTIONS.md. The preferred workspace root is `/opt/workspace/agent_workdir`.
 2. Read INSTRUCTIONS.md and the PyTorch reference implementation in src/.
 3. Create the required Triton implementation file.
 4. Run the AST check.
@@ -357,9 +360,10 @@ Target architecture: {arch}
 Reference file: `src/{op_name}.py`
 Implementation target: `src/{op_name}_triton_ascend_impl.py`
 
-Start by checking `pwd` and reading `INSTRUCTIONS.md`. Then implement and verify
-according to the commands in `INSTRUCTIONS.md`. Call submit only after the verifier
-reports passed_cases == total_cases.
+Start by checking `pwd` and reading `INSTRUCTIONS.md`. The preferred workspace
+root is `/opt/workspace/agent_workdir`; use it when an absolute path is needed.
+Then implement and verify according to the commands in `INSTRUCTIONS.md`. Call
+submit only after the verifier reports passed_cases == total_cases.
 
 {instruction}
 """

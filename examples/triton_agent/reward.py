@@ -458,7 +458,7 @@ async def _metrics_from_upstream_workspace(
 
 async def _remote_ast_check(env, workspace_dir: str, op_name: str) -> dict[str, Any] | None:
     impl_file = f"{workspace_dir}/src/{op_name}_triton_ascend_impl.py"
-    checker = f"{workspace_dir}/.claude/skills/triton-op-verifier/scripts/validate_triton_impl.py"
+    checker = f"{workspace_dir}/tools/triton-op-verifier/scripts/validate_triton_impl.py"
     if not await _remote_file_exists(env, checker):
         return None
     cmd = (
@@ -645,8 +645,8 @@ async def evaluate_triton_workspace(
 def artifact_candidates(workspace_dir: str, op_name: str) -> list[tuple[str, str]]:
     """Text artifacts that are cheap to copy back from a sandbox."""
     return [
-        (f"{workspace_dir}/claude_code_trajectory.jsonl", "claude_code_trajectory.jsonl"),
-        (f"{workspace_dir}/claude_code_stdout.log", "claude_code_stdout.log"),
+        (f"{workspace_dir}/agent_trajectory.jsonl", "agent_trajectory.jsonl"),
+        (f"{workspace_dir}/agent_stdout.log", "agent_stdout.log"),
         (f"{workspace_dir}/metrics.json", "metrics.json"),
         (f"{workspace_dir}/metrics_error.log", "metrics_error.log"),
         (f"{workspace_dir}/metrics_best.json", "metrics_best.json"),
@@ -662,7 +662,7 @@ def artifact_candidates(workspace_dir: str, op_name: str) -> list[tuple[str, str
     ]
 
 
-def _format_claude_content(content: Any) -> str:
+def _format_agent_content(content: Any) -> str:
     if isinstance(content, str):
         return content
     if not isinstance(content, list):
@@ -688,14 +688,14 @@ def _format_claude_content(content: Any) -> str:
             parts.append(
                 "[tool_result] "
                 f"id={block.get('tool_use_id', '')} is_error={block.get('is_error', False)}\n"
-                f"{_format_claude_content(block.get('content', ''))}"
+                f"{_format_agent_content(block.get('content', ''))}"
             )
         else:
             parts.append(json.dumps(block, ensure_ascii=False, indent=2))
     return "\n\n".join(part for part in parts if part)
 
 
-def _format_claude_trajectory(jsonl_text: str) -> str:
+def _format_agent_trajectory(jsonl_text: str) -> str:
     sections: list[str] = []
     for line_no, line in enumerate(jsonl_text.splitlines(), start=1):
         line = line.strip()
@@ -712,7 +712,7 @@ def _format_claude_trajectory(jsonl_text: str) -> str:
         if event_type in ("assistant", "user") and isinstance(event.get("message"), dict):
             message = event["message"]
             role = str(message.get("role") or event_type).upper()
-            sections.append(f"### {role}\n{_format_claude_content(message.get('content', ''))}")
+            sections.append(f"### {role}\n{_format_agent_content(message.get('content', ''))}")
         elif event_type == "system":
             detail = {k: v for k, v in event.items() if k not in {"uuid", "session_id"}}
             sections.append(f"### SYSTEM/{subtype or 'event'}\n{json.dumps(detail, ensure_ascii=False, indent=2)}")
@@ -753,14 +753,14 @@ async def archive_text_artifacts(env, metadata: dict[str, Any], dest_root: str, 
             copied += 1
         except Exception as exc:
             logger.warning("Failed to archive %s: %s", remote_path, exc)
-    if "claude_code_trajectory.jsonl" in copied_texts:
+    if "agent_trajectory.jsonl" in copied_texts:
         try:
             (dest / "conversation.log").write_text(
-                _format_claude_trajectory(copied_texts["claude_code_trajectory.jsonl"]),
+                _format_agent_trajectory(copied_texts["agent_trajectory.jsonl"]),
                 encoding="utf-8",
                 errors="replace",
             )
             copied += 1
         except Exception as exc:
-            logger.warning("Failed to render Claude Code conversation log: %s", exc)
+            logger.warning("Failed to render agent conversation log: %s", exc)
     return str(dest) if copied else None

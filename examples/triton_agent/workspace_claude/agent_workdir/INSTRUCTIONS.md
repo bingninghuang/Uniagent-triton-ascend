@@ -11,4 +11,6 @@ The generated task will include:
 - compact validation commands
 
 The agent should implement `ModelNew` in the required implementation file and
-use the local verifier scripts under `tools/triton-op-verifier/scripts/`.
+follow `CLAUDE.md` plus the local `triton-op-verifier` skill. Runtime workspaces
+use this file and `CLAUDE.md` as the only required top-level markdown entry
+points.
