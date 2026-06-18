@@ -192,60 +192,49 @@ def load_tasks(
 # Workspace setup
 # ---------------------------------------------------------------------------
 
-KERNELBENCH_INSTRUCTION_TEMPLATE = """# KernelBench Operator Task
+KERNELBENCH_INSTRUCTION_TEMPLATE = """# KernelBench Triton Ascend Task
 
 Operator: {op_name}
 Target: {arch}
-Create: `src/{op_name}_triton_ascend_impl.py`
 
-This is a concrete operator task. Do not ask which operator to implement.
-Use only the local files bundled in this workspace; do not fetch, clone, or
-search remote repositories for skills or references.
+Reference implementation:
+- `src/{op_name}.py`
 
-Reference behavior is defined by `src/{op_name}.py`. Read that file and the
-sidecar case files in `src/` only as needed.
+You must create:
+- `src/{op_name}_triton_ascend_impl.py`
 
-Workflow:
-- Read `INSTRUCTIONS.md` and `CLAUDE.md`.
-- Phase 1 task extraction is already complete. Do not call `triton-task-extractor`.
-- Follow the bundled upstream `CLAUDE.md`, `.claude/skills`, and `.claude/refs`
-  for implementation and verifier rules.
-- Use `$OPERATOR_PYTHON` through `bash tools/run_npu_command.sh` for NPU
-  verify/benchmark when it is set. A plain `python3` missing torch is not task
-  success or proof that validation is impossible.
-- Do not write `IMPLEMENTATION_SUMMARY.md` or `IMPLEMENTATION_STATUS.md`.
-- Leave the upstream artifacts such as `verify_result.json`, `perf_result.json`,
-  `summary.json`, and the final generated implementation in the workspace.
+Goal:
+Implement a Triton Ascend NPU version of the reference PyTorch operator.
+The implementation must match the reference outputs for all provided test cases.
+
+Important rules:
+- Work from the current workspace directory.
+- Read `src/{op_name}.py` before coding.
+- Use local files only. Do not fetch code from the internet.
+- Implement `ModelNew` in `src/{op_name}_triton_ascend_impl.py`.
+- Pass tensors directly to Triton kernels. Do not use `.data_ptr()`.
+- Prefer module-level `@triton.jit` kernels launched as `kernel[grid](...)`.
+- Do not write summary/status markdown files.
+- Call `submit` only after correctness verification passes all cases.
 
 Validation commands:
-- AST check:
-  `python3 .claude/skills/triton-op-verifier/scripts/validate_triton_impl.py src/{op_name}_triton_ascend_impl.py --json`
-- Stage files:
-  `mkdir -p output/verify && cp src/{op_name}.py output/verify/{op_name}_torch.py && cp src/{op_name}_triton_ascend_impl.py output/verify/{op_name}_triton_ascend_impl.py && {{ cp src/*.json src/*.jsonl output/verify/ 2>/dev/null || true; }}`
-- Verify:
-  `PY="${{OPERATOR_PYTHON:-/opt/conda/envs/evaluator-py311/bin/python}}" && bash tools/run_npu_command.sh "$PY" .claude/skills/triton-op-verifier/scripts/verify.py --op_name {op_name} --verify_dir output/verify --triton_impl_name triton_ascend_impl --timeout 900 --output output/verify/verify_result.json`
-- After verifier failure, use `output/verify/verify_result_summary.json` or the
-  compact printed summary for repair. Do not read full `verify_result.json`,
-  full `*.raw.log`, or verifier source unless the compact summary is missing.
-- Stop only after verifier reports `passed_cases == total_cases`. A passing AST
-  check is not completion.
+1. AST check:
+   `python3 .claude/skills/triton-op-verifier/scripts/validate_triton_impl.py src/{op_name}_triton_ascend_impl.py --json`
+2. Stage files:
+   `mkdir -p output/verify && cp src/{op_name}.py output/verify/{op_name}_torch.py && cp src/{op_name}_triton_ascend_impl.py output/verify/{op_name}_triton_ascend_impl.py && {{ cp src/*.json src/*.jsonl output/verify/ 2>/dev/null || true; }}`
+3. Verify correctness:
+   `PY="${{OPERATOR_PYTHON:-/opt/conda/envs/evaluator-py311/bin/python}}" && bash tools/run_npu_command.sh "$PY" .claude/skills/triton-op-verifier/scripts/verify.py --op_name {op_name} --verify_dir output/verify --triton_impl_name triton_ascend_impl --timeout 900 --output output/verify/verify_result.json`
 
-Common pitfalls:
-- Launch Triton kernels by passing tensors directly, for example
-  `kernel[grid](x, out, ...)`. Do not pass `x.data_ptr()`.
-- `Unsupported ptr type ... in tl.load` means an integer pointer was passed to
-  the kernel, usually via `.data_ptr()`. This is an implementation bug, not an
-  environment issue.
-- Prefer module-level `@triton.jit` kernels launched as `kernel[grid](...)`;
-  avoid `self._kernel[grid](...)`.
-- AST check is only a precheck. Compilation or correctness failures from
-  `verify.py` are implementation failures to repair.
-- Do not assume same-shape flattened elementwise behavior when the reference or
-  JSON cases include broadcasting, `dim`, reductions, or shape changes.
+If verification fails:
+- Prefer `output/verify/verify_result_summary.json` if it exists.
+- Otherwise inspect the compact verifier output.
+- Fix the implementation and rerun verification.
 
-Final response: one concise status sentence only. No summary markdown.
+Success condition:
+- The verifier reports `passed_cases == total_cases`.
 
-Task context: {instruction}
+Task context:
+{instruction}
 """
 
 
@@ -315,53 +304,62 @@ async def upload_workspace(env: AgentEnv, host_workdir: Path) -> str:
         archive_path.write_bytes(_tar_directory(host_workdir))
         await env.copy_to_container(archive_path, Path(container_archive))
 
+    workspace_dir = "/opt/workspace/agent_workdir"
     await env.communicate(
         f"rm -rf /opt/workspace && "
         f"tar -xzf {container_archive} -C /opt && "
-        f"rm -f {container_archive}",
+        f"rm -f {container_archive} && "
+        f"test -f {workspace_dir}/INSTRUCTIONS.md",
         check="raise",
         error_msg="Failed to extract Triton workspace",
     )
-    return f"/opt/workspace/agent_workdir"
+    await env.communicate(
+        f"cd {workspace_dir}",
+        check="raise",
+        error_msg="Failed to enter Triton workspace",
+    )
+    return workspace_dir
 
 
 # ---------------------------------------------------------------------------
 # Prompt construction
 # ---------------------------------------------------------------------------
 
-SYSTEM_PROMPT = """You are a coding agent that writes Triton Ascend NPU operators.
+SYSTEM_PROMPT = """You are a coding agent that implements Triton Ascend NPU operators.
 
 Available tools:
-- str_replace_editor: view, create, edit files (commands: view, create, str_replace, insert, undo_edit)
-- execute_bash: run shell commands (verification, benchmarking, etc.)
-- submit: signal task completion when all verification tests pass
+- str_replace_editor: view, create, and edit files
+- execute_bash: run shell commands
+- submit: finish the task after verification passes
 
 Workflow:
-1. Read `INSTRUCTIONS.md` and `CLAUDE.md` for task details and validation commands.
-2. Read the reference PyTorch implementation in `src/`.
-3. Create `src/{op_name}_triton_ascend_impl.py` with your Triton implementation.
-4. Run validation commands (AST check, verify, benchmark) using execute_bash.
-5. If verification fails, read the compact summary, fix the implementation, and re-verify.
-6. Call submit when `passed_cases == total_cases`.
+1. Confirm the current directory contains INSTRUCTIONS.md.
+2. Read INSTRUCTIONS.md and the PyTorch reference implementation in src/.
+3. Create the required Triton implementation file.
+4. Run the AST check.
+5. Run correctness verification.
+6. If verification fails, inspect the compact error summary, fix the code, and verify again.
+7. Call submit only after all correctness cases pass.
 
 Rules:
-- Pass tensors directly to Triton kernels. Do NOT use `.data_ptr()`.
-- Prefer module-level `@triton.jit` kernels launched as `kernel[grid](...)`.
-- Use `$OPERATOR_PYTHON` via `bash tools/run_npu_command.sh` for NPU commands.
-- Do not write summary/status markdown files.
-- Only verifier `passed_cases == total_cases` is success. AST check alone is not.
+- Use local files only.
+- Do not fetch external repositories or code.
+- Pass tensors directly to Triton kernels. Do not use .data_ptr().
+- Prefer module-level @triton.jit kernels.
+- AST check alone is not success.
+- Correctness verification must pass all cases before submit.
 """
 
-USER_PROMPT_TEMPLATE = """Implement the Triton Ascend operator described in INSTRUCTIONS.md.
+USER_PROMPT_TEMPLATE = """Implement the Triton Ascend operator in the current workspace.
 
 Operator: {op_name}
 Target architecture: {arch}
 Reference file: `src/{op_name}.py`
 Implementation target: `src/{op_name}_triton_ascend_impl.py`
 
-Read `INSTRUCTIONS.md` first, then implement the operator. Follow the validation
-commands in `INSTRUCTIONS.md` to verify your implementation. Call submit only after
-the verifier reports passed_cases == total_cases.
+Start by checking `pwd` and reading `INSTRUCTIONS.md`. Then implement and verify
+according to the commands in `INSTRUCTIONS.md`. Call submit only after the verifier
+reports passed_cases == total_cases.
 
 {instruction}
 """
