@@ -50,9 +50,18 @@ def load_jsonl(path: Path) -> list[dict[str, Any]]:
 
 
 def iter_tool_results(result: dict[str, Any]):
-    for step_idx, step in enumerate(result.get("trajectory") or [], 1):
-        for tool in step.get("tool_results") or []:
-            yield step_idx, step, tool
+    trajectory = result.get("trajectory") or []
+    if isinstance(trajectory, str):
+        return
+    for step_idx, step in enumerate(trajectory, 1):
+        if not isinstance(step, dict):
+            continue
+        tool_results = step.get("tool_results") or []
+        if isinstance(tool_results, str):
+            continue
+        for tool in tool_results:
+            if isinstance(tool, dict):
+                yield step_idx, step, tool
 
 
 def extract_errors(result: dict[str, Any]) -> list[str]:

@@ -602,6 +602,8 @@ def _json_safe(obj: Any) -> Any:
         return None
     if isinstance(obj, (str, int, float, bool)):
         return obj
+    if hasattr(obj, "model_dump"):
+        return _json_safe(obj.model_dump())
     if isinstance(obj, dict):
         return {str(k): _json_safe(v) for k, v in obj.items()}
     if isinstance(obj, (list, tuple)):

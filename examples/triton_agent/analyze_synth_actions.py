@@ -96,9 +96,21 @@ def one_line(text: Any, limit: int) -> str:
 
 
 def iter_tools(result: dict[str, Any]):
-    for step_idx, step in enumerate(result.get("trajectory") or [], 1):
-        for tool_idx, tool in enumerate(step.get("tool_results") or [], 1):
-            yield step_idx, tool_idx, step, tool
+    trajectory = result.get("trajectory") or []
+    if isinstance(trajectory, str):
+        # Older result files may contain Pydantic StepOutput objects stringified by
+        # _json_safe(), e.g. "step_idx=1 response='' ...". They do not preserve
+        # structured tool_results, so skip instead of crashing.
+        return
+    for step_idx, step in enumerate(trajectory, 1):
+        if not isinstance(step, dict):
+            continue
+        tool_results = step.get("tool_results") or []
+        if isinstance(tool_results, str):
+            continue
+        for tool_idx, tool in enumerate(tool_results, 1):
+            if isinstance(tool, dict):
+                yield step_idx, tool_idx, step, tool
 
 
 def is_str_replace_view(tool: dict[str, Any]) -> bool:
