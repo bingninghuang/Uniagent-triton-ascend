@@ -326,21 +326,23 @@ class OpenAICompatibleChatModel:
         response_content = response_message.content or ""
         response_tool_calls = list(response_message.tool_calls or [])
 
-        # DeepSeek-style models may return reasoning_content separately from
-        # content. When the model is "thinking" (especially after seeing
-        # truncated or unusual output), content may be empty while the actual
-        # response is in reasoning_content. Merge it so the parser has
-        # something to work with.
+        # DeepSeek-style models return reasoning_content (CoT) separately
+        # from content. Always merge it so the full model output is captured
+        # in trajectory data for RL training and debugging.
         reasoning = getattr(response_message, "reasoning_content", None) or ""
-        if reasoning and not response_content and not response_tool_calls:
+        if reasoning:
             import logging
             _logger = logging.getLogger("OpenAICompatibleChatModel")
-            _logger.warning(
-                "Model returned empty content and no tool_calls, but has "
-                "reasoning_content (%d chars). Falling back to reasoning_content.",
-                len(reasoning),
-            )
-            response_content = reasoning
+            if not response_content and not response_tool_calls:
+                _logger.warning(
+                    "Model returned empty content and no tool_calls, but has "
+                    "reasoning_content (%d chars). Falling back to reasoning_content.",
+                    len(reasoning),
+                )
+            if response_content:
+                response_content = reasoning + "\n\n" + response_content
+            else:
+                response_content = reasoning
 
         serialized_tool_calls: list[dict] = [
             {
