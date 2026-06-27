@@ -326,23 +326,23 @@ class OpenAICompatibleChatModel:
         response_content = response_message.content or ""
         response_tool_calls = list(response_message.tool_calls or [])
 
-        # DeepSeek-style models return reasoning_content (CoT) separately
-        # from content. Always merge it so the full model output is captured
-        # in trajectory data for RL training and debugging.
+        # DeepSeek-style models return reasoning_content (CoT) separately.
+        # Pass it through generation_info so it ends up in step_output.thought,
+        # keeping response and thought distinct.
         reasoning = getattr(response_message, "reasoning_content", None) or ""
-        if reasoning:
+
+        # Fallback: when the model produces only reasoning (no content, no
+        # tool calls), use it as content so the parser has something to work
+        # with and the step is treated as "thinking" rather than format_error.
+        if reasoning and not response_content and not response_tool_calls:
             import logging
             _logger = logging.getLogger("OpenAICompatibleChatModel")
-            if not response_content and not response_tool_calls:
-                _logger.warning(
-                    "Model returned empty content and no tool_calls, but has "
-                    "reasoning_content (%d chars). Falling back to reasoning_content.",
-                    len(reasoning),
-                )
-            if response_content:
-                response_content = reasoning + "\n\n" + response_content
-            else:
-                response_content = reasoning
+            _logger.warning(
+                "Model returned empty content and no tool_calls, but has "
+                "reasoning_content (%d chars). Falling back to reasoning_content.",
+                len(reasoning),
+            )
+            response_content = reasoning
 
         serialized_tool_calls: list[dict] = [
             {
@@ -366,5 +366,6 @@ class OpenAICompatibleChatModel:
             {
                 "prompt_tokens": prompt_tokens,
                 "completion_tokens": completion_tokens,
+                "reasoning_content": reasoning,
             },
         )

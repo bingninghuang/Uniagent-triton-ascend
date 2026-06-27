@@ -134,11 +134,15 @@ class AgentInteraction:
                 messages=self.messages,
                 rollout_cache=self.rollout_cache,
             )
+            reasoning = generation_info.get("reasoning_content", "") or ""
             step_output.response = model_output
+            step_output.thought = reasoning
             self.logger.info(
                 f"Prompt Tokens: {generation_info['prompt_tokens']}, "
                 f"Completion Tokens: {generation_info['completion_tokens']}"
             )
+            if reasoning:
+                self.logger.debug(f"Reasoning (first 200 chars):\n{reasoning[:200]}")
             self.logger.debug(f"Model Output:\n{model_output}")
         except MaxTokenExceededError as e:
             _msg = (
@@ -155,9 +159,13 @@ class AgentInteraction:
         # step 3: parse model response to actions
         self.rollout_cache = rollout_cache
 
-        # Persist the assistant message in api-shape (with tool_calls)
-        # so replay preserves the assistant<->tool linkage.
-        assistant_msg: dict[str, object] = {"role": "assistant", "content": model_output}
+        # Build the assistant message for conversation context.
+        # Include reasoning (CoT) so the model sees its own thinking in
+        # subsequent turns, keeping the chain-of-thought coherent.
+        assistant_content = model_output
+        if reasoning:
+            assistant_content = reasoning if not model_output else reasoning + "\n\n" + model_output
+        assistant_msg: dict[str, object] = {"role": "assistant", "content": assistant_content}
         if tool_calls:
             assistant_msg["tool_calls"] = tool_calls
         self.messages.append(assistant_msg)
@@ -195,7 +203,11 @@ class AgentInteraction:
             self.logger.error("{}", _msg)
             return step_output
 
-        step_output.thought = content
+        # step_output.thought is set from reasoning_content (API CoT) above.
+        # If there was no reasoning_content, fall back to the text content
+        # extracted by the parser (text-based tool calling path).
+        if not step_output.thought:
+            step_output.thought = content
 
         # When the model responds with text only (no tool calls), it is
         # thinking/reasoning.  Treat this as a valid non-terminal step so the
