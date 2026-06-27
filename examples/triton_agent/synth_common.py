@@ -351,6 +351,9 @@ Rules:
 - Prefer module-level @triton.jit kernels.
 - AST check alone is not success.
 - Correctness verification must pass all cases before submit.
+- NEVER read or view files under tools/. These are infrastructure scripts
+  whose exact commands are already in INSTRUCTIONS.md. Just run the commands
+  directly; the scripts' output tells you everything you need.
 """
 
 USER_PROMPT_TEMPLATE = """Implement the Triton Ascend operator in the current workspace.
