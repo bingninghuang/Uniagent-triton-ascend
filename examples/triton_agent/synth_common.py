@@ -213,6 +213,10 @@ Important rules:
 - Use this workspace root when an absolute path is needed.
 - Relative paths such as `INSTRUCTIONS.md` and `src/...` are valid after checking `pwd`.
 - Read `src/{op_name}.py` before coding.
+- The companion JSON file `src/*.json` may contain many test cases and be
+  truncated when viewed. Read only the first 2-3 lines to understand the
+  input format (shapes, dtypes, parameter names). If truncated, use
+  `view_range [1, 3]` to see just the first few cases.
 - Use local files only. Do not fetch code from the internet.
 - Implement `ModelNew` in `src/{op_name}_triton_ascend_impl.py`.
 - Pass tensors directly to Triton kernels. Do not use `.data_ptr()`.
@@ -389,6 +393,11 @@ Rules:
 - NEVER read or view files under tools/. These are infrastructure scripts
   whose exact commands are already in INSTRUCTIONS.md. Just run the commands
   directly; the scripts' output tells you everything you need.
+- Test case JSON files (like `src/*.json`) can be very large. You only need
+  to read the first 2-3 cases to understand the input shapes/dtypes. If a
+  file view gets truncated (marked `<response clipped>`), immediately use
+  `view_range` to read just what you need. Never let a truncated view cause
+  you to produce an empty response — always follow up with another action.
 """
 
 USER_PROMPT_TEMPLATE = """Implement the Triton Ascend operator in the current workspace.
