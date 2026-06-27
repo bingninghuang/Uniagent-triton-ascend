@@ -226,7 +226,7 @@ Validation commands:
 2. Stage files:
    `mkdir -p output/verify && cp src/{op_name}.py output/verify/{op_name}_torch.py && cp src/{op_name}_triton_ascend_impl.py output/verify/{op_name}_triton_ascend_impl.py && {{ cp src/*.json src/*.jsonl output/verify/ 2>/dev/null || true; }}`
 3. Verify correctness:
-   `PY="${{OPERATOR_PYTHON:-/opt/conda/envs/evaluator-py311/bin/python}}" && bash tools/run_npu_command.sh "$PY" tools/triton-op-verifier/scripts/verify.py --op_name {op_name} --verify_dir output/verify --triton_impl_name triton_ascend_impl --timeout 900 --output output/verify/verify_result.json`
+   `PY="${{OPERATOR_PYTHON:-/usr/local/python3.11.14/bin/python}}" && bash tools/run_npu_command.sh "$PY" tools/triton-op-verifier/scripts/verify.py --op_name {op_name} --verify_dir output/verify --triton_impl_name triton_ascend_impl --timeout 900 --output output/verify/verify_result.json`
 
 If verification fails:
 - Prefer `output/verify/verify_result_summary.json` if it exists.
