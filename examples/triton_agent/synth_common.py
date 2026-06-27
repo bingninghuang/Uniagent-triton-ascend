@@ -220,21 +220,56 @@ Important rules:
 - Do not write summary/status markdown files.
 - Call `submit` only after correctness verification passes all cases.
 
-Validation commands:
-1. AST check:
-   `python3 tools/triton-op-verifier/scripts/validate_triton_impl.py src/{op_name}_triton_ascend_impl.py --json`
-2. Stage files:
-   `mkdir -p output/verify && cp src/{op_name}.py output/verify/{op_name}_torch.py && cp src/{op_name}_triton_ascend_impl.py output/verify/{op_name}_triton_ascend_impl.py && {{ cp src/*.json src/*.jsonl output/verify/ 2>/dev/null || true; }}`
-3. Verify correctness:
-   `PY="${{OPERATOR_PYTHON:-/usr/local/python3.11.14/bin/python}}" && bash tools/run_npu_command.sh "$PY" tools/triton-op-verifier/scripts/verify.py --op_name {op_name} --verify_dir output/verify --triton_impl_name triton_ascend_impl --timeout 900 --output output/verify/verify_result.json`
+--- Validation Pipeline ---
+The scripts under `tools/` are pre-installed infrastructure. NEVER read or view
+their source code — just run the commands below. Each command's output is
+self-explanatory.
+
+Step 1 — AST check (static analysis, no NPU needed):
+  Command:
+    python3 tools/triton-op-verifier/scripts/validate_triton_impl.py \
+      src/{op_name}_triton_ascend_impl.py --json
+  What it does: checks that your code has @triton.jit kernels and forward()
+    actually calls them (not pure PyTorch).
+  Output: JSON with "valid": true/false. If false, read the "suggestion" field
+    and fix your code before proceeding.
+
+Step 2 — Stage files for the verifier:
+  Command:
+    mkdir -p output/verify && \
+    cp src/{op_name}.py output/verify/{op_name}_torch.py && \
+    cp src/{op_name}_triton_ascend_impl.py output/verify/{op_name}_triton_ascend_impl.py && \
+    {{ cp src/*.json src/*.jsonl output/verify/ 2>/dev/null || true; }}
+
+Step 3 — Correctness verification (requires NPU):
+  Command:
+    PY="${{OPERATOR_PYTHON:-/usr/local/python3.11.14/bin/python}}" && \
+    bash tools/run_npu_command.sh "$PY" \
+      tools/triton-op-verifier/scripts/verify.py \
+      --op_name {op_name} \
+      --verify_dir output/verify \
+      --triton_impl_name triton_ascend_impl \
+      --timeout 900 \
+      --output output/verify/verify_result.json
+  What it does: runs all test cases and compares your Triton output against
+    the reference PyTorch output.
+  Output files produced:
+    - output/verify/verify_result.json        (full results, may be large)
+    - output/verify/verify_result_summary.json (compact summary — READ THIS)
+    - output/verify/verify_result.raw.log     (raw log if something crashes)
+  How to check results:
+    cat output/verify/verify_result_summary.json
+    Look for: "passed_cases", "total_cases", "verified_success", "error_groups".
 
 If verification fails:
-- Prefer `output/verify/verify_result_summary.json` if it exists.
-- Otherwise inspect the compact verifier output.
-- Fix the implementation and rerun verification.
+- Read `output/verify/verify_result_summary.json` FIRST. It groups errors by
+  type and shows the most common failure reasons with examples.
+- Use the error descriptions to make targeted fixes to your implementation.
+- Re-run Step 3 (no need to re-stage unless you changed file names).
+- If the summary doesn't exist, read `output/verify/verify_result.raw.log`.
 
 Success condition:
-- The verifier reports `passed_cases == total_cases`.
+- `passed_cases == total_cases` in the verification output.
 
 Task context:
 {instruction}
