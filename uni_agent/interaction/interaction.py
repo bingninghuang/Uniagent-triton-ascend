@@ -170,8 +170,6 @@ class AgentInteraction:
                 )
             else:
                 content, tool_calls = await self.tools_manager.parse_action(model_output=model_output)
-            if not tool_calls and not self.chat_mode:
-                raise FunctionCallFormatError("No function call found in the response.")
         except FunctionCallFormatError as e:
             if tool_calls:
                 error_msgs: list[dict[str, object]] = [
@@ -198,6 +196,20 @@ class AgentInteraction:
             return step_output
 
         step_output.thought = content
+
+        # When the model responds with text only (no tool calls), it is
+        # thinking/reasoning.  Treat this as a valid non-terminal step so the
+        # thinking becomes part of the conversation and the model can act in
+        # the next turn.  chat_mode would also land here (turn_done).
+        if not tool_calls:
+            if not self.chat_mode:
+                step_output.exit_reason = "thinking"
+                self.logger.info(f"💬 THINKING (no tool call): {content[:200]}")
+            else:
+                step_output.done = True
+                step_output.exit_reason = "turn_done"
+                self.logger.info(f"💬 TURN DONE (no tool call): {model_output}")
+            return step_output
 
         # step 4: chat_mode-only end-of-turn (single-shot already raised above).
         if not tool_calls:
