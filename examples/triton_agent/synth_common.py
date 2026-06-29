@@ -621,24 +621,25 @@ def _format_skills(skill_paths: list[str], sandbox_dir: str = SKILLS_SANDBOX_DIR
 # System prompt used during coding / fix sessions (no execute_bash, no submit).
 CODING_SYSTEM_PROMPT = """You are a Triton Ascend NPU operator implementation expert.
 
+Your workspace is `/opt/workspace/agent_workdir`. ALL file paths must start with
+`/opt/workspace/agent_workdir/`.  The directory `/testbed` does NOT exist — do
+NOT use it.  Use `pwd` to confirm you are in the right directory.
+
 Available tools:
-- str_replace_editor: view, create, and edit files. Use `view` to read a file,
-  `create` to write a new file (with `file_text` containing the full content),
-  `str_replace` to edit an existing file.
-- search_skills: search skill reference documents by keywords. Use this to
-  find Triton-Ascend syntax references and best practices.
+- str_replace_editor: view, create, and edit files.
+- search_skills: search skill reference documents by keywords.
 
 Rules:
-- Your FIRST action must be `str_replace_editor create` to write the
-  implementation file. Do not spend turns only searching or viewing.
+- Your FIRST action should write the implementation file using
+  `str_replace_editor create` at the correct workspace path.
+- Do NOT spend turns exploring the filesystem.
 - Implement `ModelNew` in the required implementation file.
 - Pass tensors directly to Triton kernels. Do not use .data_ptr().
 - Prefer module-level `@triton.jit` kernels launched as `kernel[grid](...)`.
-- NEVER read or view files under tools/ — they are infrastructure scripts.
-- Use `search_skills` to find relevant Triton reference material as needed.
-- The verification pipeline is run automatically — you do NOT need to run it.
-- After writing the file, you may optionally search skills and edit to improve
-  the code, then stop. Do NOT call submit or any finish tool.
+- NEVER read files under tools/ — they are infrastructure scripts.
+- Use `search_skills` for Triton-Ascend reference material.
+- The verification pipeline runs automatically — you do NOT need to run it.
+- After writing the file, improve if needed, then stop. Do NOT loop on thinking.
 """
 
 
@@ -672,14 +673,17 @@ def _build_initial_prompt(
         skills_text,
         "",
         "## Instructions",
-        f"IMMEDIATE ACTION: Use `str_replace_editor create` to write",
-        f"`src/{op_name}_triton_ascend_impl.py` with a complete implementation.",
-        f"Do this NOW — do not search skills or view other files first.",
+        f"Workspace: `/opt/workspace/agent_workdir`",
+        f"Implementation file: `/opt/workspace/agent_workdir/src/{op_name}_triton_ascend_impl.py`",
+        f"Reference file: `/opt/workspace/agent_workdir/src/{op_name}.py`",
         f"",
-        f"The file must contain a `ModelNew` class with at least one",
-        f"@triton.jit kernel. After writing the initial code, you may use",
-        f"`search_skills` and `str_replace_editor str_replace` to improve it.",
-        f"Stop when ready for automated verification.",
+        f"IMMEDIATE ACTION: Use `str_replace_editor create` with path",
+        f"`/opt/workspace/agent_workdir/src/{op_name}_triton_ascend_impl.py`",
+        f"to write the complete ModelNew implementation now.",
+        f"",
+        f"Rules: ModelNew class with @triton.jit kernel(s). No `for` loops in",
+        f"forward(). No torch compute ops — only buffer alloc and view/reshape.",
+        f"After writing, use `search_skills` and edit if needed, then stop.",
         "",
         instruction,
     ])
@@ -694,8 +698,10 @@ def _build_ast_fix_prompt(
     skills_text: str,
 ) -> str:
     """Build a fix prompt when AST check fails."""
+    impl_path = f"/opt/workspace/agent_workdir/src/{op_name}_triton_ascend_impl.py"
     return "\n".join([
         f"# AST Check Failed: {op_name}",
+        f"Fix the file: `{impl_path}`",
         "",
         "## Error",
         ast_error,
@@ -709,9 +715,10 @@ def _build_ast_fix_prompt(
         skills_text,
         "",
         "## Instructions",
-        "Fix the AST errors using `str_replace_editor`.",
-        "Use `search_skills` if you need syntax or API reference.",
-        "Do NOT run validation — just fix the code and stop.",
+        f"1. Read `{impl_path}` to see the current code.",
+        f"2. Use `str_replace_editor str_replace` to fix the errors.",
+        "3. Use `search_skills` if you need syntax reference.",
+        "4. Do NOT explore the filesystem. Fix the file and stop.",
     ])
 
 
@@ -724,8 +731,10 @@ def _build_correctness_fix_prompt(
     skills_text: str,
 ) -> str:
     """Build a fix prompt when correctness verification fails."""
+    impl_path = f"/opt/workspace/agent_workdir/src/{op_name}_triton_ascend_impl.py"
     parts = [
         f"# Correctness Verification Failed: {op_name}",
+        f"Fix the file: `{impl_path}`",
         f"Passed: {passed}/{total} ({100*passed/max(total,1):.1f}%)",
         "",
     ]
@@ -750,10 +759,11 @@ def _build_correctness_fix_prompt(
         skills_text,
         "",
         "## Instructions",
-        "Fix the errors using `str_replace_editor`.",
-        "Focus on the concrete failure reasons listed above.",
-        "Use `search_skills(query=\"...\")` for specific topics.",
-        "Do NOT run validation — just fix the code and stop.",
+        f"1. Read `{impl_path}` to see the current code.",
+        f"2. Use `str_replace_editor str_replace` to fix the errors.",
+        "3. Focus on the concrete failure reasons listed above.",
+        "4. Use `search_skills` for specific syntax reference.",
+        "5. Do NOT explore the filesystem. Fix the file and stop.",
     ])
 
     return "\n".join(parts)
@@ -1035,10 +1045,12 @@ async def run_one_task_hard(
         ]
 
         print(f"[synth] Stage 1: generating initial implementation for {op_name}")
+        # Cap Stage 1 at 15 turns (CLI --max-turns is for soft workflow).
+        stage1_turns = min(max_turns, 15)
         stage1_result = await _run_coding_session(
             env, chat_model, f"{run_id_base}_s1",
             stage1_messages,
-            max_turns=max_turns,
+            max_turns=stage1_turns,
             action_timeout=action_timeout,
         )
         all_trajectory.extend(stage1_result.get("trajectory", []))
@@ -1054,7 +1066,7 @@ async def run_one_task_hard(
                     env, chat_model, f"{run_id_base}_retry{fix_attempt}",
                     [{"role": "system", "content": CODING_SYSTEM_PROMPT},
                      {"role": "user", "content": retry_prompt}],
-                    max_turns=3, action_timeout=action_timeout,
+                    max_turns=5, action_timeout=action_timeout,
                 )
                 all_trajectory.extend(retry_result.get("trajectory", []))
                 impl_code = await _read_impl_file(env, op_name, workspace_dir)
@@ -1080,7 +1092,7 @@ async def run_one_task_hard(
                     env, chat_model, f"{run_id_base}_fix_ast{fix_attempt}",
                     [{"role": "system", "content": CODING_SYSTEM_PROMPT},
                      {"role": "user", "content": fix_prompt}],
-                    max_turns=3, action_timeout=action_timeout,
+                    max_turns=5, action_timeout=action_timeout,
                 )
                 all_trajectory.extend(fix_result.get("trajectory", []))
                 continue
