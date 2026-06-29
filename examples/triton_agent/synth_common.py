@@ -47,9 +47,7 @@ WORKSPACE_ROOT = SCRIPT_DIR / "workspace"
 BENCHMARK_ROOT = SCRIPT_DIR / "benchmarks" / "NPUKernelBench"
 
 # Skills reference documents (from the Claude Code workspace).
-SKILLS_SRC = (
-    SCRIPT_DIR / "workspace_claude" / "agent_workdir" / ".claude" / "skills"
-)
+SKILLS_SRC = SCRIPT_DIR / "workspace_knowledge"
 SKILLS_SANDBOX_DIR = ".skills"
 
 DEFAULT_SANDBOX_IMAGE = os.environ.get("TRITON_SANDBOX_IMAGE", "triton-operator-env:latest")
@@ -499,57 +497,56 @@ def create_sandbox_env(
 _OP_SKILL_MAP: list[tuple[str, list[str]]] = [
     ("sum|mean|max|min|norm|softmax|var|std|layernorm|groupnorm|batchnorm|"
      "variance|rmsnorm|instancenorm|local_response_norm",
-     ["triton-op-coding/references/triton-ascend-reduce.md"]),
+     ["triton-ascend-reduce.md"]),
     ("matmul|linear|bmm|dot|addmm|einsum|outer",
-     ["triton-op-coding/references/triton-ascend-matmul.md"]),
+     ["triton-ascend-matmul.md"]),
     ("conv|pool|stencil|avgpool|maxpool|adaptive_avg_pool|adaptive_max_pool",
-     ["triton-op-coding/references/triton-ascend-conv.md",
-      "triton-op-coding/references/triton-ascend-reduce.md"]),
+     ["triton-ascend-reduce.md"]),
     ("gelu|relu|sigmoid|silu|swish|swiglu|add|mul|abs|sub|div|pow|exp|log|"
      "sqrt|rsqrt|neg|tanh|elu|leaky_relu|hardsigmoid|hardswish|silu|mish|"
      "cast|clamp|threshold|prelu|hardshrink|softplus|softsign|tanhshrink",
-     ["triton-op-coding/references/triton-ascend-elementwise.md"]),
+     ["triton-ascend-elementwise.md"]),
     ("sort|topk|argsort|kthvalue|median|msort",
-     ["triton-op-coding/references/triton-ascend-sort-select.md"]),
+     ["triton-ascend-sort-select.md"]),
     ("gather|scatter|index|embedding|nonzero|where|take|masked_select|"
      "index_select|index_put|index_add|index_copy|index_fill",
-     ["triton-op-coding/references/triton-ascend-elementwise.md"]),
+     ["triton-ascend-elementwise.md"]),
     ("interpolate|upsample|resize|grid_sample|resample|affine_grid",
-     ["triton-op-coding/references/triton-ascend-interpolate.md"]),
+     ["triton-ascend-interpolate.md"]),
     ("attention|flash|qkv|multihead|scaled_dot_product",
-     ["triton-op-coding/references/triton-ascend-attention.md"]),
+     ["triton-ascend-attention.md"]),
     ("cumsum|cumprod|histogram|histc|bincount",
-     ["triton-op-coding/references/triton-ascend-reduce.md"]),
+     ["triton-ascend-reduce.md"]),
     ("cat|concat|split|chunk|stack|unbind|tile|repeat|repeat_interleave|"
      "pad|permute|transpose|flip|roll|rot90|reshape|view|squeeze|unsqueeze|"
      "expand|flatten|unflatten",
-     ["triton-op-coding/references/triton-ascend-elementwise.md"]),
+     ["triton-ascend-elementwise.md"]),
 ]
 
 _DEFAULT_SKILLS: list[str] = [
-    "triton-op-coding/references/triton-ascend-fundamentals.md",
-    "triton-op-coding/references/triton-ascend-examples.md",
+    "triton-ascend-fundamentals.md",
+    "triton-ascend-examples.md",
 ]
 
 # Error type keywords → additional skills for repair.
 _ERROR_SKILL_MAP: list[tuple[str, list[str]]] = [
     ("scalar|item\\(\\)|tl\\.|host.side|item\\(|torch\\.tensor",
-     ["triton-latency-optimizer/references/avoid_scalar_lowering.md",
-      "triton-latency-optimizer/references/scalar_to_vector.md"]),
+     ["avoid_scalar_lowering.md",
+      "scalar_to_vector.md"]),
     ("shape.mismatch|broadcast|stride|transpose|permute|reshape|view|contiguous",
-     ["triton-op-coding/references/triton-ascend-elementwise.md"]),
+     ["triton-ascend-elementwise.md"]),
     ("precision|nan|inf|tolerance|relative.error|numerical|overflow|underflow",
-     ["triton-op-coding/references/triton-ascend-reduce.md"]),
+     ["triton-ascend-reduce.md"]),
     ("grid|coreDim|65535|block|program_id|tile|launch",
-     ["triton-op-coding/references/triton-ascend-fundamentals.md",
-      "triton-latency-optimizer/references/block_size_scaling.md"]),
+     ["triton-ascend-fundamentals.md",
+      "block_size_scaling.md"]),
     ("compile|syntax|typeerror|valueerror|unsupported|constexpr",
-     ["triton-op-coding/references/triton-ascend-fundamentals.md",
-      "triton-op-coding/references/triton-ascend-examples.md"]),
+     ["triton-ascend-fundamentals.md",
+      "triton-ascend-examples.md"]),
     ("matmul|dot|linear|gemm|bmm",
-     ["triton-op-coding/references/triton-ascend-matmul.md"]),
+     ["triton-ascend-matmul.md"]),
     ("attention|softmax",
-     ["triton-op-coding/references/triton-ascend-attention.md"]),
+     ["triton-ascend-attention.md"]),
 ]
 
 
@@ -595,7 +592,7 @@ def _select_error_skills(error_groups: list[dict]) -> list[str]:
 
 def _format_skills(skill_paths: list[str], sandbox_dir: str = SKILLS_SANDBOX_DIR) -> str:
     """Read skill files and return formatted snippets for prompt inclusion."""
-    skills_root = SCRIPT_DIR / "workspace_claude" / "agent_workdir" / ".claude" / "skills"
+    skills_root = SKILLS_SRC
     parts: list[str] = []
 
     for rel_path in skill_paths:
@@ -734,6 +731,7 @@ def _build_correctness_fix_prompt(
     total: int,
     error_groups: list[dict],
     skills_text: str,
+    history: str = "",
 ) -> str:
     """Build a fix prompt when correctness verification fails."""
     impl_path = f"/opt/workspace/agent_workdir/src/{op_name}_triton_ascend_impl.py"
@@ -741,8 +739,10 @@ def _build_correctness_fix_prompt(
         f"# Correctness Verification Failed: {op_name}",
         f"Fix the file: `{impl_path}`",
         f"Passed: {passed}/{total} ({100*passed/max(total,1):.1f}%)",
-        "",
     ]
+    if history:
+        parts.append(history)
+    parts.append("")
 
     if error_groups:
         parts.append("## Error Summary")
@@ -943,74 +943,60 @@ async def _extract_test_case_summary(
     return f"{total} test cases. First {len(cases)}:\n" + "\n".join(cases)
 
 
-# ---- coding session ---------------------------------------------------------
+# ---- single-interaction run loop helpers -----------------------------------
 
-async def _run_coding_session(
-    env: AgentEnv,
-    chat_model: OpenAICompatibleChatModel,
-    run_id: str,
-    messages: list[dict[str, str]],
-    *,
-    max_turns: int = 5,
-    action_timeout: int = 300,
-) -> dict[str, Any]:
-    """Run a limited AgentInteraction session (str_replace_editor + search_skills only).
+async def _run_turns(
+    interaction: AgentInteraction,
+    num_turns: int,
+    start_idx: int,
+) -> list[Any]:
+    """Run up to ``num_turns`` steps of *interaction*, appending each
+    :class:`StepOutput` to ``interaction.trajectory``.
 
-    No execute_bash, no submit. Returns the trajectory and exit info.
+    Returns early when a step sets ``done=True`` for a terminal reason
+    (token_limit, terminal_dead, timeout_budget_exhausted).  Non-terminal
+    exits (thinking, format_error, completed) just continue the loop.
     """
-    tools_manager = ToolsManager(
-        tools_manager_config=ToolsManagerConfig(
-            tools=[
-                ToolConfig(name="str_replace_editor"),
-                ToolConfig(name="search_skills"),
-            ],
-            parser=DEFAULT_TOOL_PARSER,
-        )
+    terminal_exits = {"token_limit", "terminal_dead", "timeout_budget_exhausted"}
+
+    for i in range(num_turns):
+        step_idx = start_idx + i
+        try:
+            step_output = await interaction.step(step_idx)
+        except Exception:
+            import traceback
+            print(f"  [step {step_idx}] unknown_error:")
+            traceback.print_exc()
+            step_output = type("StepOutput", (), {
+                "step_idx": step_idx,
+                "response": "",
+                "thought": "",
+                "tool_results": [],
+                "done": True,
+                "exit_reason": "unknown_error",
+            })()
+        interaction.trajectory.append(step_output)
+        if step_output.done and step_output.exit_reason in terminal_exits:
+            return interaction.trajectory
+    return interaction.trajectory
+
+
+async def _inject_user_message(
+    interaction: AgentInteraction,
+    chat_model: OpenAICompatibleChatModel,
+    content: str,
+) -> None:
+    """Inject a user-role message into the interaction's conversation.
+
+    Updates both ``interaction.messages`` (for the API) and
+    ``interaction.rollout_cache`` (for the training path).
+    """
+    msg: dict[str, object] = {"role": "user", "content": content}
+    interaction.messages.append(msg)
+    interaction.rollout_cache = await chat_model.append_messages_to_rollout_cache(
+        [{"role": "user", "content": content}],
+        interaction.rollout_cache,
     )
-    chat_model.set_tools_schemas(tools_manager.tools_schemas)
-    await env.install_tools(tools_manager.tools)
-
-    interaction = AgentInteraction(
-        run_id=run_id,
-        env=env,
-        model=chat_model,
-        tools_manager=tools_manager,
-        messages=messages,
-        action_timeout=action_timeout,
-        max_turns=max_turns,
-    )
-
-    result = await interaction.run()
-    trajectory = result.get("trajectory", [])
-    num_turns = len(trajectory)
-
-    # Debug: print every step.
-    print(f"  [{run_id}] session done: {num_turns} turns, messages={len(result.get('messages', []))}")
-    for step in trajectory:
-        exit_r = getattr(step, "exit_reason", "?") if hasattr(step, "exit_reason") else step.get("exit_reason", "?")
-        resp = getattr(step, "response", "") if hasattr(step, "response") else step.get("response", "")
-        tools = getattr(step, "tool_results", []) or []
-        n_tools = len(tools) if isinstance(tools, list) else 0
-        print(f"    step {getattr(step, 'step_idx', '?')}: exit={exit_r} resp_len={len(resp)} tools={n_tools}")
-        for tr in (tools if isinstance(tools, list) else []):
-            name = getattr(tr, "name", "?") if hasattr(tr, "name") else tr.get("name", "?")
-            action = getattr(tr, "action", "") if hasattr(tr, "action") else tr.get("action", "")
-            status = getattr(tr, "status", "") if hasattr(tr, "status") else tr.get("status", "")
-            obs = (getattr(tr, "observation", "") if hasattr(tr, "observation") else tr.get("observation", ""))[:200]
-            print(f"      tool={name} status={status} action={action[:120]}")
-            if status != "ok":
-                print(f"      OBS: {obs}")
-
-    exit_reason = "unknown"
-    if num_turns > 0:
-        exit_reason = getattr(trajectory[-1], "exit_reason", "unknown")
-
-    return {
-        "trajectory": trajectory,
-        "messages": result.get("messages", []),
-        "num_turns": num_turns,
-        "exit_reason": exit_reason,
-    }
 
 
 # ---- main orchestration -----------------------------------------------------
@@ -1030,12 +1016,12 @@ async def run_one_task_hard(
 ) -> dict[str, Any]:
     """Run one Triton operator task with the hard workflow.
 
-    Stage 1: model writes the initial implementation (limited tools, no
-             verification).
-    Stage 2: code-controlled verify → fix loop with structured error feedback.
+    Uses a **single** ``AgentInteraction`` instance so that the entire
+    trajectory (Stage 1 + all fix rounds) is one continuous rollout,
+    compatible with both inference and RL-training paths.
     """
     op_name = task["op_name"]
-    run_id_base = f"synth_{op_name}_{uuid.uuid4().hex[:6]}"
+    run_id = f"synth_{op_name}_{uuid.uuid4().hex[:6]}"
 
     # --- setup ---
     workspace_temp_dir = SCRIPT_DIR / "workspace_temp"
@@ -1047,56 +1033,76 @@ async def run_one_task_hard(
     try:
         setup_workspace(task, host_workdir)
 
-        env = create_sandbox_env(f"{run_id_base}_main", device_ids=device_ids)
+        env = create_sandbox_env(run_id, device_ids=device_ids)
         await env.start()
 
         workspace_dir = await upload_workspace(env, host_workdir)
 
         started_at = time.perf_counter()
-        all_trajectory: list[Any] = []
 
-        # --- Stage 1: initial implementation ---
-        # Prepare prompt with code-matched skills and test case summary.
+        # ---- build Stage 1 prompt ----
         op_skills = _select_op_skills(task.get("task_code", ""), op_name)
         skills_text = _format_skills(op_skills)
         test_summary = await _extract_test_case_summary(env, op_name, workspace_dir)
-
         initial_prompt = _build_initial_prompt(task, skills_text, test_summary)
-        stage1_messages: list[dict[str, str]] = [
+
+        messages: list[dict[str, str]] = [
             {"role": "system", "content": CODING_SYSTEM_PROMPT},
             {"role": "user", "content": initial_prompt},
         ]
 
-        print(f"[synth] Stage 1: generating initial implementation for {op_name}")
-        # Cap Stage 1 at 15 turns (CLI --max-turns is for soft workflow).
-        stage1_turns = min(max_turns, 12)
-        stage1_result = await _run_coding_session(
-            env, chat_model, f"{run_id_base}_s1",
-            stage1_messages,
-            max_turns=stage1_turns,
-            action_timeout=action_timeout,
+        # ---- single interaction for the whole task ----
+        tools_manager = ToolsManager(
+            tools_manager_config=ToolsManagerConfig(
+                tools=[
+                    ToolConfig(name="str_replace_editor"),
+                    ToolConfig(name="search_skills"),
+                ],
+                parser=DEFAULT_TOOL_PARSER,
+            )
         )
-        all_trajectory.extend(stage1_result.get("trajectory", []))
+        chat_model.set_tools_schemas(tools_manager.tools_schemas)
+        await env.install_tools(tools_manager.tools)
 
-        # --- Stage 2: verify + fix loop ---
+        interaction = AgentInteraction(
+            run_id=run_id,
+            env=env,
+            model=chat_model,
+            tools_manager=tools_manager,
+            messages=messages,
+            action_timeout=action_timeout,
+            max_turns=999,   # we drive step() ourselves
+        )
+        interaction.trajectory: list[Any] = []
+        interaction.rollout_cache = await chat_model.prepare_rollout_cache(messages)
+
+        next_step = 1  # global step counter
+
+        # ---- Stage 1: initial implementation ----
+        print(f"[synth] Stage 1: generating initial implementation for {op_name}")
+        stage1_turns = min(max_turns, 12)
+        await _run_turns(interaction, stage1_turns, next_step)
+        next_step += stage1_turns
+
+        # ---- Stage 2: verify + fix loop ----
+        prev_passed, prev_total = 0, 1
         for fix_attempt in range(1, max_fix_attempts + 1):
             impl_code = await _read_impl_file(env, op_name, workspace_dir)
             if not impl_code:
-                print(f"[synth] {op_name}: no implementation file, retrying...")
-                # Prompt model to create the file.
-                retry_prompt = _build_initial_prompt(task, skills_text, test_summary)
-                retry_result = await _run_coding_session(
-                    env, chat_model, f"{run_id_base}_retry{fix_attempt}",
-                    [{"role": "system", "content": CODING_SYSTEM_PROMPT},
-                     {"role": "user", "content": retry_prompt}],
-                    max_turns=8, action_timeout=action_timeout,
+                print(f"[synth] {op_name}: no implementation file, prompting...")
+                await _inject_user_message(
+                    interaction, chat_model,
+                    f"IMPORTANT: Create the file "
+                    f"`/opt/workspace/agent_workdir/src/{op_name}_triton_ascend_impl.py` "
+                    f"using `str_replace_editor create`. Do this NOW.",
                 )
-                all_trajectory.extend(retry_result.get("trajectory", []))
+                await _run_turns(interaction, 5, next_step)
+                next_step += 5
                 impl_code = await _read_impl_file(env, op_name, workspace_dir)
                 if not impl_code:
                     continue
 
-            # AST check
+            # -- AST check --
             print(f"[synth] {op_name}: AST check (attempt {fix_attempt})")
             ast_result = await _run_ast_check(env, op_name, workspace_dir)
             if not ast_result.get("valid"):
@@ -1106,21 +1112,17 @@ async def run_one_task_hard(
                      "error_type": "ast_check_failed"}
                 ])
                 ast_skills_text = _format_skills(op_skills + error_skills)
-                fix_prompt = _build_ast_fix_prompt(
+                ast_fix_msg = _build_ast_fix_prompt(
                     op_name, impl_code or "",
                     ast_result.get("suggestion", "AST check failed"),
                     ast_skills_text,
                 )
-                fix_result = await _run_coding_session(
-                    env, chat_model, f"{run_id_base}_fix_ast{fix_attempt}",
-                    [{"role": "system", "content": CODING_SYSTEM_PROMPT},
-                     {"role": "user", "content": fix_prompt}],
-                    max_turns=8, action_timeout=action_timeout,
-                )
-                all_trajectory.extend(fix_result.get("trajectory", []))
+                await _inject_user_message(interaction, chat_model, ast_fix_msg)
+                await _run_turns(interaction, 5, next_step)
+                next_step += 5
                 continue
 
-            # Correctness verification
+            # -- correctness verification --
             print(f"[synth] {op_name}: correctness verification (attempt {fix_attempt})")
             passed, total, error_groups = await _run_verify(
                 env, op_name, workspace_dir,
@@ -1128,7 +1130,26 @@ async def run_one_task_hard(
 
             if passed == total and total > 0:
                 print(f"[synth] {op_name}: VERIFIED {passed}/{total} — SUCCESS")
-                # Evaluate reward.
+
+                # Run benchmark to get speedup data.
+                print(f"[synth] {op_name}: running benchmark...")
+                python = os.environ.get("OPERATOR_PYTHON", "/usr/local/python3.11.14/bin/python")
+                benchmark_cmd = (
+                    f"cd {shlex.quote(workspace_dir)} && "
+                    f"PY={shlex.quote(python)} && "
+                    f"bash tools/run_npu_command.sh \"$PY\" "
+                    f"tools/triton-op-verifier/scripts/benchmark.py "
+                    f"--op_name {shlex.quote(op_name)} "
+                    f"--verify_dir output/verify "
+                    f"--triton_impl_name triton_ascend_impl "
+                    f"--output output/perf_result.json "
+                    f"--warmup 5 --repeats 20"
+                )
+                try:
+                    await env.communicate(benchmark_cmd, check="ignore", timeout=600)
+                except Exception as exc:
+                    print(f"[synth] {op_name}: benchmark failed ({exc}), continuing without speedup")
+
                 metadata = {
                     "op_name": op_name,
                     "arch": task.get("arch", "ascend910b1"),
@@ -1144,24 +1165,30 @@ async def run_one_task_hard(
                 for g in error_groups[:3]:
                     print(f"  - [{g.get('error_type','?')}] {g.get('reason','')[:120]}")
 
-            # Build fix prompt.
+            history = ""
+            if fix_attempt > 1 and prev_total > 0:
+                trend = (
+                    "↑ improved" if passed > prev_passed
+                    else ("↓ regressed" if passed < prev_passed
+                    else "→ unchanged")
+                )
+                history = (
+                    f"Previous attempt: {prev_passed}/{prev_total}. "
+                    f"This attempt: {passed}/{total} {trend}."
+                )
+
             error_skills = _select_error_skills(error_groups)
             fix_skills_text = _format_skills(op_skills + error_skills)
             fix_prompt = _build_correctness_fix_prompt(
                 op_name, impl_code or "", passed, total,
-                error_groups, fix_skills_text,
+                error_groups, fix_skills_text, history=history,
             )
-            fix_result = await _run_coding_session(
-                env, chat_model, f"{run_id_base}_fix{fix_attempt}",
-                [{"role": "system", "content": CODING_SYSTEM_PROMPT},
-                 {"role": "user", "content": fix_prompt}],
-                max_turns=8, action_timeout=action_timeout,
-            )
-            all_trajectory.extend(fix_result.get("trajectory", []))
+            prev_passed, prev_total = passed, total
+
+            await _inject_user_message(interaction, chat_model, fix_prompt)
+            await _run_turns(interaction, 8, next_step)
+            next_step += 8
         else:
-            # Loop exhausted without 100% success.  Still evaluate the
-            # workspace to capture actual pass_rate / reward as a partial
-            # result for training data.
             print(f"[synth] {op_name}: fix attempts exhausted, evaluating partial result")
             metadata = {
                 "op_name": op_name,
@@ -1188,11 +1215,30 @@ async def run_one_task_hard(
                     speedup = metrics["perf_data"][key]
                     break
 
+        # Debug: print step summary.
+        print(f"  [{run_id}] total trajectory: {len(interaction.trajectory)} steps")
+        for step in interaction.trajectory:
+            exit_r = getattr(step, "exit_reason", "?") if hasattr(step, "exit_reason") else step.get("exit_reason", "?")
+            resp = getattr(step, "response", "") if hasattr(step, "response") else step.get("response", "")
+            tools = getattr(step, "tool_results", []) or []
+            n_tools = len(tools) if isinstance(tools, list) else 0
+            print(f"    step {getattr(step, 'step_idx', '?')}: exit={exit_r} resp_len={len(resp)} tools={n_tools}")
+            for tr in (tools if isinstance(tools, list) else []):
+                name = getattr(tr, "name", "?") if hasattr(tr, "name") else tr.get("name", "?")
+                action = getattr(tr, "action", "") if hasattr(tr, "action") else tr.get("action", "")
+                status = getattr(tr, "status", "") if hasattr(tr, "status") else tr.get("status", "")
+                obs = (getattr(tr, "observation", "") if hasattr(tr, "observation") else tr.get("observation", ""))[:200]
+                print(f"      tool={name} status={status} action={action[:120]}")
+                if status != "ok":
+                    print(f"      OBS: {obs}")
+
+        trajectory_serialized = _json_safe(interaction.trajectory)
+
         result = {
             "op_name": op_name,
-            "messages": [],
-            "trajectory": _json_safe(all_trajectory),
-            "num_turns": len(all_trajectory),
+            "messages": _json_safe(interaction.messages),
+            "trajectory": trajectory_serialized,
+            "num_turns": len(interaction.trajectory),
             "exit_reason": exit_reason,
             "reward_score": reward_score,
             "reward_breakdown": reward_breakdown,
@@ -1205,13 +1251,13 @@ async def run_one_task_hard(
         if output_dir:
             from examples.triton_agent.reward import archive_text_artifacts
             try:
-                metadata = {
+                meta = {
                     "op_name": op_name,
                     "arch": task.get("arch", "ascend910b1"),
                     "task_code": task.get("task_code", ""),
                 }
                 await archive_text_artifacts(
-                    env, metadata, output_dir, workspace_dir=workspace_dir,
+                    env, meta, output_dir, workspace_dir=workspace_dir,
                 )
             except Exception:
                 pass
@@ -1219,7 +1265,7 @@ async def run_one_task_hard(
         print(
             f"[synth] op={op_name} reward={reward_score:.4f} "
             f"pass_rate={pass_rate:.2f} speedup={speedup} "
-            f"turns={len(all_trajectory)} exit={exit_reason} time={execution_time:.1f}s"
+            f"turns={len(interaction.trajectory)} exit={exit_reason} time={execution_time:.1f}s"
         )
         return result
 
