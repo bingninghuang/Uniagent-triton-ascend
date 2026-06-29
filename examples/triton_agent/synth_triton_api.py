@@ -69,7 +69,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--action-timeout", type=int, default=300, help="Timeout per tool execution (seconds)")
     parser.add_argument("--temperature", type=float, default=1.0, help="Sampling temperature")
     parser.add_argument("--top-p", type=float, default=1.0, help="Sampling top_p")
-    parser.add_argument("--max-tokens", type=int, default=8192, help="Max tokens per API response (including reasoning tokens)")
+    parser.add_argument("--max-tokens", type=int, default=32768, help="Max tokens per API response (including reasoning tokens)")
 
     # Sandbox
     parser.add_argument("--sandbox-image", default=DEFAULT_SANDBOX_IMAGE, help="Docker sandbox image")

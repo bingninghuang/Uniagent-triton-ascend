@@ -56,7 +56,7 @@ DEFAULT_SANDBOX_IMAGE = os.environ.get("TRITON_SANDBOX_IMAGE", "triton-operator-
 
 # Attach-mode defaults (for connecting to an existing swerex server)
 DEFAULT_ATTACH_HOST = os.environ.get("TRITON_ATTACH_HOST", "http://127.0.0.1")
-DEFAULT_ATTACH_PORT = int(os.environ.get("TRITON_ATTACH_PORT", "18000"))
+DEFAULT_ATTACH_PORT = int(os.environ.get("TRITON_ATTACH_PORT", "17000"))
 DEFAULT_ATTACH_AUTH_TOKEN = os.environ.get("TRITON_ATTACH_AUTH_TOKEN", "mytoken123")
 DEFAULT_WORKSPACE_DIR = "/opt/workspace/agent_workdir"
 DEFAULT_TOOL_PARSER = "qwen3_coder"

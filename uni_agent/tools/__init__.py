@@ -11,6 +11,7 @@ from .execute_bash import ExecuteBashTool
 from .lark_cli import LarkCliTool
 from .search_arxiv import SearchArxivTool
 from .search import SearchWikiTool
+from .search_skills import SearchSkillsTool
 from .str_replace_editor import StrReplaceEditorTool
 from .submit import SubmitTool
 
@@ -29,6 +30,7 @@ __all__ = [
     "FinishTool",
     "LarkCliTool",
     "SearchArxivTool",
+    "SearchSkillsTool",
     "SearchWikiTool",
     "StrReplaceEditorTool",
     "SubmitTool",
