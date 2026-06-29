@@ -699,7 +699,7 @@ def _build_ast_fix_prompt(
 ) -> str:
     """Build a fix prompt when AST check fails."""
     impl_path = f"/opt/workspace/agent_workdir/src/{op_name}_triton_ascend_impl.py"
-    return "\n".join([
+    parts = [
         f"# AST Check Failed: {op_name}",
         f"Fix the file: `{impl_path}`",
         "",
@@ -711,15 +711,20 @@ def _build_ast_fix_prompt(
         current_code[:8000] if len(current_code) > 8000 else current_code,
         "```",
         "",
-        "## Relevant Skills",
-        skills_text,
-        "",
         "## Instructions",
-        f"1. Read `{impl_path}` to see the current code.",
-        f"2. Use `str_replace_editor str_replace` to fix the errors.",
-        "3. Use `search_skills` if you need syntax reference.",
-        "4. Do NOT explore the filesystem. Fix the file and stop.",
-    ])
+        f"FIX THE ERROR NOW: The AST check found issues in your code.",
+        f"Use `str_replace_editor str_replace` on `{impl_path}` to fix them.",
+        f"Focus on the error message — it tells you the exact problem.",
+        f"Only use `search_skills` after attempting a fix if stuck.",
+        f"Do NOT explore the filesystem. Fix first, then stop.",
+    ]
+    if skills_text:
+        parts.extend([
+            "",
+            "## Reference Skills (supplementary)",
+            skills_text,
+        ])
+    return "\n".join(parts)
 
 
 def _build_correctness_fix_prompt(
@@ -755,16 +760,22 @@ def _build_correctness_fix_prompt(
         current_code[:8000] if len(current_code) > 8000 else current_code,
         "```",
         "",
-        "## Relevant Skills",
-        skills_text,
-        "",
         "## Instructions",
-        f"1. Read `{impl_path}` to see the current code.",
-        f"2. Use `str_replace_editor str_replace` to fix the errors.",
-        "3. Focus on the concrete failure reasons listed above.",
-        "4. Use `search_skills` for specific syntax reference.",
-        "5. Do NOT explore the filesystem. Fix the file and stop.",
+        f"FIX THE ERRORS NOW: Use `str_replace_editor str_replace` on",
+        f"`{impl_path}` to fix the failures described above. The error",
+        f"messages tell you exactly what is wrong — act on them directly.",
+        f"",
+        f"Only use `search_skills` AFTER attempting a fix, and only if you",
+        f"are stuck on a specific syntax question. Skills are supplementary.",
+        f"Do NOT explore the filesystem. Fix first, then stop.",
     ])
+
+    if skills_text:
+        parts.extend([
+            "",
+            "## Reference Skills (supplementary, search only if stuck)",
+            skills_text,
+        ])
 
     return "\n".join(parts)
 
@@ -1058,7 +1069,7 @@ async def run_one_task_hard(
 
         print(f"[synth] Stage 1: generating initial implementation for {op_name}")
         # Cap Stage 1 at 15 turns (CLI --max-turns is for soft workflow).
-        stage1_turns = min(max_turns, 15)
+        stage1_turns = min(max_turns, 12)
         stage1_result = await _run_coding_session(
             env, chat_model, f"{run_id_base}_s1",
             stage1_messages,
@@ -1078,7 +1089,7 @@ async def run_one_task_hard(
                     env, chat_model, f"{run_id_base}_retry{fix_attempt}",
                     [{"role": "system", "content": CODING_SYSTEM_PROMPT},
                      {"role": "user", "content": retry_prompt}],
-                    max_turns=5, action_timeout=action_timeout,
+                    max_turns=8, action_timeout=action_timeout,
                 )
                 all_trajectory.extend(retry_result.get("trajectory", []))
                 impl_code = await _read_impl_file(env, op_name, workspace_dir)
@@ -1104,7 +1115,7 @@ async def run_one_task_hard(
                     env, chat_model, f"{run_id_base}_fix_ast{fix_attempt}",
                     [{"role": "system", "content": CODING_SYSTEM_PROMPT},
                      {"role": "user", "content": fix_prompt}],
-                    max_turns=5, action_timeout=action_timeout,
+                    max_turns=8, action_timeout=action_timeout,
                 )
                 all_trajectory.extend(fix_result.get("trajectory", []))
                 continue
@@ -1144,7 +1155,7 @@ async def run_one_task_hard(
                 env, chat_model, f"{run_id_base}_fix{fix_attempt}",
                 [{"role": "system", "content": CODING_SYSTEM_PROMPT},
                  {"role": "user", "content": fix_prompt}],
-                max_turns=5, action_timeout=action_timeout,
+                max_turns=8, action_timeout=action_timeout,
             )
             all_trajectory.extend(fix_result.get("trajectory", []))
         else:
