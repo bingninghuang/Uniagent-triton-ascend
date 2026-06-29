@@ -1159,13 +1159,18 @@ async def run_one_task_hard(
             )
             all_trajectory.extend(fix_result.get("trajectory", []))
         else:
-            # Loop exhausted without success.
-            reward_score = 0.0
-            eval_result = {
-                "eval_completed": False,
-                "reward": 0.0,
-                "reason": "max_fix_attempts_exhausted",
+            # Loop exhausted without 100% success.  Still evaluate the
+            # workspace to capture actual pass_rate / reward as a partial
+            # result for training data.
+            print(f"[synth] {op_name}: fix attempts exhausted, evaluating partial result")
+            metadata = {
+                "op_name": op_name,
+                "arch": task.get("arch", "ascend910b1"),
+                "task_code": task.get("task_code", ""),
             }
+            reward_score, eval_result = await evaluate_triton_workspace(
+                env, metadata, workspace_dir=workspace_dir,
+            )
 
         execution_time = time.perf_counter() - started_at
 
