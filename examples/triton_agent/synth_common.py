@@ -951,14 +951,22 @@ async def _run_coding_session(
     trajectory = result.get("trajectory", [])
     num_turns = len(trajectory)
 
-    # Debug: print tool calls made in this session.
+    # Debug: print every step.
+    print(f"  [{run_id}] session done: {num_turns} turns, messages={len(result.get('messages', []))}")
     for step in trajectory:
-        for tr in getattr(step, "tool_results", []) or []:
+        exit_r = getattr(step, "exit_reason", "?") if hasattr(step, "exit_reason") else step.get("exit_reason", "?")
+        resp = getattr(step, "response", "") if hasattr(step, "response") else step.get("response", "")
+        tools = getattr(step, "tool_results", []) or []
+        n_tools = len(tools) if isinstance(tools, list) else 0
+        print(f"    step {getattr(step, 'step_idx', '?')}: exit={exit_r} resp_len={len(resp)} tools={n_tools}")
+        for tr in (tools if isinstance(tools, list) else []):
             name = getattr(tr, "name", "?") if hasattr(tr, "name") else tr.get("name", "?")
             action = getattr(tr, "action", "") if hasattr(tr, "action") else tr.get("action", "")
             status = getattr(tr, "status", "") if hasattr(tr, "status") else tr.get("status", "")
             obs = (getattr(tr, "observation", "") if hasattr(tr, "observation") else tr.get("observation", ""))[:200]
-            print(f"  [{run_id}] tool={name} status={status} action={action[:150]} obs={obs}")
+            print(f"      tool={name} status={status} action={action[:120]}")
+            if status != "ok":
+                print(f"      OBS: {obs}")
 
     exit_reason = "unknown"
     if num_turns > 0:
