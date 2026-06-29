@@ -836,11 +836,13 @@ async def _run_verify(
     )
     await env.communicate(stage_cmd, check="ignore")
 
-    # 2. Run verify via the run_npu_command.sh wrapper
+    # 2. Run verify via the run_npu_command.sh wrapper.
+    # Use "&&" so PY is set before "$PY" is expanded (bare "PY=x cmd $PY"
+    # expands $PY before the prefix takes effect — bash gotcha).
     python = os.environ.get("OPERATOR_PYTHON", "/usr/local/python3.11.14/bin/python")
     verify_cmd = (
         f"cd {shlex.quote(workspace_dir)} && "
-        f"PY={shlex.quote(python)} "
+        f"PY={shlex.quote(python)} && "
         f"bash tools/run_npu_command.sh \"$PY\" "
         f"tools/triton-op-verifier/scripts/verify.py "
         f"--op_name {shlex.quote(op_name)} "
@@ -849,7 +851,14 @@ async def _run_verify(
         f"--timeout 900 "
         f"--output output/verify/verify_result.json"
     )
+    print(f"  [verify] running: {verify_cmd[:200]}...")
     await env.communicate(verify_cmd, check="ignore")
+    # Debug: check what files exist after verify
+    check = await env.communicate(
+        f"ls -la {shlex.quote(workspace_dir)}/output/verify/ 2>&1 || echo 'no-dir'",
+        check="ignore",
+    )
+    print(f"  [verify] output files: {check.strip()[:300]}")
 
     # 3. Read summary
     summary_path = f"{workspace_dir}/output/verify/verify_result_summary.json"
