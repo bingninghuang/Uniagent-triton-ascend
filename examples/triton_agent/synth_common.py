@@ -851,8 +851,11 @@ async def _run_verify(
         f"--timeout 900 "
         f"--output output/verify/verify_result.json"
     )
-    print(f"  [verify] running: {verify_cmd[:200]}...")
-    await env.communicate(verify_cmd, check="ignore")
+    print(f"  [verify] running verify for {op_name}...")
+    try:
+        await env.communicate(verify_cmd, check="ignore", timeout=960)
+    except Exception as exc:
+        print(f"  [verify] command failed: {exc}")
     # Debug: check what files exist after verify
     check = await env.communicate(
         f"ls -la {shlex.quote(workspace_dir)}/output/verify/ 2>&1 || echo 'no-dir'",
