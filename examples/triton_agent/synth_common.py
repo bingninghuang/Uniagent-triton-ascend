@@ -622,17 +622,23 @@ def _format_skills(skill_paths: list[str], sandbox_dir: str = SKILLS_SANDBOX_DIR
 CODING_SYSTEM_PROMPT = """You are a Triton Ascend NPU operator implementation expert.
 
 Available tools:
-- str_replace_editor: view, create, and edit files under src/
-- search_skills: search skill reference documents by keywords
+- str_replace_editor: view, create, and edit files. Use `view` to read a file,
+  `create` to write a new file (with `file_text` containing the full content),
+  `str_replace` to edit an existing file.
+- search_skills: search skill reference documents by keywords. Use this to
+  find Triton-Ascend syntax references and best practices.
 
 Rules:
+- Your FIRST action must be `str_replace_editor create` to write the
+  implementation file. Do not spend turns only searching or viewing.
 - Implement `ModelNew` in the required implementation file.
 - Pass tensors directly to Triton kernels. Do not use .data_ptr().
 - Prefer module-level `@triton.jit` kernels launched as `kernel[grid](...)`.
 - NEVER read or view files under tools/ — they are infrastructure scripts.
 - Use `search_skills` to find relevant Triton reference material as needed.
 - The verification pipeline is run automatically — you do NOT need to run it.
-- Just write the implementation file. Stop when the code is ready for validation.
+- After writing the file, you may optionally search skills and edit to improve
+  the code, then stop. Do NOT call submit or any finish tool.
 """
 
 
@@ -666,13 +672,14 @@ def _build_initial_prompt(
         skills_text,
         "",
         "## Instructions",
-        f"1. Read the reference implementation above and understand the operator.",
-        f"2. Use `search_skills` if you need more reference material.",
-        f"3. Use `str_replace_editor` to create:",
-        f"   `src/{op_name}_triton_ascend_impl.py`",
-        f"4. The file must contain a `ModelNew` class with @triton.jit kernel(s).",
-        f"5. Do NOT run verification commands. Just write the code.",
-        f"6. When done, stop. Your code will be verified automatically.",
+        f"IMMEDIATE ACTION: Use `str_replace_editor create` to write",
+        f"`src/{op_name}_triton_ascend_impl.py` with a complete implementation.",
+        f"Do this NOW — do not search skills or view other files first.",
+        f"",
+        f"The file must contain a `ModelNew` class with at least one",
+        f"@triton.jit kernel. After writing the initial code, you may use",
+        f"`search_skills` and `str_replace_editor str_replace` to improve it.",
+        f"Stop when ready for automated verification.",
         "",
         instruction,
     ])
@@ -928,6 +935,7 @@ async def _run_coding_session(
         )
     )
     chat_model.set_tools_schemas(tools_manager.tools_schemas)
+    await env.install_tools(tools_manager.tools)
 
     interaction = AgentInteraction(
         run_id=run_id,
@@ -990,7 +998,6 @@ async def run_one_task_hard(
 
         env = create_sandbox_env(f"{run_id_base}_main", device_ids=device_ids)
         await env.start()
-        await env.install_tools([])  # tools installed per-session
 
         workspace_dir = await upload_workspace(env, host_workdir)
 
@@ -1111,7 +1118,9 @@ async def run_one_task_hard(
 
         # --- collect results ---
         exit_reason = "finished" if reward_score > 0.5 else "max_fix_attempts"
-        metrics = eval_result.get("metrics") if isinstance(eval_result, dict) else {}
+        metrics = eval_result.get("metrics") if isinstance(eval_result, dict) else None
+        if not isinstance(metrics, dict):
+            metrics = {}
         reward_breakdown = reward_breakdown_from_metrics(metrics) if metrics else {}
         pass_rate = metrics.get("pass_rate", 0.0)
         speedup = None
