@@ -950,6 +950,16 @@ async def _run_coding_session(
     result = await interaction.run()
     trajectory = result.get("trajectory", [])
     num_turns = len(trajectory)
+
+    # Debug: print tool calls made in this session.
+    for step in trajectory:
+        for tr in getattr(step, "tool_results", []) or []:
+            name = getattr(tr, "name", "?") if hasattr(tr, "name") else tr.get("name", "?")
+            action = getattr(tr, "action", "") if hasattr(tr, "action") else tr.get("action", "")
+            status = getattr(tr, "status", "") if hasattr(tr, "status") else tr.get("status", "")
+            obs = (getattr(tr, "observation", "") if hasattr(tr, "observation") else tr.get("observation", ""))[:200]
+            print(f"  [{run_id}] tool={name} status={status} action={action[:150]} obs={obs}")
+
     exit_reason = "unknown"
     if num_turns > 0:
         exit_reason = getattr(trajectory[-1], "exit_reason", "unknown")
