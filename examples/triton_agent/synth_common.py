@@ -976,6 +976,19 @@ async def _run_turns(
                 "exit_reason": "unknown_error",
             })()
         interaction.trajectory.append(step_output)
+
+        # Real-time progress print.
+        exit_r = getattr(step_output, "exit_reason", "?")
+        tools = getattr(step_output, "tool_results", []) or []
+        n_tools = len(tools) if isinstance(tools, list) else 0
+        parts = [f"  [{step_idx}] exit={exit_r} tools={n_tools}"]
+        for tr in (tools if isinstance(tools, list) else []):
+            name = getattr(tr, "name", "?") if hasattr(tr, "name") else tr.get("name", "?")
+            status = getattr(tr, "status", "") if hasattr(tr, "status") else tr.get("status", "")
+            action = getattr(tr, "action", "") if hasattr(tr, "action") else tr.get("action", "")
+            parts.append(f" | {name}({status}): {action[:100]}")
+        print("".join(parts), flush=True)
+
         if step_output.done and step_output.exit_reason in terminal_exits:
             return interaction.trajectory
     return interaction.trajectory
@@ -1131,24 +1144,24 @@ async def run_one_task_hard(
             if passed == total and total > 0:
                 print(f"[synth] {op_name}: VERIFIED {passed}/{total} — SUCCESS")
 
-                # Run benchmark to get speedup data.
-                print(f"[synth] {op_name}: running benchmark...")
-                python = os.environ.get("OPERATOR_PYTHON", "/usr/local/python3.11.14/bin/python")
-                benchmark_cmd = (
-                    f"cd {shlex.quote(workspace_dir)} && "
-                    f"PY={shlex.quote(python)} && "
-                    f"bash tools/run_npu_command.sh \"$PY\" "
-                    f"tools/triton-op-verifier/scripts/benchmark.py "
-                    f"--op_name {shlex.quote(op_name)} "
-                    f"--verify_dir output/verify "
-                    f"--triton_impl_name triton_ascend_impl "
-                    f"--output output/perf_result.json "
-                    f"--warmup 5 --repeats 20"
-                )
-                try:
-                    await env.communicate(benchmark_cmd, check="ignore", timeout=600)
-                except Exception as exc:
-                    print(f"[synth] {op_name}: benchmark failed ({exc}), continuing without speedup")
+                # # Run benchmark to get speedup data.
+                # print(f"[synth] {op_name}: running benchmark...")
+                # python = os.environ.get("OPERATOR_PYTHON", "/usr/local/python3.11.14/bin/python")
+                # benchmark_cmd = (
+                #     f"cd {shlex.quote(workspace_dir)} && "
+                #     f"PY={shlex.quote(python)} && "
+                #     f"bash tools/run_npu_command.sh \"$PY\" "
+                #     f"tools/triton-op-verifier/scripts/benchmark.py "
+                #     f"--op_name {shlex.quote(op_name)} "
+                #     f"--verify_dir output/verify "
+                #     f"--triton_impl_name triton_ascend_impl "
+                #     f"--output output/perf_result.json "
+                #     f"--warmup 3 --repeats 10"
+                # )
+                # try:
+                #     await env.communicate(benchmark_cmd, check="ignore", timeout=900)
+                # except Exception as exc:
+                #     print(f"[synth] {op_name}: benchmark failed ({exc}), continuing without speedup")
 
                 metadata = {
                     "op_name": op_name,
@@ -1215,22 +1228,7 @@ async def run_one_task_hard(
                     speedup = metrics["perf_data"][key]
                     break
 
-        # Debug: print step summary.
-        print(f"  [{run_id}] total trajectory: {len(interaction.trajectory)} steps")
-        for step in interaction.trajectory:
-            exit_r = getattr(step, "exit_reason", "?") if hasattr(step, "exit_reason") else step.get("exit_reason", "?")
-            resp = getattr(step, "response", "") if hasattr(step, "response") else step.get("response", "")
-            tools = getattr(step, "tool_results", []) or []
-            n_tools = len(tools) if isinstance(tools, list) else 0
-            print(f"    step {getattr(step, 'step_idx', '?')}: exit={exit_r} resp_len={len(resp)} tools={n_tools}")
-            for tr in (tools if isinstance(tools, list) else []):
-                name = getattr(tr, "name", "?") if hasattr(tr, "name") else tr.get("name", "?")
-                action = getattr(tr, "action", "") if hasattr(tr, "action") else tr.get("action", "")
-                status = getattr(tr, "status", "") if hasattr(tr, "status") else tr.get("status", "")
-                obs = (getattr(tr, "observation", "") if hasattr(tr, "observation") else tr.get("observation", ""))[:200]
-                print(f"      tool={name} status={status} action={action[:120]}")
-                if status != "ok":
-                    print(f"      OBS: {obs}")
+        print(f"  [{run_id}] total: {len(interaction.trajectory)} steps", flush=True)
 
         trajectory_serialized = _json_safe(interaction.trajectory)
 
