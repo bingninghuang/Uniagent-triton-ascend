@@ -1,0 +1,101 @@
+#!/usr/bin/env python3
+"""Search skill reference documents for matching sections.
+
+Reads .md files under the configured skills directory and returns the top
+5 most relevant sections matching the query keywords.
+"""
+
+from __future__ import annotations
+
+import argparse
+import os
+import re
+from pathlib import Path
+
+
+def _split_sections(content: str) -> list[tuple[str, str]]:
+    """Split markdown content into (heading, body) pairs."""
+    sections: list[tuple[str, str]] = []
+    current_heading = "(top)"
+    current_lines: list[str] = []
+    for line in content.splitlines():
+        if re.match(r"^#{1,2}\s", line):
+            if current_lines:
+                sections.append((current_heading, "\n".join(current_lines)))
+            current_heading = line
+            current_lines = []
+        else:
+            current_lines.append(line)
+    if current_lines:
+        sections.append((current_heading, "\n".join(current_lines)))
+    return sections
+
+
+def _score(text: str, keywords: list[str]) -> int:
+    """Count how many keywords appear in the text."""
+    lower = text.lower()
+    return sum(1 for kw in keywords if kw.lower() in lower)
+
+
+def search(query: str, skills_dir: str) -> str:
+    keywords = [k for k in query.strip().split() if k]
+    if not keywords:
+        return "No search keywords provided."
+
+    root = Path(skills_dir)
+    if not root.is_dir():
+        return f"Skills directory not found: {skills_dir}"
+
+    results: list[dict] = []
+    for md_file in sorted(root.rglob("*.md")):
+        try:
+            content = md_file.read_text(encoding="utf-8", errors="replace")
+        except Exception:
+            continue
+
+        rel_path = md_file.relative_to(root)
+        for heading, body in _split_sections(content):
+            section_text = f"{heading}\n{body}"
+            s = _score(section_text, keywords)
+            if s > 0:
+                body_preview = body[:1500]
+                if len(body) > 1500:
+                    body_preview += "\n...[truncated]"
+                results.append({
+                    "source": str(rel_path),
+                    "heading": heading,
+                    "score": s,
+                    "snippet": body_preview,
+                })
+
+    results.sort(key=lambda r: r["score"], reverse=True)
+    top = results[:5]
+
+    if not top:
+        return f"No results matching '{query}'."
+
+    lines: list[str] = []
+    for i, r in enumerate(top, 1):
+        lines.append(f"### [{i}] {r['source']}  (score={r['score']})")
+        if r["heading"] != "(top)":
+            lines.append(f"    {r['heading']}")
+        lines.append("")
+        lines.append(r["snippet"])
+        lines.append("")
+
+    return "\n".join(lines)
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--query", required=True, help="Space-separated search keywords")
+    args = parser.parse_args()
+
+    skills_dir = os.environ.get(
+        "SKILLS_DIR", "/opt/workspace/agent_workdir/.skills"
+    )
+    print(search(args.query, skills_dir))
+
+
+if __name__ == "__main__":
+    main()

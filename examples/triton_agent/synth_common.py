@@ -11,6 +11,7 @@ import io
 import json
 import os
 import re
+import shlex
 import shutil
 import tarfile
 import tempfile
@@ -44,6 +45,12 @@ from examples.triton_agent.reward import (
 SCRIPT_DIR = Path(__file__).resolve().parent
 WORKSPACE_ROOT = SCRIPT_DIR / "workspace"
 BENCHMARK_ROOT = SCRIPT_DIR / "benchmarks" / "NPUKernelBench"
+
+# Skills reference documents (from the Claude Code workspace).
+SKILLS_SRC = (
+    SCRIPT_DIR / "workspace_claude" / "agent_workdir" / ".claude" / "skills"
+)
+SKILLS_SANDBOX_DIR = ".skills"
 
 DEFAULT_SANDBOX_IMAGE = os.environ.get("TRITON_SANDBOX_IMAGE", "triton-operator-env:latest")
 
@@ -293,6 +300,11 @@ def setup_workspace(task: dict[str, Any], work_dir: Path) -> Path:
         shutil.rmtree(agent_dir_dst)
     shutil.copytree(agent_dir_src, agent_dir_dst)
 
+    # Copy skill reference documents so search_skills can find them.
+    if SKILLS_SRC.is_dir():
+        skills_dst = agent_dir_dst / SKILLS_SANDBOX_DIR
+        shutil.copytree(SKILLS_SRC, skills_dst, dirs_exist_ok=True)
+
     op_name = task["op_name"]
     arch = task.get("arch", "ascend910b1")
     instruction = task.get("instruction", f"Implement the {op_name} operator.")
@@ -478,7 +490,699 @@ def create_sandbox_env(
 
 
 # ---------------------------------------------------------------------------
-# Run one task
+# Hard workflow: skill matching, prompt builders, and orchestration
+# ---------------------------------------------------------------------------
+
+# ---- skill matching ---------------------------------------------------------
+
+# Operator type keywords → skill reference files (relative to .skills/).
+_OP_SKILL_MAP: list[tuple[str, list[str]]] = [
+    ("sum|mean|max|min|norm|softmax|var|std|layernorm|groupnorm|batchnorm|"
+     "variance|rmsnorm|instancenorm|local_response_norm",
+     ["triton-op-coding/references/triton-ascend-reduce.md"]),
+    ("matmul|linear|bmm|dot|addmm|einsum|outer",
+     ["triton-op-coding/references/triton-ascend-matmul.md"]),
+    ("conv|pool|stencil|avgpool|maxpool|adaptive_avg_pool|adaptive_max_pool",
+     ["triton-op-coding/references/triton-ascend-conv.md",
+      "triton-op-coding/references/triton-ascend-reduce.md"]),
+    ("gelu|relu|sigmoid|silu|swish|swiglu|add|mul|abs|sub|div|pow|exp|log|"
+     "sqrt|rsqrt|neg|tanh|elu|leaky_relu|hardsigmoid|hardswish|silu|mish|"
+     "cast|clamp|threshold|prelu|hardshrink|softplus|softsign|tanhshrink",
+     ["triton-op-coding/references/triton-ascend-elementwise.md"]),
+    ("sort|topk|argsort|kthvalue|median|msort",
+     ["triton-op-coding/references/triton-ascend-sort-select.md"]),
+    ("gather|scatter|index|embedding|nonzero|where|take|masked_select|"
+     "index_select|index_put|index_add|index_copy|index_fill",
+     ["triton-op-coding/references/triton-ascend-elementwise.md"]),
+    ("interpolate|upsample|resize|grid_sample|resample|affine_grid",
+     ["triton-op-coding/references/triton-ascend-interpolate.md"]),
+    ("attention|flash|qkv|multihead|scaled_dot_product",
+     ["triton-op-coding/references/triton-ascend-attention.md"]),
+    ("cumsum|cumprod|histogram|histc|bincount",
+     ["triton-op-coding/references/triton-ascend-reduce.md"]),
+    ("cat|concat|split|chunk|stack|unbind|tile|repeat|repeat_interleave|"
+     "pad|permute|transpose|flip|roll|rot90|reshape|view|squeeze|unsqueeze|"
+     "expand|flatten|unflatten",
+     ["triton-op-coding/references/triton-ascend-elementwise.md"]),
+]
+
+_DEFAULT_SKILLS: list[str] = [
+    "triton-op-coding/references/triton-ascend-fundamentals.md",
+    "triton-op-coding/references/triton-ascend-examples.md",
+]
+
+# Error type keywords → additional skills for repair.
+_ERROR_SKILL_MAP: list[tuple[str, list[str]]] = [
+    ("scalar|item\\(\\)|tl\\.|host.side|item\\(|torch\\.tensor",
+     ["triton-latency-optimizer/references/avoid_scalar_lowering.md",
+      "triton-latency-optimizer/references/scalar_to_vector.md"]),
+    ("shape.mismatch|broadcast|stride|transpose|permute|reshape|view|contiguous",
+     ["triton-op-coding/references/triton-ascend-elementwise.md"]),
+    ("precision|nan|inf|tolerance|relative.error|numerical|overflow|underflow",
+     ["triton-op-coding/references/triton-ascend-reduce.md"]),
+    ("grid|coreDim|65535|block|program_id|tile|launch",
+     ["triton-op-coding/references/triton-ascend-fundamentals.md",
+      "triton-latency-optimizer/references/block_size_scaling.md"]),
+    ("compile|syntax|typeerror|valueerror|unsupported|constexpr",
+     ["triton-op-coding/references/triton-ascend-fundamentals.md",
+      "triton-op-coding/references/triton-ascend-examples.md"]),
+    ("matmul|dot|linear|gemm|bmm",
+     ["triton-op-coding/references/triton-ascend-matmul.md"]),
+    ("attention|softmax",
+     ["triton-op-coding/references/triton-ascend-attention.md"]),
+]
+
+
+def _select_op_skills(task_code: str, op_name: str) -> list[str]:
+    """Return skill file paths relevant to the operator, plus defaults."""
+    text = f"{op_name}\n{task_code}".lower()
+    paths: list[str] = []
+    seen: set[str] = set()
+
+    for pattern, refs in _OP_SKILL_MAP:
+        if any(kw in text for kw in pattern.split("|")):
+            for ref in refs:
+                if ref not in seen:
+                    paths.append(ref)
+                    seen.add(ref)
+
+    for ref in _DEFAULT_SKILLS:
+        if ref not in seen:
+            paths.append(ref)
+            seen.add(ref)
+
+    return paths
+
+
+def _select_error_skills(error_groups: list[dict]) -> list[str]:
+    """Return additional skill paths for specific error types."""
+    text = " ".join(
+        g.get("reason", "") + " " + g.get("error_type", "")
+        for g in (error_groups or [])
+    ).lower()
+    paths: list[str] = []
+    seen: set[str] = set()
+
+    for pattern, refs in _ERROR_SKILL_MAP:
+        if any(kw in text for kw in pattern.split("|")):
+            for ref in refs:
+                if ref not in seen:
+                    paths.append(ref)
+                    seen.add(ref)
+
+    return paths
+
+
+def _format_skills(skill_paths: list[str], sandbox_dir: str = SKILLS_SANDBOX_DIR) -> str:
+    """Read skill files and return formatted snippets for prompt inclusion."""
+    skills_root = SCRIPT_DIR / "workspace_claude" / "agent_workdir" / ".claude" / "skills"
+    parts: list[str] = []
+
+    for rel_path in skill_paths:
+        full = skills_root / rel_path
+        if not full.is_file():
+            continue
+        try:
+            content = full.read_text(encoding="utf-8", errors="replace")
+        except Exception:
+            continue
+
+        # Truncate to keep prompt compact.
+        if len(content) > 2000:
+            content = content[:2000] + "\n...[truncated]"
+
+        parts.append(f"### {rel_path}\n{content}")
+
+    return "\n\n".join(parts)
+
+
+# ---- prompt builders --------------------------------------------------------
+
+# System prompt used during coding / fix sessions (no execute_bash, no submit).
+CODING_SYSTEM_PROMPT = """You are a Triton Ascend NPU operator implementation expert.
+
+Available tools:
+- str_replace_editor: view, create, and edit files under src/
+- search_skills: search skill reference documents by keywords
+
+Rules:
+- Implement `ModelNew` in the required implementation file.
+- Pass tensors directly to Triton kernels. Do not use .data_ptr().
+- Prefer module-level `@triton.jit` kernels launched as `kernel[grid](...)`.
+- NEVER read or view files under tools/ — they are infrastructure scripts.
+- Use `search_skills` to find relevant Triton reference material as needed.
+- The verification pipeline is run automatically — you do NOT need to run it.
+- Just write the implementation file. Stop when the code is ready for validation.
+"""
+
+
+def _build_initial_prompt(
+    task: dict[str, Any],
+    skills_text: str,
+    test_case_summary: str = "",
+) -> str:
+    """Build the Stage 1 prompt: all info the model needs to write the impl."""
+    op_name = task["op_name"]
+    arch = task.get("arch", "ascend910b1")
+    task_code = task.get("task_code", "")
+    instruction = task.get("instruction", f"Implement the {op_name} operator.")
+
+    parts = [
+        f"# Task: Implement {op_name}",
+        f"Target architecture: {arch}",
+        "",
+        "## Reference Implementation",
+        "```python",
+        task_code[:8000] if len(task_code) > 8000 else task_code,
+        "```",
+    ]
+
+    if test_case_summary:
+        parts.extend(["", "## Test Cases", test_case_summary])
+
+    parts.extend([
+        "",
+        "## Relevant Skills",
+        skills_text,
+        "",
+        "## Instructions",
+        f"1. Read the reference implementation above and understand the operator.",
+        f"2. Use `search_skills` if you need more reference material.",
+        f"3. Use `str_replace_editor` to create:",
+        f"   `src/{op_name}_triton_ascend_impl.py`",
+        f"4. The file must contain a `ModelNew` class with @triton.jit kernel(s).",
+        f"5. Do NOT run verification commands. Just write the code.",
+        f"6. When done, stop. Your code will be verified automatically.",
+        "",
+        instruction,
+    ])
+
+    return "\n".join(parts)
+
+
+def _build_ast_fix_prompt(
+    op_name: str,
+    current_code: str,
+    ast_error: str,
+    skills_text: str,
+) -> str:
+    """Build a fix prompt when AST check fails."""
+    return "\n".join([
+        f"# AST Check Failed: {op_name}",
+        "",
+        "## Error",
+        ast_error,
+        "",
+        "## Your Current Code",
+        "```python",
+        current_code[:8000] if len(current_code) > 8000 else current_code,
+        "```",
+        "",
+        "## Relevant Skills",
+        skills_text,
+        "",
+        "## Instructions",
+        "Fix the AST errors using `str_replace_editor`.",
+        "Use `search_skills` if you need syntax or API reference.",
+        "Do NOT run validation — just fix the code and stop.",
+    ])
+
+
+def _build_correctness_fix_prompt(
+    op_name: str,
+    current_code: str,
+    passed: int,
+    total: int,
+    error_groups: list[dict],
+    skills_text: str,
+) -> str:
+    """Build a fix prompt when correctness verification fails."""
+    parts = [
+        f"# Correctness Verification Failed: {op_name}",
+        f"Passed: {passed}/{total} ({100*passed/max(total,1):.1f}%)",
+        "",
+    ]
+
+    if error_groups:
+        parts.append("## Error Summary")
+        for g in error_groups:
+            parts.append(
+                f"- [{g.get('error_type', 'unknown')}] "
+                f"{g.get('reason', '')} "
+                f"(affects {g.get('count', 0)} cases)"
+            )
+        parts.append("")
+
+    parts.extend([
+        "## Your Current Code",
+        "```python",
+        current_code[:8000] if len(current_code) > 8000 else current_code,
+        "```",
+        "",
+        "## Relevant Skills",
+        skills_text,
+        "",
+        "## Instructions",
+        "Fix the errors using `str_replace_editor`.",
+        "Focus on the concrete failure reasons listed above.",
+        "Use `search_skills(query=\"...\")` for specific topics.",
+        "Do NOT run validation — just fix the code and stop.",
+    ])
+
+    return "\n".join(parts)
+
+
+# ---- sandbox helpers --------------------------------------------------------
+
+async def _read_impl_file(
+    env: AgentEnv,
+    op_name: str,
+    workspace_dir: str = DEFAULT_WORKSPACE_DIR,
+) -> str | None:
+    """Read the current implementation file from the sandbox."""
+    path = f"{workspace_dir}/src/{op_name}_triton_ascend_impl.py"
+    try:
+        return await env.read_file(path)
+    except Exception:
+        return None
+
+
+async def _run_ast_check(
+    env: AgentEnv,
+    op_name: str,
+    workspace_dir: str = DEFAULT_WORKSPACE_DIR,
+) -> dict[str, Any]:
+    """Run the AST validation script and return parsed result."""
+    impl = f"{workspace_dir}/src/{op_name}_triton_ascend_impl.py"
+    checker = (
+        f"{workspace_dir}/tools/triton-op-verifier/scripts/"
+        "validate_triton_impl.py"
+    )
+    cmd = (
+        f"python3 {shlex.quote(checker)} {shlex.quote(impl)} --json 2>&1"
+    )
+    try:
+        output = await env.communicate(cmd, check="ignore")
+    except Exception as exc:
+        return {"valid": False, "suggestion": f"AST check error: {exc}"}
+
+    # Extract JSON from output (may be mixed with log lines).
+    text = output.strip()
+    start = text.find("{")
+    end = text.rfind("}")
+    if 0 <= start < end:
+        try:
+            return json.loads(text[start:end + 1])
+        except json.JSONDecodeError:
+            pass
+    return {"valid": False, "suggestion": text[-1000:]}
+
+
+async def _run_verify(
+    env: AgentEnv,
+    op_name: str,
+    workspace_dir: str = DEFAULT_WORKSPACE_DIR,
+) -> tuple[int, int, list[dict]]:
+    """Stage files, run the correctness verifier, parse results.
+
+    Returns (passed_cases, total_cases, error_groups).
+    """
+
+    # 1. Stage files
+    stage_cmd = (
+        f"cd {shlex.quote(workspace_dir)} && "
+        f"mkdir -p output/verify && "
+        f"cp src/{shlex.quote(op_name)}.py output/verify/{shlex.quote(op_name)}_torch.py && "
+        f"cp src/{shlex.quote(op_name)}_triton_ascend_impl.py "
+        f"output/verify/{shlex.quote(op_name)}_triton_ascend_impl.py; "
+        f"cp src/*.json src/*.jsonl output/verify/ 2>/dev/null; true"
+    )
+    await env.communicate(stage_cmd, check="ignore")
+
+    # 2. Run verify via the run_npu_command.sh wrapper
+    python = os.environ.get("OPERATOR_PYTHON", "/usr/local/python3.11.14/bin/python")
+    verify_cmd = (
+        f"cd {shlex.quote(workspace_dir)} && "
+        f"PY={shlex.quote(python)} "
+        f"bash tools/run_npu_command.sh \"$PY\" "
+        f"tools/triton-op-verifier/scripts/verify.py "
+        f"--op_name {shlex.quote(op_name)} "
+        f"--verify_dir output/verify "
+        f"--triton_impl_name triton_ascend_impl "
+        f"--timeout 900 "
+        f"--output output/verify/verify_result.json"
+    )
+    await env.communicate(verify_cmd, check="ignore")
+
+    # 3. Read summary
+    summary_path = f"{workspace_dir}/output/verify/verify_result_summary.json"
+    try:
+        summary_text = await env.read_file(summary_path)
+        summary = json.loads(summary_text.lstrip("﻿"))
+    except Exception:
+        # Fall back to verify_result.json
+        try:
+            raw_text = await env.read_file(
+                f"{workspace_dir}/output/verify/verify_result.json"
+            )
+            raw = json.loads(raw_text.lstrip("﻿"))
+            passed = raw.get("passed_cases", 0)
+            total = raw.get("total_cases", 0)
+            failed = raw.get("failed_cases", max(total - passed, 0))
+            return passed, total, [
+                {"error_type": "verify_failed", "reason": "See raw log", "count": failed}
+            ]
+        except Exception:
+            return 0, 1, [{"error_type": "no_output", "reason": "Verifier produced no output", "count": 1}]
+
+    passed = summary.get("passed_cases", 0)
+    total = summary.get("total_cases", 0)
+    error_groups = summary.get("error_groups", [])
+    return passed, total, error_groups
+
+
+async def _extract_test_case_summary(
+    env: AgentEnv,
+    op_name: str,
+    workspace_dir: str = DEFAULT_WORKSPACE_DIR,
+    max_cases: int = 3,
+) -> str:
+    """Read the first few test cases and return a human-readable summary."""
+    json_path = f"src/{op_name}.json"
+    # Find the actual JSON file.
+    find_cmd = (
+        f"cd {shlex.quote(workspace_dir)} && "
+        f"ls src/*.json src/*.jsonl 2>/dev/null | head -1"
+    )
+    output = await env.communicate(find_cmd, check="ignore")
+    found = output.strip().splitlines()
+    if not found:
+        return ""
+
+    path = found[0]
+    try:
+        text = await env.read_file(path)
+    except Exception:
+        return ""
+
+    lines = [l for l in text.splitlines() if l.strip()]
+    cases = []
+    for i, line in enumerate(lines[:max_cases]):
+        try:
+            case = json.loads(line)
+            inputs = case.get("inputs", [])
+            shapes = ", ".join(
+                f"{inp.get('name','?')}={inp.get('shape','?')}({inp.get('dtype','?')})"
+                for inp in inputs[:6]
+            )
+            cases.append(f"  Case {i+1}: {shapes}")
+        except json.JSONDecodeError:
+            cases.append(f"  Case {i+1}: [unparseable]")
+
+    total = len(lines)
+    return f"{total} test cases. First {len(cases)}:\n" + "\n".join(cases)
+
+
+# ---- coding session ---------------------------------------------------------
+
+async def _run_coding_session(
+    env: AgentEnv,
+    chat_model: OpenAICompatibleChatModel,
+    run_id: str,
+    messages: list[dict[str, str]],
+    *,
+    max_turns: int = 5,
+    action_timeout: int = 300,
+) -> dict[str, Any]:
+    """Run a limited AgentInteraction session (str_replace_editor + search_skills only).
+
+    No execute_bash, no submit. Returns the trajectory and exit info.
+    """
+    tools_manager = ToolsManager(
+        tools_manager_config=ToolsManagerConfig(
+            tools=[
+                ToolConfig(name="str_replace_editor"),
+                ToolConfig(name="search_skills"),
+            ],
+            parser=DEFAULT_TOOL_PARSER,
+        )
+    )
+    chat_model.set_tools_schemas(tools_manager.tools_schemas)
+
+    interaction = AgentInteraction(
+        run_id=run_id,
+        env=env,
+        model=chat_model,
+        tools_manager=tools_manager,
+        messages=messages,
+        action_timeout=action_timeout,
+        max_turns=max_turns,
+    )
+
+    result = await interaction.run()
+    trajectory = result.get("trajectory", [])
+    num_turns = len(trajectory)
+    exit_reason = "unknown"
+    if num_turns > 0:
+        exit_reason = getattr(trajectory[-1], "exit_reason", "unknown")
+
+    return {
+        "trajectory": trajectory,
+        "messages": result.get("messages", []),
+        "num_turns": num_turns,
+        "exit_reason": exit_reason,
+    }
+
+
+# ---- main orchestration -----------------------------------------------------
+
+MAX_FIX_ATTEMPTS = 5  # max verify → fix rounds in Stage 2
+
+
+async def run_one_task_hard(
+    task: dict[str, Any],
+    chat_model: OpenAICompatibleChatModel,
+    *,
+    output_dir: str = "",
+    max_turns: int = 10,
+    action_timeout: int = 300,
+    device_ids: str = "",
+    max_fix_attempts: int = MAX_FIX_ATTEMPTS,
+) -> dict[str, Any]:
+    """Run one Triton operator task with the hard workflow.
+
+    Stage 1: model writes the initial implementation (limited tools, no
+             verification).
+    Stage 2: code-controlled verify → fix loop with structured error feedback.
+    """
+    op_name = task["op_name"]
+    run_id_base = f"synth_{op_name}_{uuid.uuid4().hex[:6]}"
+
+    # --- setup ---
+    workspace_temp_dir = SCRIPT_DIR / "workspace_temp"
+    workspace_temp_dir.mkdir(parents=True, exist_ok=True)
+    host_workdir = Path(tempfile.mkdtemp(
+        prefix=f"synth-{op_name}-", dir=workspace_temp_dir,
+    ))
+
+    try:
+        setup_workspace(task, host_workdir)
+
+        env = create_sandbox_env(f"{run_id_base}_main", device_ids=device_ids)
+        await env.start()
+        await env.install_tools([])  # tools installed per-session
+
+        workspace_dir = await upload_workspace(env, host_workdir)
+
+        started_at = time.perf_counter()
+        all_trajectory: list[Any] = []
+
+        # --- Stage 1: initial implementation ---
+        # Prepare prompt with code-matched skills and test case summary.
+        op_skills = _select_op_skills(task.get("task_code", ""), op_name)
+        skills_text = _format_skills(op_skills)
+        test_summary = await _extract_test_case_summary(env, op_name, workspace_dir)
+
+        initial_prompt = _build_initial_prompt(task, skills_text, test_summary)
+        stage1_messages: list[dict[str, str]] = [
+            {"role": "system", "content": CODING_SYSTEM_PROMPT},
+            {"role": "user", "content": initial_prompt},
+        ]
+
+        print(f"[synth] Stage 1: generating initial implementation for {op_name}")
+        stage1_result = await _run_coding_session(
+            env, chat_model, f"{run_id_base}_s1",
+            stage1_messages,
+            max_turns=max_turns,
+            action_timeout=action_timeout,
+        )
+        all_trajectory.extend(stage1_result.get("trajectory", []))
+
+        # --- Stage 2: verify + fix loop ---
+        for fix_attempt in range(1, max_fix_attempts + 1):
+            impl_code = await _read_impl_file(env, op_name, workspace_dir)
+            if not impl_code:
+                print(f"[synth] {op_name}: no implementation file, retrying...")
+                # Prompt model to create the file.
+                retry_prompt = _build_initial_prompt(task, skills_text, test_summary)
+                retry_result = await _run_coding_session(
+                    env, chat_model, f"{run_id_base}_retry{fix_attempt}",
+                    [{"role": "system", "content": CODING_SYSTEM_PROMPT},
+                     {"role": "user", "content": retry_prompt}],
+                    max_turns=3, action_timeout=action_timeout,
+                )
+                all_trajectory.extend(retry_result.get("trajectory", []))
+                impl_code = await _read_impl_file(env, op_name, workspace_dir)
+                if not impl_code:
+                    continue
+
+            # AST check
+            print(f"[synth] {op_name}: AST check (attempt {fix_attempt})")
+            ast_result = await _run_ast_check(env, op_name, workspace_dir)
+            if not ast_result.get("valid"):
+                print(f"[synth] {op_name}: AST FAILED — {ast_result.get('suggestion', '')[:200]}")
+                error_skills = _select_error_skills([
+                    {"reason": ast_result.get("suggestion", ""),
+                     "error_type": "ast_check_failed"}
+                ])
+                ast_skills_text = _format_skills(op_skills + error_skills)
+                fix_prompt = _build_ast_fix_prompt(
+                    op_name, impl_code or "",
+                    ast_result.get("suggestion", "AST check failed"),
+                    ast_skills_text,
+                )
+                fix_result = await _run_coding_session(
+                    env, chat_model, f"{run_id_base}_fix_ast{fix_attempt}",
+                    [{"role": "system", "content": CODING_SYSTEM_PROMPT},
+                     {"role": "user", "content": fix_prompt}],
+                    max_turns=3, action_timeout=action_timeout,
+                )
+                all_trajectory.extend(fix_result.get("trajectory", []))
+                continue
+
+            # Correctness verification
+            print(f"[synth] {op_name}: correctness verification (attempt {fix_attempt})")
+            passed, total, error_groups = await _run_verify(
+                env, op_name, workspace_dir,
+            )
+
+            if passed == total and total > 0:
+                print(f"[synth] {op_name}: VERIFIED {passed}/{total} — SUCCESS")
+                # Evaluate reward.
+                metadata = {
+                    "op_name": op_name,
+                    "arch": task.get("arch", "ascend910b1"),
+                    "task_code": task.get("task_code", ""),
+                }
+                reward_score, eval_result = await evaluate_triton_workspace(
+                    env, metadata, workspace_dir=workspace_dir,
+                )
+                break
+
+            print(f"[synth] {op_name}: VERIFY FAILED {passed}/{total}")
+            if error_groups:
+                for g in error_groups[:3]:
+                    print(f"  - [{g.get('error_type','?')}] {g.get('reason','')[:120]}")
+
+            # Build fix prompt.
+            error_skills = _select_error_skills(error_groups)
+            fix_skills_text = _format_skills(op_skills + error_skills)
+            fix_prompt = _build_correctness_fix_prompt(
+                op_name, impl_code or "", passed, total,
+                error_groups, fix_skills_text,
+            )
+            fix_result = await _run_coding_session(
+                env, chat_model, f"{run_id_base}_fix{fix_attempt}",
+                [{"role": "system", "content": CODING_SYSTEM_PROMPT},
+                 {"role": "user", "content": fix_prompt}],
+                max_turns=5, action_timeout=action_timeout,
+            )
+            all_trajectory.extend(fix_result.get("trajectory", []))
+        else:
+            # Loop exhausted without success.
+            reward_score = 0.0
+            eval_result = {
+                "eval_completed": False,
+                "reward": 0.0,
+                "reason": "max_fix_attempts_exhausted",
+            }
+
+        execution_time = time.perf_counter() - started_at
+
+        # --- collect results ---
+        exit_reason = "finished" if reward_score > 0.5 else "max_fix_attempts"
+        metrics = eval_result.get("metrics") if isinstance(eval_result, dict) else {}
+        reward_breakdown = reward_breakdown_from_metrics(metrics) if metrics else {}
+        pass_rate = metrics.get("pass_rate", 0.0)
+        speedup = None
+        if isinstance(metrics.get("perf_data"), dict):
+            for key in ("speedup_vs_torch", "speedup", "geomean_speedup"):
+                if key in metrics["perf_data"]:
+                    speedup = metrics["perf_data"][key]
+                    break
+
+        result = {
+            "op_name": op_name,
+            "messages": [],
+            "trajectory": _json_safe(all_trajectory),
+            "num_turns": len(all_trajectory),
+            "exit_reason": exit_reason,
+            "reward_score": reward_score,
+            "reward_breakdown": reward_breakdown,
+            "eval_result": _json_safe(eval_result),
+            "pass_rate": pass_rate,
+            "speedup_vs_torch": speedup,
+            "execution_time": round(execution_time, 3),
+        }
+
+        if output_dir:
+            from examples.triton_agent.reward import archive_text_artifacts
+            try:
+                metadata = {
+                    "op_name": op_name,
+                    "arch": task.get("arch", "ascend910b1"),
+                    "task_code": task.get("task_code", ""),
+                }
+                await archive_text_artifacts(
+                    env, metadata, output_dir, workspace_dir=workspace_dir,
+                )
+            except Exception:
+                pass
+
+        print(
+            f"[synth] op={op_name} reward={reward_score:.4f} "
+            f"pass_rate={pass_rate:.2f} speedup={speedup} "
+            f"turns={len(all_trajectory)} exit={exit_reason} time={execution_time:.1f}s"
+        )
+        return result
+
+    except Exception as exc:
+        execution_time = time.perf_counter() - started_at
+        import traceback
+        print(f"[synth] ERROR op={op_name}: {type(exc).__name__}: {exc}")
+        traceback.print_exc()
+        return {
+            "op_name": op_name,
+            "messages": [],
+            "trajectory": [],
+            "num_turns": 0,
+            "exit_reason": "unknown_error",
+            "reward_score": 0.0,
+            "reward_breakdown": {},
+            "eval_result": {"eval_completed": False, "reward": 0.0, "error": str(exc)},
+            "pass_rate": 0.0,
+            "speedup_vs_torch": None,
+            "execution_time": round(execution_time, 3),
+        }
+
+    finally:
+        try:
+            await env.close()
+        except Exception:
+            pass
+        shutil.rmtree(host_workdir, ignore_errors=True)
+
+
 # ---------------------------------------------------------------------------
 
 

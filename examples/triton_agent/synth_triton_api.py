@@ -36,7 +36,7 @@ if str(REPO_ROOT) not in sys.path:
 from uni_agent.interaction.model import OpenAICompatibleChatModel
 from examples.triton_agent.synth_common import (
     load_tasks,
-    run_one_task,
+    run_one_task_hard,
     save_results,
     DEFAULT_SANDBOX_IMAGE,
 )
@@ -122,7 +122,7 @@ async def async_main(args: argparse.Namespace) -> int:
         task_output_dir = str(Path(output_path).parent / "artifacts" / task["op_name"])
         Path(task_output_dir).mkdir(parents=True, exist_ok=True)
 
-        result = await run_one_task(
+        result = await run_one_task_hard(
             task,
             chat_model,
             output_dir=task_output_dir,
