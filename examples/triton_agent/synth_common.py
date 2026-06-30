@@ -630,6 +630,9 @@ Rules:
 - Your FIRST action should write the implementation file using
   `str_replace_editor create` at the correct workspace path.
 - Do NOT spend turns exploring the filesystem.
+- After editing code with `str_replace`, do NOT immediately `view` the
+  same file — the `str_replace` output already confirms the change.
+  Only `view` a file once per session to check the initial state.
 - Implement `ModelNew` in the required implementation file.
 - Pass tensors directly to Triton kernels. Do not use .data_ptr().
 - Prefer module-level `@triton.jit` kernels launched as `kernel[grid](...)`.
