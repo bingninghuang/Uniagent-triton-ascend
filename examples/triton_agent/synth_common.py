@@ -54,7 +54,7 @@ DEFAULT_SANDBOX_IMAGE = os.environ.get("TRITON_SANDBOX_IMAGE", "triton-operator-
 
 # Attach-mode defaults (for connecting to an existing swerex server)
 DEFAULT_ATTACH_HOST = os.environ.get("TRITON_ATTACH_HOST", "http://127.0.0.1")
-DEFAULT_ATTACH_PORT = int(os.environ.get("TRITON_ATTACH_PORT", "17000"))
+DEFAULT_ATTACH_PORT = int(os.environ.get("TRITON_ATTACH_PORT", "1717"))
 DEFAULT_ATTACH_AUTH_TOKEN = os.environ.get("TRITON_ATTACH_AUTH_TOKEN", "mytoken123")
 DEFAULT_WORKSPACE_DIR = "/opt/workspace/agent_workdir"
 DEFAULT_TOOL_PARSER = "qwen3_coder"
@@ -98,17 +98,10 @@ def _parse_npukernelbench_filename(path: Path) -> tuple[int | str, str]:
     return path.stem, path.stem
 
 
-_WARMUP_EXCLUDE_KEYWORDS = (
-    "conv_transpose", "conv_transposed", "transpose3d", "transposed_3d",
-    "conv3d", "3d_convolution", "attention", "transformer", "conv2d", "conv_standard",
-)
-
-
 def load_tasks(
     dataset_path: str = str(BENCHMARK_ROOT),
     levels: str = "level_1",
     max_rows: int | None = None,
-    filter_mode: str = "warmup",
 ) -> list[dict[str, Any]]:
     """Load NPUKernelBench tasks from a local directory.
 
@@ -152,15 +145,6 @@ def load_tasks(
                 "support_files": support_files,
             })
 
-    # Apply filter
-    if filter_mode == "warmup":
-        filtered = []
-        for row in rows:
-            text = f"{row['name']}\n{row['code']}".lower()
-            if not any(kw in text for kw in _WARMUP_EXCLUDE_KEYWORDS):
-                filtered.append(row)
-        rows = filtered
-
     if max_rows is not None:
         rows = rows[:max_rows]
 
@@ -189,7 +173,7 @@ def load_tasks(
             "instruction": instruction,
         })
 
-    print(f"[synth] Loaded {len(tasks)} tasks (levels={levels}, filter={filter_mode})")
+    print(f"[synth] Loaded {len(tasks)} tasks (levels={levels})")
     return tasks
 
 
@@ -640,6 +624,18 @@ Rules:
 - Use `search_skills` for Triton-Ascend reference material.
 - The verification pipeline runs automatically — you do NOT need to run it.
 - After writing the file, improve if needed, then stop. Do NOT loop on thinking.
+
+NUMERICAL PRECISION RULES (critical for float16 pass rate):
+- ALL intermediate computation MUST use tl.float32, only cast back to the
+  input dtype at the final tl.store. This is non-negotiable for float16 inputs.
+- eps values for float16: use at least 1e-5 (NOT 1e-8).
+- Clamp exp/log inputs: `tl.math.clamp(x, -10.0, 10.0)` before exp/expm1.
+- For reduction ops (sum, mean, cumsum): accumulate in float32, do NOT
+  accumulate in float16 — cumulative error will exceed the MARE threshold.
+- After sqrt/rsqrt on small values, verify the result is finite (not nan/inf).
+- If `grid` exceeds 65535, use interleaved-loop pattern OR set
+  `os.environ["TRITON_ALL_BLOCKS_PARALLEL"] = "1"` as a quick workaround.
+- Use `search_skills triton-ascend-elementwise float16 precision` for examples.
 """
 
 
@@ -696,32 +692,77 @@ def _build_ast_fix_prompt(
     current_code: str,
     ast_error: str,
     skills_text: str,
+    fix_attempt: int = 1,
+    max_fix_attempts: int = MAX_FIX_ATTEMPTS,
 ) -> str:
-    """Build a fix prompt when AST check fails."""
+    """Build a fix prompt when AST check fails.
+
+    Categorizes the AST error and gives targeted fix instructions instead of
+    a generic "fix it" message.
+    """
     impl_path = f"/opt/workspace/agent_workdir/src/{op_name}_triton_ascend_impl.py"
+    error_lower = ast_error.lower()
+
+    # --- categorize the AST error for targeted advice ---
+    if "for 循环" in ast_error or "for loop" in error_lower:
+        specific_fix = (
+            "YOUR MISTAKE: You wrote a Python `for` loop inside `forward()`."
+            "All loops MUST be inside the @triton.jit kernel, NOT in forward()."
+            "Move the loop logic into the kernel function."
+        )
+    elif "kernel 启动" in ast_error or "kernel launch" in error_lower:
+        specific_fix = (
+            "YOUR MISTAKE: You launched the Triton kernel multiple times "
+            "in forward(). Only ONE kernel launch is allowed per forward() call."
+            "Merge the logic into a single kernel, or use grid dimensions to "
+            "handle multiple cases."
+        )
+    elif "pytorch" in error_lower or "torch." in error_lower:
+        specific_fix = (
+            "YOUR MISTAKE: You used PyTorch compute ops (torch.xxx) inside "
+            "forward(). forward() may ONLY contain: buffer allocation "
+            "(torch.empty, torch.empty_like), shape ops (.view, .reshape, "
+            ".contiguous), and a SINGLE kernel[grid](...) launch. "
+            "Move ALL computation into the @triton.jit kernel."
+        )
+    elif "data_ptr" in error_lower or ".data" in error_lower:
+        specific_fix = (
+            "YOUR MISTAKE: You used .data_ptr() or .data. Pass tensors "
+            "DIRECTLY to the kernel — Triton handles pointer extraction."
+        )
+    else:
+        specific_fix = (
+            "The AST checker found code patterns that violate the constraints."
+            "Read the error message carefully — it tells you exactly which "
+            "line has the problem and what pattern is disallowed."
+        )
+
     parts = [
-        f"# AST Check Failed: {op_name}",
-        f"Fix the file: `{impl_path}`",
+        f"# AST Check Failed — Fix Attempt {fix_attempt}/{max_fix_attempts}",
+        f"File to fix: `{impl_path}`",
         "",
-        "## Error",
-        ast_error,
+        "## What Went Wrong",
+        specific_fix,
+        "",
+        "## AST Checker Output",
+        "```",
+        ast_error[:3000] if len(ast_error) > 3000 else ast_error,
+        "```",
         "",
         "## Your Current Code",
         "```python",
-        current_code[:8000] if len(current_code) > 8000 else current_code,
+        current_code[:6000] if len(current_code) > 6000 else current_code,
         "```",
         "",
-        "## Instructions",
-        f"FIX THE ERROR NOW: The AST check found issues in your code.",
-        f"Use `str_replace_editor str_replace` on `{impl_path}` to fix them.",
-        f"Focus on the error message — it tells you the exact problem.",
-        f"Only use `search_skills` after attempting a fix if stuck.",
-        f"Do NOT explore the filesystem. Fix first, then stop.",
+        "## Fix Instructions",
+        f"1. Use `str_replace_editor str_replace` on `{impl_path}`",
+        f"2. Fix ONLY the specific issue described above — do not rewrite everything",
+        f"3. After your edit, STOP. The AST check will re-run automatically.",
     ]
     if skills_text:
         parts.extend([
             "",
-            "## Reference Skills (supplementary)",
+            "## Reference (use search_skills for details)",
             skills_text,
         ])
     return "\n".join(parts)
@@ -735,50 +776,170 @@ def _build_correctness_fix_prompt(
     error_groups: list[dict],
     skills_text: str,
     history: str = "",
+    fix_attempt: int = 1,
+    max_fix_attempts: int = MAX_FIX_ATTEMPTS,
 ) -> str:
-    """Build a fix prompt when correctness verification fails."""
+    """Build a fix prompt when correctness verification fails.
+
+    Key improvements over the old version:
+    - Error-type-aware fix strategies (precision vs compile vs runtime)
+    - Shows example failed cases (shapes, dtypes) from error_groups
+    - Structured fix priority: fix the highest-count error first
+    - Skills are promoted from "supplementary" to actionable reference
+    """
     impl_path = f"/opt/workspace/agent_workdir/src/{op_name}_triton_ascend_impl.py"
+    pct = 100 * passed / max(total, 1)
+
     parts = [
-        f"# Correctness Verification Failed: {op_name}",
-        f"Fix the file: `{impl_path}`",
-        f"Passed: {passed}/{total} ({100*passed/max(total,1):.1f}%)",
+        f"# Fix Attempt {fix_attempt}/{max_fix_attempts}: {op_name}",
+        f"File: `{impl_path}`",
+        f"Result: {passed}/{total} passed ({pct:.1f}%)",
     ]
     if history:
-        parts.append(history)
+        parts.append(f"Trend: {history}")
     parts.append("")
 
+    # ---- error groups with example cases ----
     if error_groups:
-        parts.append("## Error Summary")
-        for g in error_groups:
-            parts.append(
-                f"- [{g.get('error_type', 'unknown')}] "
-                f"{g.get('reason', '')} "
-                f"(affects {g.get('count', 0)} cases)"
-            )
+        parts.append("## Failed Test Cases")
+        parts.append("")
+        for i, g in enumerate(error_groups):
+            etype = g.get("error_type", "unknown")
+            reason = g.get("reason", "")
+            count = g.get("count", 0)
+            examples = g.get("examples", [])
+
+            parts.append(f"### Error {i + 1}: {etype} ({count}/{total} cases)")
+            parts.append(f"```")
+            parts.append(f"{reason}")
+            parts.append(f"```")
+
+            # Show example inputs that triggered this error
+            if examples:
+                parts.append("Example inputs that failed:")
+                for ex in examples[:3]:
+                    case_idx = ex.get("case_idx", "?")
+                    input_desc = ex.get("input_desc", "")
+                    # compact the input description
+                    if isinstance(input_desc, list):
+                        desc_parts = []
+                        for inp in input_desc:
+                            if isinstance(inp, dict):
+                                desc_parts.append(
+                                    f"{inp.get('type','?')}[{inp.get('shape','?')}]"
+                                    f"({inp.get('dtype','?')})"
+                                )
+                            else:
+                                desc_parts.append(str(inp)[:80])
+                        input_desc = ", ".join(desc_parts)
+                    parts.append(f"  case {case_idx}: {input_desc}")
+            parts.append("")
+
+    # ---- fix strategy: error-type-aware ----
+    parts.append("## Fix Strategy")
+    parts.append("")
+
+    # Analyze error_groups to determine the dominant error category
+    has_precision = False
+    has_compilation = False
+    has_runtime = False
+    has_shape = False
+
+    for g in (error_groups or []):
+        etype = str(g.get("error_type", "")).lower()
+        reason = str(g.get("reason", "")).lower()
+        combined = etype + " " + reason
+
+        if any(kw in combined for kw in ("assertionerror", "mare=", "mere=", "输出不一致", "精度")):
+            has_precision = True
+        if any(kw in combined for kw in ("compilationerror", "syntax", "nameerror", "typeerror")):
+            has_compilation = True
+        if any(kw in combined for kw in ("runtimeerror", "acl", "stream", "memory")):
+            has_runtime = True
+        if any(kw in combined for kw in ("shape", "形状", "broadcast", "dimension")):
+            has_shape = True
+
+    if has_precision:
+        parts.append(
+            "**PRECISION ERRORS detected** — this is the most important thing to fix:\n"
+            "- ALL intermediate computation MUST use `tl.float32`. Cast inputs with `.to(tl.float32)`\n"
+            "  before computing, and cast back `.to(input_dtype)` only at the final `tl.store`.\n"
+            "- For reduction ops (sum/mean/cumsum): accumulate in float32, never in float16.\n"
+            "- For exp/log: clamp input to `[-10.0, 10.0]` before `tl.math.exp()`.\n"
+            "- For division: compute in float32: `(a.to(tl.float32) / b.to(tl.float32)).to(out_dtype)`.\n"
+            "- For sqrt/rsqrt: use `eps >= 1e-5` (NOT 1e-8) for float16 inputs.\n"
+            "- Use `search_skills precision float16` for detailed examples."
+        )
         parts.append("")
 
+    if has_compilation:
+        parts.append(
+            "**COMPILATION ERRORS detected**:\n"
+            "- Check the error location (line number in the error message).\n"
+            "- Common causes: undefined variable, wrong type annotation, "
+            "unsupported Triton construct on Ascend.\n"
+            "- `constexpr` parameters must be literal values or marked `tl.constexpr`.\n"
+            "- Use `search_skills compilation error` for known Ascend constraints."
+        )
+        parts.append("")
+
+    if has_runtime:
+        parts.append(
+            "**RUNTIME ERRORS detected** (NPU/ACL level):\n"
+            "- ACL stream errors often mean: out-of-bound access, invalid pointer, "
+            "or unsupported operation.\n"
+            "- Check that ALL memory accesses are within bounds (masks are correct).\n"
+            "- Check that kernel grid is valid (< 65535 per dimension).\n"
+            "- For large tensors: use interleaved loop or set "
+            "`os.environ[\"TRITON_ALL_BLOCKS_PARALLEL\"] = \"1\"`."
+        )
+        parts.append("")
+
+    if has_shape:
+        parts.append(
+            "**SHAPE/BROADCAST ERRORS detected**:\n"
+            "- Check that output tensor shapes match expected shapes.\n"
+            "- When handling multiple input dtypes/shapes, ensure consistent indexing.\n"
+            "- Use tl.arange and masks carefully for non-uniform shapes."
+        )
+        parts.append("")
+
+    if not (has_precision or has_compilation or has_runtime or has_shape):
+        # Generic fallback
+        parts.append(
+            "Read each error message carefully. The error type and reason tell you "
+            "exactly what failed. Fix the highest-count error group first — that "
+            "will recover the most test cases in one edit."
+        )
+        parts.append("")
+
+    # ---- current code (compact) ----
     parts.extend([
         "## Your Current Code",
         "```python",
-        current_code[:8000] if len(current_code) > 8000 else current_code,
+        current_code[:6000] if len(current_code) > 6000 else current_code,
         "```",
         "",
-        "## Instructions",
-        f"FIX THE ERRORS NOW: Use `str_replace_editor str_replace` on",
-        f"`{impl_path}` to fix the failures described above. The error",
-        f"messages tell you exactly what is wrong — act on them directly.",
-        f"",
-        f"Only use `search_skills` AFTER attempting a fix, and only if you",
-        f"are stuck on a specific syntax question. Skills are supplementary.",
-        f"Do NOT explore the filesystem. Fix first, then stop.",
     ])
 
+    # ---- skills (promoted to actionable reference) ----
     if skills_text:
         parts.extend([
-            "",
-            "## Reference Skills (supplementary, search only if stuck)",
+            "## Reference Skills (use search_skills for full details)",
             skills_text,
+            "",
         ])
+
+    # ---- action ----
+    parts.extend([
+        "## Action Required",
+        f"1. Focus on the error group with the HIGHEST count — fix it first.",
+        f"2. Use `str_replace_editor str_replace` on `{impl_path}` to edit.",
+        f"3. For precision errors: the fix is usually adding `.to(tl.float32)` to inputs",
+        f"   and `.to(out_dtype)` at the final store. This is a SMALL, LOCALIZED change.",
+        f"4. After editing, STOP. Do not explore. Verification re-runs automatically.",
+        f"5. If you already tried this fix before and it didn't work, try a DIFFERENT approach.",
+    ])
 
     return "\n".join(parts)
 
@@ -1132,6 +1293,8 @@ async def run_one_task_hard(
                     op_name, impl_code or "",
                     ast_result.get("suggestion", "AST check failed"),
                     ast_skills_text,
+                    fix_attempt=fix_attempt,
+                    max_fix_attempts=max_fix_attempts,
                 )
                 await _inject_user_message(interaction, chat_model, ast_fix_msg)
                 await _run_turns(interaction, 5, next_step)
@@ -1188,16 +1351,26 @@ async def run_one_task_hard(
                     else ("↓ regressed" if passed < prev_passed
                     else "→ unchanged")
                 )
-                history = (
-                    f"Previous attempt: {prev_passed}/{prev_total}. "
-                    f"This attempt: {passed}/{total} {trend}."
-                )
+                if trend == "→ unchanged" or trend == "↓ regressed":
+                    history = (
+                        f"Previous: {prev_passed}/{prev_total} → Now: {passed}/{total} ({trend}). "
+                        f"Your last fix did NOT help (or made things worse). "
+                        f"Try a COMPLETELY DIFFERENT approach this time — review the "
+                        f"Fix Strategy section below for guidance."
+                    )
+                else:
+                    history = (
+                        f"Previous: {prev_passed}/{prev_total} → Now: {passed}/{total} ({trend}). "
+                        f"Progress! Continue with the same approach to fix the remaining errors."
+                    )
 
             error_skills = _select_error_skills(error_groups)
             fix_skills_text = _format_skills(op_skills + error_skills)
             fix_prompt = _build_correctness_fix_prompt(
                 op_name, impl_code or "", passed, total,
                 error_groups, fix_skills_text, history=history,
+                fix_attempt=fix_attempt,
+                max_fix_attempts=max_fix_attempts,
             )
             prev_passed, prev_total = passed, total
 

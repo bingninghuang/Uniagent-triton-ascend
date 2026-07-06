@@ -61,8 +61,6 @@ def parse_args() -> argparse.Namespace:
                         help="Path to NPUKernelBench dataset directory")
     parser.add_argument("--levels", default="level_1", help="Comma-separated levels, e.g. level_1,level_2 or all")
     parser.add_argument("--max-rows", type=int, default=None, help="Max number of tasks to run")
-    parser.add_argument("--filter-mode", default="warmup", choices=["warmup", "all"],
-                        help="Task filter mode: warmup excludes complex ops, all includes everything")
 
     # Agent loop
     parser.add_argument("--max-turns", type=int, default=50, help="Max agent interaction turns per task")
@@ -102,7 +100,6 @@ async def async_main(args: argparse.Namespace) -> int:
         dataset_path=args.dataset,
         levels=args.levels,
         max_rows=args.max_rows,
-        filter_mode=args.filter_mode,
     )
     if not tasks:
         print("[synth] No tasks loaded. Check --dataset and --levels.")

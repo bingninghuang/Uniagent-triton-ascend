@@ -322,34 +322,49 @@ def analyze_failures(rows: list[dict[str, Any]]) -> dict[str, Any]:
 
 
 def analyze_fix_loop(rows: list[dict[str, Any]]) -> dict[str, Any]:
-    """Analyze whether stage-2 repair actually improves results."""
-    fix_attempt_counts: Counter = Counter()
-    success_by_fix_attempts: dict[int, list[float]] = defaultdict(list)
+    """Analyze whether stage-2 repair actually improves results.
+
+    Detects fix injections by scanning the *messages* field for user-role
+    messages containing verify/AST feedback (injected via _inject_user_message),
+    NOT by scanning trajectory steps (which only contain model outputs).
+    """
+    fix_round_counts: Counter = Counter()
+    success_by_fix_rounds: dict[int, list[float]] = defaultdict(list)
+    # Track: when there are multiple verify rounds, does pass_rate improve?
+    fix_progression: list[dict[str, Any]] = []
 
     for r in rows:
-        trajectory = r.get("trajectory") or []
-        if isinstance(trajectory, str):
+        messages = r.get("messages") or []
+        if not messages:
+            # Fallback: count from exit_reason
+            exit_reason = r.get("exit_reason", "")
+            if "max_fix_attempts" in str(exit_reason):
+                fix_round_counts[5] += 1  # assume max
+                success_by_fix_rounds[5].append(_safe_float(r.get("reward_score")))
+            else:
+                fix_round_counts[0] += 1
+                success_by_fix_rounds[0].append(_safe_float(r.get("reward_score")))
             continue
 
-        fix_count = 0
-        for step in trajectory:
-            if not isinstance(step, dict):
-                continue
-            response = step.get("response") or ""
-            if isinstance(response, str) and (
-                "verify.py" in response.lower()
-                or "ast check failed" in response.lower()
-                or "fix attempt" in response.lower()
-                or "error_groups" in response.lower()
-            ):
-                fix_count += 1
+        # Count fix/verify rounds from injected user messages
+        boundaries = _detect_stage_boundaries(messages)
+        num_fix_rounds = len(boundaries)
 
-        fix_attempt_counts[fix_count] += 1
+        fix_round_counts[num_fix_rounds] += 1
         reward = _safe_float(r.get("reward_score"))
-        success_by_fix_attempts[fix_count].append(reward)
+        success_by_fix_rounds[num_fix_rounds].append(reward)
+
+        if num_fix_rounds > 0 and boundaries:
+            fix_progression.append({
+                "op_name": r.get("op_name", "?"),
+                "num_fix_rounds": num_fix_rounds,
+                "reward": reward,
+                "pass_rate": _safe_float(r.get("pass_rate")),
+                "exit_reason": r.get("exit_reason", "?"),
+            })
 
     fix_reward_avg = {}
-    for count, rewards in sorted(success_by_fix_attempts.items()):
+    for count, rewards in sorted(success_by_fix_rounds.items()):
         fix_reward_avg[count] = {
             "avg_reward": sum(rewards) / len(rewards) if rewards else 0.0,
             "count": len(rewards),
@@ -357,8 +372,9 @@ def analyze_fix_loop(rows: list[dict[str, Any]]) -> dict[str, Any]:
         }
 
     return {
-        "fix_attempt_distribution": dict(fix_attempt_counts),
+        "fix_round_distribution": dict(fix_round_counts),
         "fix_reward_avg": fix_reward_avg,
+        "fix_progression": fix_progression,
     }
 
 
@@ -636,25 +652,43 @@ def _print_fix_loop_analysis(fix_stats: dict[str, Any]) -> None:
         return
     print_header("4. FIX LOOP (STAGE 2) ANALYSIS")
 
-    dist = fix_stats["fix_attempt_distribution"]
+    dist = fix_stats.get("fix_round_distribution", {})
     if not dist:
         print("  No fix-loop data available.")
         return
 
-    print(f"  {'Fix injections':>16s}  {'Tasks':>6s}  {'Avg Reward':>10s}  {'Success Rate':>12s}")
-    print(f"  {'─' * 16} {'─' * 6} {'─' * 10} {'─' * 12}")
+    print(f"  Fix rounds = number of verify/AST-fix injection cycles per task.")
+    print(f"  0 rounds = task passed on first try (no fixes needed).")
+    print(f"  N rounds = N rounds of verify → fix-prompt → model-edit before success or giving up.")
+    print()
+    print(f"  {'Fix rounds':>12s}  {'Tasks':>6s}  {'Avg Reward':>10s}  {'Success Rate':>14s}")
+    print(f"  {'─' * 12} {'─' * 6} {'─' * 10} {'─' * 14}")
+    total = sum(dist.values())
     for count in sorted(dist):
         info = fix_stats["fix_reward_avg"].get(count, {})
+        succ_count = int(info.get("success_rate", 0) * dist[count])
         print(
-            f"  {count:16d}  {dist[count]:6d}  {_f(info.get('avg_reward')):>10s}  "
-            f"{_pct(int(info.get('success_rate', 0) * dist[count]), dist[count]):>12s}"
+            f"  {count:12d}  {dist[count]:6d}  {_f(info.get('avg_reward')):>10s}  "
+            f"{succ_count}/{dist[count]} ({_pct(succ_count, dist[count])})"
         )
+
+    # Show fix progression details for multi-round tasks
+    progression = fix_stats.get("fix_progression", [])
+    if progression:
+        print_subheader("Tasks that went through fix rounds")
+        progression.sort(key=lambda x: x["num_fix_rounds"], reverse=True)
+        for p in progression[:20]:
+            status = "✓" if p["reward"] > 0.5 else "✗"
+            print(
+                f"  {status} {p['op_name']:<50s}  fix_rounds={p['num_fix_rounds']}  "
+                f"reward={_f(p['reward'])}  pass_rate={_f(p['pass_rate'], 2)}  exit={p['exit_reason']}"
+            )
 
     print()
     print("  Interpretation:")
-    print("  - Tasks with 0 fix injections = AST+compile passed on first try, or no verify reached.")
-    print("  - More injections → model received more repair feedback before giving up.")
-    print("  - If success rate drops with more injections, the repair prompts may not help enough.")
+    print("  - 0 rounds: task passed first-try or never reached verify stage.")
+    print("  - If many tasks have high fix rounds but low success → repair prompts are not effective.")
+    print("  - If few tasks enter fix rounds → most failures happen before verify (compile/AST stage).")
 
 
 def _print_operator_breakdown(op_stats: list[dict[str, Any]]) -> None:
@@ -760,6 +794,37 @@ def _print_insights(rows: list[dict[str, Any]], reward_stats: dict[str, Any],
             "(b) per-tool-call reward signals, or (c) process reward model (PRM) for dense feedback."
         )
 
+    # 2b. Reward bimodality check (critical for RL)
+    rewards_sorted = sorted(rewards)
+    mid_gap = sum(1 for r in rewards if 0.15 < r < 0.55)
+    low_cluster = sum(1 for r in rewards if 0.01 <= r <= 0.15)
+    high_cluster = sum(1 for r in rewards if r >= 0.55)
+    if low_cluster > 0 and high_cluster > 0 and mid_gap < n * 0.15:
+        insights.append(
+            f"2b. ⚠ Reward bimodality detected: {low_cluster} tasks in [0.01–0.15], "
+            f"{high_cluster} in [0.55–1.0], but only {mid_gap} in between. "
+            "RL training needs a continuous reward gradient. The gap between 'compiles but fails tests' "
+            "(~0.05–0.10) and 'passes all tests' (~0.75) is too large. "
+            "Consider: (a) increasing compile reward weight, (b) giving partial bonus for pass_rate > 0.8, "
+            "or (c) reward = compile + correctness × pass_rate² to reward partial progress more."
+        )
+
+    # 2c. Stale-metrics suspicion: high pass_rate but low reward
+    stale_suspects = []
+    for r in rows:
+        pr = _safe_float(r.get("pass_rate"))
+        reward = _safe_float(r.get("reward_score"))
+        if pr > 0.7 and reward < 0.2:
+            stale_suspects.append((r.get("op_name", "?"), pr, reward))
+    if stale_suspects:
+        insights.append(
+            f"2c. ⚠ {len(stale_suspects)} tasks have high pass_rate but very low reward "
+            f"(suspected stale_metrics bug in reward.py): "
+            + ", ".join(f"{op}(pr={_f(pr, 2)}, r={_f(r)})" for op, pr, r in stale_suspects[:5])
+            + ". The eval code may be giving fixed 0.05 reward when metrics timestamp is stale. "
+            "Check reward.py lines 590/617 — stale_upstream_artifacts / stale_metrics path."
+        )
+
     # 3. Speedup component
     speedup_vals = comps.get("speedup", [])
     nonzero_speedup = sum(1 for v in speedup_vals if v > 0.001)
@@ -804,15 +869,27 @@ def _print_insights(rows: list[dict[str, Any]], reward_stats: dict[str, Any],
             "(c) adding retrieval-augmented fixes from a knowledge base."
         )
 
-    # 7. Trajectory length
+    # 7. Trajectory length & message bloat
     all_turns = [_safe_int(r.get("num_turns")) for r in rows]
     if all_turns:
-        long_trajectories = sum(1 for t in all_turns if t > 12)
-        if long_trajectories > n * 0.3:
+        # Check total message volume, not just turn count (stage 1 + stage 2 is expected >12)
+        total_msg_chars = []
+        for r in rows:
+            messages = r.get("messages") or []
+            chars = sum(len(str(m.get("content", ""))) for m in messages if isinstance(m, dict))
+            total_msg_chars.append(chars)
+        avg_msg_chars = sum(total_msg_chars) / len(total_msg_chars) if total_msg_chars else 0
+        if avg_msg_chars > 500_000:
             insights.append(
-                f"7. ⚠ {long_trajectories}/{n} tasks exceed 12 turns (stage 1 limit). "
-                "Long trajectories bloat message history and risk hitting API token limits. "
-                "Consider truncating or summarizing older messages."
+                f"7. ⚠ Average message history is {avg_msg_chars:,.0f} chars (approaching 1MB API limit). "
+                "Long fix loops bloat message history with repeated verify output. "
+                "Consider: (a) summarizing old verify results, (b) truncating earlier turns, "
+                "or (c) reducing max fix attempts from 5 to 3."
+            )
+        elif avg_msg_chars > 200_000:
+            insights.append(
+                f"7. ℹ Average message history is {avg_msg_chars:,.0f} chars. "
+                "This is manageable but monitor for growth as more operators are added."
             )
 
     # 8. Worst operators
