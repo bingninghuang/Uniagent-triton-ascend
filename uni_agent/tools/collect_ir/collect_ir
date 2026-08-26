@@ -1,0 +1,590 @@
+#!/usr/bin/env python3
+"""collect_ir - collect Triton compiler IR for the current operator.
+
+Runs inside the sandbox workspace. Auto-detects the op_name from
+src/*_triton_ascend_impl.py, generates a runner script that triggers
+Triton compilation with TRITON_DEBUG=1, extracts IR files (ttir,
+ttadapter, last_pass) via bishengir-compile, and prints a structured
+summary with quick bottleneck identification.
+"""
+
+from __future__ import annotations
+
+import glob
+import json
+import os
+import re
+import subprocess
+import sys
+
+WORKSPACE = os.environ.get("TRITON_WORKSPACE_DIR", "/opt/workspace/agent_workdir")
+
+_cwd = os.getcwd()
+if os.path.isdir(os.path.join(_cwd, "src")) and os.path.isdir(os.path.join(_cwd, "tools")):
+    WORKSPACE = _cwd
+
+PYTHON = os.environ.get("OPERATOR_PYTHON", "/usr/local/python3.11.14/bin/python")
+IR_TIMEOUT = 600  # seconds for the runner script
+COMPILE_TIMEOUT = 300  # seconds per bishengir-compile call
+RUN_VERIFY_TIMEOUT = 960
+
+
+def _find_op_name() -> str | None:
+    """Detect op_name from src/*_triton_ascend_impl.py."""
+    files = glob.glob(os.path.join(WORKSPACE, "src", "*_triton_ascend_impl.py"))
+    if not files:
+        return None
+    base = os.path.basename(files[0])
+    return base[: -len("_triton_ascend_impl.py")]
+
+
+def _get_impl_path(op_name: str) -> str:
+    return os.path.join(WORKSPACE, "src", f"{op_name}_triton_ascend_impl.py")
+
+
+def _generate_runner(op_name: str) -> str:
+    """Generate a temporary runner script that triggers Triton compilation.
+
+    The runner imports the implementation module, creates a ModelNew
+    instance, and calls forward() with the first test case to trigger
+    the Triton kernel compilation.
+    """
+    impl_file = _get_impl_path(op_name)
+    module_name = f"{op_name}_triton_ascend_impl"
+
+    runner = f'''#!/usr/bin/env python3
+"""Auto-generated IR collection runner. Triggers Triton compilation."""
+import sys, os, json, glob
+
+WORKSPACE = {repr(WORKSPACE)}
+os.chdir(WORKSPACE)
+sys.path.insert(0, os.path.join(WORKSPACE, "src"))
+
+import torch
+
+# Import the implementation module
+import {module_name} as impl_mod
+
+# Create model instance
+init_args = impl_mod.get_init_inputs()
+model = impl_mod.ModelNew(*init_args)
+
+# Move to NPU if available
+if torch.npu.is_available():
+    model = model.npu()
+
+# Get test inputs - try get_input_groups (multi-case) first, then get_inputs
+inputs = None
+if hasattr(impl_mod, "get_input_groups"):
+    try:
+        all_groups = impl_mod.get_input_groups()
+        if all_groups:
+            inputs = all_groups[0]
+    except Exception as e:
+        print(f"[ir_runner] get_input_groups failed: {{e}}", file=sys.stderr)
+
+if inputs is None and hasattr(impl_mod, "get_inputs"):
+    try:
+        inputs = impl_mod.get_inputs()
+    except Exception as e:
+        print(f"[ir_runner] get_inputs failed: {{e}}", file=sys.stderr)
+
+if inputs is None:
+    print("[ir_runner] ERROR: No test inputs available", file=sys.stderr)
+    sys.exit(1)
+
+# Move tensors to NPU
+npu_inputs = []
+for x in inputs:
+    if isinstance(x, torch.Tensor):
+        npu_inputs.append(x.npu())
+    else:
+        npu_inputs.append(x)
+
+# Run forward to trigger compilation
+print("[ir_runner] Running forward pass to trigger Triton compilation...")
+with torch.no_grad():
+    _ = model(*npu_inputs)
+print("[ir_runner] Forward pass completed.")
+'''
+    runner_path = os.path.join(WORKSPACE, "output", "ir_runner.py")
+    os.makedirs(os.path.dirname(runner_path), exist_ok=True)
+    with open(runner_path, "w") as f:
+        f.write(runner)
+    return runner_path
+
+
+def _run_ir_collection(runner_path: str) -> tuple[str, str]:
+    """Run the runner script with TRITON_DEBUG=1 to trigger IR dump.
+
+    Returns (stdout, stderr).
+    """
+    run_npu = os.path.join(WORKSPACE, "tools", "run_npu_command.sh")
+    if not os.path.exists(run_npu):
+        return "", f"run_npu_command.sh not found at {run_npu}"
+
+    env_overrides = (
+        f"TRITON_DEBUG=1 "
+        f"TRITON_ALWAYS_COMPILE=1 "
+        f"TRITON_DISABLE_LINE_INFO=0 "
+        f"TRITON_DISABLE_FFTS=1"
+    )
+
+    cmd = (
+        f"cd {WORKSPACE} && "
+        f"PY={PYTHON} && "
+        f"{env_overrides} "
+        f'bash {run_npu} "$PY" {runner_path}'
+    )
+
+    try:
+        proc = subprocess.run(
+            cmd, shell=True, capture_output=True, text=True, timeout=IR_TIMEOUT,
+        )
+        return proc.stdout, proc.stderr
+    except subprocess.TimeoutExpired:
+        return "", "IR collection runner timed out"
+    except Exception as exc:
+        return "", str(exc)
+
+
+def _detect_bishengir_target() -> str | None:
+    """Detect the correct bishengir-compile target for the current arch."""
+    # 1. Explicit env override
+    target = os.environ.get("BISHENGIR_TARGET")
+    if target:
+        return target
+
+    # 2. Map from TRITON_KERNELBENCH_ARCH
+    arch = os.environ.get("TRITON_KERNELBENCH_ARCH", "")
+    arch_map = {
+        "ascend910b1": "Ascend910B1",
+        "ascend910b2": "Ascend910B2",
+        "ascend910b2c": "Ascend910B2C",
+        "ascend910b3": "Ascend910B3",
+        "ascend910b4": "Ascend910B4",
+        "ascend910-9362": "Ascend910_9362",
+        "ascend910-9372": "Ascend910_9372",
+        "ascend910-9381": "Ascend910_9381",
+        "ascend910-9382": "Ascend910_9382",
+        "ascend910-9391": "Ascend910_9391",
+        "ascend910-9392": "Ascend910_9392",
+    }
+    if arch in arch_map:
+        return arch_map[arch]
+
+    # 3. Try to auto-detect from bishengir-compile --help
+    try:
+        result = subprocess.run(
+            ["bishengir-compile", "--help"], capture_output=True, text=True, timeout=30,
+        )
+        help_text = result.stdout + result.stderr
+        # Look for valid targets (check specific before generic)
+        for candidate in ("Ascend910B3", "Ascend910B2", "Ascend910B1", "Ascend910_9382"):
+            # Match exact target name (with word boundary to avoid partial matches)
+            if f"={candidate}" in help_text:
+                return candidate
+    except Exception:
+        pass
+
+    return None
+
+
+def _detect_print_ir_flag(bishengir_path: str) -> str | None:
+    """Detect the IR dump flag supported by the compiler version."""
+    # Priority: env override > --mlir-print-ir-after-all > --bishengir-print-ir-after > --print-after-all
+    env_flag = os.environ.get("BISHENGIR_PRINT_IR_FLAG")
+    if env_flag:
+        return env_flag
+
+    try:
+        result = subprocess.run(
+            [bishengir_path, "--help"], capture_output=True, text=True, timeout=30,
+        )
+        help_text = result.stdout + result.stderr
+        if "mlir-print-ir-after-all" in help_text:
+            return "--mlir-print-ir-after-all"
+        if "bishengir-print-ir-after" in help_text:
+            return "--bishengir-print-ir-after=hivm-inject-sync"
+        if "print-after-all" in help_text:
+            return "--print-after-all"
+    except Exception:
+        pass
+    return None
+
+
+def _find_bishengir_compile() -> str | None:
+    """Find the bishengir-compile binary."""
+    # Check env var
+    path = os.environ.get("BISHENGIR_COMPILE")
+    if path and os.path.isfile(path):
+        return path
+
+    # Check PATH
+    try:
+        result = subprocess.run(
+            ["which", "bishengir-compile"], capture_output=True, text=True, timeout=10,
+        )
+        if result.returncode == 0:
+            path = result.stdout.strip()
+            if path and os.path.isfile(path):
+                return path
+    except Exception:
+        pass
+    return None
+
+
+def _extract_kernel_name(ttadapter_path: str) -> str:
+    """Extract kernel name from ttadapter.mlir file."""
+    try:
+        with open(ttadapter_path, encoding="utf-8", errors="replace") as f:
+            content = f.read()
+        for pattern in [
+            r"(?<=func\.func @)\w+",
+            r"(?<=tt\.func @)\w+",
+            r"(?<=module @)\w+",
+        ]:
+            m = re.search(pattern, content)
+            if m:
+                return m.group(0)
+    except Exception:
+        pass
+    return "unknown"
+
+
+def _parse_dump_dirs(log_output: str) -> list[str]:
+    """Parse 'Dumping intermediate results to <dir>' from log output."""
+    dirs = []
+    for line in log_output.splitlines():
+        m = re.search(r"Dumping intermediate results to\s+(\S+)", line)
+        if m:
+            d = m.group(1)
+            if os.path.isdir(d):
+                dirs.append(d)
+    return dirs
+
+
+def _run_bishengir_compile(
+    bishengir_path: str,
+    target: str,
+    print_ir_flag: str,
+    ttadapter_path: str,
+    dump_dir: str,
+    kernel_name: str,
+    output_dir: str,
+) -> dict:
+    """Run bishengir-compile on a single kernel and extract last_pass.mlir."""
+    output_file = f"/tmp/ir_{kernel_name}_full_dump.txt"
+
+    cmd = [
+        bishengir_path,
+        f"--target={target}",
+        "--enable-auto-multi-buffer=False",
+        "--enable-auto-bind-sub-block=True",
+        "--enable-hfusion-compile=true",
+        "--enable-hivm-compile=true",
+        "--enable-triton-kernel-compile=true",
+        print_ir_flag,
+        "kernel.ttadapter.mlir",
+    ]
+
+    # bishengir-compile calls hivmc-a5 as a subprocess. The bishengir bin
+    # directory must be on $PATH, otherwise the pipeline stops at InjectIR.
+    bishengir_bin = os.path.dirname(bishengir_path)
+    env = os.environ.copy()
+    if bishengir_bin not in env.get("PATH", ""):
+        env["PATH"] = f"{bishengir_bin}:{env.get('PATH', '')}"
+
+    try:
+        proc = subprocess.run(
+            cmd, capture_output=True, text=True, timeout=COMPILE_TIMEOUT,
+            cwd=dump_dir, env=env, start_new_session=True,
+        )
+        output = proc.stdout + proc.stderr
+        with open(output_file, "w") as f:
+            f.write(output)
+    except subprocess.TimeoutExpired:
+        return {"ok": False, "error": "bishengir-compile timed out"}
+    except Exception as exc:
+        return {"ok": False, "error": str(exc)}
+
+    if proc.returncode != 0:
+        return {
+            "ok": False,
+            "kernel_name": kernel_name,
+            "error": f"exit code {proc.returncode}",
+            "stderr_tail": output[-800:] if output else "",
+            "output_file": output_file,
+        }
+
+    # Extract last_pass.mlir
+    last_pass_content = ""
+    if "bishengir-print-ir-after" in print_ir_flag:
+        # Direct IR output: entire file is the last-pass IR
+        last_pass_content = output
+    else:
+        # Marker-based extraction: find last "IR Dump After" block
+        lines = output.splitlines()
+        last_idx = -1
+        for i, line in enumerate(lines):
+            if "IR Dump After" in line:
+                last_idx = i
+        if last_idx >= 0:
+            last_pass_content = "\n".join(lines[last_idx:])
+
+    if not last_pass_content:
+        return {"ok": False, "error": "no IR Dump After found in output"}
+
+    # Save last_pass.mlir
+    last_pass_path = os.path.join(output_dir, f"{kernel_name}_last_pass.mlir")
+    with open(last_pass_path, "w") as f:
+        f.write(last_pass_content)
+
+    # Copy ttir and ttadapter if available
+    saved_files = {"last_pass": last_pass_path}
+    ttir_src = os.path.join(dump_dir, "kernel.ttir.mlir")
+    if os.path.isfile(ttir_src):
+        ttir_dst = os.path.join(output_dir, f"{kernel_name}_ttir.mlir")
+        with open(ttir_src) as src, open(ttir_dst, "w") as dst:
+            dst.write(src.read())
+        saved_files["ttir"] = ttir_dst
+
+    ttadapter_dst = os.path.join(output_dir, f"{kernel_name}_ttadapter.mlir")
+    if os.path.isfile(ttadapter_path):
+        with open(ttadapter_path) as src, open(ttadapter_dst, "w") as dst:
+            dst.write(src.read())
+        saved_files["ttadapter"] = ttadapter_dst
+
+    # Validate last_pass
+    valid = "hivm.hir." in last_pass_content or "llvm." in last_pass_content
+
+    # Quick performance characteristics
+    total_lines = last_pass_content.count("\n") + 1
+    hivm_count = last_pass_content.count("hivm.hir.")
+    llvm_count = last_pass_content.count("llvm.")
+    memcpy_count = last_pass_content.count("llvm.memcpy")
+    load_count = last_pass_content.count("llvm.load")
+    store_count = last_pass_content.count("llvm.store")
+    sync_count = len(re.findall(r"hivm\.hir\.\w*sync\w*", last_pass_content, re.IGNORECASE))
+    scalar_count = len(re.findall(r"hivm\.hir\.\w*scalar\w*", last_pass_content, re.IGNORECASE))
+
+    return {
+        "ok": True,
+        "valid": valid,
+        "kernel_name": kernel_name,
+        "saved_files": saved_files,
+        "last_pass_lines": total_lines,
+        "hivm_intrinsics": hivm_count,
+        "hivm_ratio_pct": round(hivm_count / max(total_lines, 1) * 100, 1),
+        "llvm_ops": llvm_count,
+        "memory_ops": {"load": load_count, "store": store_count, "memcpy": memcpy_count},
+        "sync_ops": sync_count,
+        "scalar_ops": scalar_count,
+    }
+
+
+def _identify_bottlenecks(kernel_results: list[dict]) -> list[str]:
+    """Identify potential bottlenecks from IR analysis."""
+    suggestions = []
+    if not kernel_results:
+        return suggestions
+
+    for kr in kernel_results:
+        if not kr.get("ok"):
+            continue
+        name = kr.get("kernel_name", "?")
+        hivm_pct = kr.get("hivm_ratio_pct", 0)
+        mem_ops = kr.get("memory_ops", {})
+        sync_ops = kr.get("sync_ops", 0)
+        scalar_ops = kr.get("scalar_ops", 0)
+
+        total_mem = mem_ops.get("load", 0) + mem_ops.get("store", 0) + mem_ops.get("memcpy", 0)
+
+        if scalar_ops > 0 and hivm_pct > 0:
+            scalar_ratio = scalar_ops / max(kr.get("last_pass_lines", 1), 1) * 100
+            if scalar_ratio > 5:
+                suggestions.append(
+                    f"[{name}] Scalar operations detected ({scalar_ratio:.1f}%). "
+                    f"Check: scalar_to_vector (point 5), avoid_scalar_lowering (point 6)"
+                )
+
+        if total_mem > hivm_pct * 10:
+            suggestions.append(
+                f"[{name}] High memory operation count ({total_mem} ops). "
+                f"Check: tiling_optimization (point 2), discrete_memory_access (point 4), "
+                f"loop_invariant_hoisting (point 10)"
+            )
+
+        if sync_ops > 2:
+            suggestions.append(
+                f"[{name}] Sync operations detected ({sync_ops}). "
+                f"Check: pass_merge (point 7), kernel_splitting (point 18)"
+            )
+
+    if not suggestions:
+        suggestions.append("No obvious bottlenecks detected in IR. Check all optimization points systematically.")
+
+    return suggestions
+
+
+def main() -> int:
+    op_name = _find_op_name()
+    if not op_name:
+        print("[collect_ir] FAILED: no implementation file found.")
+        print("[collect_ir] Create src/<op_name>_triton_ascend_impl.py first.")
+        return 0
+
+    print(f"[collect_ir] op_name={op_name} workspace={WORKSPACE}")
+
+    # Step 1: Find bishengir-compile
+    bishengir_path = _find_bishengir_compile()
+    if not bishengir_path:
+        summary = {
+            "stage": "ir_failed",
+            "error": "bishengir-compile not found. Set BISHENGIR_COMPILE env var or ensure it's on PATH.",
+        }
+        print("[collect_ir] ERROR: bishengir-compile not found")
+        print("[collect_ir] === SUMMARY ===")
+        print(json.dumps(summary, ensure_ascii=False, indent=2))
+        return 0
+
+    print(f"[collect_ir] bishengir-compile: {bishengir_path}")
+
+    # Step 2: Detect target and IR dump flag
+    target = _detect_bishengir_target()
+    if not target:
+        summary = {
+            "stage": "ir_failed",
+            "error": "Could not determine bishengir-compile target. Set BISHENGIR_TARGET env var.",
+        }
+        print("[collect_ir] ERROR: could not determine compile target")
+        print("[collect_ir] === SUMMARY ===")
+        print(json.dumps(summary, ensure_ascii=False, indent=2))
+        return 0
+
+    print_ir_flag = _detect_print_ir_flag(bishengir_path)
+    if not print_ir_flag:
+        summary = {
+            "stage": "ir_failed",
+            "error": "Could not detect IR dump flag for bishengir-compile.",
+        }
+        print("[collect_ir] ERROR: no IR dump flag found")
+        print("[collect_ir] === SUMMARY ===")
+        print(json.dumps(summary, ensure_ascii=False, indent=2))
+        return 0
+
+    print(f"[collect_ir] target={target} ir_flag={print_ir_flag}")
+
+    # Step 3: Generate runner script
+    runner_path = _generate_runner(op_name)
+    print(f"[collect_ir] runner script: {runner_path}")
+
+    # Step 4: Run with TRITON_DEBUG=1
+    print("[collect_ir] === Running with TRITON_DEBUG=1 ===")
+    stdout, stderr = _run_ir_collection(runner_path)
+    log_output = stdout + "\n" + stderr
+
+    # Save raw log
+    log_path = os.path.join(WORKSPACE, "output", "ir", "triton_compile_run.log")
+    os.makedirs(os.path.dirname(log_path), exist_ok=True)
+    with open(log_path, "w") as f:
+        f.write(log_output)
+
+    # Step 5: Parse dump directories
+    dump_dirs = _parse_dump_dirs(log_output)
+    if not dump_dirs:
+        summary = {
+            "stage": "ir_failed",
+            "error": "No IR dump directories found. The runner may have failed.",
+            "runner_log": log_path,
+            "stderr_tail": stderr[-500:] if stderr else "",
+        }
+        print("[collect_ir] No dump directories found")
+        print("[collect_ir] === SUMMARY ===")
+        print(json.dumps(summary, ensure_ascii=False, indent=2))
+        return 0
+
+    print(f"[collect_ir] Found {len(dump_dirs)} dump directories")
+
+    # Step 6: Deduplicate by kernel name
+    seen_kernels = set()
+    unique_kernels = []
+    for dd in dump_dirs:
+        ttadapter = os.path.join(dd, "kernel.ttadapter.mlir")
+        if not os.path.isfile(ttadapter):
+            continue
+        kname = _extract_kernel_name(ttadapter)
+        if kname in seen_kernels:
+            continue
+        seen_kernels.add(kname)
+        unique_kernels.append((dd, kname))
+
+    print(f"[collect_ir] {len(unique_kernels)} unique kernels: {list(seen_kernels)}")
+
+    # Step 7: Run bishengir-compile for each kernel
+    ir_output_dir = os.path.join(WORKSPACE, "output", "ir")
+    os.makedirs(ir_output_dir, exist_ok=True)
+
+    kernel_results = []
+    for dump_dir, kname in unique_kernels:
+        print(f"[collect_ir] Compiling kernel: {kname}")
+        ttadapter = os.path.join(dump_dir, "kernel.ttadapter.mlir")
+        result = _run_bishengir_compile(
+            bishengir_path, target, print_ir_flag,
+            ttadapter, dump_dir, kname, ir_output_dir,
+        )
+        kernel_results.append(result)
+        if result.get("ok"):
+            print(f"[collect_ir]   -> valid={result['valid']} lines={result['last_pass_lines']}")
+        else:
+            print(f"[collect_ir]   -> FAILED: {result.get('error', 'unknown')}")
+
+    # Step 8: Identify bottlenecks
+    bottlenecks = _identify_bottlenecks(kernel_results)
+
+    # Step 9: Build summary
+    ir_files = {}
+    for kr in kernel_results:
+        if kr.get("ok"):
+            ir_files[kr["kernel_name"]] = kr["saved_files"]
+
+    summary = {
+        "stage": "ir_collected",
+        "op_name": op_name,
+        "ir_output_dir": ir_output_dir,
+        "runner_log": log_path,
+        "kernels": [kr for kr in kernel_results if kr.get("ok")],
+        "failed_kernels": [
+            {
+                "kernel_name": kr.get("kernel_name", "?"),
+                "error": kr.get("error", "?"),
+                "stderr_tail": kr.get("stderr_tail", ""),
+            }
+            for kr in kernel_results if not kr.get("ok")
+        ],
+        "ir_files": ir_files,
+        "bottleneck_suggestions": bottlenecks,
+    }
+
+    print("[collect_ir] === SUMMARY ===")
+    print(json.dumps(summary, ensure_ascii=False, indent=2))
+
+    # Print human-readable bottleneck suggestions
+    if bottlenecks:
+        print("\n[collect_ir] === Bottleneck Analysis ===")
+        for s in bottlenecks:
+            print(f"  - {s}")
+
+    # Print IR file locations
+    print("\n[collect_ir] === IR Files ===")
+    for kname, files in ir_files.items():
+        print(f"  Kernel: {kname}")
+        for ftype, fpath in files.items():
+            print(f"    {ftype}: {fpath}")
+        print("  (Use str_replace_editor view to read IR files for deeper analysis)")
+
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())

@@ -1,0 +1,315 @@
+#!/usr/bin/env python3
+"""run_verify - AST check + verify + benchmark for Triton Ascend operators."""
+
+from __future__ import annotations
+
+import glob
+import json
+import os
+import subprocess
+import sys
+from pathlib import Path
+from typing import Any
+
+
+def _workspace() -> Path:
+    env = os.environ.get("TRITON_WORKSPACE_DIR") or os.environ.get("WORKSPACE_BASE")
+    if env:
+        return Path(env)
+    cwd = Path.cwd()
+    if (cwd / "src").is_dir() and (cwd / "tools").is_dir():
+        return cwd
+    return Path("/opt/workspace/agent_workdir")
+
+
+def _find_op_name(workspace: Path) -> str | None:
+    op = os.environ.get("OPERATOR_NAME", "").strip()
+    if op:
+        return op
+    matches = glob.glob(str(workspace / "src" / "*_triton_ascend_impl.py"))
+    if not matches:
+        return None
+    base = os.path.basename(matches[0])
+    return base[: -len("_triton_ascend_impl.py")]
+
+
+def _read_json(path: Path) -> dict[str, Any] | None:
+    if not path.is_file():
+        return None
+    try:
+        return json.loads(path.read_text(encoding="utf-8-sig"))
+    except Exception:
+        return None
+
+
+def _run(cmd: list[str], *, cwd: Path, timeout: int | None = None) -> tuple[int, str, str]:
+    try:
+        proc = subprocess.run(
+            cmd,
+            cwd=str(cwd),
+            capture_output=True,
+            text=True,
+            timeout=timeout,
+            env=os.environ.copy(),
+        )
+        return proc.returncode, proc.stdout, proc.stderr
+    except subprocess.TimeoutExpired as exc:
+        out = exc.stdout or ""
+        err = exc.stderr or ""
+        if isinstance(out, bytes):
+            out = out.decode("utf-8", errors="replace")
+        if isinstance(err, bytes):
+            err = err.decode("utf-8", errors="replace")
+        return 124, out, err + "\n[run_verify] command timed out"
+
+
+def _print_summary(summary: dict[str, Any]) -> None:
+    print("[run_verify] === SUMMARY ===")
+    print(json.dumps(summary, ensure_ascii=False, indent=2))
+
+
+def _bottleneck_hint(kernel_metrics: dict[str, dict[str, float]] | None) -> str:
+    if not kernel_metrics:
+        return "No kernel metrics available yet. Focus on correctness first."
+
+    hints: list[str] = []
+    for kernel, metrics in kernel_metrics.items():
+        mte2 = metrics.get("aiv_mte2_ratio", 0.0)
+        mte3 = metrics.get("aiv_mte3_ratio", 0.0)
+        scalar = metrics.get("aiv_scalar_ratio", 0.0)
+        vec = metrics.get("aiv_vec_ratio", 0.0)
+        cube = metrics.get("cube_utilization(%)", metrics.get("aic_mac_ratio", 0.0))
+
+        if mte2 >= 0.35 or mte3 >= 0.35:
+            hints.append(f"{kernel}: memory bandwidth bound (mte2={mte2:.2f}, mte3={mte3:.2f})")
+        elif scalar >= 0.25:
+            hints.append(f"{kernel}: scalar-heavy (scalar_ratio={scalar:.2f})")
+        elif vec <= 0.2 and cube <= 0.2:
+            hints.append(f"{kernel}: low compute utilization (vec={vec:.2f}, cube={cube:.2f})")
+        else:
+            hints.append(f"{kernel}: balanced profile; inspect latency-optimizer skill for next steps")
+
+    return "; ".join(hints[:4])
+
+
+def _kernel_metrics_from_perf(perf: dict[str, Any] | None) -> dict[str, dict[str, float]] | None:
+    if not isinstance(perf, dict):
+        return None
+    impl = perf.get("implementation")
+    if isinstance(impl, dict):
+        km = impl.get("kernel_metrics")
+        if isinstance(km, dict) and km:
+            return km
+    per_shape = perf.get("per_shape_results")
+    if isinstance(per_shape, list):
+        merged: dict[str, dict[str, float]] = {}
+        for item in per_shape:
+            if not isinstance(item, dict):
+                continue
+            impl_shape = item.get("implementation")
+            if not isinstance(impl_shape, dict):
+                continue
+            km = impl_shape.get("kernel_metrics")
+            if isinstance(km, dict):
+                merged.update(km)
+        return merged or None
+    return None
+
+
+def main() -> int:
+    workspace = _workspace()
+    os.chdir(workspace)
+
+    op_name = _find_op_name(workspace)
+    if not op_name:
+        _print_summary(
+            {
+                "stage": "setup_failed",
+                "ast_valid": False,
+                "verified_success": False,
+                "error": "Could not detect op_name from OPERATOR_NAME or src/*_triton_ascend_impl.py",
+            }
+        )
+        return 1
+
+    tools = workspace / "tools"
+    validate_py = tools / "triton-op-verifier" / "scripts" / "validate_triton_impl.py"
+    run_npu = tools / "run_npu_command.sh"
+    verify_py = tools / "triton-op-verifier" / "scripts" / "verify.py"
+    benchmark_py = tools / "triton-op-verifier" / "scripts" / "benchmark.py"
+    impl_path = workspace / "src" / f"{op_name}_triton_ascend_impl.py"
+
+    ast_python = os.environ.get("AST_CHECK_PYTHON", "python3")
+    operator_python = os.environ.get("OPERATOR_PYTHON", "python3")
+    eval_timeout = os.environ.get("EVAL_TIMEOUT", "900")
+
+    summary: dict[str, Any] = {
+        "stage": "started",
+        "op_name": op_name,
+        "ast_valid": False,
+        "verified_success": False,
+    }
+
+    if not impl_path.is_file():
+        summary.update(
+            {
+                "stage": "setup_failed",
+                "error": f"Implementation file missing: {impl_path}",
+            }
+        )
+        _print_summary(summary)
+        return 1
+
+    # ---- AST check ----
+    print(f"[run_verify] AST check: {impl_path}")
+    ast_cmd = [ast_python, str(validate_py), str(impl_path), "--json"]
+    ast_rc, ast_out, ast_err = _run(ast_cmd, cwd=workspace, timeout=120)
+    ast_data = None
+    if ast_out.strip():
+        try:
+            ast_data = json.loads(ast_out)
+        except json.JSONDecodeError:
+            ast_data = None
+
+    ast_valid = ast_rc == 0 and (
+        ast_data.get("valid", True) if isinstance(ast_data, dict) else ast_rc == 0
+    )
+    summary["ast_valid"] = bool(ast_valid)
+    if isinstance(ast_data, dict):
+        summary["ast_result"] = ast_data
+
+    if not ast_valid:
+        summary["stage"] = "ast_failed"
+        summary["error"] = (
+            (ast_data or {}).get("message")
+            or (ast_data or {}).get("error")
+            or ast_err.strip()
+            or ast_out.strip()
+            or "AST validation failed"
+        )
+        _print_summary(summary)
+        return 1
+
+    # ---- Stage verify inputs ----
+    verify_dir = workspace / "output" / "verify"
+    verify_dir.mkdir(parents=True, exist_ok=True)
+    stage_cmd = (
+        f"cp -f {impl_path} {verify_dir / f'{op_name}_triton_ascend_impl.py'} && "
+        f"cp -f {workspace / 'src' / f'{op_name}.py'} {verify_dir / f'{op_name}_torch.py'} && "
+        f"(cp -f {workspace / 'src'}/*.json {verify_dir}/ 2>/dev/null || true) && "
+        f"(cp -f {workspace / 'src'}/*.jsonl {verify_dir}/ 2>/dev/null || true)"
+    )
+    subprocess.run(stage_cmd, shell=True, cwd=str(workspace), check=False)
+
+    verify_output = verify_dir / "verify_result.json"
+    summary_output = verify_dir / "verify_result_summary.json"
+
+    # ---- Correctness verify ----
+    print(f"[run_verify] verify: op={op_name}")
+    verify_cmd = [
+        "bash",
+        str(run_npu),
+        operator_python,
+        str(verify_py),
+        "--op_name",
+        op_name,
+        "--verify_dir",
+        "output/verify",
+        "--triton_impl_name",
+        "triton_ascend_impl",
+        "--timeout",
+        eval_timeout,
+        "--output",
+        str(verify_output),
+    ]
+    verify_rc, verify_out, verify_err = _run(
+        verify_cmd,
+        cwd=workspace,
+        timeout=int(float(eval_timeout)) + 120,
+    )
+    if verify_out:
+        print(verify_out, end="" if verify_out.endswith("\n") else "\n")
+    if verify_err:
+        print(verify_err, file=sys.stderr, end="" if verify_err.endswith("\n") else "\n")
+
+    verify_summary = _read_json(summary_output) or _read_json(verify_output)
+    if isinstance(verify_summary, dict):
+        summary.update(
+            {
+                "total_cases": verify_summary.get("total_cases"),
+                "passed_cases": verify_summary.get("passed_cases"),
+                "failed_cases": verify_summary.get("failed_cases"),
+                "pass_rate": verify_summary.get("pass_rate"),
+                "verified_success": bool(verify_summary.get("verified_success")),
+                "error_groups": verify_summary.get("error_groups", []),
+            }
+        )
+    else:
+        raw_verify = _read_json(verify_output)
+        if isinstance(raw_verify, dict):
+            total = int(raw_verify.get("total_cases") or 0)
+            passed = int(raw_verify.get("passed_cases") or 0)
+            summary.update(
+                {
+                    "total_cases": total,
+                    "passed_cases": passed,
+                    "failed_cases": max(total - passed, 0),
+                    "pass_rate": round(passed / max(total, 1), 6) if total else 0.0,
+                    "verified_success": total > 0 and passed == total and verify_rc == 0,
+                    "error_groups": [],
+                }
+            )
+
+    if not summary.get("verified_success"):
+        summary["stage"] = "verify_failed"
+        summary["verify_exit"] = verify_rc
+        _print_summary(summary)
+        return 1
+
+    # ---- Benchmark ----
+    perf_output = workspace / "output" / "perf_result.json"
+    print(f"[run_verify] benchmark: op={op_name}")
+    bench_cmd = [
+        "bash",
+        str(run_npu),
+        operator_python,
+        str(benchmark_py),
+        "--op_name",
+        op_name,
+        "--verify_dir",
+        "output/verify",
+        "--triton_impl_name",
+        "triton_ascend_impl",
+        "--output",
+        str(perf_output),
+    ]
+    bench_rc, bench_out, bench_err = _run(
+        bench_cmd,
+        cwd=workspace,
+        timeout=int(float(eval_timeout)) + 120,
+    )
+    if bench_out:
+        print(bench_out, end="" if bench_out.endswith("\n") else "\n")
+    if bench_err:
+        print(bench_err, file=sys.stderr, end="" if bench_err.endswith("\n") else "\n")
+
+    perf = _read_json(perf_output)
+    if isinstance(perf, dict):
+        summary["speedup_vs_torch"] = perf.get("speedup_vs_torch")
+        summary["perf_total_cases"] = perf.get("total_cases")
+        summary["perf_passed_cases"] = perf.get("passed_cases")
+        kernel_metrics = _kernel_metrics_from_perf(perf)
+        if kernel_metrics:
+            summary["kernel_metrics"] = kernel_metrics
+            summary["bottleneck_hint"] = _bottleneck_hint(kernel_metrics)
+    else:
+        summary["benchmark_exit"] = bench_rc
+        summary["bottleneck_hint"] = "Benchmark did not produce perf_result.json"
+
+    summary["stage"] = "completed" if bench_rc == 0 else "benchmark_failed"
+    _print_summary(summary)
+    return 0 if summary.get("verified_success") else 1
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

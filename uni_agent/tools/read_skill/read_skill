@@ -1,0 +1,282 @@
+#!/usr/bin/env python3
+"""Read a skill's SKILL.md or reference files.
+
+Modes:
+  --skill <name>                          # default: metadata + directory + first sentence per heading
+  --skill <name> --section "标题"          # read a ## or ### chapter
+  --skill <name> --file references/xx.md  # read a references/ file
+  --skill <name> --full                   # read entire SKILL.md
+"""
+
+from __future__ import annotations
+
+import argparse
+import os
+import re
+import sys
+from pathlib import Path
+
+
+def _parse_frontmatter(content: str) -> dict[str, str]:
+    """Parse YAML frontmatter (between --- lines) from SKILL.md.
+
+    Handles simple values and folded scalars (>). Does not require
+    the yaml package.
+    """
+    m = re.match(r"^---\s*\n(.*?)\n---\s*\n", content, re.DOTALL)
+    if not m:
+        return {}
+
+    fm_text = m.group(1)
+    result: dict[str, str] = {}
+    lines = fm_text.splitlines()
+    i = 0
+    while i < len(lines):
+        line = lines[i]
+        key_match = re.match(r"^(\S+):\s*(.*)$", line)
+        if key_match:
+            key = key_match.group(1)
+            value = key_match.group(2).strip()
+            if value == ">":
+                # Folded scalar: collect following indented lines
+                folded_lines: list[str] = []
+                i += 1
+                while i < len(lines) and (lines[i].startswith(" ") or lines[i].strip() == ""):
+                    folded_lines.append(lines[i].strip())
+                    i += 1
+                result[key] = " ".join(folded_lines)
+                continue
+            elif value:
+                # Simple value (strip surrounding quotes if present)
+                if len(value) >= 2 and value[0] in "\"'" and value[-1] == value[0]:
+                    value = value[1:-1]
+                result[key] = value
+        i += 1
+
+    return result
+
+
+def _split_sections(content: str) -> list[tuple[str, str]]:
+    """Split markdown into (heading, body) pairs by ## headings.
+
+    ### headings are NOT split here -- they stay within their parent ## section.
+    """
+    sections: list[tuple[str, str]] = []
+    current_heading = "(top)"
+    current_lines: list[str] = []
+    for line in content.splitlines():
+        if re.match(r"^#{1,2}\s", line):
+            if current_lines:
+                sections.append((current_heading, "\n".join(current_lines)))
+            current_heading = line
+            current_lines = []
+        else:
+            current_lines.append(line)
+    if current_lines:
+        sections.append((current_heading, "\n".join(current_lines)))
+    return sections
+
+
+def _split_subsections(content: str) -> list[tuple[str, str]]:
+    """Split markdown into (heading, body) pairs by ### headings only.
+
+    Used for reading individual ### subsections.
+    """
+    sections: list[tuple[str, str]] = []
+    current_heading = "(top)"
+    current_lines: list[str] = []
+    for line in content.splitlines():
+        if re.match(r"^###\s", line):
+            if current_lines:
+                sections.append((current_heading, "\n".join(current_lines)))
+            current_heading = line
+            current_lines = []
+        else:
+            current_lines.append(line)
+    if current_lines:
+        sections.append((current_heading, "\n".join(current_lines)))
+    return sections
+
+
+def _extract_heading_tree(content: str) -> list[tuple[int, str]]:
+    """Extract all ## and ### headings with their level.
+
+    Returns a list of (level, heading_line) tuples where level is 2 or 3.
+    """
+    tree: list[tuple[int, str]] = []
+    for line in content.splitlines():
+        m = re.match(r"^(#{2,3})\s+(.+)$", line)
+        if m:
+            tree.append((len(m.group(1)), line))
+    return tree
+
+
+def _truncate_line(text: str, limit: int = 250) -> str:
+    """Truncate a single line to ``limit`` chars, appending '...' if truncated."""
+    if len(text) <= limit:
+        return text
+    return text[:limit].rstrip() + "..."
+
+
+def _extract_heading_summaries(content: str) -> list[tuple[int, str, str]]:
+    """For each ## and ### heading, extract the first content line under it.
+
+    Returns a list of (level, heading_line, first_sentence) tuples. Skips
+    empty lines and pure table separators (``| --- | --- |``). Stops at the
+    next heading of any level. Truncates the captured line to 250 chars.
+    Returns an empty first_sentence when the heading is immediately followed
+    by another heading or only table/blank lines.
+    """
+    # Strip frontmatter so its keys aren't mistaken for prose.
+    body = content
+    fm_match = re.match(r"^---\s*\n.*?\n---\s*\n", body, re.DOTALL)
+    if fm_match:
+        body = body[fm_match.end():]
+
+    lines = body.splitlines()
+    summaries: list[tuple[int, str, str]] = []
+    i = 0
+    while i < len(lines):
+        line = lines[i]
+        m = re.match(r"^(#{2,3})\s+(.+)$", line)
+        if not m:
+            i += 1
+            continue
+        level = len(m.group(1))
+        heading = line
+        first_sentence = ""
+        j = i + 1
+        while j < len(lines):
+            nxt = lines[j]
+            nxt_stripped = nxt.strip()
+            # Stop at next heading of any level.
+            if re.match(r"^#{1,6}\s", nxt):
+                break
+            # Skip blank lines.
+            if not nxt_stripped:
+                j += 1
+                continue
+            # Skip pure table separator lines (e.g. | --- | --- |).
+            if nxt_stripped.startswith("|") and re.match(r"^\|[\s:|-]+\|$", nxt_stripped):
+                j += 1
+                continue
+            # First real content line.
+            first_sentence = _truncate_line(nxt_stripped)
+            break
+        summaries.append((level, heading, first_sentence))
+        i += 1
+    return summaries
+
+
+def _truncate(text: str, limit: int = 1000000) -> str:
+    if len(text) > limit:
+        return text[:limit] + "\n...[truncated]"
+    return text
+
+
+def read_skill(
+    skills_dir: str,
+    skill: str,
+    section: str = "",
+    file: str = "",
+    full: bool = False,
+) -> str:
+    root = Path(skills_dir)
+    skill_dir = root / skill
+    skill_md = skill_dir / "SKILL.md"
+
+    if not skill_md.is_file():
+        # try to find skill by matching directory name
+        candidates = [d for d in root.iterdir() if d.is_dir() and d.name == skill]
+        if not candidates:
+            return f"Skill not found: {skill} (looked in {root})"
+
+    if file:
+        file_path = skill_dir / file
+        if not file_path.is_file():
+            return f"File not found: {file} in skill {skill} (full path: {file_path})"
+        content = file_path.read_text(encoding="utf-8", errors="replace")
+        return f"source: {skill}/{file}\n\n{_truncate(content)}"
+
+    if not skill_md.is_file():
+        return f"SKILL.md not found for skill: {skill}"
+
+    content = skill_md.read_text(encoding="utf-8", errors="replace")
+
+    if full:
+        return f"source: {skill}/SKILL.md\n\n{content}"
+
+    if section:
+        # First pass: try matching ## headings (returns full section
+        # including ### subsections within it)
+        sections = _split_sections(content)
+        target = section.strip().lower()
+        for heading, body in sections:
+            if target in heading.lower():
+                return f"source: {skill}/SKILL.md\nheading: {heading}\n\n{body}"
+        # Second pass: try matching ### headings (returns just that subsection)
+        subsections = _split_subsections(content)
+        for heading, body in subsections:
+            if target in heading.lower():
+                return f"source: {skill}/SKILL.md\nheading: {heading}\n\n{body}"
+        # Not found: list all headings (## and ### with indentation)
+        heading_tree = _extract_heading_tree(content)
+        all_headings = []
+        for level, heading in heading_tree:
+            if level == 2:
+                all_headings.append(heading)
+            elif level == 3:
+                all_headings.append(f"  {heading}")
+        return (
+            f"Section '{section}' not found in {skill}/SKILL.md.\n"
+            f"Available headings:\n" + "\n".join(all_headings)
+        )
+
+    # default: metadata + directory (headings + first sentence per heading)
+    fm = _parse_frontmatter(content)
+    heading_summaries = _extract_heading_summaries(content)
+
+    # Build metadata section
+    meta_parts = []
+    if fm.get("name"):
+        meta_parts.append(f"- name: {fm['name']}")
+    if fm.get("description"):
+        meta_parts.append(f"- description: {fm['description']}")
+    if fm.get("argument-hint"):
+        meta_parts.append(f"- argument-hint: {fm['argument-hint']}")
+    meta_block = "\n".join(meta_parts) if meta_parts else "(no metadata)"
+
+    # Build directory: each heading followed by its first sentence (indented).
+    dir_lines = []
+    for level, heading, first_sentence in heading_summaries:
+        if level == 2:
+            dir_lines.append(heading)
+            dir_lines.append(f"  {first_sentence}" if first_sentence else "")
+        elif level == 3:
+            dir_lines.append(f"  {heading}")
+            dir_lines.append(f"    {first_sentence}" if first_sentence else "")
+
+    return (
+        f"source: {skill}/SKILL.md\n\n"
+        f"## Metadata\n{meta_block}\n\n"
+        f"## Directory\n" + "\n".join(dir_lines) + "\n"
+    )
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--skill", required=True, help="Skill name")
+    parser.add_argument("--section", default="", help="## or ### heading to read")
+    parser.add_argument("--file", default="", help="references/ file path")
+    parser.add_argument("--full", action="store_true", help="Read entire SKILL.md")
+    args = parser.parse_args()
+
+    skills_dir = os.environ.get(
+        "SKILLS_DIR", "/opt/workspace/agent_workdir/.skills"
+    )
+    result = read_skill(skills_dir, args.skill, args.section, args.file, args.full)
+    print(result)
+
+
+if __name__ == "__main__":
+    main()

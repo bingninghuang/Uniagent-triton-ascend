@@ -92,18 +92,28 @@ class RemoteRuntime(AbstractRuntime):
             return self._config.timeout
         return timeout
 
+    @staticmethod
+
+    def _unverified_ssl_context() -> ssl.SSLContext:
+        """TODO use tls1.2 for openyuanrong, will be removed in the future"""
+        ctx = ssl.SSLContext(ssl.PROTOCOL_TLS_CLIENT)
+        ctx.check_hostname = False
+        ctx.verify_mode = ssl.CERT_NONE
+        ctx.minimum_version = ssl.TLSVersion.TLSv1_2
+        ctx.maximum_version = ssl.TLSVersion.TLSv1_2
+        return ctx
+
     def _make_connector(self) -> aiohttp.TCPConnector:
-        if self._config.ssl_verify:
-            return aiohttp.TCPConnector(force_close=True)
-        return aiohttp.TCPConnector(force_close=True, ssl=False)
+        if self._api_url.startswith("https://") and not self._config.ssl_verify:
+            return aiohttp.TCPConnector(ssl=self._unverified_ssl_context(), force_close=True)
+        return aiohttp.TCPConnector(force_close=True)
 
     def _client_session_kwargs(self, *, timeout: float | None = None) -> dict[str, Any]:
-        kwargs: dict[str, Any] = {
-            "connector": self._make_connector(),
-            "proxy": self._config.proxy,
-        }
+        kwargs: dict[str, Any] = {"connector": self._make_connector()}
         if timeout is not None:
             kwargs["timeout"] = aiohttp.ClientTimeout(total=timeout)
+        if self._config.proxy:
+            kwargs["proxy"] = self._config.proxy
         return kwargs
 
     @property
@@ -194,12 +204,12 @@ class RemoteRuntime(AbstractRuntime):
                     data = await response.json()
                     msg = f"Status code {response.status} from {self._api_url}/is_alive. Message: {data.get('detail')}"
                     return IsAliveResponse(is_alive=False, message=msg)
-        except aiohttp.ClientError:
-            msg = f"Failed to connect to {self._config.host}\n"
+        except (aiohttp.ClientError, TimeoutError):
+            msg = f"Failed to connect to {self._api_url}\n"
             msg += traceback.format_exc()
             return IsAliveResponse(is_alive=False, message=msg)
         except Exception:
-            msg = f"Failed to connect to {self._config.host}\n"
+            msg = f"Failed to connect to {self._api_url}\n"
             msg += traceback.format_exc()
             return IsAliveResponse(is_alive=False, message=msg)
 
@@ -285,7 +295,7 @@ class RemoteRuntime(AbstractRuntime):
         source = Path(request.source_path).resolve()
         self.logger.debug(f"Uploading file from {source} to {request.target_path}")
 
-        async with aiohttp.ClientSession(**self._client_session_kwargs()) as session:
+        async with aiohttp.ClientSession(**self._client_session_kwargs(timeout=self._config.timeout)) as session:
             if source.is_dir():
                 # Ignore cleanup errors: See https://github.com/SWE-agent/SWE-agent/issues/1005
                 with tempfile.TemporaryDirectory(ignore_cleanup_errors=True) as temp_dir:
@@ -300,7 +310,9 @@ class RemoteRuntime(AbstractRuntime):
                         data.add_field("unzip", "true")
 
                         async with session.post(
-                            f"{self._api_url}/upload", data=data, headers=self._headers
+                            f"{self._api_url}/upload",
+                            data=data,
+                            headers=self._headers,
                         ) as response:
                             await self._handle_response_errors(response)
                             return UploadResponse(**(await response.json()))
@@ -319,7 +331,11 @@ class RemoteRuntime(AbstractRuntime):
 
                     self.logger.debug(f"FormData contains {len(data._fields)} fields: {[f[0] for f in data._fields]}")
 
-                    async with session.post(f"{self._api_url}/upload", data=data, headers=self._headers) as response:
+                    async with session.post(
+                        f"{self._api_url}/upload",
+                        data=data,
+                        headers=self._headers,
+                    ) as response:
                         await self._handle_response_errors(response)
                         return UploadResponse(**(await response.json()))
             else:

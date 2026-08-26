@@ -158,13 +158,13 @@ class YRDeploymentConfig(BaseModel):
 
     image: str | None = None
     """Docker image URL for the sandbox. Uses the default runtime image when unset."""
-    cpu: int = 2000
+    cpu: int = 1000
     """CPU request in milli-cores."""
-    memory: int = 4096
+    memory: int = 2048
     """Memory request in MiB."""
-    cpu_limit: int = 0
+    cpu_limit: int = 4000
     """CPU cgroup limit in milli-cores. 0 means equal to cpu."""
-    mem_limit: int = 0
+    mem_limit: int = 8192
     """Memory cgroup limit in MiB. 0 means equal to memory."""
     idle_timeout: int = 600
     """Idle timeout in seconds before auto-termination."""
@@ -190,6 +190,10 @@ class YRDeploymentConfig(BaseModel):
     """Verify TLS when connecting to the port-forwarded https URL (self-signed clusters often need False)."""
     sandbox_kwargs: dict[str, Any] = Field(default_factory=dict)
     """Extra keyword arguments passed to akernel_sdk.Sandbox."""
+    swerex_runtime_image: str | None = None
+    """Optional SWE-ReX runtime rootfs image mounted into the sandbox."""
+    swerex_runtime_target: str = "/opt/swe-rex"
+    """Mount point for the SWE-ReX runtime image inside the sandbox."""
 
     type: Literal["openyuanrong"] = "openyuanrong"
     """Discriminator for (de)serialization/CLI. Do not change."""

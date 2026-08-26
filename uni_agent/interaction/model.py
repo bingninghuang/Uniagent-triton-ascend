@@ -138,7 +138,7 @@ class AgentChatModel:
         return response_str, [], rollout_cache, generation_info
 
     async def _get_new_message_ids(self, new_messages: list[dict[str, Any]]) -> list[int]:
-        from verl.utils.chat_template import apply_chat_template
+        from verl.utils.tokenizer.chat_template import apply_chat_template
         from verl.utils.tokenizer import normalize_token_ids
 
         tokenized_prompt = await self.loop.run_in_executor(
@@ -154,7 +154,7 @@ class AgentChatModel:
 
     @cached_property
     def message_boundary_tokens(self) -> list[int]:
-        from verl.utils.chat_template import apply_chat_template
+        from verl.utils.tokenizer.chat_template import apply_chat_template
         from verl.utils.tokenizer import normalize_token_ids
 
         dummy_history = [
@@ -224,18 +224,12 @@ class OpenAICompatibleChatModel:
             self.sampling_params = {}
         if not hasattr(self, "timeout"):
             self.timeout = 300
-        if not hasattr(self, "verify_ssl"):
-            self.verify_ssl = True
         self.base_url = self.base_url.rstrip("/")
         self.loop = get_event_loop()
 
         from openai import AsyncOpenAI
 
-        client_kwargs = {"api_key": self.api_key, "base_url": self.base_url, "timeout": self.timeout}
-        if not self.verify_ssl:
-            import httpx
-            client_kwargs["http_client"] = httpx.AsyncClient(verify=False)
-        self.client = AsyncOpenAI(**client_kwargs)
+        self.client = AsyncOpenAI(api_key=self.api_key, base_url=self.base_url, timeout=self.timeout)
 
     def set_tools_schemas(self, tools_schemas: list[dict]) -> None:
         self.tools_schemas = tools_schemas
@@ -342,8 +336,7 @@ class OpenAICompatibleChatModel:
                 "reasoning_content (%d chars). Falling back to reasoning_content.",
                 len(reasoning),
             )
-            response_content = reasoning
-
+            response_content = ""
         serialized_tool_calls: list[dict] = [
             {
                 "id": tool_call.id,
@@ -359,6 +352,7 @@ class OpenAICompatibleChatModel:
         usage = chat_completion.usage
         completion_tokens = usage.completion_tokens if usage is not None else max(len(response_content.split()), 1)
         prompt_tokens = usage.prompt_tokens if usage is not None else 0
+        finish_reason = getattr(chat_completion.choices[0], "finish_reason", None) or ""
         return (
             response_content,
             serialized_tool_calls,
@@ -366,6 +360,6 @@ class OpenAICompatibleChatModel:
             {
                 "prompt_tokens": prompt_tokens,
                 "completion_tokens": completion_tokens,
-                "reasoning_content": reasoning,
+                "finish_reason": finish_reason,
             },
         )

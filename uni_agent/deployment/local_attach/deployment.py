@@ -42,6 +42,9 @@ Typical usage::
     env.close()              # no-op for container; sandbox keeps running
 """
 
+import asyncio
+import os
+import time
 import uuid
 from typing import Any, Self
 
@@ -57,7 +60,6 @@ from swerex.runtime.abstract import (
     CreateBashSessionRequest,
     IsAliveResponse,
 )
-from swerex.utils.wait import _wait_until_alive
 
 from uni_agent.async_logging import get_logger
 from uni_agent.deployment.config import LocalAttachDeploymentConfig
@@ -115,17 +117,27 @@ class LocalAttachDeployment(AbstractDeployment):
                 f"LocalAttach: client initialized for {self._config.host}:{self._config.port} (no container started)"
             )
 
-        try:
-            await _wait_until_alive(
-                self._runtime.is_alive,
-                timeout=self._config.startup_timeout,
-                function_timeout=0.5,
-            )
-        except TimeoutError as exc:
+        health_timeout = float(os.environ.get("TRITON_LOCAL_ATTACH_HEALTH_TIMEOUT", "5.0"))
+        deadline = time.monotonic() + self._config.startup_timeout
+        last_message = ""
+        alive = False
+        while True:
+            remaining = deadline - time.monotonic()
+            if remaining <= 0:
+                break
+            response = await self._runtime.is_alive(timeout=min(health_timeout, max(0.1, remaining)))
+            if response.is_alive:
+                alive = True
+                break
+            last_message = response.message or ""
+            await asyncio.sleep(0.5)
+
+        if not alive:
             raise RuntimeError(
                 f"LocalAttach: swerex at {self._config.host}:{self._config.port} not reachable within "
-                f"{self._config.startup_timeout}s. Is the user-managed container running and exposing the port?"
-            ) from exc
+                f"{self._config.startup_timeout}s. Is the user-managed container running and exposing the port? "
+                f"Last health-check message: {last_message}"
+            )
 
         session_name = CreateBashSessionRequest.model_fields["session"].default
         try:

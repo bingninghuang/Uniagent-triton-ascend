@@ -110,6 +110,13 @@ class ToolsManager:
             if param_key == "command":
                 continue
 
+            # Boolean flags: --flag (True) or omit (False).
+            # Must check before int/str because bool is a subclass of int.
+            if isinstance(param_value, bool):
+                if param_value:
+                    cmd_parts.append(f"--{param_key}")
+                continue
+
             # Use JSON for structured types so the script can json.loads them
             if isinstance(param_value, list | dict):
                 param_str = json.dumps(param_value, ensure_ascii=False)

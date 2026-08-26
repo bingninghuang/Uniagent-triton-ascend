@@ -1,0 +1,506 @@
+#!/usr/bin/env python3
+"""collect_profiling - collect msprof profiling metrics for the current operator.
+
+Runs inside the sandbox workspace. Auto-detects the op_name from
+src/*_triton_ascend_impl.py, extracts @triton.jit kernel names,
+runs msprof op, parses op_summary CSV for key metrics, and prints
+a structured summary with bottleneck analysis.
+"""
+
+from __future__ import annotations
+
+import csv
+import glob
+import json
+import os
+import re
+import subprocess
+import sys
+
+WORKSPACE = os.environ.get("TRITON_WORKSPACE_DIR", "/opt/workspace/agent_workdir")
+
+_cwd = os.getcwd()
+if os.path.isdir(os.path.join(_cwd, "src")) and os.path.isdir(os.path.join(_cwd, "tools")):
+    WORKSPACE = _cwd
+
+PYTHON = os.environ.get("OPERATOR_PYTHON", "/usr/local/python3.11.14/bin/python")
+MSPROF_TIMEOUT = 300  # seconds - profiling runner needs to compile + execute kernel
+RUNNER_TIMEOUT = 300
+
+
+def _find_op_name() -> str | None:
+    """Detect op_name from src/*_triton_ascend_impl.py."""
+    files = glob.glob(os.path.join(WORKSPACE, "src", "*_triton_ascend_impl.py"))
+    if not files:
+        return None
+    base = os.path.basename(files[0])
+    return base[: -len("_triton_ascend_impl.py")]
+
+
+def _get_impl_path(op_name: str) -> str:
+    return os.path.join(WORKSPACE, "src", f"{op_name}_triton_ascend_impl.py")
+
+
+def _extract_kernel_names(impl_path: str) -> list[str]:
+    """Extract @triton.jit kernel function names from the implementation file."""
+    try:
+        with open(impl_path, encoding="utf-8", errors="replace") as f:
+            content = f.read()
+    except Exception:
+        return []
+
+    # Match @triton.jit followed by def function_name
+    pattern = r"@triton\.jit\s*\n\s*def\s+(\w+)"
+    matches = re.findall(pattern, content)
+    return matches if matches else []
+
+
+def _find_msprof() -> str | None:
+    """Find the msprof binary."""
+    # Check common paths
+    candidates = [
+        "msprof",
+        "/usr/local/Ascend/ascend-toolkit/latest/bin/msprof",
+    ]
+    msprof_env = os.environ.get("MSPROF_PATH")
+    if msprof_env:
+        candidates.insert(0, msprof_env)
+
+    for c in candidates:
+        try:
+            result = subprocess.run(
+                ["which", c], capture_output=True, text=True, timeout=10,
+            )
+            if result.returncode == 0:
+                path = result.stdout.strip()
+                if path and os.path.isfile(path):
+                    return path
+        except Exception:
+            continue
+
+    # Try finding via find
+    try:
+        result = subprocess.run(
+            ["find", "/usr/local/Ascend", "-name", "msprof", "-type", "f"],
+            capture_output=True, text=True, timeout=30,
+        )
+        if result.stdout.strip():
+            path = result.stdout.strip().splitlines()[0]
+            if os.path.isfile(path):
+                return path
+    except Exception:
+        pass
+
+    return None
+
+
+def _generate_runner(op_name: str) -> str:
+    """Generate a temporary runner script that triggers kernel execution."""
+    module_name = f"{op_name}_triton_ascend_impl"
+
+    runner = f'''#!/usr/bin/env python3
+"""Auto-generated profiling runner. Triggers kernel execution for msprof."""
+import sys, os
+
+WORKSPACE = {repr(WORKSPACE)}
+os.chdir(WORKSPACE)
+sys.path.insert(0, os.path.join(WORKSPACE, "src"))
+
+import torch
+
+import {module_name} as impl_mod
+
+init_args = impl_mod.get_init_inputs()
+model = impl_mod.ModelNew(*init_args)
+
+if torch.npu.is_available():
+    model = model.npu()
+
+# Get test inputs
+inputs = None
+if hasattr(impl_mod, "get_input_groups"):
+    try:
+        all_groups = impl_mod.get_input_groups()
+        if all_groups:
+            inputs = all_groups[0]
+    except Exception as e:
+        print(f"[prof_runner] get_input_groups failed: {{e}}", file=sys.stderr)
+
+if inputs is None and hasattr(impl_mod, "get_inputs"):
+    try:
+        inputs = impl_mod.get_inputs()
+    except Exception as e:
+        print(f"[prof_runner] get_inputs failed: {{e}}", file=sys.stderr)
+
+if inputs is None:
+    print("[prof_runner] ERROR: No test inputs available", file=sys.stderr)
+    sys.exit(1)
+
+npu_inputs = []
+for x in inputs:
+    if isinstance(x, torch.Tensor):
+        npu_inputs.append(x.npu())
+    else:
+        npu_inputs.append(x)
+
+# Warmup runs to stabilize
+print("[prof_runner] Warmup runs...")
+with torch.no_grad():
+    for _ in range(3):
+        _ = model(*npu_inputs)
+torch.npu.synchronize()
+
+# Profiled run
+print("[prof_runner] Profiled run...")
+with torch.no_grad():
+    _ = model(*npu_inputs)
+torch.npu.synchronize()
+print("[prof_runner] Done.")
+'''
+    runner_path = os.path.join(WORKSPACE, "output", "prof_runner.py")
+    os.makedirs(os.path.dirname(runner_path), exist_ok=True)
+    with open(runner_path, "w") as f:
+        f.write(runner)
+    return runner_path
+
+
+def _run_msprof(msprof_path: str, kernel_names: list[str], runner_path: str) -> tuple[str, str, int]:
+    """Run msprof op on the runner script.
+
+    Sources env.sh for environment setup, sets ASCEND_RT_VISIBLE_DEVICES,
+    then runs msprof directly (not through run_npu_command.sh to avoid
+    device-lock blocking and sudo wrapping issues).
+
+    Returns (stdout, stderr, returncode).
+    """
+    output_dir = os.path.join(WORKSPACE, "output", "profiling")
+    os.makedirs(output_dir, exist_ok=True)
+
+    env_sh = os.path.join(WORKSPACE, "tools", "env.sh")
+
+    # Build msprof command
+    kernel_arg = ""
+    if kernel_names:
+        kernel_arg = f"--kernel-name={kernel_names[0]}"
+
+    # Source env.sh for Python/conda setup, then run msprof directly
+    cmd = (
+        f"cd {WORKSPACE} && "
+        f'source {env_sh} && '
+        f'{msprof_path} op {kernel_arg} '
+        f'--output={output_dir} '
+        f'{PYTHON} {runner_path}'
+    )
+
+    # Build env with device selection
+    env = os.environ.copy()
+    device_ids = os.environ.get("EVAL_DEVICE_IDS", os.environ.get("ASCEND_RT_VISIBLE_DEVICES", ""))
+    if device_ids:
+        env["ASCEND_RT_VISIBLE_DEVICES"] = device_ids.split(",")[0].strip()
+        env["ALLOCATED_DEVICE_ID"] = env["ASCEND_RT_VISIBLE_DEVICES"]
+
+    try:
+        proc = subprocess.run(
+            cmd, shell=True, capture_output=True, text=True, timeout=MSPROF_TIMEOUT, env=env,
+            executable="/bin/bash",
+        )
+        return proc.stdout, proc.stderr, proc.returncode
+    except subprocess.TimeoutExpired:
+        return "", f"msprof timed out after {MSPROF_TIMEOUT}s", -1
+    except Exception as exc:
+        return "", str(exc), -1
+
+
+def _find_op_summary(output_dir: str) -> str | None:
+    """Find op_summary CSV file in the profiling output."""
+    patterns = [
+        "op_summary_*.csv",
+        "op_summary.csv",
+        "**/op_summary_*.csv",
+        "**/op_summary.csv",
+    ]
+    for pattern in patterns:
+        matches = glob.glob(os.path.join(output_dir, pattern), recursive=True)
+        if matches:
+            return matches[0]
+    return None
+
+
+def _parse_op_summary(csv_path: str) -> dict:
+    """Parse op_summary CSV for key performance metrics."""
+    metrics = {}
+    try:
+        with open(csv_path, encoding="utf-8-sig") as f:
+            reader = csv.DictReader(f)
+            rows = list(reader)
+            if not rows:
+                return {"error": "empty CSV"}
+
+            # Take the first row (or aggregate if multiple)
+            row = rows[0]
+
+            # Map CSV columns to metrics (column names may vary by msprof version)
+            column_aliases = {
+                "aiv_vec_ratio": ["aiv_vec_ratio", "Vector Ratio", "vec_ratio"],
+                "aiv_mte2_ratio": ["aiv_mte2_ratio", "MTE2 Ratio", "mte2_ratio"],
+                "aiv_scalar_ratio": ["aiv_scalar_ratio", "Scalar Ratio", "scalar_ratio"],
+                "aic_cube_ratio": ["aic_cube_ratio", "Cube Ratio", "cube_ratio"],
+                "aic_mte1_ratio": ["aic_mte1_ratio", "MTE1 Ratio", "mte1_ratio"],
+                "op_duration_us": ["op_duration(us)", "op_duration", "Duration(us)", "duration"],
+                "kernel_name": ["Op Name", "op_name", "kernel_name", "Name"],
+            }
+
+            for metric, aliases in column_aliases.items():
+                for alias in aliases:
+                    if alias in row:
+                        val = row[alias]
+                        try:
+                            if metric == "kernel_name":
+                                metrics[metric] = val
+                            else:
+                                # Parse as float, stripping % if present
+                                val_str = str(val).strip().rstrip("%")
+                                metrics[metric] = float(val_str) if val_str else None
+                        except (ValueError, TypeError):
+                            pass
+                        break
+
+            # Also capture all raw columns for debugging
+            metrics["_raw_columns"] = list(row.keys())
+            metrics["_row_count"] = len(rows)
+
+    except Exception as exc:
+        return {"error": str(exc)}
+
+    return metrics
+
+
+def _analyze_bottlenecks(metrics: dict) -> list[dict]:
+    """Analyze metrics and identify bottlenecks with optimization suggestions."""
+    bottlenecks = []
+
+    vec_ratio = metrics.get("aiv_vec_ratio")
+    mte2_ratio = metrics.get("aiv_mte2_ratio")
+    scalar_ratio = metrics.get("aiv_scalar_ratio")
+    cube_ratio = metrics.get("aic_cube_ratio")
+    mte1_ratio = metrics.get("aic_mte1_ratio")
+
+    # Vector utilization
+    if vec_ratio is not None:
+        if vec_ratio < 10:
+            bottlenecks.append({
+                "metric": "aiv_vec_ratio",
+                "value": vec_ratio,
+                "threshold": ">80%",
+                "severity": "critical",
+                "diagnosis": "Vector compute unit severely underutilized",
+                "suggestions": [
+                    "point 2 (tiling_optimization): increase block size",
+                    "point 3 (vector_core_partition): check grid/core matching",
+                    "point 13 (autotune): tune block size parameters",
+                ],
+            })
+        elif vec_ratio < 80:
+            bottlenecks.append({
+                "metric": "aiv_vec_ratio",
+                "value": vec_ratio,
+                "threshold": ">80%",
+                "severity": "warning",
+                "diagnosis": "Vector compute unit underutilized",
+                "suggestions": [
+                    "point 2 (tiling_optimization): optimize tiling",
+                    "point 5 (scalar_to_vector): vectorize scalar ops",
+                ],
+            })
+
+    # Memory transfer
+    if mte2_ratio is not None and mte2_ratio > 50:
+        bottlenecks.append({
+            "metric": "aiv_mte2_ratio",
+            "value": mte2_ratio,
+            "threshold": "<50%",
+            "severity": "critical" if mte2_ratio > 70 else "warning",
+            "diagnosis": "Memory transfer bottleneck (GM->UB bandwidth limited)",
+            "suggestions": [
+                "point 2 (tiling_optimization): increase tile size to reduce transfers",
+                "point 4 (discrete_memory_access): optimize gather/scatter",
+                "point 10 (loop_invariant_hoisting): hoist repeated loads",
+                "point 11 (load_order): reorder loads for pipeline overlap",
+            ],
+        })
+
+    # Scalar operations
+    if scalar_ratio is not None and scalar_ratio > 20:
+        bottlenecks.append({
+            "metric": "aiv_scalar_ratio",
+            "value": scalar_ratio,
+            "threshold": "<20%",
+            "severity": "critical" if scalar_ratio > 30 else "warning",
+            "diagnosis": "Scalar degradation likely (int64, comparison, or division)",
+            "suggestions": [
+                "point 5 (scalar_to_vector): convert scalar ops to vector",
+                "point 6 (avoid_scalar_lowering): avoid int64, use int32",
+                "point 9 (libdevice_usage): use libdevice for math functions",
+            ],
+        })
+
+    # Cube utilization
+    if cube_ratio is not None and cube_ratio < 30:
+        bottlenecks.append({
+            "metric": "aic_cube_ratio",
+            "value": cube_ratio,
+            "threshold": ">80%",
+            "severity": "warning",
+            "diagnosis": "Cube pipeline stalled",
+            "suggestions": [
+                "point 2 (tiling_optimization): check tiling for matmul",
+                "point 19 (cube_mte3_decoupling): decouple Cube/MTE3",
+            ],
+        })
+
+    # MTE1 ratio
+    if mte1_ratio is not None and mte1_ratio > 60:
+        bottlenecks.append({
+            "metric": "aic_mte1_ratio",
+            "value": mte1_ratio,
+            "threshold": "moderate",
+            "severity": "warning",
+            "diagnosis": "L1->L0A/L0B transfer bottleneck",
+            "suggestions": [
+                "point 2 (tiling_optimization): optimize m0/k0/n0 tiling",
+            ],
+        })
+
+    if not bottlenecks:
+        bottlenecks.append({
+            "metric": "overall",
+            "value": None,
+            "threshold": "N/A",
+            "severity": "info",
+            "diagnosis": "No critical bottlenecks detected. Check IR analysis for deeper insights.",
+            "suggestions": ["Read latency-optimizer SKILL.md for systematic optimization point checking."],
+        })
+
+    return bottlenecks
+
+
+def main() -> int:
+    op_name = _find_op_name()
+    if not op_name:
+        print("[collect_profiling] FAILED: no implementation file found.")
+        return 0
+
+    print(f"[collect_profiling] op_name={op_name} workspace={WORKSPACE}")
+
+    # Step 1: Find msprof
+    msprof_path = _find_msprof()
+    if not msprof_path:
+        summary = {
+            "stage": "profiling_failed",
+            "error": "msprof not found. Ensure CANN toolkit is installed.",
+        }
+        print("[collect_profiling] ERROR: msprof not found")
+        print("[collect_profiling] === SUMMARY ===")
+        print(json.dumps(summary, ensure_ascii=False, indent=2))
+        return 0
+
+    print(f"[collect_profiling] msprof: {msprof_path}")
+
+    # Step 2: Extract kernel names
+    impl_path = _get_impl_path(op_name)
+    kernel_names = _extract_kernel_names(impl_path)
+    if not kernel_names:
+        print("[collect_profiling] WARNING: no @triton.jit kernels found, will profile all")
+    else:
+        print(f"[collect_profiling] kernels: {kernel_names}")
+
+    # Step 3: Generate runner
+    runner_path = _generate_runner(op_name)
+    print(f"[collect_profiling] runner: {runner_path}")
+
+    # Step 4: Run msprof
+    print("[collect_profiling] === Running msprof op ===")
+    stdout, stderr, retcode = _run_msprof(msprof_path, kernel_names, runner_path)
+
+    profiling_dir = os.path.join(WORKSPACE, "output", "profiling")
+    os.makedirs(profiling_dir, exist_ok=True)
+
+    # Save raw output
+    raw_log_path = os.path.join(profiling_dir, "msprof_raw.log")
+    with open(raw_log_path, "w") as f:
+        f.write(f"=== stdout ===\n{stdout}\n=== stderr ===\n{stderr}\n")
+
+    if retcode != 0:
+        summary = {
+            "stage": "profiling_failed",
+            "error": f"msprof exited with code {retcode}",
+            "stderr_tail": stderr[-500:] if stderr else "",
+            "raw_log": raw_log_path,
+        }
+        print(f"[collect_profiling] msprof failed (exit={retcode})")
+        print("[collect_profiling] === SUMMARY ===")
+        print(json.dumps(summary, ensure_ascii=False, indent=2))
+        return 0
+
+    # Step 5: Find and parse op_summary CSV
+    csv_path = _find_op_summary(profiling_dir)
+    if not csv_path:
+        summary = {
+            "stage": "profiling_failed",
+            "error": "op_summary CSV not found in profiling output",
+            "profiling_dir": profiling_dir,
+            "raw_log": raw_log_path,
+        }
+        print("[collect_profiling] No op_summary CSV found")
+        print("[collect_profiling] === SUMMARY ===")
+        print(json.dumps(summary, ensure_ascii=False, indent=2))
+        return 0
+
+    print(f"[collect_profiling] op_summary: {csv_path}")
+
+    metrics = _parse_op_summary(csv_path)
+    if "error" in metrics:
+        summary = {
+            "stage": "profiling_failed",
+            "error": f"CSV parse error: {metrics['error']}",
+            "csv_path": csv_path,
+        }
+        print(f"[collect_profiling] CSV parse error: {metrics['error']}")
+        print("[collect_profiling] === SUMMARY ===")
+        print(json.dumps(summary, ensure_ascii=False, indent=2))
+        return 0
+
+    # Step 6: Analyze bottlenecks
+    bottlenecks = _analyze_bottlenecks(metrics)
+
+    # Step 7: Build summary
+    summary = {
+        "stage": "profiling_collected",
+        "op_name": op_name,
+        "kernel_names": kernel_names,
+        "profiling_dir": profiling_dir,
+        "csv_path": csv_path,
+        "metrics": {k: v for k, v in metrics.items() if not k.startswith("_")},
+        "raw_columns": metrics.get("_raw_columns", []),
+        "bottlenecks": bottlenecks,
+    }
+
+    print("[collect_profiling] === SUMMARY ===")
+    print(json.dumps(summary, ensure_ascii=False, indent=2))
+
+    # Print human-readable bottleneck analysis
+    if bottlenecks:
+        print("\n[collect_profiling] === Bottleneck Analysis ===")
+        for b in bottlenecks:
+            val_str = f"{b['value']}" if b['value'] is not None else "N/A"
+            print(f"  [{b['severity'].upper()}] {b['metric']}={val_str} (threshold: {b['threshold']})")
+            print(f"    Diagnosis: {b['diagnosis']}")
+            print(f"    Suggestions:")
+            for s in b["suggestions"]:
+                print(f"      - {s}")
+
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())

@@ -60,7 +60,17 @@ def _compact_reason(text: str) -> str:
     for marker in REASON_MARKERS:
         if marker in text:
             idx = text.find(marker)
-            return text[idx:].splitlines()[0][:500]
+            tail = text[idx:]
+            lines = [ln.strip() for ln in tail.splitlines() if ln.strip()]
+            if not lines:
+                return tail[:500]
+            first = lines[0][:500]
+            if len(lines) == 1:
+                return first
+            last = lines[-1][:500]
+            if first == last:
+                return first
+            return f"{first} [...] {last}"[:800]
     for line in reversed(text.splitlines()):
         stripped = line.strip()
         if stripped:

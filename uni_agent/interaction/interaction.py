@@ -39,6 +39,9 @@ class StepOutput(BaseModel):
     tool_results: list[ToolResult] = Field(default_factory=list)
     done: bool = False
     exit_reason: str = ""
+    prompt_tokens: int | None = None
+    completion_tokens: int | None = None
+    finish_reason: str = ""
 
 
 def fast_deepcopy(obj):
@@ -134,24 +137,18 @@ class AgentInteraction:
                 messages=self.messages,
                 rollout_cache=self.rollout_cache,
             )
-            reasoning = generation_info.get("reasoning_content", "") or ""
             step_output.response = model_output
-            step_output.thought = reasoning
+            step_output.prompt_tokens = generation_info.get("prompt_tokens")
+            step_output.completion_tokens = generation_info.get("completion_tokens")
+            step_output.finish_reason = generation_info.get("finish_reason") or ""
             self.logger.info(
-                f"Prompt Tokens: {generation_info['prompt_tokens']}, "
-                f"Completion Tokens: {generation_info['completion_tokens']}"
+                f"Prompt Tokens: {generation_info.get('prompt_tokens')}, "
+                f"Completion Tokens: {generation_info.get('completion_tokens')}, "
+                f"Finish Reason: {step_output.finish_reason or 'n/a'}"
             )
-            if reasoning:
-                self.logger.debug(f"Reasoning (first 200 chars):\n{reasoning[:200]}")
             self.logger.debug(f"Model Output:\n{model_output}")
         except MaxTokenExceededError as e:
-            _msg = (
-                f"[step{step_idx}] MaxTokenExceededError: "
-                f"response_mask_len_before={len(self.rollout_cache.get('response_mask', []))} "
-                f"prompt_ids_len={len(self.rollout_cache.get('prompt_ids', []))} "
-                f"detail: {str(e)}"
-            )
-            self.logger.error("{}", _msg)
+            self.logger.error(str(e))
             step_output.exit_reason = "token_limit"
             step_output.done = True
             return step_output
@@ -159,13 +156,9 @@ class AgentInteraction:
         # step 3: parse model response to actions
         self.rollout_cache = rollout_cache
 
-        # Build the assistant message for conversation context.
-        # Include reasoning (CoT) so the model sees its own thinking in
-        # subsequent turns, keeping the chain-of-thought coherent.
-        assistant_content = model_output
-        if reasoning:
-            assistant_content = reasoning if not model_output else reasoning + "\n\n" + model_output
-        assistant_msg: dict[str, object] = {"role": "assistant", "content": assistant_content}
+        # Persist the assistant message in api-shape (with tool_calls)
+        # so replay preserves the assistant<->tool linkage.
+        assistant_msg: dict[str, object] = {"role": "assistant", "content": model_output}
         if tool_calls:
             assistant_msg["tool_calls"] = tool_calls
         self.messages.append(assistant_msg)
@@ -178,6 +171,8 @@ class AgentInteraction:
                 )
             else:
                 content, tool_calls = await self.tools_manager.parse_action(model_output=model_output)
+            if not tool_calls and not self.chat_mode:
+                raise FunctionCallFormatError("No function call found in the response.")
         except FunctionCallFormatError as e:
             if tool_calls:
                 error_msgs: list[dict[str, object]] = [
@@ -195,33 +190,14 @@ class AgentInteraction:
             self.rollout_cache = await self.model.append_messages_to_rollout_cache(error_msgs, self.rollout_cache)
             step_output.exit_reason = "format_error"
             model_output_preview = "\n".join(model_output.splitlines()[:20])
-            _msg = (
+            self.logger.error(
                 f"Fail to parse thought and action from model output.\n"
                 f"Error Message: {str(e)}\n"
                 f"Model Output (first 20 lines): {model_output_preview}"
             )
-            self.logger.error("{}", _msg)
             return step_output
 
-        # step_output.thought is set from reasoning_content (API CoT) above.
-        # If there was no reasoning_content, fall back to the text content
-        # extracted by the parser (text-based tool calling path).
-        if not step_output.thought:
-            step_output.thought = content
-
-        # When the model responds with text only (no tool calls), it is
-        # thinking/reasoning.  Treat this as a valid non-terminal step so the
-        # thinking becomes part of the conversation and the model can act in
-        # the next turn.  chat_mode would also land here (turn_done).
-        if not tool_calls:
-            if not self.chat_mode:
-                step_output.exit_reason = "thinking"
-                self.logger.info(f"💬 THINKING (no tool call): {content[:200]}")
-            else:
-                step_output.done = True
-                step_output.exit_reason = "turn_done"
-                self.logger.info(f"💬 TURN DONE (no tool call): {model_output}")
-            return step_output
+        step_output.thought = content
 
         # step 4: chat_mode-only end-of-turn (single-shot already raised above).
         if not tool_calls:
@@ -372,12 +348,7 @@ class AgentInteraction:
                     break
             except Exception as e:
                 # this should not happen, if it happens, we should fix the code
-                _msg = (
-                    f"[step{step_idx}] unknown_error: {type(e).__name__}: {e} "
-                    f"response_mask_len_before={len(self.rollout_cache.get('response_mask', []))} "
-                    f"prompt_ids_len={len(self.rollout_cache.get('prompt_ids', []))}"
-                )
-                self.logger.opt(exception=True).critical("{}", _msg)
+                self.logger.critical(f"Exit due to unknown error: {str(e)}")
                 step_output = StepOutput(step_idx=step_idx, exit_reason="unknown_error")
                 self.trajectory.append(step_output)
                 break

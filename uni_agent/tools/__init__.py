@@ -5,13 +5,17 @@ Scaffold tools.
 
 from pydantic import BaseModel
 
+from .collect_ir import CollectIrTool
+from .collect_profiling import CollectProfilingTool
 from .finish import FinishTool
 from .registry import get_tool, AbstractTool
 from .execute_bash import ExecuteBashTool
 from .lark_cli import LarkCliTool
+from .list_skills import ListSkillsTool
+from .read_skill import ReadSkillTool
+from .run_verify import RunVerifyTool
 from .search_arxiv import SearchArxivTool
 from .search import SearchWikiTool
-from .search_skills import SearchSkillsTool
 from .str_replace_editor import StrReplaceEditorTool
 from .submit import SubmitTool
 
@@ -26,11 +30,15 @@ class ToolConfig(BaseModel):
 
 __all__ = [
     "ToolConfig",
+    "CollectIrTool",
+    "CollectProfilingTool",
     "ExecuteBashTool",
     "FinishTool",
     "LarkCliTool",
+    "ListSkillsTool",
+    "ReadSkillTool",
+    "RunVerifyTool",
     "SearchArxivTool",
-    "SearchSkillsTool",
     "SearchWikiTool",
     "StrReplaceEditorTool",
     "SubmitTool",
