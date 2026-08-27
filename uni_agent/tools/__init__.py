@@ -13,6 +13,7 @@ from .execute_bash import ExecuteBashTool
 from .lark_cli import LarkCliTool
 from .list_skills import ListSkillsTool
 from .read_skill import ReadSkillTool
+from .run_verify import RunVerifyTool
 from .search_arxiv import SearchArxivTool
 from .search import SearchWikiTool
 from .str_replace_editor import StrReplaceEditorTool
@@ -36,6 +37,7 @@ __all__ = [
     "LarkCliTool",
     "ListSkillsTool",
     "ReadSkillTool",
+    "RunVerifyTool",
     "SearchArxivTool",
     "SearchWikiTool",
     "StrReplaceEditorTool",

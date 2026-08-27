@@ -1,0 +1,683 @@
+#!/usr/bin/env python3
+"""run_verify — model-invoked verification for Triton Ascend operator tasks.
+
+Runs inside the sandbox workspace. Auto-detects the op_name from
+src/*_triton_ascend_impl.py, then:
+
+  1. AST check  (validate_triton_impl.py --json)
+  2. Correctness verification  (verify.py via run_npu_command.sh)
+
+Prints a compact structured summary to stdout. Does NOT dump full tracebacks.
+"""
+
+from __future__ import annotations
+
+import argparse
+import glob
+import json
+import os
+import re
+import shutil
+import subprocess
+import sys
+
+WORKSPACE = os.environ.get("TRITON_WORKSPACE_DIR", "/opt/workspace/agent_workdir")
+
+# If cwd looks like a workspace (has src/ and tools/), prefer it — the swerex
+# session cwd is the workspace root after upload_workspace.
+_cwd = os.getcwd()
+if os.path.isdir(os.path.join(_cwd, "src")) and os.path.isdir(os.path.join(_cwd, "tools")):
+    WORKSPACE = _cwd
+
+PYTHON = os.environ.get("OPERATOR_PYTHON", "python3")
+VERIFY_TIMEOUT = 960  # seconds (16 min)
+AST_TIMEOUT = 120
+BENCHMARK_TIMEOUT = int(os.environ.get("TRITON_FINAL_BENCHMARK_TIMEOUT", "900"))
+DEFAULT_MAX_ERROR_CHARS = int(os.environ.get("TRITON_PIPELINE_ERROR_PREVIEW_CHARS", "2000"))
+
+_ERROR_KEYWORDS = (
+    # Python / Triton errors
+    "Error", "error", "Traceback", "assert",
+    "raise", "Exception", "FAILED",
+    # Triton / Ascend specific
+    "Ascend", "Triton",
+    # System-level crashes
+    "Killed", "Segmentation fault", "core dumped",
+    "OOM", "Out of memory",
+    "SIGKILL", "SIGSEGV",
+)
+
+_SYSTEM_ERROR_KEYWORDS = (
+    "Killed", "Segmentation fault", "core dumped",
+    "OOM", "Out of memory",
+    "SIGKILL", "SIGSEGV",
+)
+
+
+def _pinned_op_name() -> str | None:
+    """Prefer the op pinned for this sandbox card over leftover impl files."""
+    for key in ("TRITON_CURRENT_OP_NAME", "OPERATOR_NAME"):
+        value = (os.environ.get(key) or "").strip()
+        if value:
+            return value
+    pin_path = os.path.join(WORKSPACE, ".triton_current_op_name")
+    if os.path.isfile(pin_path):
+        try:
+            value = open(pin_path, encoding="utf-8").read().strip()
+        except OSError:
+            value = ""
+        if value:
+            return value
+    return None
+
+
+def _find_op_name() -> str | None:
+    """Detect op_name from the pinned current op, else a unique impl file."""
+    pinned = _pinned_op_name()
+    files = glob.glob(os.path.join(WORKSPACE, "src", "*_triton_ascend_impl.py"))
+    names = [
+        os.path.basename(path)[: -len("_triton_ascend_impl.py")]
+        for path in files
+    ]
+    if pinned:
+        if names and pinned not in names:
+            print(
+                f"[run_verify] WARNING: pinned op={pinned} but impl files={names}; "
+                "refusing to verify a leftover op",
+                file=sys.stderr,
+            )
+        return pinned
+    if len(names) == 1:
+        return names[0]
+    if len(names) > 1:
+        print(
+            f"[run_verify] FAILED: multiple impl files without pinned op: {names}",
+            file=sys.stderr,
+        )
+        return None
+    return None
+
+
+def _run_ast_check(op_name: str) -> dict:
+    """Run AST validation; return parsed JSON result."""
+    impl = os.path.join(WORKSPACE, "src", f"{op_name}_triton_ascend_impl.py")
+    checker = os.path.join(
+        WORKSPACE, "tools", "triton-op-verifier", "scripts", "validate_triton_impl.py"
+    )
+    if not os.path.exists(impl):
+        return {"valid": False, "suggestion": f"Implementation file not found: {impl}"}
+    if not os.path.exists(checker):
+        return {"valid": False, "suggestion": f"AST checker not found: {checker}"}
+
+    try:
+        proc = subprocess.run(
+            ["python3", checker, impl, "--json"],
+            capture_output=True, text=True, timeout=AST_TIMEOUT,
+        )
+    except subprocess.TimeoutExpired:
+        return {"valid": False, "suggestion": "AST check timed out"}
+    except Exception as exc:
+        return {"valid": False, "suggestion": f"AST check error: {exc}"}
+
+    text = (proc.stdout + proc.stderr).strip()
+    start = text.find("{")
+    end = text.rfind("}")
+    if 0 <= start < end:
+        try:
+            return json.loads(text[start : end + 1])
+        except json.JSONDecodeError:
+            pass
+    return {"valid": False, "suggestion": text[-1000:] if text else "No AST output"}
+
+
+def _stage_files(op_name: str) -> None:
+    """Copy reference + impl + case files into output/verify/."""
+    verify_dir = os.path.join(WORKSPACE, "output", "verify")
+    os.makedirs(verify_dir, exist_ok=True)
+
+    src_ref = os.path.join(WORKSPACE, "src", f"{op_name}.py")
+    src_impl = os.path.join(WORKSPACE, "src", f"{op_name}_triton_ascend_impl.py")
+    shutil.copy2(src_ref, os.path.join(verify_dir, f"{op_name}_torch.py"))
+    shutil.copy2(src_impl, os.path.join(verify_dir, f"{op_name}_triton_ascend_impl.py"))
+    for pattern in ("*.json", "*.jsonl"):
+        for f in glob.glob(os.path.join(WORKSPACE, "src", pattern)):
+            shutil.copy2(f, verify_dir)
+
+    # Also stage {op_name}.json under the name {op_name}_torch.json so that
+    # reference impls whose get_inputs derives the case filename from
+    # os.path.basename(__file__) (now *_torch.py) can find their cases. The
+    # reference file may hardcode either the original sidecar name or a
+    # basename-derived name; both are now present in verify_dir.
+    case_json = os.path.join(WORKSPACE, "src", f"{op_name}.json")
+    if os.path.exists(case_json):
+        shutil.copy2(case_json, os.path.join(verify_dir, f"{op_name}_torch.json"))
+
+
+def _deduplicate_lines(text: str) -> str:
+    """Remove duplicate lines after normalizing line numbers and temp paths.
+
+    MLIR compilation errors repeat the same message at different line numbers
+    and temp paths. This collapses them so only unique error patterns remain.
+    """
+    seen: set[str] = set()
+    unique: list[str] = []
+    for line in text.splitlines():
+        normalized = re.sub(r"/tmp/[^\s:]+", "/tmp/...", line)
+        normalized = re.sub(r":\d+:\d+", ":LINE", normalized)
+        if normalized not in seen:
+            seen.add(normalized)
+            unique.append(line)
+    return "\n".join(unique)
+
+
+def _read_failures(workspace: str) -> list[dict]:
+    """Read the failures list from verify_result.json."""
+    result_path = os.path.join(workspace, "output", "verify", "verify_result.json")
+    if not os.path.isfile(result_path):
+        return []
+    try:
+        with open(result_path, encoding="utf-8-sig") as f:
+            data = json.loads(f.read())
+        failures = data.get("failures", [])
+        return failures if isinstance(failures, list) else []
+    except Exception:
+        return []
+
+
+def _extract_error_preview(
+    stderr_output: str,
+    workspace: str,
+    max_chars: int,
+) -> str:
+    """Extract error-relevant info from structured failures and raw log.
+
+    Primary source: ``failures`` list in ``verify_result.json`` (per-case,
+    structured). Each error type gets a section with a deduplicated
+    representative traceback.
+
+    Secondary source: ``verify_result.raw.log`` scanned for system-level
+    crashes (Killed, Segmentation fault, OOM) that may not appear in the
+    structured failures.
+
+    Fallback: if neither source yields data, fall back to the legacy
+    keyword-filter approach on the raw log.
+    """
+    # --- Source 1: structured failures (per-case, deduped) ---
+    failures = _read_failures(workspace)
+
+    # Group by error_type
+    groups: dict[str, list[dict]] = {}
+    for f in failures:
+        if not isinstance(f, dict):
+            continue
+        etype = f.get("error_type", "Unknown")
+        groups.setdefault(etype, []).append(f)
+
+    sections: list[str] = []
+
+    if groups:
+        budget_per_group = max_chars // max(len(groups), 1)
+        for etype, items in groups.items():
+            case_indices = [str(it.get("case_idx", "?")) for it in items]
+            header = f"[Case {','.join(case_indices)}: {etype} (x{len(items)})]"
+
+            # Take ONE representative error_msg, deduplicate its lines
+            rep_msg = items[0].get("error_msg", "")
+            deduped = _deduplicate_lines(rep_msg)
+
+            # Truncate to per-group budget
+            if len(deduped) > budget_per_group:
+                deduped = deduped[:budget_per_group]
+
+            sections.append(f"{header}\n{deduped}")
+
+    # --- Source 2: raw log for system errors (Killed, segfault, OOM) ---
+    raw_log_path = os.path.join(workspace, "output", "verify", "verify_result.raw.log")
+    raw_log_content = ""
+    if os.path.isfile(raw_log_path):
+        try:
+            with open(raw_log_path, encoding="utf-8", errors="replace") as f:
+                raw_log_content = f.read()
+        except Exception:
+            pass
+
+    system_lines: list[str] = []
+    for source in (raw_log_content, stderr_output):
+        if not source:
+            continue
+        for line in source.splitlines():
+            if any(kw in line for kw in _SYSTEM_ERROR_KEYWORDS):
+                if line not in system_lines:
+                    system_lines.append(line)
+
+    if system_lines:
+        sys_text = "\n".join(system_lines)
+        sys_budget = min(len(sys_text) + 50, max_chars // 4)
+        if len(sys_text) > sys_budget:
+            sys_text = sys_text[:sys_budget]
+        sections.append(f"[System]\n{sys_text}")
+
+    # --- Fallback: legacy keyword filter when no structured data ---
+    if not sections:
+        combined_lines: list[str] = []
+        for source in (raw_log_content, stderr_output):
+            if not source:
+                continue
+            for line in source.splitlines():
+                if any(kw in line for kw in _ERROR_KEYWORDS):
+                    combined_lines.append(line)
+        if not combined_lines:
+            fallback = raw_log_content or stderr_output
+            if fallback:
+                combined_lines = fallback.splitlines()[-20:]
+        if not combined_lines:
+            return ""
+        text = "\n".join(combined_lines)
+        if len(text) > max_chars:
+            text = text[-max_chars:]
+        return text
+
+    # --- Assemble final output ---
+    result = "\n\n".join(sections)
+    if len(result) > max_chars:
+        result = result[:max_chars]
+    return result
+
+
+def _run_verify(op_name: str) -> dict:
+    """Run correctness verifier; return parsed summary.
+
+    The returned dict may include a ``_stderr`` key containing the
+    subprocess stderr output (for error preview extraction).
+    """
+    verify_script = os.path.join(
+        WORKSPACE, "tools", "triton-op-verifier", "scripts", "verify.py"
+    )
+    run_npu = os.path.join(WORKSPACE, "tools", "run_npu_command.sh")
+
+    cmd = (
+        f"cd {WORKSPACE} && "
+        f"PY={PYTHON} && "
+        f'bash {run_npu} "$PY" '
+        f"{verify_script} "
+        f"--op_name {op_name} "
+        f"--verify_dir output/verify "
+        f"--triton_impl_name triton_ascend_impl "
+        f"--timeout 900 "
+        f"--output output/verify/verify_result.json"
+    )
+
+    stderr_output = ""
+    try:
+        proc = subprocess.run(
+            cmd, shell=True, capture_output=True, text=True, timeout=VERIFY_TIMEOUT,
+        )
+        stderr_output = proc.stderr or ""
+    except subprocess.TimeoutExpired as exc:
+        stderr_output = ""
+        if hasattr(exc, "stderr") and isinstance(exc.stderr, str):
+            stderr_output = exc.stderr
+        return {
+            "passed_cases": 0, "total_cases": 1,
+            "error_groups": [{"error_type": "timeout", "reason": "verify.py timed out (900s)", "count": 1}],
+            "_stderr": stderr_output,
+        }
+    except Exception as exc:
+        return {
+            "passed_cases": 0, "total_cases": 1,
+            "error_groups": [{"error_type": "exception", "reason": str(exc)[:500], "count": 1}],
+        }
+
+    # Prefer verify_result_summary.json (produced by summarize_verify_result.py
+    # if the task template ran it). Otherwise parse verify_result.json.
+    summary_path = os.path.join(WORKSPACE, "output", "verify", "verify_result_summary.json")
+    if os.path.exists(summary_path):
+        try:
+            with open(summary_path, encoding="utf-8-sig") as f:
+                result = json.loads(f.read())
+            result["_stderr"] = stderr_output
+            return result
+        except Exception:
+            pass
+
+    result_path = os.path.join(WORKSPACE, "output", "verify", "verify_result.json")
+    if os.path.exists(result_path):
+        try:
+            with open(result_path, encoding="utf-8-sig") as f:
+                raw = json.loads(f.read())
+            passed = int(raw.get("passed_cases", 0))
+            total = int(raw.get("total_cases", 0))
+            failed = int(raw.get("failed_cases", max(total - passed, 0)))
+            return {
+                "passed_cases": passed, "total_cases": total, "failed_cases": failed,
+                "error_groups": [
+                    {"error_type": "verify_failed", "reason": "See output/verify/verify_result.json", "count": failed}
+                ],
+                "_stderr": stderr_output,
+            }
+        except Exception:
+            pass
+
+    return {
+        "passed_cases": 0, "total_cases": 1,
+        "error_groups": [{"error_type": "no_output", "reason": "Verifier produced no output", "count": 1}],
+        "_stderr": stderr_output,
+    }
+
+
+def _compute_bottleneck_hint(
+    kernel_metrics: dict, operators: dict,
+) -> list:
+    """基于主导 kernel 的 AIC/AIV 指标计算瓶颈分类。
+
+    严格按 KB1 profiling-guide.md lines 155-160 的 4 条诊断规则：
+      1. aiv_vec_ratio < 10%  -> Vector 未充分发挥算力
+      2. aiv_scalar_ratio > 30% -> 存在标量退化（数据类型不支持）
+      3. aiv_mte2_ratio > 50%  -> 搬运瓶颈
+      4. aic_cube_ratio < 30%  -> Cube 断流
+
+    主导 kernel = operators 中耗时最长的 kernel。
+    注意：CSV 列名为 aic_mac_ratio，KB1 文档称 aic_cube_ratio，指同一指标。
+    注意：scalar_ratio 高不一定是真瓶颈（AGENTS.md caveat）：
+      如果标量操作被流水线重叠隐藏，则不是瓶颈。标注为 "possible"。
+    可能同时命中多个瓶颈，返回列表。
+    """
+    if not kernel_metrics or not operators:
+        return ["no_bottleneck_data"]
+
+    # 找到耗时最长的 kernel 作为主导 kernel
+    dominant_kernel = max(operators, key=lambda k: operators[k])
+    m = kernel_metrics.get(dominant_kernel, {})
+    if not m:
+        return ["no_bottleneck_data"]
+
+    hints = []
+    if m.get("aiv_vec_ratio", 1.0) < 0.10:
+        hints.append("vector_underutilized")
+    if m.get("aiv_scalar_ratio", 0.0) > 0.30:
+        hints.append("scalar_degradation_possible")
+    if m.get("aiv_mte2_ratio", 0.0) > 0.50:
+        hints.append("memory_transfer_bound")
+    if m.get("aic_mac_ratio", 1.0) < 0.30:
+        hints.append("cube_stall")
+    if not hints:
+        hints.append("no_obvious_bottleneck")
+    return hints
+
+
+def _run_benchmark(op_name: str) -> dict:
+    """Run performance benchmark; return parsed summary.
+
+    Mirrors ``_run_verify``: calls ``benchmark.py`` via ``run_npu_command.sh``
+    so the benchmark gets the NPU device lock and ``OPERATOR_PYTHON``
+    substitution. Only invoked after verify fully passes (all cases).
+
+    Returns a dict. ``ran`` indicates whether benchmark.py produced a valid
+    ``perf_result.json``; ``reason`` explains why it was skipped. Never raises.
+    """
+    benchmark_script = os.path.join(
+        WORKSPACE, "tools", "triton-op-verifier", "scripts", "benchmark.py"
+    )
+    run_npu = os.path.join(WORKSPACE, "tools", "run_npu_command.sh")
+    perf_path = os.path.join(WORKSPACE, "output", "perf_result.json")
+
+    if not os.path.exists(benchmark_script):
+        return {"ran": False, "reason": "no_benchmark_script"}
+    if not os.path.exists(run_npu):
+        return {"ran": False, "reason": "no_run_npu"}
+
+    warmup = int(os.environ.get("TRITON_FINAL_BENCHMARK_WARMUP", "5"))
+    repeats = int(os.environ.get("TRITON_FINAL_BENCHMARK_REPEATS", "20"))
+
+    cmd = (
+        f"cd {WORKSPACE} && "
+        f"PY={PYTHON} && "
+        f'bash {run_npu} "$PY" '
+        f"{benchmark_script} "
+        f"--op_name {op_name} "
+        f"--verify_dir output/verify "
+        f"--triton_impl_name triton_ascend_impl "
+        f"--warmup {warmup} "
+        f"--repeats {repeats} "
+        f"--output output/perf_result.json"
+    )
+
+    try:
+        proc = subprocess.run(
+            cmd, shell=True, capture_output=True, text=True, timeout=BENCHMARK_TIMEOUT,
+        )
+    except subprocess.TimeoutExpired:
+        return {"ran": False, "reason": "timeout", "exit_code": None}
+    except Exception as exc:
+        return {"ran": False, "reason": "exception", "error": str(exc)[:500]}
+
+    # benchmark.py writes perf_result.json atomically on success (result_dict
+    # is fully built before json.dump, see benchmark.py:1055). If the file is
+    # missing, the benchmark failed - return the reason so the caller can
+    # surface it. A corrupt JSON is removed so the next run_verify can retry.
+    if not os.path.exists(perf_path):
+        return {"ran": False, "reason": "no_perf_output",
+                "exit_code": proc.returncode,
+                "stderr_tail": (proc.stderr or "")[-500:]}
+
+    try:
+        with open(perf_path, encoding="utf-8-sig") as f:
+            perf = json.loads(f.read())
+    except Exception as exc:
+        # Corrupt JSON: remove it so the next run_verify can retry
+        try:
+            os.remove(perf_path)
+        except OSError:
+            pass
+        return {"ran": False, "reason": "bad_perf_json", "error": str(exc)[:300]}
+
+    speedup = perf.get("speedup_vs_torch")  # None if any case failed
+    passed = int(perf.get("passed_cases", 0))
+    total = int(perf.get("total_cases", 0))
+
+    # 提取 impl 侧 kernel_metrics（AIC/AIV 利用率指标）
+    impl = perf.get("implementation") or {}
+    kernel_metrics = impl.get("kernel_metrics") or {}
+
+    # 基于主导 kernel（operators 中耗时最长的）计算 bottleneck_hint
+    # 严格按 KB1 profiling-guide.md lines 155-160 的 4 条诊断规则
+    operators = impl.get("operators") or {}
+    bottleneck_hint = _compute_bottleneck_hint(kernel_metrics, operators)
+
+    return {
+        "ran": True,
+        "exit_code": proc.returncode,
+        "speedup_vs_torch": speedup,
+        "passed_cases": passed,
+        "total_cases": total,
+        "perf_path": perf_path,
+        "kernel_metrics": kernel_metrics,
+        "bottleneck_hint": bottleneck_hint,
+    }
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser(description="Run AST check + correctness verification.")
+    parser.add_argument(
+        "--max-error-chars", "--max_error_chars",
+        type=int,
+        default=DEFAULT_MAX_ERROR_CHARS,
+        help=f"Max chars of error preview when verification fails (default: {DEFAULT_MAX_ERROR_CHARS})",
+    )
+    args = parser.parse_args()
+    max_error_chars = args.max_error_chars
+
+    op_name = _find_op_name()
+    if not op_name:
+        print("[run_verify] FAILED: no implementation file found.")
+        print("[run_verify] Create src/<op_name>_triton_ascend_impl.py first using str_replace_editor create.")
+        return 0
+
+    print(f"[run_verify] op_name={op_name} workspace={WORKSPACE}")
+
+    # ---- Step 1/3: AST check ----
+    print("[run_verify] === Step 1/3: AST check ===")
+    ast_result = _run_ast_check(op_name)
+    ast_valid = ast_result.get("valid", False)
+
+    if not ast_valid:
+        suggestion = ast_result.get("suggestion", "AST check failed")[:1000]
+        summary = {
+            "stage": "ast_failed",
+            "ast_valid": False,
+            "regression_type": ast_result.get("regression_type"),
+            "suggestion": suggestion,
+            "fix_hint": "Fix the AST error in the implementation file, then call run_verify again.",
+        }
+        print("[run_verify] AST FAILED")
+        print("[run_verify] suggestion:", suggestion[:300])
+        print("[run_verify] === SUMMARY ===")
+        print(json.dumps(summary, ensure_ascii=False, indent=2))
+        return 0
+
+    print("[run_verify] AST PASSED")
+
+    # ---- Step 2/3: correctness verification ----
+    print("[run_verify] === Step 2/3: correctness verification ===")
+    try:
+        _stage_files(op_name)
+        print("[run_verify] files staged to output/verify/")
+    except Exception as exc:
+        print("[run_verify] staging failed:", exc)
+        return 0
+
+    verify_result = _run_verify(op_name)
+    passed = int(verify_result.get("passed_cases", 0))
+    total = int(verify_result.get("total_cases", 0))
+    error_groups = verify_result.get("error_groups", [])[:4]
+    failed = int(verify_result.get("failed_cases", max(total - passed, 0)))
+
+    all_pass = total > 0 and passed == total
+    summary = {
+        "stage": "verify_done",
+        "ast_valid": True,
+        "passed_cases": passed,
+        "total_cases": total,
+        "failed_cases": failed,
+        "pass_rate": round(passed / max(total, 1), 6) if total > 0 else 0.0,
+        "verified_success": all_pass,
+        "error_groups": error_groups,
+    }
+
+    # Add error preview when verification fails
+    if not all_pass:
+        stderr_output = verify_result.get("_stderr", "")
+        error_preview = _extract_error_preview(stderr_output, WORKSPACE, max_error_chars)
+        if error_preview:
+            summary["error_preview"] = error_preview
+
+    print(f"[run_verify] verify result: {passed}/{total}")
+    if error_groups:
+        for g in error_groups:
+            etype = g.get("error_type", "?")
+            reason = g.get("reason", "")[:200]
+            count = g.get("count", 0)
+            print(f"  - [{etype}] {reason} (x{count})")
+
+    # ---- Step 3/3: performance benchmark (only when all_pass) ----
+    # Run benchmark.py so the agent sees speedup_vs_torch on every run_verify
+    # call. If AST failed or verify didn't fully pass, benchmark is skipped.
+    # This writes output/perf_result.json. evaluate_triton_workspace uses
+    # it only for speedup_vs_torch; correctness always comes from
+    # verify_result.json. perf_result_best.json is still updated here.
+    if not all_pass:
+        # Remove stale perf_result.json from a previous passing run so the
+        # eval doesn't mix old perf data (speedup, passed_cases) with the
+        # current failed verify result.  perf_result_best.json is preserved
+        # (only updated when a new passing run has a higher speedup).
+        stale_perf = os.path.join(WORKSPACE, "output", "perf_result.json")
+        if os.path.exists(stale_perf):
+            os.remove(stale_perf)
+            print("[run_verify] removed stale perf_result.json (correctness failed)")
+    if all_pass:
+        print("[run_verify] === Step 3/3: performance benchmark ===")
+        bench = _run_benchmark(op_name)
+        try:
+            target = float(os.environ.get("TRITON_REWARD_TARGET_SPEEDUP", "2.0"))
+        except ValueError:
+            target = 2.0
+
+        if bench.get("ran"):
+            speedup = bench.get("speedup_vs_torch")
+            summary["benchmark_ran"] = True
+            summary["speedup_vs_torch"] = speedup
+            summary["speedup_target"] = target
+            summary["kernel_metrics"] = bench.get("kernel_metrics", {})
+            summary["bottleneck_hint"] = bench.get("bottleneck_hint", [])
+            if speedup is None:
+                print("[run_verify] benchmark ran but speedup is None "
+                      "(perf failed for some shapes)")
+            else:
+                tag = "OK" if speedup >= target else "LOW"
+                print(f"[run_verify] speedup_vs_torch={speedup:.4f}x "
+                      f"(target={target:.1f}x) [{tag}]")
+
+                # 输出瓶颈分析提示
+                hints = summary.get("bottleneck_hint", [])
+                if hints and hints != ["no_obvious_bottleneck"]:
+                    print(f"[run_verify] bottleneck_hint: {', '.join(hints)}")
+                    print("[run_verify] (see latency-optimizer skill for "
+                          "optimization directions matching these hints)")
+
+                # Track best across all run_verify calls during the agent
+                # loop. run_verify overwrites perf_result.json on every
+                # call; without this, only the last version survives and
+                # _snapshot_success_as_best (called once in
+                # evaluate_triton_workspace) always saves the last version.
+                best_perf_path = os.path.join(
+                    WORKSPACE, "output", "perf_result_best.json")
+                best_speedup = None
+                if os.path.exists(best_perf_path):
+                    try:
+                        with open(best_perf_path, encoding="utf-8-sig") as f:
+                            best_perf = json.loads(f.read())
+                        best_speedup = best_perf.get("speedup_vs_torch")
+                    except Exception:
+                        pass
+
+                if best_speedup is None or speedup >= best_speedup:
+                    shutil.copy2(
+                        os.path.join(WORKSPACE, "output", "perf_result.json"),
+                        best_perf_path,
+                    )
+                    shutil.copy2(
+                        os.path.join(
+                            WORKSPACE, "src",
+                            f"{op_name}_triton_ascend_impl.py"),
+                        os.path.join(
+                            WORKSPACE, "src",
+                            f"{op_name}_triton_ascend_impl_best.py"),
+                    )
+                    prev_str = (f"prev={best_speedup:.4f}x"
+                                 if best_speedup is not None else "first")
+                    print(f"[run_verify] saved as best "
+                          f"(speedup={speedup:.4f}x, {prev_str})")
+        else:
+            summary["benchmark_ran"] = False
+            summary["benchmark_skip_reason"] = bench.get("reason", "unknown")
+            print(f"[run_verify] benchmark skipped: {bench.get('reason')}")
+
+    print("[run_verify] === SUMMARY ===")
+    print(json.dumps(summary, ensure_ascii=False, indent=2))
+
+    if all_pass:
+        speedup = summary.get("speedup_vs_torch")
+        if speedup is not None:
+            print(f"[run_verify] ALL CASES PASSED - speedup={speedup:.4f}x "
+                  f"(target={target:.1f}x). Optimize further or call submit "
+                  f"when speedup reaches the target.")
+        else:
+            print("[run_verify] ALL CASES PASSED - benchmark did not produce "
+                  "speedup. You may optimize and run_verify again, or call submit.")
+    else:
+        print(f"[run_verify] {failed}/{total} cases failed - fix the errors above, then call run_verify again.")
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())

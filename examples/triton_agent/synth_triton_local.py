@@ -135,6 +135,9 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--eval-device-ids", default="", help="Comma-separated NPU device IDs for evaluation")
 
     parser.add_argument("--output", default="", help="Output JSONL path (default: auto-generated)")
+    parser.add_argument("--artifacts-dir", default="",
+                        help="Root dir for per-op artifacts (default: <output parent>/artifacts); "
+                             "each op writes into <artifacts-dir>/<op_name>/")
     parser.add_argument("--served-model-name", default="triton-synth", help="Model name advertised by vLLM")
 
     parser.add_argument("--resume-from-log", default="", metavar="LOG_PATH",
@@ -157,6 +160,7 @@ async def async_main(args: argparse.Namespace) -> int:
         base_url=f"http://{args.host}:{args.port}/v1",
         api_key="EMPTY",
         model_name=args.served_model_name,
+        max_model_len=args.max_model_len,
         sampling_params={
             "temperature": 1.0,
             "top_p": 1.0,
@@ -214,10 +218,11 @@ async def async_main(args: argparse.Namespace) -> int:
     Path(output_path).parent.mkdir(parents=True, exist_ok=True)
 
     # 6. Run tasks
+    artifacts_root = args.artifacts_dir or str(Path(output_path).parent / "artifacts")
     results = []
     for idx, task in enumerate(tasks):
         print(f"\n[synth] === Task {idx + 1}/{len(tasks)}: {task['op_name']} ===")
-        task_output_dir = str(Path(output_path).parent / "artifacts" / task["op_name"])
+        task_output_dir = str(Path(artifacts_root) / task["op_name"])
         Path(task_output_dir).mkdir(parents=True, exist_ok=True)
 
         result = await run_one_task_hard(
