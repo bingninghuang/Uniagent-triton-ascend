@@ -17,7 +17,7 @@
 set -euo pipefail
 
 REPO_ROOT="${REPO_ROOT:-/home/Uniagent-triton-ascend-compact}"
-DATASET="${DATASET:-/home/ascendc-kernelgen-data/npu_benchmark/level4}"
+DATASET="${DATASET:-/home/ascendc-kernelgen-data/npu_benchmark}"
 OUT_ROOT="${OUT_ROOT:-/home/Uniagent-triton-ascend-compact/eval/output}"
 
 # --- vLLM server (shared by all workers) -------------------------------------
