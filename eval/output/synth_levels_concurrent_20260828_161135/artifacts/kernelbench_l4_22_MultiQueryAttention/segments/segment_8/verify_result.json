@@ -1,0 +1,1008 @@
+{
+  "op_name": "kernelbench_l4_22_MultiQueryAttention",
+  "total_cases": 50,
+  "passed_cases": 0,
+  "failed_cases": 50,
+  "failures": [
+    {
+      "case_idx": 1,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            5,
+            60
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "scalar",
+          "value": 3
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card7/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card7/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card7/agent_workdir/output/verify/kernelbench_l4_22_MultiQueryAttention_triton_ascend_impl.py\", line 247, in forward\n    gemm_kernel[(g1,)](\n  File \"/usr/local/python3.11.14/lib/pytho\n... [truncated 420 chars] ...\n3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 303, in compile\n    module = src.make_ir(options, codegen_fns, module_map, context)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 16:17:\n    BLOCK_N: tl.constexpr,\n    BLOCK_K: tl.constexpr,\n):\n    pid = tl.program_id(0).to(tl.int32)\n    num_cores = tl.num_programs(0).to(tl.int32)\n\n    num_m = tl.cdiv(M, BLOCK_M)\n    num_n = tl.cdiv(N, BLOCK_N)\n    num_tiles = num_m * num_n\n\n    # int division -> float division (exact for values < 2**24)\n    per_prog = (((num_tiles + num_cores - 1).to(tl.float32)\n                 ^\nTypeError('unexpected type fp32')\n"
+    },
+    {
+      "case_idx": 2,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            3,
+            7,
+            72
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": 3
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card7/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card7/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card7/agent_workdir/output/verify/kernelbench_l4_22_MultiQueryAttention_triton_ascend_impl.py\", line 247, in forward\n    gemm_kernel[(g1,)](\n  File \"/usr/local/python3.11.14/lib/pytho\n... [truncated 420 chars] ...\n3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 303, in compile\n    module = src.make_ir(options, codegen_fns, module_map, context)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 16:17:\n    BLOCK_N: tl.constexpr,\n    BLOCK_K: tl.constexpr,\n):\n    pid = tl.program_id(0).to(tl.int32)\n    num_cores = tl.num_programs(0).to(tl.int32)\n\n    num_m = tl.cdiv(M, BLOCK_M)\n    num_n = tl.cdiv(N, BLOCK_N)\n    num_tiles = num_m * num_n\n\n    # int division -> float division (exact for values < 2**24)\n    per_prog = (((num_tiles + num_cores - 1).to(tl.float32)\n                 ^\nTypeError('unexpected type fp32')\n"
+    },
+    {
+      "case_idx": 3,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            11,
+            96
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 4
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card7/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card7/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card7/agent_workdir/output/verify/kernelbench_l4_22_MultiQueryAttention_triton_ascend_impl.py\", line 247, in forward\n    gemm_kernel[(g1,)](\n  File \"/usr/local/python3.11.14/lib/pytho\n... [truncated 420 chars] ...\n3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 303, in compile\n    module = src.make_ir(options, codegen_fns, module_map, context)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 16:17:\n    BLOCK_N: tl.constexpr,\n    BLOCK_K: tl.constexpr,\n):\n    pid = tl.program_id(0).to(tl.int32)\n    num_cores = tl.num_programs(0).to(tl.int32)\n\n    num_m = tl.cdiv(M, BLOCK_M)\n    num_n = tl.cdiv(N, BLOCK_N)\n    num_tiles = num_m * num_n\n\n    # int division -> float division (exact for values < 2**24)\n    per_prog = (((num_tiles + num_cores - 1).to(tl.float32)\n                 ^\nTypeError('unexpected type fp32')\n"
+    },
+    {
+      "case_idx": 4,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            13,
+            120
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "scalar",
+          "value": 5
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card7/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card7/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card7/agent_workdir/output/verify/kernelbench_l4_22_MultiQueryAttention_triton_ascend_impl.py\", line 247, in forward\n    gemm_kernel[(g1,)](\n  File \"/usr/local/python3.11.14/lib/pytho\n... [truncated 420 chars] ...\n3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 303, in compile\n    module = src.make_ir(options, codegen_fns, module_map, context)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 16:17:\n    BLOCK_N: tl.constexpr,\n    BLOCK_K: tl.constexpr,\n):\n    pid = tl.program_id(0).to(tl.int32)\n    num_cores = tl.num_programs(0).to(tl.int32)\n\n    num_m = tl.cdiv(M, BLOCK_M)\n    num_n = tl.cdiv(N, BLOCK_N)\n    num_tiles = num_m * num_n\n\n    # int division -> float division (exact for values < 2**24)\n    per_prog = (((num_tiles + num_cores - 1).to(tl.float32)\n                 ^\nTypeError('unexpected type fp32')\n"
+    },
+    {
+      "case_idx": 5,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            3,
+            48
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": 2
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card7/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card7/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card7/agent_workdir/output/verify/kernelbench_l4_22_MultiQueryAttention_triton_ascend_impl.py\", line 247, in forward\n    gemm_kernel[(g1,)](\n  File \"/usr/local/python3.11.14/lib/pytho\n... [truncated 420 chars] ...\n3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 303, in compile\n    module = src.make_ir(options, codegen_fns, module_map, context)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 16:17:\n    BLOCK_N: tl.constexpr,\n    BLOCK_K: tl.constexpr,\n):\n    pid = tl.program_id(0).to(tl.int32)\n    num_cores = tl.num_programs(0).to(tl.int32)\n\n    num_m = tl.cdiv(M, BLOCK_M)\n    num_n = tl.cdiv(N, BLOCK_N)\n    num_tiles = num_m * num_n\n\n    # int division -> float division (exact for values < 2**24)\n    per_prog = (((num_tiles + num_cores - 1).to(tl.float32)\n                 ^\nTypeError('unexpected type fp32')\n"
+    },
+    {
+      "case_idx": 6,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            19,
+            144
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 3
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card7/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card7/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card7/agent_workdir/output/verify/kernelbench_l4_22_MultiQueryAttention_triton_ascend_impl.py\", line 247, in forward\n    gemm_kernel[(g1,)](\n  File \"/usr/local/python3.11.14/lib/pytho\n... [truncated 420 chars] ...\n3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 303, in compile\n    module = src.make_ir(options, codegen_fns, module_map, context)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 16:17:\n    BLOCK_N: tl.constexpr,\n    BLOCK_K: tl.constexpr,\n):\n    pid = tl.program_id(0).to(tl.int32)\n    num_cores = tl.num_programs(0).to(tl.int32)\n\n    num_m = tl.cdiv(M, BLOCK_M)\n    num_n = tl.cdiv(N, BLOCK_N)\n    num_tiles = num_m * num_n\n\n    # int division -> float division (exact for values < 2**24)\n    per_prog = (((num_tiles + num_cores - 1).to(tl.float32)\n                 ^\nTypeError('unexpected type fp32')\n"
+    },
+    {
+      "case_idx": 7,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            23,
+            160
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "scalar",
+          "value": 5
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card7/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card7/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card7/agent_workdir/output/verify/kernelbench_l4_22_MultiQueryAttention_triton_ascend_impl.py\", line 247, in forward\n    gemm_kernel[(g1,)](\n  File \"/usr/local/python3.11.14/lib/pytho\n... [truncated 420 chars] ...\n3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 303, in compile\n    module = src.make_ir(options, codegen_fns, module_map, context)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 16:17:\n    BLOCK_N: tl.constexpr,\n    BLOCK_K: tl.constexpr,\n):\n    pid = tl.program_id(0).to(tl.int32)\n    num_cores = tl.num_programs(0).to(tl.int32)\n\n    num_m = tl.cdiv(M, BLOCK_M)\n    num_n = tl.cdiv(N, BLOCK_N)\n    num_tiles = num_m * num_n\n\n    # int division -> float division (exact for values < 2**24)\n    per_prog = (((num_tiles + num_cores - 1).to(tl.float32)\n                 ^\nTypeError('unexpected type fp32')\n"
+    },
+    {
+      "case_idx": 8,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            29,
+            192
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": 3
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card7/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card7/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card7/agent_workdir/output/verify/kernelbench_l4_22_MultiQueryAttention_triton_ascend_impl.py\", line 247, in forward\n    gemm_kernel[(g1,)](\n  File \"/usr/local/python3.11.14/lib/pytho\n... [truncated 420 chars] ...\n3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 303, in compile\n    module = src.make_ir(options, codegen_fns, module_map, context)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 16:17:\n    BLOCK_N: tl.constexpr,\n    BLOCK_K: tl.constexpr,\n):\n    pid = tl.program_id(0).to(tl.int32)\n    num_cores = tl.num_programs(0).to(tl.int32)\n\n    num_m = tl.cdiv(M, BLOCK_M)\n    num_n = tl.cdiv(N, BLOCK_N)\n    num_tiles = num_m * num_n\n\n    # int division -> float division (exact for values < 2**24)\n    per_prog = (((num_tiles + num_cores - 1).to(tl.float32)\n                 ^\nTypeError('unexpected type fp32')\n"
+    },
+    {
+      "case_idx": 9,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            31,
+            224
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 4
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card7/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card7/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card7/agent_workdir/output/verify/kernelbench_l4_22_MultiQueryAttention_triton_ascend_impl.py\", line 247, in forward\n    gemm_kernel[(g1,)](\n  File \"/usr/local/python3.11.14/lib/pytho\n... [truncated 420 chars] ...\n3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 303, in compile\n    module = src.make_ir(options, codegen_fns, module_map, context)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 16:17:\n    BLOCK_N: tl.constexpr,\n    BLOCK_K: tl.constexpr,\n):\n    pid = tl.program_id(0).to(tl.int32)\n    num_cores = tl.num_programs(0).to(tl.int32)\n\n    num_m = tl.cdiv(M, BLOCK_M)\n    num_n = tl.cdiv(N, BLOCK_N)\n    num_tiles = num_m * num_n\n\n    # int division -> float division (exact for values < 2**24)\n    per_prog = (((num_tiles + num_cores - 1).to(tl.float32)\n                 ^\nTypeError('unexpected type fp32')\n"
+    },
+    {
+      "case_idx": 10,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            3,
+            37,
+            240
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "scalar",
+          "value": 5
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card7/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card7/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card7/agent_workdir/output/verify/kernelbench_l4_22_MultiQueryAttention_triton_ascend_impl.py\", line 247, in forward\n    gemm_kernel[(g1,)](\n  File \"/usr/local/python3.11.14/lib/pytho\n... [truncated 420 chars] ...\n3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 303, in compile\n    module = src.make_ir(options, codegen_fns, module_map, context)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 16:17:\n    BLOCK_N: tl.constexpr,\n    BLOCK_K: tl.constexpr,\n):\n    pid = tl.program_id(0).to(tl.int32)\n    num_cores = tl.num_programs(0).to(tl.int32)\n\n    num_m = tl.cdiv(M, BLOCK_M)\n    num_n = tl.cdiv(N, BLOCK_N)\n    num_tiles = num_m * num_n\n\n    # int division -> float division (exact for values < 2**24)\n    per_prog = (((num_tiles + num_cores - 1).to(tl.float32)\n                 ^\nTypeError('unexpected type fp32')\n"
+    },
+    {
+      "case_idx": 11,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            43,
+            256
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": 4
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card7/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card7/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card7/agent_workdir/output/verify/kernelbench_l4_22_MultiQueryAttention_triton_ascend_impl.py\", line 247, in forward\n    gemm_kernel[(g1,)](\n  File \"/usr/local/python3.11.14/lib/pytho\n... [truncated 420 chars] ...\n3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 303, in compile\n    module = src.make_ir(options, codegen_fns, module_map, context)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 16:17:\n    BLOCK_N: tl.constexpr,\n    BLOCK_K: tl.constexpr,\n):\n    pid = tl.program_id(0).to(tl.int32)\n    num_cores = tl.num_programs(0).to(tl.int32)\n\n    num_m = tl.cdiv(M, BLOCK_M)\n    num_n = tl.cdiv(N, BLOCK_N)\n    num_tiles = num_m * num_n\n\n    # int division -> float division (exact for values < 2**24)\n    per_prog = (((num_tiles + num_cores - 1).to(tl.float32)\n                 ^\nTypeError('unexpected type fp32')\n"
+    },
+    {
+      "case_idx": 12,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            47,
+            288
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 6
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card7/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card7/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card7/agent_workdir/output/verify/kernelbench_l4_22_MultiQueryAttention_triton_ascend_impl.py\", line 247, in forward\n    gemm_kernel[(g1,)](\n  File \"/usr/local/python3.11.14/lib/pytho\n... [truncated 420 chars] ...\n3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 303, in compile\n    module = src.make_ir(options, codegen_fns, module_map, context)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 16:17:\n    BLOCK_N: tl.constexpr,\n    BLOCK_K: tl.constexpr,\n):\n    pid = tl.program_id(0).to(tl.int32)\n    num_cores = tl.num_programs(0).to(tl.int32)\n\n    num_m = tl.cdiv(M, BLOCK_M)\n    num_n = tl.cdiv(N, BLOCK_N)\n    num_tiles = num_m * num_n\n\n    # int division -> float division (exact for values < 2**24)\n    per_prog = (((num_tiles + num_cores - 1).to(tl.float32)\n                 ^\nTypeError('unexpected type fp32')\n"
+    },
+    {
+      "case_idx": 13,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            53,
+            320
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "scalar",
+          "value": 5
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card7/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card7/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card7/agent_workdir/output/verify/kernelbench_l4_22_MultiQueryAttention_triton_ascend_impl.py\", line 247, in forward\n    gemm_kernel[(g1,)](\n  File \"/usr/local/python3.11.14/lib/pytho\n... [truncated 420 chars] ...\n3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 303, in compile\n    module = src.make_ir(options, codegen_fns, module_map, context)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 16:17:\n    BLOCK_N: tl.constexpr,\n    BLOCK_K: tl.constexpr,\n):\n    pid = tl.program_id(0).to(tl.int32)\n    num_cores = tl.num_programs(0).to(tl.int32)\n\n    num_m = tl.cdiv(M, BLOCK_M)\n    num_n = tl.cdiv(N, BLOCK_N)\n    num_tiles = num_m * num_n\n\n    # int division -> float division (exact for values < 2**24)\n    per_prog = (((num_tiles + num_cores - 1).to(tl.float32)\n                 ^\nTypeError('unexpected type fp32')\n"
+    },
+    {
+      "case_idx": 14,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            59,
+            360
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": 6
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card7/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card7/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card7/agent_workdir/output/verify/kernelbench_l4_22_MultiQueryAttention_triton_ascend_impl.py\", line 247, in forward\n    gemm_kernel[(g1,)](\n  File \"/usr/local/python3.11.14/lib/pytho\n... [truncated 420 chars] ...\n3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 303, in compile\n    module = src.make_ir(options, codegen_fns, module_map, context)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 16:17:\n    BLOCK_N: tl.constexpr,\n    BLOCK_K: tl.constexpr,\n):\n    pid = tl.program_id(0).to(tl.int32)\n    num_cores = tl.num_programs(0).to(tl.int32)\n\n    num_m = tl.cdiv(M, BLOCK_M)\n    num_n = tl.cdiv(N, BLOCK_N)\n    num_tiles = num_m * num_n\n\n    # int division -> float division (exact for values < 2**24)\n    per_prog = (((num_tiles + num_cores - 1).to(tl.float32)\n                 ^\nTypeError('unexpected type fp32')\n"
+    },
+    {
+      "case_idx": 15,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            3,
+            17,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 4
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card7/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card7/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card7/agent_workdir/output/verify/kernelbench_l4_22_MultiQueryAttention_triton_ascend_impl.py\", line 247, in forward\n    gemm_kernel[(g1,)](\n  File \"/usr/local/python3.11.14/lib/pytho\n... [truncated 420 chars] ...\n3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 303, in compile\n    module = src.make_ir(options, codegen_fns, module_map, context)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 16:17:\n    BLOCK_N: tl.constexpr,\n    BLOCK_K: tl.constexpr,\n):\n    pid = tl.program_id(0).to(tl.int32)\n    num_cores = tl.num_programs(0).to(tl.int32)\n\n    num_m = tl.cdiv(M, BLOCK_M)\n    num_n = tl.cdiv(N, BLOCK_N)\n    num_tiles = num_m * num_n\n\n    # int division -> float division (exact for values < 2**24)\n    per_prog = (((num_tiles + num_cores - 1).to(tl.float32)\n                 ^\nTypeError('unexpected type fp32')\n"
+    },
+    {
+      "case_idx": 16,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            127,
+            720
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "scalar",
+          "value": 12
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card7/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card7/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card7/agent_workdir/output/verify/kernelbench_l4_22_MultiQueryAttention_triton_ascend_impl.py\", line 247, in forward\n    gemm_kernel[(g1,)](\n  File \"/usr/local/python3.11.14/lib/pytho\n... [truncated 420 chars] ...\n3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 303, in compile\n    module = src.make_ir(options, codegen_fns, module_map, context)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 16:17:\n    BLOCK_N: tl.constexpr,\n    BLOCK_K: tl.constexpr,\n):\n    pid = tl.program_id(0).to(tl.int32)\n    num_cores = tl.num_programs(0).to(tl.int32)\n\n    num_m = tl.cdiv(M, BLOCK_M)\n    num_n = tl.cdiv(N, BLOCK_N)\n    num_tiles = num_m * num_n\n\n    # int division -> float division (exact for values < 2**24)\n    per_prog = (((num_tiles + num_cores - 1).to(tl.float32)\n                 ^\nTypeError('unexpected type fp32')\n"
+    },
+    {
+      "case_idx": 17,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            131,
+            768
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": 12
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card7/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card7/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card7/agent_workdir/output/verify/kernelbench_l4_22_MultiQueryAttention_triton_ascend_impl.py\", line 247, in forward\n    gemm_kernel[(g1,)](\n  File \"/usr/local/python3.11.14/lib/pytho\n... [truncated 420 chars] ...\n3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 303, in compile\n    module = src.make_ir(options, codegen_fns, module_map, context)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 16:17:\n    BLOCK_N: tl.constexpr,\n    BLOCK_K: tl.constexpr,\n):\n    pid = tl.program_id(0).to(tl.int32)\n    num_cores = tl.num_programs(0).to(tl.int32)\n\n    num_m = tl.cdiv(M, BLOCK_M)\n    num_n = tl.cdiv(N, BLOCK_N)\n    num_tiles = num_m * num_n\n\n    # int division -> float division (exact for values < 2**24)\n    per_prog = (((num_tiles + num_cores - 1).to(tl.float32)\n                 ^\nTypeError('unexpected type fp32')\n"
+    },
+    {
+      "case_idx": 18,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            137,
+            800
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 10
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card7/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card7/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card7/agent_workdir/output/verify/kernelbench_l4_22_MultiQueryAttention_triton_ascend_impl.py\", line 247, in forward\n    gemm_kernel[(g1,)](\n  File \"/usr/local/python3.11.14/lib/pytho\n... [truncated 420 chars] ...\n3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 303, in compile\n    module = src.make_ir(options, codegen_fns, module_map, context)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 16:17:\n    BLOCK_N: tl.constexpr,\n    BLOCK_K: tl.constexpr,\n):\n    pid = tl.program_id(0).to(tl.int32)\n    num_cores = tl.num_programs(0).to(tl.int32)\n\n    num_m = tl.cdiv(M, BLOCK_M)\n    num_n = tl.cdiv(N, BLOCK_N)\n    num_tiles = num_m * num_n\n\n    # int division -> float division (exact for values < 2**24)\n    per_prog = (((num_tiles + num_cores - 1).to(tl.float32)\n                 ^\nTypeError('unexpected type fp32')\n"
+    },
+    {
+      "case_idx": 19,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            149,
+            832
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "scalar",
+          "value": 13
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card7/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card7/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card7/agent_workdir/output/verify/kernelbench_l4_22_MultiQueryAttention_triton_ascend_impl.py\", line 247, in forward\n    gemm_kernel[(g1,)](\n  File \"/usr/local/python3.11.14/lib/pytho\n... [truncated 420 chars] ...\n3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 303, in compile\n    module = src.make_ir(options, codegen_fns, module_map, context)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 16:17:\n    BLOCK_N: tl.constexpr,\n    BLOCK_K: tl.constexpr,\n):\n    pid = tl.program_id(0).to(tl.int32)\n    num_cores = tl.num_programs(0).to(tl.int32)\n\n    num_m = tl.cdiv(M, BLOCK_M)\n    num_n = tl.cdiv(N, BLOCK_N)\n    num_tiles = num_m * num_n\n\n    # int division -> float division (exact for values < 2**24)\n    per_prog = (((num_tiles + num_cores - 1).to(tl.float32)\n                 ^\nTypeError('unexpected type fp32')\n"
+    },
+    {
+      "case_idx": 20,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            157,
+            864
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": 12
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card7/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card7/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card7/agent_workdir/output/verify/kernelbench_l4_22_MultiQueryAttention_triton_ascend_impl.py\", line 247, in forward\n    gemm_kernel[(g1,)](\n  File \"/usr/local/python3.11.14/lib/pytho\n... [truncated 420 chars] ...\n3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 303, in compile\n    module = src.make_ir(options, codegen_fns, module_map, context)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 16:17:\n    BLOCK_N: tl.constexpr,\n    BLOCK_K: tl.constexpr,\n):\n    pid = tl.program_id(0).to(tl.int32)\n    num_cores = tl.num_programs(0).to(tl.int32)\n\n    num_m = tl.cdiv(M, BLOCK_M)\n    num_n = tl.cdiv(N, BLOCK_N)\n    num_tiles = num_m * num_n\n\n    # int division -> float division (exact for values < 2**24)\n    per_prog = (((num_tiles + num_cores - 1).to(tl.float32)\n                 ^\nTypeError('unexpected type fp32')\n"
+    },
+    {
+      "case_idx": 21,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            167,
+            896
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 14
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card7/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card7/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card7/agent_workdir/output/verify/kernelbench_l4_22_MultiQueryAttention_triton_ascend_impl.py\", line 247, in forward\n    gemm_kernel[(g1,)](\n  File \"/usr/local/python3.11.14/lib/pytho\n... [truncated 420 chars] ...\n3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 303, in compile\n    module = src.make_ir(options, codegen_fns, module_map, context)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 16:17:\n    BLOCK_N: tl.constexpr,\n    BLOCK_K: tl.constexpr,\n):\n    pid = tl.program_id(0).to(tl.int32)\n    num_cores = tl.num_programs(0).to(tl.int32)\n\n    num_m = tl.cdiv(M, BLOCK_M)\n    num_n = tl.cdiv(N, BLOCK_N)\n    num_tiles = num_m * num_n\n\n    # int division -> float division (exact for values < 2**24)\n    per_prog = (((num_tiles + num_cores - 1).to(tl.float32)\n                 ^\nTypeError('unexpected type fp32')\n"
+    },
+    {
+      "case_idx": 22,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            179,
+            960
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "scalar",
+          "value": 15
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card7/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card7/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card7/agent_workdir/output/verify/kernelbench_l4_22_MultiQueryAttention_triton_ascend_impl.py\", line 247, in forward\n    gemm_kernel[(g1,)](\n  File \"/usr/local/python3.11.14/lib/pytho\n... [truncated 420 chars] ...\n3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 303, in compile\n    module = src.make_ir(options, codegen_fns, module_map, context)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 16:17:\n    BLOCK_N: tl.constexpr,\n    BLOCK_K: tl.constexpr,\n):\n    pid = tl.program_id(0).to(tl.int32)\n    num_cores = tl.num_programs(0).to(tl.int32)\n\n    num_m = tl.cdiv(M, BLOCK_M)\n    num_n = tl.cdiv(N, BLOCK_N)\n    num_tiles = num_m * num_n\n\n    # int division -> float division (exact for values < 2**24)\n    per_prog = (((num_tiles + num_cores - 1).to(tl.float32)\n                 ^\nTypeError('unexpected type fp32')\n"
+    },
+    {
+      "case_idx": 23,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            3,
+            191,
+            1024
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": 16
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card7/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card7/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card7/agent_workdir/output/verify/kernelbench_l4_22_MultiQueryAttention_triton_ascend_impl.py\", line 247, in forward\n    gemm_kernel[(g1,)](\n  File \"/usr/local/python3.11.14/lib/pytho\n... [truncated 420 chars] ...\n3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 303, in compile\n    module = src.make_ir(options, codegen_fns, module_map, context)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 16:17:\n    BLOCK_N: tl.constexpr,\n    BLOCK_K: tl.constexpr,\n):\n    pid = tl.program_id(0).to(tl.int32)\n    num_cores = tl.num_programs(0).to(tl.int32)\n\n    num_m = tl.cdiv(M, BLOCK_M)\n    num_n = tl.cdiv(N, BLOCK_N)\n    num_tiles = num_m * num_n\n\n    # int division -> float division (exact for values < 2**24)\n    per_prog = (((num_tiles + num_cores - 1).to(tl.float32)\n                 ^\nTypeError('unexpected type fp32')\n"
+    },
+    {
+      "case_idx": 24,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            3,
+            211,
+            1088
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 17
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card7/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card7/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card7/agent_workdir/output/verify/kernelbench_l4_22_MultiQueryAttention_triton_ascend_impl.py\", line 247, in forward\n    gemm_kernel[(g1,)](\n  File \"/usr/local/python3.11.14/lib/pytho\n... [truncated 420 chars] ...\n3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 303, in compile\n    module = src.make_ir(options, codegen_fns, module_map, context)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 16:17:\n    BLOCK_N: tl.constexpr,\n    BLOCK_K: tl.constexpr,\n):\n    pid = tl.program_id(0).to(tl.int32)\n    num_cores = tl.num_programs(0).to(tl.int32)\n\n    num_m = tl.cdiv(M, BLOCK_M)\n    num_n = tl.cdiv(N, BLOCK_N)\n    num_tiles = num_m * num_n\n\n    # int division -> float division (exact for values < 2**24)\n    per_prog = (((num_tiles + num_cores - 1).to(tl.float32)\n                 ^\nTypeError('unexpected type fp32')\n"
+    },
+    {
+      "case_idx": 25,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            61,
+            384
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "scalar",
+          "value": 6
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card7/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card7/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card7/agent_workdir/output/verify/kernelbench_l4_22_MultiQueryAttention_triton_ascend_impl.py\", line 247, in forward\n    gemm_kernel[(g1,)](\n  File \"/usr/local/python3.11.14/lib/pytho\n... [truncated 420 chars] ...\n3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 303, in compile\n    module = src.make_ir(options, codegen_fns, module_map, context)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 16:17:\n    BLOCK_N: tl.constexpr,\n    BLOCK_K: tl.constexpr,\n):\n    pid = tl.program_id(0).to(tl.int32)\n    num_cores = tl.num_programs(0).to(tl.int32)\n\n    num_m = tl.cdiv(M, BLOCK_M)\n    num_n = tl.cdiv(N, BLOCK_N)\n    num_tiles = num_m * num_n\n\n    # int division -> float division (exact for values < 2**24)\n    per_prog = (((num_tiles + num_cores - 1).to(tl.float32)\n                 ^\nTypeError('unexpected type fp32')\n"
+    },
+    {
+      "case_idx": 26,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            67,
+            420
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": 7
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card7/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card7/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card7/agent_workdir/output/verify/kernelbench_l4_22_MultiQueryAttention_triton_ascend_impl.py\", line 247, in forward\n    gemm_kernel[(g1,)](\n  File \"/usr/local/python3.11.14/lib/pytho\n... [truncated 420 chars] ...\n3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 303, in compile\n    module = src.make_ir(options, codegen_fns, module_map, context)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 16:17:\n    BLOCK_N: tl.constexpr,\n    BLOCK_K: tl.constexpr,\n):\n    pid = tl.program_id(0).to(tl.int32)\n    num_cores = tl.num_programs(0).to(tl.int32)\n\n    num_m = tl.cdiv(M, BLOCK_M)\n    num_n = tl.cdiv(N, BLOCK_N)\n    num_tiles = num_m * num_n\n\n    # int division -> float division (exact for values < 2**24)\n    per_prog = (((num_tiles + num_cores - 1).to(tl.float32)\n                 ^\nTypeError('unexpected type fp32')\n"
+    },
+    {
+      "case_idx": 27,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            71,
+            448
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 7
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card7/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card7/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card7/agent_workdir/output/verify/kernelbench_l4_22_MultiQueryAttention_triton_ascend_impl.py\", line 247, in forward\n    gemm_kernel[(g1,)](\n  File \"/usr/local/python3.11.14/lib/pytho\n... [truncated 420 chars] ...\n3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 303, in compile\n    module = src.make_ir(options, codegen_fns, module_map, context)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 16:17:\n    BLOCK_N: tl.constexpr,\n    BLOCK_K: tl.constexpr,\n):\n    pid = tl.program_id(0).to(tl.int32)\n    num_cores = tl.num_programs(0).to(tl.int32)\n\n    num_m = tl.cdiv(M, BLOCK_M)\n    num_n = tl.cdiv(N, BLOCK_N)\n    num_tiles = num_m * num_n\n\n    # int division -> float division (exact for values < 2**24)\n    per_prog = (((num_tiles + num_cores - 1).to(tl.float32)\n                 ^\nTypeError('unexpected type fp32')\n"
+    },
+    {
+      "case_idx": 28,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            3,
+            73,
+            480
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "scalar",
+          "value": 8
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card7/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card7/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card7/agent_workdir/output/verify/kernelbench_l4_22_MultiQueryAttention_triton_ascend_impl.py\", line 247, in forward\n    gemm_kernel[(g1,)](\n  File \"/usr/local/python3.11.14/lib/pytho\n... [truncated 420 chars] ...\n3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 303, in compile\n    module = src.make_ir(options, codegen_fns, module_map, context)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 16:17:\n    BLOCK_N: tl.constexpr,\n    BLOCK_K: tl.constexpr,\n):\n    pid = tl.program_id(0).to(tl.int32)\n    num_cores = tl.num_programs(0).to(tl.int32)\n\n    num_m = tl.cdiv(M, BLOCK_M)\n    num_n = tl.cdiv(N, BLOCK_N)\n    num_tiles = num_m * num_n\n\n    # int division -> float division (exact for values < 2**24)\n    per_prog = (((num_tiles + num_cores - 1).to(tl.float32)\n                 ^\nTypeError('unexpected type fp32')\n"
+    },
+    {
+      "case_idx": 29,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            79,
+            512
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": 8
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card7/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card7/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card7/agent_workdir/output/verify/kernelbench_l4_22_MultiQueryAttention_triton_ascend_impl.py\", line 247, in forward\n    gemm_kernel[(g1,)](\n  File \"/usr/local/python3.11.14/lib/pytho\n... [truncated 420 chars] ...\n3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 303, in compile\n    module = src.make_ir(options, codegen_fns, module_map, context)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 16:17:\n    BLOCK_N: tl.constexpr,\n    BLOCK_K: tl.constexpr,\n):\n    pid = tl.program_id(0).to(tl.int32)\n    num_cores = tl.num_programs(0).to(tl.int32)\n\n    num_m = tl.cdiv(M, BLOCK_M)\n    num_n = tl.cdiv(N, BLOCK_N)\n    num_tiles = num_m * num_n\n\n    # int division -> float division (exact for values < 2**24)\n    per_prog = (((num_tiles + num_cores - 1).to(tl.float32)\n                 ^\nTypeError('unexpected type fp32')\n"
+    },
+    {
+      "case_idx": 30,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            83,
+            540
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 9
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card7/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card7/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card7/agent_workdir/output/verify/kernelbench_l4_22_MultiQueryAttention_triton_ascend_impl.py\", line 247, in forward\n    gemm_kernel[(g1,)](\n  File \"/usr/local/python3.11.14/lib/pytho\n... [truncated 420 chars] ...\n3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 303, in compile\n    module = src.make_ir(options, codegen_fns, module_map, context)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 16:17:\n    BLOCK_N: tl.constexpr,\n    BLOCK_K: tl.constexpr,\n):\n    pid = tl.program_id(0).to(tl.int32)\n    num_cores = tl.num_programs(0).to(tl.int32)\n\n    num_m = tl.cdiv(M, BLOCK_M)\n    num_n = tl.cdiv(N, BLOCK_N)\n    num_tiles = num_m * num_n\n\n    # int division -> float division (exact for values < 2**24)\n    per_prog = (((num_tiles + num_cores - 1).to(tl.float32)\n                 ^\nTypeError('unexpected type fp32')\n"
+    },
+    {
+      "case_idx": 31,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            89,
+            576
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "scalar",
+          "value": 9
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card7/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card7/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card7/agent_workdir/output/verify/kernelbench_l4_22_MultiQueryAttention_triton_ascend_impl.py\", line 247, in forward\n    gemm_kernel[(g1,)](\n  File \"/usr/local/python3.11.14/lib/pytho\n... [truncated 420 chars] ...\n3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 303, in compile\n    module = src.make_ir(options, codegen_fns, module_map, context)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 16:17:\n    BLOCK_N: tl.constexpr,\n    BLOCK_K: tl.constexpr,\n):\n    pid = tl.program_id(0).to(tl.int32)\n    num_cores = tl.num_programs(0).to(tl.int32)\n\n    num_m = tl.cdiv(M, BLOCK_M)\n    num_n = tl.cdiv(N, BLOCK_N)\n    num_tiles = num_m * num_n\n\n    # int division -> float division (exact for values < 2**24)\n    per_prog = (((num_tiles + num_cores - 1).to(tl.float32)\n                 ^\nTypeError('unexpected type fp32')\n"
+    },
+    {
+      "case_idx": 32,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            97,
+            600
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": 10
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card7/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card7/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card7/agent_workdir/output/verify/kernelbench_l4_22_MultiQueryAttention_triton_ascend_impl.py\", line 247, in forward\n    gemm_kernel[(g1,)](\n  File \"/usr/local/python3.11.14/lib/pytho\n... [truncated 420 chars] ...\n3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 303, in compile\n    module = src.make_ir(options, codegen_fns, module_map, context)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 16:17:\n    BLOCK_N: tl.constexpr,\n    BLOCK_K: tl.constexpr,\n):\n    pid = tl.program_id(0).to(tl.int32)\n    num_cores = tl.num_programs(0).to(tl.int32)\n\n    num_m = tl.cdiv(M, BLOCK_M)\n    num_n = tl.cdiv(N, BLOCK_N)\n    num_tiles = num_m * num_n\n\n    # int division -> float division (exact for values < 2**24)\n    per_prog = (((num_tiles + num_cores - 1).to(tl.float32)\n                 ^\nTypeError('unexpected type fp32')\n"
+    },
+    {
+      "case_idx": 33,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            3,
+            101,
+            640
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 10
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card7/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card7/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card7/agent_workdir/output/verify/kernelbench_l4_22_MultiQueryAttention_triton_ascend_impl.py\", line 247, in forward\n    gemm_kernel[(g1,)](\n  File \"/usr/local/python3.11.14/lib/pytho\n... [truncated 420 chars] ...\n3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 303, in compile\n    module = src.make_ir(options, codegen_fns, module_map, context)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 16:17:\n    BLOCK_N: tl.constexpr,\n    BLOCK_K: tl.constexpr,\n):\n    pid = tl.program_id(0).to(tl.int32)\n    num_cores = tl.num_programs(0).to(tl.int32)\n\n    num_m = tl.cdiv(M, BLOCK_M)\n    num_n = tl.cdiv(N, BLOCK_N)\n    num_tiles = num_m * num_n\n\n    # int division -> float division (exact for values < 2**24)\n    per_prog = (((num_tiles + num_cores - 1).to(tl.float32)\n                 ^\nTypeError('unexpected type fp32')\n"
+    },
+    {
+      "case_idx": 34,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            107,
+            672
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "scalar",
+          "value": 12
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card7/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card7/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card7/agent_workdir/output/verify/kernelbench_l4_22_MultiQueryAttention_triton_ascend_impl.py\", line 247, in forward\n    gemm_kernel[(g1,)](\n  File \"/usr/local/python3.11.14/lib/pytho\n... [truncated 420 chars] ...\n3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 303, in compile\n    module = src.make_ir(options, codegen_fns, module_map, context)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 16:17:\n    BLOCK_N: tl.constexpr,\n    BLOCK_K: tl.constexpr,\n):\n    pid = tl.program_id(0).to(tl.int32)\n    num_cores = tl.num_programs(0).to(tl.int32)\n\n    num_m = tl.cdiv(M, BLOCK_M)\n    num_n = tl.cdiv(N, BLOCK_N)\n    num_tiles = num_m * num_n\n\n    # int division -> float division (exact for values < 2**24)\n    per_prog = (((num_tiles + num_cores - 1).to(tl.float32)\n                 ^\nTypeError('unexpected type fp32')\n"
+    },
+    {
+      "case_idx": 35,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            113,
+            704
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": 11
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card7/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card7/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card7/agent_workdir/output/verify/kernelbench_l4_22_MultiQueryAttention_triton_ascend_impl.py\", line 247, in forward\n    gemm_kernel[(g1,)](\n  File \"/usr/local/python3.11.14/lib/pytho\n... [truncated 420 chars] ...\n3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 303, in compile\n    module = src.make_ir(options, codegen_fns, module_map, context)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 16:17:\n    BLOCK_N: tl.constexpr,\n    BLOCK_K: tl.constexpr,\n):\n    pid = tl.program_id(0).to(tl.int32)\n    num_cores = tl.num_programs(0).to(tl.int32)\n\n    num_m = tl.cdiv(M, BLOCK_M)\n    num_n = tl.cdiv(N, BLOCK_N)\n    num_tiles = num_m * num_n\n\n    # int division -> float division (exact for values < 2**24)\n    per_prog = (((num_tiles + num_cores - 1).to(tl.float32)\n                 ^\nTypeError('unexpected type fp32')\n"
+    },
+    {
+      "case_idx": 36,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            577,
+            896
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 14
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card7/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card7/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card7/agent_workdir/output/verify/kernelbench_l4_22_MultiQueryAttention_triton_ascend_impl.py\", line 247, in forward\n    gemm_kernel[(g1,)](\n  File \"/usr/local/python3.11.14/lib/pytho\n... [truncated 420 chars] ...\n3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 303, in compile\n    module = src.make_ir(options, codegen_fns, module_map, context)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 16:17:\n    BLOCK_N: tl.constexpr,\n    BLOCK_K: tl.constexpr,\n):\n    pid = tl.program_id(0).to(tl.int32)\n    num_cores = tl.num_programs(0).to(tl.int32)\n\n    num_m = tl.cdiv(M, BLOCK_M)\n    num_n = tl.cdiv(N, BLOCK_N)\n    num_tiles = num_m * num_n\n\n    # int division -> float division (exact for values < 2**24)\n    per_prog = (((num_tiles + num_cores - 1).to(tl.float32)\n                 ^\nTypeError('unexpected type fp32')\n"
+    },
+    {
+      "case_idx": 37,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            641,
+            768
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "scalar",
+          "value": 12
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card7/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card7/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card7/agent_workdir/output/verify/kernelbench_l4_22_MultiQueryAttention_triton_ascend_impl.py\", line 247, in forward\n    gemm_kernel[(g1,)](\n  File \"/usr/local/python3.11.14/lib/pytho\n... [truncated 420 chars] ...\n3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 303, in compile\n    module = src.make_ir(options, codegen_fns, module_map, context)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 16:17:\n    BLOCK_N: tl.constexpr,\n    BLOCK_K: tl.constexpr,\n):\n    pid = tl.program_id(0).to(tl.int32)\n    num_cores = tl.num_programs(0).to(tl.int32)\n\n    num_m = tl.cdiv(M, BLOCK_M)\n    num_n = tl.cdiv(N, BLOCK_N)\n    num_tiles = num_m * num_n\n\n    # int division -> float division (exact for values < 2**24)\n    per_prog = (((num_tiles + num_cores - 1).to(tl.float32)\n                 ^\nTypeError('unexpected type fp32')\n"
+    },
+    {
+      "case_idx": 38,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            769,
+            640
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": 10
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card7/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card7/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card7/agent_workdir/output/verify/kernelbench_l4_22_MultiQueryAttention_triton_ascend_impl.py\", line 247, in forward\n    gemm_kernel[(g1,)](\n  File \"/usr/local/python3.11.14/lib/pytho\n... [truncated 420 chars] ...\n3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 303, in compile\n    module = src.make_ir(options, codegen_fns, module_map, context)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 16:17:\n    BLOCK_N: tl.constexpr,\n    BLOCK_K: tl.constexpr,\n):\n    pid = tl.program_id(0).to(tl.int32)\n    num_cores = tl.num_programs(0).to(tl.int32)\n\n    num_m = tl.cdiv(M, BLOCK_M)\n    num_n = tl.cdiv(N, BLOCK_N)\n    num_tiles = num_m * num_n\n\n    # int division -> float division (exact for values < 2**24)\n    per_prog = (((num_tiles + num_cores - 1).to(tl.float32)\n                 ^\nTypeError('unexpected type fp32')\n"
+    },
+    {
+      "case_idx": 39,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            897,
+            512
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 8
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card7/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card7/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card7/agent_workdir/output/verify/kernelbench_l4_22_MultiQueryAttention_triton_ascend_impl.py\", line 247, in forward\n    gemm_kernel[(g1,)](\n  File \"/usr/local/python3.11.14/lib/pytho\n... [truncated 420 chars] ...\n3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 303, in compile\n    module = src.make_ir(options, codegen_fns, module_map, context)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 16:17:\n    BLOCK_N: tl.constexpr,\n    BLOCK_K: tl.constexpr,\n):\n    pid = tl.program_id(0).to(tl.int32)\n    num_cores = tl.num_programs(0).to(tl.int32)\n\n    num_m = tl.cdiv(M, BLOCK_M)\n    num_n = tl.cdiv(N, BLOCK_N)\n    num_tiles = num_m * num_n\n\n    # int division -> float division (exact for values < 2**24)\n    per_prog = (((num_tiles + num_cores - 1).to(tl.float32)\n                 ^\nTypeError('unexpected type fp32')\n"
+    },
+    {
+      "case_idx": 40,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            223,
+            1152
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "scalar",
+          "value": 18
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card7/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card7/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card7/agent_workdir/output/verify/kernelbench_l4_22_MultiQueryAttention_triton_ascend_impl.py\", line 247, in forward\n    gemm_kernel[(g1,)](\n  File \"/usr/local/python3.11.14/lib/pytho\n... [truncated 420 chars] ...\n3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 303, in compile\n    module = src.make_ir(options, codegen_fns, module_map, context)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 16:17:\n    BLOCK_N: tl.constexpr,\n    BLOCK_K: tl.constexpr,\n):\n    pid = tl.program_id(0).to(tl.int32)\n    num_cores = tl.num_programs(0).to(tl.int32)\n\n    num_m = tl.cdiv(M, BLOCK_M)\n    num_n = tl.cdiv(N, BLOCK_N)\n    num_tiles = num_m * num_n\n\n    # int division -> float division (exact for values < 2**24)\n    per_prog = (((num_tiles + num_cores - 1).to(tl.float32)\n                 ^\nTypeError('unexpected type fp32')\n"
+    },
+    {
+      "case_idx": 41,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            239,
+            1200
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": 15
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card7/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card7/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card7/agent_workdir/output/verify/kernelbench_l4_22_MultiQueryAttention_triton_ascend_impl.py\", line 247, in forward\n    gemm_kernel[(g1,)](\n  File \"/usr/local/python3.11.14/lib/pytho\n... [truncated 420 chars] ...\n3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 303, in compile\n    module = src.make_ir(options, codegen_fns, module_map, context)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 16:17:\n    BLOCK_N: tl.constexpr,\n    BLOCK_K: tl.constexpr,\n):\n    pid = tl.program_id(0).to(tl.int32)\n    num_cores = tl.num_programs(0).to(tl.int32)\n\n    num_m = tl.cdiv(M, BLOCK_M)\n    num_n = tl.cdiv(N, BLOCK_N)\n    num_tiles = num_m * num_n\n\n    # int division -> float division (exact for values < 2**24)\n    per_prog = (((num_tiles + num_cores - 1).to(tl.float32)\n                 ^\nTypeError('unexpected type fp32')\n"
+    },
+    {
+      "case_idx": 42,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            257,
+            1248
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 16
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card7/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card7/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card7/agent_workdir/output/verify/kernelbench_l4_22_MultiQueryAttention_triton_ascend_impl.py\", line 247, in forward\n    gemm_kernel[(g1,)](\n  File \"/usr/local/python3.11.14/lib/pytho\n... [truncated 420 chars] ...\n3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 303, in compile\n    module = src.make_ir(options, codegen_fns, module_map, context)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 16:17:\n    BLOCK_N: tl.constexpr,\n    BLOCK_K: tl.constexpr,\n):\n    pid = tl.program_id(0).to(tl.int32)\n    num_cores = tl.num_programs(0).to(tl.int32)\n\n    num_m = tl.cdiv(M, BLOCK_M)\n    num_n = tl.cdiv(N, BLOCK_N)\n    num_tiles = num_m * num_n\n\n    # int division -> float division (exact for values < 2**24)\n    per_prog = (((num_tiles + num_cores - 1).to(tl.float32)\n                 ^\nTypeError('unexpected type fp32')\n"
+    },
+    {
+      "case_idx": 43,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            277,
+            1280
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "scalar",
+          "value": 20
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card7/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card7/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card7/agent_workdir/output/verify/kernelbench_l4_22_MultiQueryAttention_triton_ascend_impl.py\", line 247, in forward\n    gemm_kernel[(g1,)](\n  File \"/usr/local/python3.11.14/lib/pytho\n... [truncated 420 chars] ...\n3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 303, in compile\n    module = src.make_ir(options, codegen_fns, module_map, context)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 16:17:\n    BLOCK_N: tl.constexpr,\n    BLOCK_K: tl.constexpr,\n):\n    pid = tl.program_id(0).to(tl.int32)\n    num_cores = tl.num_programs(0).to(tl.int32)\n\n    num_m = tl.cdiv(M, BLOCK_M)\n    num_n = tl.cdiv(N, BLOCK_N)\n    num_tiles = num_m * num_n\n\n    # int division -> float division (exact for values < 2**24)\n    per_prog = (((num_tiles + num_cores - 1).to(tl.float32)\n                 ^\nTypeError('unexpected type fp32')\n"
+    },
+    {
+      "case_idx": 44,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            293,
+            1344
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": 21
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card7/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card7/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card7/agent_workdir/output/verify/kernelbench_l4_22_MultiQueryAttention_triton_ascend_impl.py\", line 247, in forward\n    gemm_kernel[(g1,)](\n  File \"/usr/local/python3.11.14/lib/pytho\n... [truncated 420 chars] ...\n3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 303, in compile\n    module = src.make_ir(options, codegen_fns, module_map, context)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 16:17:\n    BLOCK_N: tl.constexpr,\n    BLOCK_K: tl.constexpr,\n):\n    pid = tl.program_id(0).to(tl.int32)\n    num_cores = tl.num_programs(0).to(tl.int32)\n\n    num_m = tl.cdiv(M, BLOCK_M)\n    num_n = tl.cdiv(N, BLOCK_N)\n    num_tiles = num_m * num_n\n\n    # int division -> float division (exact for values < 2**24)\n    per_prog = (((num_tiles + num_cores - 1).to(tl.float32)\n                 ^\nTypeError('unexpected type fp32')\n"
+    },
+    {
+      "case_idx": 45,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            317,
+            1408
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 22
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card7/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card7/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card7/agent_workdir/output/verify/kernelbench_l4_22_MultiQueryAttention_triton_ascend_impl.py\", line 247, in forward\n    gemm_kernel[(g1,)](\n  File \"/usr/local/python3.11.14/lib/pytho\n... [truncated 420 chars] ...\n3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 303, in compile\n    module = src.make_ir(options, codegen_fns, module_map, context)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 16:17:\n    BLOCK_N: tl.constexpr,\n    BLOCK_K: tl.constexpr,\n):\n    pid = tl.program_id(0).to(tl.int32)\n    num_cores = tl.num_programs(0).to(tl.int32)\n\n    num_m = tl.cdiv(M, BLOCK_M)\n    num_n = tl.cdiv(N, BLOCK_N)\n    num_tiles = num_m * num_n\n\n    # int division -> float division (exact for values < 2**24)\n    per_prog = (((num_tiles + num_cores - 1).to(tl.float32)\n                 ^\nTypeError('unexpected type fp32')\n"
+    },
+    {
+      "case_idx": 46,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            347,
+            1440
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "scalar",
+          "value": 18
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card7/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card7/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card7/agent_workdir/output/verify/kernelbench_l4_22_MultiQueryAttention_triton_ascend_impl.py\", line 247, in forward\n    gemm_kernel[(g1,)](\n  File \"/usr/local/python3.11.14/lib/pytho\n... [truncated 420 chars] ...\n3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 303, in compile\n    module = src.make_ir(options, codegen_fns, module_map, context)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 16:17:\n    BLOCK_N: tl.constexpr,\n    BLOCK_K: tl.constexpr,\n):\n    pid = tl.program_id(0).to(tl.int32)\n    num_cores = tl.num_programs(0).to(tl.int32)\n\n    num_m = tl.cdiv(M, BLOCK_M)\n    num_n = tl.cdiv(N, BLOCK_N)\n    num_tiles = num_m * num_n\n\n    # int division -> float division (exact for values < 2**24)\n    per_prog = (((num_tiles + num_cores - 1).to(tl.float32)\n                 ^\nTypeError('unexpected type fp32')\n"
+    },
+    {
+      "case_idx": 47,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            383,
+            1472
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": 23
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card7/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card7/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card7/agent_workdir/output/verify/kernelbench_l4_22_MultiQueryAttention_triton_ascend_impl.py\", line 247, in forward\n    gemm_kernel[(g1,)](\n  File \"/usr/local/python3.11.14/lib/pytho\n... [truncated 420 chars] ...\n3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 303, in compile\n    module = src.make_ir(options, codegen_fns, module_map, context)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 16:17:\n    BLOCK_N: tl.constexpr,\n    BLOCK_K: tl.constexpr,\n):\n    pid = tl.program_id(0).to(tl.int32)\n    num_cores = tl.num_programs(0).to(tl.int32)\n\n    num_m = tl.cdiv(M, BLOCK_M)\n    num_n = tl.cdiv(N, BLOCK_N)\n    num_tiles = num_m * num_n\n\n    # int division -> float division (exact for values < 2**24)\n    per_prog = (((num_tiles + num_cores - 1).to(tl.float32)\n                 ^\nTypeError('unexpected type fp32')\n"
+    },
+    {
+      "case_idx": 48,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            419,
+            1536
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 24
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card7/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card7/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card7/agent_workdir/output/verify/kernelbench_l4_22_MultiQueryAttention_triton_ascend_impl.py\", line 247, in forward\n    gemm_kernel[(g1,)](\n  File \"/usr/local/python3.11.14/lib/pytho\n... [truncated 420 chars] ...\n3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 303, in compile\n    module = src.make_ir(options, codegen_fns, module_map, context)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 16:17:\n    BLOCK_N: tl.constexpr,\n    BLOCK_K: tl.constexpr,\n):\n    pid = tl.program_id(0).to(tl.int32)\n    num_cores = tl.num_programs(0).to(tl.int32)\n\n    num_m = tl.cdiv(M, BLOCK_M)\n    num_n = tl.cdiv(N, BLOCK_N)\n    num_tiles = num_m * num_n\n\n    # int division -> float division (exact for values < 2**24)\n    per_prog = (((num_tiles + num_cores - 1).to(tl.float32)\n                 ^\nTypeError('unexpected type fp32')\n"
+    },
+    {
+      "case_idx": 49,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            463,
+            1280
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "scalar",
+          "value": 16
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card7/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card7/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card7/agent_workdir/output/verify/kernelbench_l4_22_MultiQueryAttention_triton_ascend_impl.py\", line 247, in forward\n    gemm_kernel[(g1,)](\n  File \"/usr/local/python3.11.14/lib/pytho\n... [truncated 420 chars] ...\n3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 303, in compile\n    module = src.make_ir(options, codegen_fns, module_map, context)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 16:17:\n    BLOCK_N: tl.constexpr,\n    BLOCK_K: tl.constexpr,\n):\n    pid = tl.program_id(0).to(tl.int32)\n    num_cores = tl.num_programs(0).to(tl.int32)\n\n    num_m = tl.cdiv(M, BLOCK_M)\n    num_n = tl.cdiv(N, BLOCK_N)\n    num_tiles = num_m * num_n\n\n    # int division -> float division (exact for values < 2**24)\n    per_prog = (((num_tiles + num_cores - 1).to(tl.float32)\n                 ^\nTypeError('unexpected type fp32')\n"
+    },
+    {
+      "case_idx": 50,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            509,
+            1024
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": 16
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card7/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card7/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card7/agent_workdir/output/verify/kernelbench_l4_22_MultiQueryAttention_triton_ascend_impl.py\", line 247, in forward\n    gemm_kernel[(g1,)](\n  File \"/usr/local/python3.11.14/lib/pytho\n... [truncated 420 chars] ...\n3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 303, in compile\n    module = src.make_ir(options, codegen_fns, module_map, context)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 16:17:\n    BLOCK_N: tl.constexpr,\n    BLOCK_K: tl.constexpr,\n):\n    pid = tl.program_id(0).to(tl.int32)\n    num_cores = tl.num_programs(0).to(tl.int32)\n\n    num_m = tl.cdiv(M, BLOCK_M)\n    num_n = tl.cdiv(N, BLOCK_N)\n    num_tiles = num_m * num_n\n\n    # int division -> float division (exact for values < 2**24)\n    per_prog = (((num_tiles + num_cores - 1).to(tl.float32)\n                 ^\nTypeError('unexpected type fp32')\n"
+    }
+  ]
+}

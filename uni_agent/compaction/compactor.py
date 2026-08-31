@@ -178,7 +178,7 @@ class CompactionConfig:
         return int(self.max_context_tokens * self.threshold_ratio)
 
     @classmethod
-    def from_env(cls, env: dict[str, str] | None = None) -> "CompactionConfig":
+    def from_env(cls, env: dict[str, str] | None = None, max_model_len: int | None = None) -> "CompactionConfig":
         import os
 
         env = env if env is not None else dict(os.environ)
@@ -201,10 +201,13 @@ class CompactionConfig:
             except (TypeError, ValueError):
                 return default
 
+        # max_context_tokens comes from the model's real inference length.
+        max_context_tokens = max_model_len if max_model_len is not None else 40960
+
         return cls(
             enabled=_bool("TRITON_COMPACTION_ENABLED", True),
             threshold_ratio=_float("TRITON_COMPACTION_THRESHOLD", 0.8),
-            max_context_tokens=_int("TRITON_COMPACTION_MAX_CONTEXT", 40960),
+            max_context_tokens=max_context_tokens,
             failure_backoff_steps=_int("TRITON_COMPACTION_BACKOFF", 3),
         )
 

@@ -1,0 +1,554 @@
+{
+  "op_name": "kernelbench_l4_26_ViTAttention",
+  "total_cases": 50,
+  "passed_cases": 29,
+  "failed_cases": 21,
+  "failures": [
+    {
+      "case_idx": 4,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            3,
+            26,
+            512
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": 8
+        }
+      ],
+      "error_type": "AccuracyError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card4/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 898, in run_single_case\n    compare(\n  File \"/opt/workspace_card4/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 677, in compare\n    _compare_float_output(fw_finite, impl_finite, ctx)\n  File \"/opt/workspace_card4/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 596, in _compare_float_output\n    _check_accuracy_npu_benchmark(fw_finite, impl_finite, ctx.data_type)\n  File \"/opt/workspace_card4/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 845, in _check_accuracy_npu_benchmark\n    raise AccuracyError(\nAccuracyError: 验证失败 dtype=torch.float32: max_error_cap_violations=13293/39936 (atol=1.000000e-03, rtol=1.220703e-04, max_abs_diff=1.916180e+00, ok=False), matched_ratio=0.666041 (req>=0.9, ok=False), MERE=1.258235e+00 (rel_thr=1.220703e-04, ok=False); small_count=1, normal_count=39935\n前 10 个 max_error_cap 违例位置:\n  位置[2\n... [truncated 4081 chars] ...\nd 未通过位置:\n  位置[2569] (正常域): framework=-1.965221e-03, impl=-1.965465e-03, 相对误差=1.239191e-04 (允许<=1.220703e-04)\n  位置[2836] (正常域): framework=1.882531e-03, impl=1.882179e-03, 相对误差=1.872409e-04 (允许<=1.220703e-04)\n  位置[3628] (正常域): framework=9.556211e-04, impl=9.551108e-04, 相对误差=5.339492e-04 (允许<=1.220703e-04)\n  位置[6478] (正常域): framework=-1.213097e-03, impl=-1.213552e-03, 相对误差=3.750018e-04 (允许<=1.220703e-04)\n  位置[6935] (正常域): framework=-1.172558e-04, impl=-1.173949e-04, 相对误差=1.185548e-03 (允许<=1.220703e-04)\n  位置[7538] (正常域): framework=1.112516e-03, impl=1.112975e-03, 相对误差=4.129829e-04 (允许<=1.220703e-04)\n  位置[8342] (正常域): framework=6.953420e-05, impl=6.975467e-05, 相对误差=3.166204e-03 (允许<=1.220703e-04)\n  位置[9282] (正常域): framework=3.957302e-04, impl=3.952424e-04, 相对误差=1.232443e-03 (允许<=1.220703e-04)\n  位置[11308] (正常域): framework=1.620573e-03, impl=1.620201e-03, 相对误差=2.297888e-04 (允许<=1.220703e-04)\n  位置[11523] (正常域): framework=-7.923341e-05, impl=-7.899223e-05, 相对误差=3.040033e-03 (允许<=1.220703e-04)\n\n",
+      "metrics": {
+        "matched_ratio": 0.6660406650641025,
+        "max_abs_diff": 1.9161797761917114,
+        "MERE": 1.2582346200942993,
+        "rel_threshold": 0.0001220703125,
+        "small_value_threshold": 6.103515625e-05,
+        "small_value_error": 9.313225746154785e-10,
+        "atol": 0.001,
+        "rtol": 0.0001220703125,
+        "max_error_cap_violation_count": 13293,
+        "required_matched_ratio": 0.9,
+        "total_finite": 39936,
+        "matched_count": 26599,
+        "small_count": 1,
+        "normal_count": 39935,
+        "checks": {
+          "max_error_cap": false,
+          "required_matched_ratio": false,
+          "MERE": false
+        }
+      }
+    },
+    {
+      "case_idx": 5,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            37,
+            640
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 10
+        }
+      ],
+      "error_type": "AccuracyError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card4/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 898, in run_single_case\n    compare(\n  File \"/opt/workspace_card4/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 677, in compare\n    _compare_float_output(fw_finite, impl_finite, ctx)\n  File \"/opt/workspace_card4/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 596, in _compare_float_output\n    _check_accuracy_npu_benchmark(fw_finite, impl_finite, ctx.data_type)\n  File \"/opt/workspace_card4/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 845, in _check_accuracy_npu_benchmark\n    raise AccuracyError(\nAccuracyError: 验证失败 dtype=torch.float16: max_error_cap_violations=1196/47360 (atol=9.000000e-02, rtol=9.765625e-04, max_abs_diff=4.375000e-01, ok=False), matched_ratio=0.932475 (req>=0.9, ok=True), MERE=6.736062e-02 (rel_thr=9.765625e-04, ok=False); small_count=28, normal_count=47332\n前 10 个 max_error_cap 违例位置:\n  位置[33\n... [truncated 2077 chars] ...\n-8.540039e-01, |diff|=1.533203e-01 (允许<=atol+rtol*|golden|=9.068426e-02)\n  位置[33929]: framework=4.506836e-01, impl=5.976562e-01, |diff|=1.469727e-01 (允许<=atol+rtol*|golden|=9.044012e-02)\n  位置[33931]: framework=-6.425781e-01, impl=-4.074707e-01, |diff|=2.351074e-01 (允许<=atol+rtol*|golden|=9.062752e-02)\n  位置[33933]: framework=-9.096680e-01, impl=-5.966797e-01, |diff|=3.129883e-01 (允许<=atol+rtol*|golden|=9.088835e-02)\n  位置[33935]: framework=-5.273438e-01, impl=-7.202148e-01, |diff|=1.928711e-01 (允许<=atol+rtol*|golden|=9.051499e-02)\n  位置[33936]: framework=-5.634766e-01, impl=-7.666016e-01, |diff|=2.031250e-01 (允许<=atol+rtol*|golden|=9.055027e-02)\n  位置[33938]: framework=-1.921387e-01, impl=-4.598999e-02, |diff|=1.461487e-01 (允许<=atol+rtol*|golden|=9.018764e-02)\n  位置[33940]: framework=-5.014648e-01, impl=-3.427734e-01, |diff|=1.586914e-01 (允许<=atol+rtol*|golden|=9.048972e-02)\n  位置[33941]: framework=-3.549805e-01, impl=-4.470215e-01, |diff|=9.204102e-02 (允许<=atol+rtol*|golden|=9.034666e-02)\n\n",
+      "metrics": {
+        "matched_ratio": 0.9324746621621621,
+        "max_abs_diff": 0.4375,
+        "MERE": 0.06736061722040176,
+        "rel_threshold": 0.0009765625,
+        "small_value_threshold": 0.00048828125,
+        "small_value_error": 1.52587890625e-05,
+        "atol": 0.09,
+        "rtol": 0.0009765625,
+        "max_error_cap_violation_count": 1196,
+        "required_matched_ratio": 0.9,
+        "total_finite": 47360,
+        "matched_count": 44162,
+        "small_count": 28,
+        "normal_count": 47332,
+        "checks": {
+          "max_error_cap": false,
+          "required_matched_ratio": true,
+          "MERE": false
+        }
+      }
+    },
+    {
+      "case_idx": 7,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            3,
+            65,
+            1024
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": 16
+        }
+      ],
+      "error_type": "MLIRCompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 310, in compile\n    next_module = compile_ir(module, metadata)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/ascend/compiler.py\", line 778, in <lambda>\n    lambda src, metadata: linalg_to_bin_enable_npu_compile_A2_A3(\n                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/ascend/compiler.py\", line 549, in linalg_to_bin_enable_npu_compile_A2_A3\n    ret = subprocess.run(cmd_list, capture_output=True, check=True)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/subprocess.py\", line 571, in run\n    raise CalledProcessError(retcode, process.args,\nsubprocess.CalledProcessError: Command '['/usr/local/Ascend/cann-9.0.0/tools/bishengi\n... [truncated 3768 chars] ...\nts while 1572864 bits available! (possible reason: tiling basic block is too large or block number is more than what user expect due to multi-buffer feature is enabled and some ops need extra local buffer.)\nloc(\"/tmp/tmpo5dn8e1k/kernel.ttadapter.mlir\":70:9): error: operand #0 does not dominate this use\nloc(\"/tmp/tmpo5dn8e1k/kernel.ttadapter.mlir\":2:1): error: Failed to run BiShengHIR pipeline\n\nloc(\"/tmp/tmpo5dn8e1k/kernel.ttadapter.mlir\":3:3): error: ub overflow, requires 1847552 bits while 1572864 bits available! (possible reason: tiling basic block is too large or block number is more than what user expect due to multi-buffer feature is enabled and some ops need extra local buffer.)\nloc(\"/tmp/tmpo5dn8e1k/kernel.ttadapter.mlir\":70:9): error: operand #0 does not dominate this use\n[ERROR] Failed to run BiShengIR pipeline\n\n\n[INFO]: The compiled kernel cache is in /root/.triton/cache/9vl6E5t1WOXCZLwsUva8jJJE_YNucfWQrsf2giw6rq8\n\n///------------------[ERROR][Triton][END]------------------\n\n"
+    },
+    {
+      "case_idx": 10,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            122,
+            192
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": 3
+        }
+      ],
+      "error_type": "MLIRCompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 310, in compile\n    next_module = compile_ir(module, metadata)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/ascend/compiler.py\", line 778, in <lambda>\n    lambda src, metadata: linalg_to_bin_enable_npu_compile_A2_A3(\n                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/ascend/compiler.py\", line 549, in linalg_to_bin_enable_npu_compile_A2_A3\n    ret = subprocess.run(cmd_list, capture_output=True, check=True)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/subprocess.py\", line 571, in run\n    raise CalledProcessError(retcode, process.args,\nsubprocess.CalledProcessError: Command '['/usr/local/Ascend/cann-9.0.0/tools/bishengi\n... [truncated 3768 chars] ...\nts while 1572864 bits available! (possible reason: tiling basic block is too large or block number is more than what user expect due to multi-buffer feature is enabled and some ops need extra local buffer.)\nloc(\"/tmp/tmp29uzpb6p/kernel.ttadapter.mlir\":70:9): error: operand #0 does not dominate this use\nloc(\"/tmp/tmp29uzpb6p/kernel.ttadapter.mlir\":2:1): error: Failed to run BiShengHIR pipeline\n\nloc(\"/tmp/tmp29uzpb6p/kernel.ttadapter.mlir\":3:3): error: ub overflow, requires 1847552 bits while 1572864 bits available! (possible reason: tiling basic block is too large or block number is more than what user expect due to multi-buffer feature is enabled and some ops need extra local buffer.)\nloc(\"/tmp/tmp29uzpb6p/kernel.ttadapter.mlir\":70:9): error: operand #0 does not dominate this use\n[ERROR] Failed to run BiShengIR pipeline\n\n\n[INFO]: The compiled kernel cache is in /root/.triton/cache/9vl6E5t1WOXCZLwsUva8jJJE_YNucfWQrsf2giw6rq8\n\n///------------------[ERROR][Triton][END]------------------\n\n"
+    },
+    {
+      "case_idx": 13,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            197,
+            512
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": 8
+        }
+      ],
+      "error_type": "MLIRCompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 310, in compile\n    next_module = compile_ir(module, metadata)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/ascend/compiler.py\", line 778, in <lambda>\n    lambda src, metadata: linalg_to_bin_enable_npu_compile_A2_A3(\n                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/ascend/compiler.py\", line 549, in linalg_to_bin_enable_npu_compile_A2_A3\n    ret = subprocess.run(cmd_list, capture_output=True, check=True)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/subprocess.py\", line 571, in run\n    raise CalledProcessError(retcode, process.args,\nsubprocess.CalledProcessError: Command '['/usr/local/Ascend/cann-9.0.0/tools/bishengi\n... [truncated 3768 chars] ...\nts while 1572864 bits available! (possible reason: tiling basic block is too large or block number is more than what user expect due to multi-buffer feature is enabled and some ops need extra local buffer.)\nloc(\"/tmp/tmpj8bhn55y/kernel.ttadapter.mlir\":70:9): error: operand #0 does not dominate this use\nloc(\"/tmp/tmpj8bhn55y/kernel.ttadapter.mlir\":2:1): error: Failed to run BiShengHIR pipeline\n\nloc(\"/tmp/tmpj8bhn55y/kernel.ttadapter.mlir\":3:3): error: ub overflow, requires 1847552 bits while 1572864 bits available! (possible reason: tiling basic block is too large or block number is more than what user expect due to multi-buffer feature is enabled and some ops need extra local buffer.)\nloc(\"/tmp/tmpj8bhn55y/kernel.ttadapter.mlir\":70:9): error: operand #0 does not dominate this use\n[ERROR] Failed to run BiShengIR pipeline\n\n\n[INFO]: The compiled kernel cache is in /root/.triton/cache/9vl6E5t1WOXCZLwsUva8jJJE_YNucfWQrsf2giw6rq8\n\n///------------------[ERROR][Triton][END]------------------\n\n"
+    },
+    {
+      "case_idx": 16,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            3,
+            290,
+            1024
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": 16
+        }
+      ],
+      "error_type": "MLIRCompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 310, in compile\n    next_module = compile_ir(module, metadata)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/ascend/compiler.py\", line 778, in <lambda>\n    lambda src, metadata: linalg_to_bin_enable_npu_compile_A2_A3(\n                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/ascend/compiler.py\", line 549, in linalg_to_bin_enable_npu_compile_A2_A3\n    ret = subprocess.run(cmd_list, capture_output=True, check=True)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/subprocess.py\", line 571, in run\n    raise CalledProcessError(retcode, process.args,\nsubprocess.CalledProcessError: Command '['/usr/local/Ascend/cann-9.0.0/tools/bishengi\n... [truncated 3768 chars] ...\nts while 1572864 bits available! (possible reason: tiling basic block is too large or block number is more than what user expect due to multi-buffer feature is enabled and some ops need extra local buffer.)\nloc(\"/tmp/tmpnd6k8v_7/kernel.ttadapter.mlir\":70:9): error: operand #0 does not dominate this use\nloc(\"/tmp/tmpnd6k8v_7/kernel.ttadapter.mlir\":2:1): error: Failed to run BiShengHIR pipeline\n\nloc(\"/tmp/tmpnd6k8v_7/kernel.ttadapter.mlir\":3:3): error: ub overflow, requires 1847552 bits while 1572864 bits available! (possible reason: tiling basic block is too large or block number is more than what user expect due to multi-buffer feature is enabled and some ops need extra local buffer.)\nloc(\"/tmp/tmpnd6k8v_7/kernel.ttadapter.mlir\":70:9): error: operand #0 does not dominate this use\n[ERROR] Failed to run BiShengIR pipeline\n\n\n[INFO]: The compiled kernel cache is in /root/.triton/cache/9vl6E5t1WOXCZLwsUva8jJJE_YNucfWQrsf2giw6rq8\n\n///------------------[ERROR][Triton][END]------------------\n\n"
+    },
+    {
+      "case_idx": 19,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            401,
+            192
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": 3
+        }
+      ],
+      "error_type": "MLIRCompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 310, in compile\n    next_module = compile_ir(module, metadata)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/ascend/compiler.py\", line 778, in <lambda>\n    lambda src, metadata: linalg_to_bin_enable_npu_compile_A2_A3(\n                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/ascend/compiler.py\", line 549, in linalg_to_bin_enable_npu_compile_A2_A3\n    ret = subprocess.run(cmd_list, capture_output=True, check=True)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/subprocess.py\", line 571, in run\n    raise CalledProcessError(retcode, process.args,\nsubprocess.CalledProcessError: Command '['/usr/local/Ascend/cann-9.0.0/tools/bishengi\n... [truncated 3768 chars] ...\nts while 1572864 bits available! (possible reason: tiling basic block is too large or block number is more than what user expect due to multi-buffer feature is enabled and some ops need extra local buffer.)\nloc(\"/tmp/tmpha06z8kg/kernel.ttadapter.mlir\":70:9): error: operand #0 does not dominate this use\nloc(\"/tmp/tmpha06z8kg/kernel.ttadapter.mlir\":2:1): error: Failed to run BiShengHIR pipeline\n\nloc(\"/tmp/tmpha06z8kg/kernel.ttadapter.mlir\":3:3): error: ub overflow, requires 1847552 bits while 1572864 bits available! (possible reason: tiling basic block is too large or block number is more than what user expect due to multi-buffer feature is enabled and some ops need extra local buffer.)\nloc(\"/tmp/tmpha06z8kg/kernel.ttadapter.mlir\":70:9): error: operand #0 does not dominate this use\n[ERROR] Failed to run BiShengIR pipeline\n\n\n[INFO]: The compiled kernel cache is in /root/.triton/cache/9vl6E5t1WOXCZLwsUva8jJJE_YNucfWQrsf2giw6rq8\n\n///------------------[ERROR][Triton][END]------------------\n\n"
+    },
+    {
+      "case_idx": 22,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            530,
+            512
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": 8
+        }
+      ],
+      "error_type": "MLIRCompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 310, in compile\n    next_module = compile_ir(module, metadata)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/ascend/compiler.py\", line 778, in <lambda>\n    lambda src, metadata: linalg_to_bin_enable_npu_compile_A2_A3(\n                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/ascend/compiler.py\", line 549, in linalg_to_bin_enable_npu_compile_A2_A3\n    ret = subprocess.run(cmd_list, capture_output=True, check=True)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/subprocess.py\", line 571, in run\n    raise CalledProcessError(retcode, process.args,\nsubprocess.CalledProcessError: Command '['/usr/local/Ascend/cann-9.0.0/tools/bishengi\n... [truncated 3768 chars] ...\nts while 1572864 bits available! (possible reason: tiling basic block is too large or block number is more than what user expect due to multi-buffer feature is enabled and some ops need extra local buffer.)\nloc(\"/tmp/tmpif7trots/kernel.ttadapter.mlir\":70:9): error: operand #0 does not dominate this use\nloc(\"/tmp/tmpif7trots/kernel.ttadapter.mlir\":2:1): error: Failed to run BiShengHIR pipeline\n\nloc(\"/tmp/tmpif7trots/kernel.ttadapter.mlir\":3:3): error: ub overflow, requires 1847552 bits while 1572864 bits available! (possible reason: tiling basic block is too large or block number is more than what user expect due to multi-buffer feature is enabled and some ops need extra local buffer.)\nloc(\"/tmp/tmpif7trots/kernel.ttadapter.mlir\":70:9): error: operand #0 does not dominate this use\n[ERROR] Failed to run BiShengIR pipeline\n\n\n[INFO]: The compiled kernel cache is in /root/.triton/cache/9vl6E5t1WOXCZLwsUva8jJJE_YNucfWQrsf2giw6rq8\n\n///------------------[ERROR][Triton][END]------------------\n\n"
+    },
+    {
+      "case_idx": 25,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            3,
+            677,
+            896
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": 14
+        }
+      ],
+      "error_type": "MLIRCompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 310, in compile\n    next_module = compile_ir(module, metadata)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/ascend/compiler.py\", line 778, in <lambda>\n    lambda src, metadata: linalg_to_bin_enable_npu_compile_A2_A3(\n                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/ascend/compiler.py\", line 549, in linalg_to_bin_enable_npu_compile_A2_A3\n    ret = subprocess.run(cmd_list, capture_output=True, check=True)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/subprocess.py\", line 571, in run\n    raise CalledProcessError(retcode, process.args,\nsubprocess.CalledProcessError: Command '['/usr/local/Ascend/cann-9.0.0/tools/bishengi\n... [truncated 3768 chars] ...\nts while 1572864 bits available! (possible reason: tiling basic block is too large or block number is more than what user expect due to multi-buffer feature is enabled and some ops need extra local buffer.)\nloc(\"/tmp/tmppxbkzrif/kernel.ttadapter.mlir\":70:9): error: operand #0 does not dominate this use\nloc(\"/tmp/tmppxbkzrif/kernel.ttadapter.mlir\":2:1): error: Failed to run BiShengHIR pipeline\n\nloc(\"/tmp/tmppxbkzrif/kernel.ttadapter.mlir\":3:3): error: ub overflow, requires 1847552 bits while 1572864 bits available! (possible reason: tiling basic block is too large or block number is more than what user expect due to multi-buffer feature is enabled and some ops need extra local buffer.)\nloc(\"/tmp/tmppxbkzrif/kernel.ttadapter.mlir\":70:9): error: operand #0 does not dominate this use\n[ERROR] Failed to run BiShengIR pipeline\n\n\n[INFO]: The compiled kernel cache is in /root/.triton/cache/9vl6E5t1WOXCZLwsUva8jJJE_YNucfWQrsf2giw6rq8\n\n///------------------[ERROR][Triton][END]------------------\n\n"
+    },
+    {
+      "case_idx": 28,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            842,
+            1280
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": 20
+        }
+      ],
+      "error_type": "MLIRCompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 310, in compile\n    next_module = compile_ir(module, metadata)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/ascend/compiler.py\", line 778, in <lambda>\n    lambda src, metadata: linalg_to_bin_enable_npu_compile_A2_A3(\n                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/ascend/compiler.py\", line 549, in linalg_to_bin_enable_npu_compile_A2_A3\n    ret = subprocess.run(cmd_list, capture_output=True, check=True)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/subprocess.py\", line 571, in run\n    raise CalledProcessError(retcode, process.args,\nsubprocess.CalledProcessError: Command '['/usr/local/Ascend/cann-9.0.0/tools/bishengi\n... [truncated 3768 chars] ...\nts while 1572864 bits available! (possible reason: tiling basic block is too large or block number is more than what user expect due to multi-buffer feature is enabled and some ops need extra local buffer.)\nloc(\"/tmp/tmpneontgsj/kernel.ttadapter.mlir\":70:9): error: operand #0 does not dominate this use\nloc(\"/tmp/tmpneontgsj/kernel.ttadapter.mlir\":2:1): error: Failed to run BiShengHIR pipeline\n\nloc(\"/tmp/tmpneontgsj/kernel.ttadapter.mlir\":3:3): error: ub overflow, requires 1847552 bits while 1572864 bits available! (possible reason: tiling basic block is too large or block number is more than what user expect due to multi-buffer feature is enabled and some ops need extra local buffer.)\nloc(\"/tmp/tmpneontgsj/kernel.ttadapter.mlir\":70:9): error: operand #0 does not dominate this use\n[ERROR] Failed to run BiShengIR pipeline\n\n\n[INFO]: The compiled kernel cache is in /root/.triton/cache/9vl6E5t1WOXCZLwsUva8jJJE_YNucfWQrsf2giw6rq8\n\n///------------------[ERROR][Triton][END]------------------\n\n"
+    },
+    {
+      "case_idx": 29,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            901,
+            192
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 3
+        }
+      ],
+      "error_type": "AccuracyError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card4/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 898, in run_single_case\n    compare(\n  File \"/opt/workspace_card4/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 677, in compare\n    _compare_float_output(fw_finite, impl_finite, ctx)\n  File \"/opt/workspace_card4/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 596, in _compare_float_output\n    _check_accuracy_npu_benchmark(fw_finite, impl_finite, ctx.data_type)\n  File \"/opt/workspace_card4/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 845, in _check_accuracy_npu_benchmark\n    raise AccuracyError(\nAccuracyError: 验证失败 dtype=torch.float16: max_error_cap_violations=0/345984 (atol=9.000000e-02, rtol=9.765625e-04, max_abs_diff=4.980469e-02, ok=True), matched_ratio=0.930063 (req>=0.9, ok=True), MERE=7.774999e-03 (rel_thr=9.765625e-04, ok=False); small_count=333, normal_count=345651\n\n\nThe above exception was the direct cause of the following exception:\n\nTraceback (most recent call last):\n  File \"/opt/workspace_card4/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card4/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 904, in run_single_case\n    raise AccuracyError(f\"[用例 {case_idx}/{total_cases}] {str(e)}\", e.metrics) from e\nAccuracyError: [用例 29/50] 验证失败 dtype=torch.float16: max_error_cap_violations=0/345984 (atol=9.000000e-02, rtol=9.765625e-04, max_abs_diff=4.980469e-02, ok=True), matched_ratio=0.930063 (req>=0.9, ok=True), MERE=7.774999e-03 (rel_thr=9.765625e-04, ok=False); small_count=333, normal_count=345651\n\n",
+      "metrics": {
+        "matched_ratio": 0.930063239918609,
+        "max_abs_diff": 0.0498046875,
+        "MERE": 0.007774998899549246,
+        "rel_threshold": 0.0009765625,
+        "small_value_threshold": 0.00048828125,
+        "small_value_error": 1.52587890625e-05,
+        "atol": 0.09,
+        "rtol": 0.0009765625,
+        "max_error_cap_violation_count": 0,
+        "required_matched_ratio": 0.9,
+        "total_finite": 345984,
+        "matched_count": 321787,
+        "small_count": 333,
+        "normal_count": 345651,
+        "checks": {
+          "max_error_cap": true,
+          "required_matched_ratio": true,
+          "MERE": false
+        }
+      }
+    },
+    {
+      "case_idx": 31,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            1025,
+            384
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": 6
+        }
+      ],
+      "error_type": "MLIRCompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 310, in compile\n    next_module = compile_ir(module, metadata)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/ascend/compiler.py\", line 778, in <lambda>\n    lambda src, metadata: linalg_to_bin_enable_npu_compile_A2_A3(\n                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/ascend/compiler.py\", line 549, in linalg_to_bin_enable_npu_compile_A2_A3\n    ret = subprocess.run(cmd_list, capture_output=True, check=True)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/subprocess.py\", line 571, in run\n    raise CalledProcessError(retcode, process.args,\nsubprocess.CalledProcessError: Command '['/usr/local/Ascend/cann-9.0.0/tools/bishengi\n... [truncated 3768 chars] ...\nts while 1572864 bits available! (possible reason: tiling basic block is too large or block number is more than what user expect due to multi-buffer feature is enabled and some ops need extra local buffer.)\nloc(\"/tmp/tmpswd0z3jz/kernel.ttadapter.mlir\":70:9): error: operand #0 does not dominate this use\nloc(\"/tmp/tmpswd0z3jz/kernel.ttadapter.mlir\":2:1): error: Failed to run BiShengHIR pipeline\n\nloc(\"/tmp/tmpswd0z3jz/kernel.ttadapter.mlir\":3:3): error: ub overflow, requires 1847552 bits while 1572864 bits available! (possible reason: tiling basic block is too large or block number is more than what user expect due to multi-buffer feature is enabled and some ops need extra local buffer.)\nloc(\"/tmp/tmpswd0z3jz/kernel.ttadapter.mlir\":70:9): error: operand #0 does not dominate this use\n[ERROR] Failed to run BiShengIR pipeline\n\n\n[INFO]: The compiled kernel cache is in /root/.triton/cache/9vl6E5t1WOXCZLwsUva8jJJE_YNucfWQrsf2giw6rq8\n\n///------------------[ERROR][Triton][END]------------------\n\n"
+    },
+    {
+      "case_idx": 32,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            1090,
+            512
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 8
+        }
+      ],
+      "error_type": "AccuracyError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card4/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 898, in run_single_case\n    compare(\n  File \"/opt/workspace_card4/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 677, in compare\n    _compare_float_output(fw_finite, impl_finite, ctx)\n  File \"/opt/workspace_card4/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 596, in _compare_float_output\n    _check_accuracy_npu_benchmark(fw_finite, impl_finite, ctx.data_type)\n  File \"/opt/workspace_card4/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 845, in _check_accuracy_npu_benchmark\n    raise AccuracyError(\nAccuracyError: 验证失败 dtype=torch.float16: max_error_cap_violations=0/558080 (atol=9.000000e-02, rtol=9.765625e-04, max_abs_diff=4.992676e-02, ok=True), matched_ratio=0.988871 (req>=0.9, ok=True), MERE=1.191261e-03 (rel_thr=9.765625e-04, ok=False); small_count=700, normal_count=557380\n\n\nThe above exception was the direct cause of the following exception:\n\nTraceback (most recent call last):\n  File \"/opt/workspace_card4/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card4/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 904, in run_single_case\n    raise AccuracyError(f\"[用例 {case_idx}/{total_cases}] {str(e)}\", e.metrics) from e\nAccuracyError: [用例 32/50] 验证失败 dtype=torch.float16: max_error_cap_violations=0/558080 (atol=9.000000e-02, rtol=9.765625e-04, max_abs_diff=4.992676e-02, ok=True), matched_ratio=0.988871 (req>=0.9, ok=True), MERE=1.191261e-03 (rel_thr=9.765625e-04, ok=False); small_count=700, normal_count=557380\n\n",
+      "metrics": {
+        "matched_ratio": 0.9888707712155963,
+        "max_abs_diff": 0.0499267578125,
+        "MERE": 0.0011912606423720717,
+        "rel_threshold": 0.0009765625,
+        "small_value_threshold": 0.00048828125,
+        "small_value_error": 1.52587890625e-05,
+        "atol": 0.09,
+        "rtol": 0.0009765625,
+        "max_error_cap_violation_count": 0,
+        "required_matched_ratio": 0.9,
+        "total_finite": 558080,
+        "matched_count": 551869,
+        "small_count": 700,
+        "normal_count": 557380,
+        "checks": {
+          "max_error_cap": true,
+          "required_matched_ratio": true,
+          "MERE": false
+        }
+      }
+    },
+    {
+      "case_idx": 34,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            1226,
+            768
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": 12
+        }
+      ],
+      "error_type": "MLIRCompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 310, in compile\n    next_module = compile_ir(module, metadata)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/ascend/compiler.py\", line 778, in <lambda>\n    lambda src, metadata: linalg_to_bin_enable_npu_compile_A2_A3(\n                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/ascend/compiler.py\", line 549, in linalg_to_bin_enable_npu_compile_A2_A3\n    ret = subprocess.run(cmd_list, capture_output=True, check=True)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/subprocess.py\", line 571, in run\n    raise CalledProcessError(retcode, process.args,\nsubprocess.CalledProcessError: Command '['/usr/local/Ascend/cann-9.0.0/tools/bishengi\n... [truncated 3768 chars] ...\nts while 1572864 bits available! (possible reason: tiling basic block is too large or block number is more than what user expect due to multi-buffer feature is enabled and some ops need extra local buffer.)\nloc(\"/tmp/tmpmthw5u8d/kernel.ttadapter.mlir\":70:9): error: operand #0 does not dominate this use\nloc(\"/tmp/tmpmthw5u8d/kernel.ttadapter.mlir\":2:1): error: Failed to run BiShengHIR pipeline\n\nloc(\"/tmp/tmpmthw5u8d/kernel.ttadapter.mlir\":3:3): error: ub overflow, requires 1847552 bits while 1572864 bits available! (possible reason: tiling basic block is too large or block number is more than what user expect due to multi-buffer feature is enabled and some ops need extra local buffer.)\nloc(\"/tmp/tmpmthw5u8d/kernel.ttadapter.mlir\":70:9): error: operand #0 does not dominate this use\n[ERROR] Failed to run BiShengIR pipeline\n\n\n[INFO]: The compiled kernel cache is in /root/.triton/cache/9vl6E5t1WOXCZLwsUva8jJJE_YNucfWQrsf2giw6rq8\n\n///------------------[ERROR][Triton][END]------------------\n\n"
+    },
+    {
+      "case_idx": 37,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            3,
+            677,
+            1280
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": 20
+        }
+      ],
+      "error_type": "MLIRCompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 310, in compile\n    next_module = compile_ir(module, metadata)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/ascend/compiler.py\", line 778, in <lambda>\n    lambda src, metadata: linalg_to_bin_enable_npu_compile_A2_A3(\n                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/ascend/compiler.py\", line 549, in linalg_to_bin_enable_npu_compile_A2_A3\n    ret = subprocess.run(cmd_list, capture_output=True, check=True)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/subprocess.py\", line 571, in run\n    raise CalledProcessError(retcode, process.args,\nsubprocess.CalledProcessError: Command '['/usr/local/Ascend/cann-9.0.0/tools/bishengi\n... [truncated 3768 chars] ...\nts while 1572864 bits available! (possible reason: tiling basic block is too large or block number is more than what user expect due to multi-buffer feature is enabled and some ops need extra local buffer.)\nloc(\"/tmp/tmp616kt6lj/kernel.ttadapter.mlir\":70:9): error: operand #0 does not dominate this use\nloc(\"/tmp/tmp616kt6lj/kernel.ttadapter.mlir\":2:1): error: Failed to run BiShengHIR pipeline\n\nloc(\"/tmp/tmp616kt6lj/kernel.ttadapter.mlir\":3:3): error: ub overflow, requires 1847552 bits while 1572864 bits available! (possible reason: tiling basic block is too large or block number is more than what user expect due to multi-buffer feature is enabled and some ops need extra local buffer.)\nloc(\"/tmp/tmp616kt6lj/kernel.ttadapter.mlir\":70:9): error: operand #0 does not dominate this use\n[ERROR] Failed to run BiShengIR pipeline\n\n\n[INFO]: The compiled kernel cache is in /root/.triton/cache/9vl6E5t1WOXCZLwsUva8jJJE_YNucfWQrsf2giw6rq8\n\n///------------------[ERROR][Triton][END]------------------\n\n"
+    },
+    {
+      "case_idx": 38,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            730,
+            192
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 3
+        }
+      ],
+      "error_type": "AccuracyError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card4/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 898, in run_single_case\n    compare(\n  File \"/opt/workspace_card4/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 677, in compare\n    _compare_float_output(fw_finite, impl_finite, ctx)\n  File \"/opt/workspace_card4/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 596, in _compare_float_output\n    _check_accuracy_npu_benchmark(fw_finite, impl_finite, ctx.data_type)\n  File \"/opt/workspace_card4/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 845, in _check_accuracy_npu_benchmark\n    raise AccuracyError(\nAccuracyError: 验证失败 dtype=torch.float16: max_error_cap_violations=2863/140160 (atol=9.000000e-02, rtol=9.765625e-04, max_abs_diff=2.773438e-01, ok=False), matched_ratio=0.827868 (req>=0.9, ok=False), MERE=7.281983e-02 (rel_thr=9.765625e-04, ok=False); small_count=59, normal_count=140101\n前 10 个 max_error_cap 违例位置:\n  位置\n... [truncated 4104 chars] ...\n过位置:\n  位置[1932] (正常域): framework=-5.893707e-03, impl=-5.870819e-03, 相对误差=3.883429e-03 (允许<=9.765625e-04)\n  位置[1950] (正常域): framework=-1.219482e-01, impl=-1.220703e-01, 相对误差=1.001000e-03 (允许<=9.765625e-04)\n  位置[1953] (正常域): framework=-5.813599e-03, impl=-5.947113e-03, 相对误差=2.296548e-02 (允许<=9.765625e-04)\n  位置[1963] (正常域): framework=-1.713562e-02, impl=-1.702881e-02, 相对误差=6.233267e-03 (允许<=9.765625e-04)\n  位置[1985] (正常域): framework=-1.203613e-01, impl=-1.204834e-01, 相对误差=1.014198e-03 (允许<=9.765625e-04)\n  位置[2004] (正常域): framework=-4.153442e-02, impl=-4.165649e-02, 相对误差=2.939008e-03 (允许<=9.765625e-04)\n  位置[2009] (正常域): framework=1.955566e-01, impl=1.953125e-01, 相对误差=1.248439e-03 (允许<=9.765625e-04)\n  位置[2022] (正常域): framework=1.226807e-01, impl=1.228027e-01, 相对误差=9.950241e-04 (允许<=9.765625e-04)\n  位置[2052] (正常域): framework=1.586914e-01, impl=1.584473e-01, 相对误差=1.538460e-03 (允许<=9.765625e-04)\n  位置[2068] (正常域): framework=-1.757812e-02, impl=-1.753235e-02, 相对误差=2.604152e-03 (允许<=9.765625e-04)\n\n",
+      "metrics": {
+        "matched_ratio": 0.8278681506849315,
+        "max_abs_diff": 0.27734375,
+        "MERE": 0.07281982898712158,
+        "rel_threshold": 0.0009765625,
+        "small_value_threshold": 0.00048828125,
+        "small_value_error": 1.52587890625e-05,
+        "atol": 0.09,
+        "rtol": 0.0009765625,
+        "max_error_cap_violation_count": 2863,
+        "required_matched_ratio": 0.9,
+        "total_finite": 140160,
+        "matched_count": 116034,
+        "small_count": 59,
+        "normal_count": 140101,
+        "checks": {
+          "max_error_cap": false,
+          "required_matched_ratio": false,
+          "MERE": false
+        }
+      }
+    },
+    {
+      "case_idx": 40,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            3,
+            842,
+            384
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": 6
+        }
+      ],
+      "error_type": "MLIRCompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 310, in compile\n    next_module = compile_ir(module, metadata)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/ascend/compiler.py\", line 778, in <lambda>\n    lambda src, metadata: linalg_to_bin_enable_npu_compile_A2_A3(\n                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/ascend/compiler.py\", line 549, in linalg_to_bin_enable_npu_compile_A2_A3\n    ret = subprocess.run(cmd_list, capture_output=True, check=True)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/subprocess.py\", line 571, in run\n    raise CalledProcessError(retcode, process.args,\nsubprocess.CalledProcessError: Command '['/usr/local/Ascend/cann-9.0.0/tools/bishengi\n... [truncated 3768 chars] ...\nts while 1572864 bits available! (possible reason: tiling basic block is too large or block number is more than what user expect due to multi-buffer feature is enabled and some ops need extra local buffer.)\nloc(\"/tmp/tmp64ut9mhp/kernel.ttadapter.mlir\":70:9): error: operand #0 does not dominate this use\nloc(\"/tmp/tmp64ut9mhp/kernel.ttadapter.mlir\":2:1): error: Failed to run BiShengHIR pipeline\n\nloc(\"/tmp/tmp64ut9mhp/kernel.ttadapter.mlir\":3:3): error: ub overflow, requires 1847552 bits while 1572864 bits available! (possible reason: tiling basic block is too large or block number is more than what user expect due to multi-buffer feature is enabled and some ops need extra local buffer.)\nloc(\"/tmp/tmp64ut9mhp/kernel.ttadapter.mlir\":70:9): error: operand #0 does not dominate this use\n[ERROR] Failed to run BiShengIR pipeline\n\n\n[INFO]: The compiled kernel cache is in /root/.triton/cache/9vl6E5t1WOXCZLwsUva8jJJE_YNucfWQrsf2giw6rq8\n\n///------------------[ERROR][Triton][END]------------------\n\n"
+    },
+    {
+      "case_idx": 43,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            1025,
+            768
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": 12
+        }
+      ],
+      "error_type": "MLIRCompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 310, in compile\n    next_module = compile_ir(module, metadata)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/ascend/compiler.py\", line 778, in <lambda>\n    lambda src, metadata: linalg_to_bin_enable_npu_compile_A2_A3(\n                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/ascend/compiler.py\", line 549, in linalg_to_bin_enable_npu_compile_A2_A3\n    ret = subprocess.run(cmd_list, capture_output=True, check=True)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/subprocess.py\", line 571, in run\n    raise CalledProcessError(retcode, process.args,\nsubprocess.CalledProcessError: Command '['/usr/local/Ascend/cann-9.0.0/tools/bishengi\n... [truncated 3768 chars] ...\nts while 1572864 bits available! (possible reason: tiling basic block is too large or block number is more than what user expect due to multi-buffer feature is enabled and some ops need extra local buffer.)\nloc(\"/tmp/tmpkeo9p8bq/kernel.ttadapter.mlir\":70:9): error: operand #0 does not dominate this use\nloc(\"/tmp/tmpkeo9p8bq/kernel.ttadapter.mlir\":2:1): error: Failed to run BiShengHIR pipeline\n\nloc(\"/tmp/tmpkeo9p8bq/kernel.ttadapter.mlir\":3:3): error: ub overflow, requires 1847552 bits while 1572864 bits available! (possible reason: tiling basic block is too large or block number is more than what user expect due to multi-buffer feature is enabled and some ops need extra local buffer.)\nloc(\"/tmp/tmpkeo9p8bq/kernel.ttadapter.mlir\":70:9): error: operand #0 does not dominate this use\n[ERROR] Failed to run BiShengIR pipeline\n\n\n[INFO]: The compiled kernel cache is in /root/.triton/cache/9vl6E5t1WOXCZLwsUva8jJJE_YNucfWQrsf2giw6rq8\n\n///------------------[ERROR][Triton][END]------------------\n\n"
+    },
+    {
+      "case_idx": 46,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            1226,
+            1152
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": 18
+        }
+      ],
+      "error_type": "MLIRCompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 310, in compile\n    next_module = compile_ir(module, metadata)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/ascend/compiler.py\", line 778, in <lambda>\n    lambda src, metadata: linalg_to_bin_enable_npu_compile_A2_A3(\n                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/ascend/compiler.py\", line 549, in linalg_to_bin_enable_npu_compile_A2_A3\n    ret = subprocess.run(cmd_list, capture_output=True, check=True)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/subprocess.py\", line 571, in run\n    raise CalledProcessError(retcode, process.args,\nsubprocess.CalledProcessError: Command '['/usr/local/Ascend/cann-9.0.0/tools/bishengi\n... [truncated 3768 chars] ...\nts while 1572864 bits available! (possible reason: tiling basic block is too large or block number is more than what user expect due to multi-buffer feature is enabled and some ops need extra local buffer.)\nloc(\"/tmp/tmpxrl0si72/kernel.ttadapter.mlir\":70:9): error: operand #0 does not dominate this use\nloc(\"/tmp/tmpxrl0si72/kernel.ttadapter.mlir\":2:1): error: Failed to run BiShengHIR pipeline\n\nloc(\"/tmp/tmpxrl0si72/kernel.ttadapter.mlir\":3:3): error: ub overflow, requires 1847552 bits while 1572864 bits available! (possible reason: tiling basic block is too large or block number is more than what user expect due to multi-buffer feature is enabled and some ops need extra local buffer.)\nloc(\"/tmp/tmpxrl0si72/kernel.ttadapter.mlir\":70:9): error: operand #0 does not dominate this use\n[ERROR] Failed to run BiShengIR pipeline\n\n\n[INFO]: The compiled kernel cache is in /root/.triton/cache/9vl6E5t1WOXCZLwsUva8jJJE_YNucfWQrsf2giw6rq8\n\n///------------------[ERROR][Triton][END]------------------\n\n"
+    },
+    {
+      "case_idx": 48,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            1370,
+            192
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "scalar",
+          "value": 3
+        }
+      ],
+      "error_type": "AccuracyError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card4/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 898, in run_single_case\n    compare(\n  File \"/opt/workspace_card4/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 677, in compare\n    _compare_float_output(fw_finite, impl_finite, ctx)\n  File \"/opt/workspace_card4/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 596, in _compare_float_output\n    _check_accuracy_npu_benchmark(fw_finite, impl_finite, ctx.data_type)\n  File \"/opt/workspace_card4/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 845, in _check_accuracy_npu_benchmark\n    raise AccuracyError(\nAccuracyError: 验证失败 dtype=torch.bfloat16: max_error_cap_violations=42358/263040 (atol=1.000000e-01, rtol=7.812500e-03, max_abs_diff=2.068359e+00, ok=False), matched_ratio=0.050825 (req>=0.9, ok=False), MERE=1.544936e+00 (rel_thr=7.812500e-03, ok=False); small_count=2728, normal_count=260312\n前 10 个 max_error_cap 违例位置:\n\n... [truncated 4004 chars] ...\n1.023499e-01)\n前 10 个 matched 未通过位置:\n  位置[0] (正常域): framework=-2.636719e-01, impl=-2.792969e-01, 相对误差=5.925924e-02 (允许<=7.812500e-03)\n  位置[1] (正常域): framework=3.281250e-01, impl=3.085938e-01, 相对误差=5.952379e-02 (允许<=7.812500e-03)\n  位置[2] (正常域): framework=1.562500e-01, impl=1.464844e-01, 相对误差=6.249996e-02 (允许<=7.812500e-03)\n  位置[3] (正常域): framework=1.572266e-01, impl=1.074219e-01, 相对误差=3.167700e-01 (允许<=7.812500e-03)\n  位置[4] (正常域): framework=-2.968750e-01, impl=-3.046875e-01, 相对误差=2.631578e-02 (允许<=7.812500e-03)\n  位置[5] (正常域): framework=-3.808594e-01, impl=-3.925781e-01, 相对误差=3.076922e-02 (允许<=7.812500e-03)\n  位置[6] (正常域): framework=-5.444336e-02, impl=-4.248047e-02, 相对误差=2.197305e-01 (允许<=7.812500e-03)\n  位置[7] (正常域): framework=-5.859375e-02, impl=-4.711914e-02, 相对误差=1.958330e-01 (允许<=7.812500e-03)\n  位置[8] (正常域): framework=-4.425049e-03, impl=5.126953e-02, 相对误差=1.258592e+01 (允许<=7.812500e-03)\n  位置[9] (正常域): framework=-2.929688e-01, impl=-3.203125e-01, 相对误差=9.333330e-02 (允许<=7.812500e-03)\n\n",
+      "metrics": {
+        "matched_ratio": 0.050824969586374696,
+        "max_abs_diff": 2.068359375,
+        "MERE": 1.5449364185333252,
+        "rel_threshold": 0.0078125,
+        "small_value_threshold": 0.00390625,
+        "small_value_error": 1.52587890625e-05,
+        "atol": 0.1,
+        "rtol": 0.0078125,
+        "max_error_cap_violation_count": 42358,
+        "required_matched_ratio": 0.9,
+        "total_finite": 263040,
+        "matched_count": 13369,
+        "small_count": 2728,
+        "normal_count": 260312,
+        "checks": {
+          "max_error_cap": false,
+          "required_matched_ratio": false,
+          "MERE": false
+        }
+      }
+    },
+    {
+      "case_idx": 49,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            1445,
+            256
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": 4
+        }
+      ],
+      "error_type": "MLIRCompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 310, in compile\n    next_module = compile_ir(module, metadata)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/ascend/compiler.py\", line 778, in <lambda>\n    lambda src, metadata: linalg_to_bin_enable_npu_compile_A2_A3(\n                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/ascend/compiler.py\", line 549, in linalg_to_bin_enable_npu_compile_A2_A3\n    ret = subprocess.run(cmd_list, capture_output=True, check=True)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/subprocess.py\", line 571, in run\n    raise CalledProcessError(retcode, process.args,\nsubprocess.CalledProcessError: Command '['/usr/local/Ascend/cann-9.0.0/tools/bishengi\n... [truncated 3768 chars] ...\nts while 1572864 bits available! (possible reason: tiling basic block is too large or block number is more than what user expect due to multi-buffer feature is enabled and some ops need extra local buffer.)\nloc(\"/tmp/tmp2tut5ru6/kernel.ttadapter.mlir\":70:9): error: operand #0 does not dominate this use\nloc(\"/tmp/tmp2tut5ru6/kernel.ttadapter.mlir\":2:1): error: Failed to run BiShengHIR pipeline\n\nloc(\"/tmp/tmp2tut5ru6/kernel.ttadapter.mlir\":3:3): error: ub overflow, requires 1847552 bits while 1572864 bits available! (possible reason: tiling basic block is too large or block number is more than what user expect due to multi-buffer feature is enabled and some ops need extra local buffer.)\nloc(\"/tmp/tmp2tut5ru6/kernel.ttadapter.mlir\":70:9): error: operand #0 does not dominate this use\n[ERROR] Failed to run BiShengIR pipeline\n\n\n[INFO]: The compiled kernel cache is in /root/.triton/cache/9vl6E5t1WOXCZLwsUva8jJJE_YNucfWQrsf2giw6rq8\n\n///------------------[ERROR][Triton][END]------------------\n\n"
+    }
+  ]
+}

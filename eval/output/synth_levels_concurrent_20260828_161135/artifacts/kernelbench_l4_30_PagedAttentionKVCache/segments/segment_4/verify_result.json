@@ -1,0 +1,64 @@
+{
+  "op_name": "kernelbench_l4_30_PagedAttentionKVCache",
+  "total_cases": 50,
+  "passed_cases": 49,
+  "failed_cases": 1,
+  "failures": [
+    {
+      "case_idx": 45,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            7,
+            32,
+            160
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            109,
+            23,
+            4,
+            160
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            109,
+            23,
+            4,
+            160
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2
+          ],
+          "dtype": "torch.int32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            7
+          ],
+          "dtype": "torch.int32"
+        },
+        {
+          "type": "scalar",
+          "value": true
+        }
+      ],
+      "error_type": "MLIRCompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 310, in compile\n    next_module = compile_ir(module, metadata)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/ascend/compiler.py\", line 778, in <lambda>\n    lambda src, metadata: linalg_to_bin_enable_npu_compile_A2_A3(\n                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/ascend/compiler.py\", line 549, in linalg_to_bin_enable_npu_compile_A2_A3\n    ret = subprocess.run(cmd_list, capture_output=True, check=True)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/subprocess.py\", line 571, in run\n    raise CalledProcessError(retcode, process.args,\nsubprocess.CalledProcessError: Command '['/usr/local/Ascend/cann-9.0.0/tools/bishengi\n... [truncated 3289 chars] ...\nl buffer.)\nloc(\"/tmp/tmpflzfdkyd/kernel.ttadapter.mlir\":2:1): error: Failed to run BiShengHIR pipeline\n\nloc(\"/tmp/tmpflzfdkyd/kernel.ttadapter.mlir\":3:3): error: ub overflow, requires 1746432 bits while 1572864 bits available! (possible reason: tiling basic block is too large or block number is more than what user expect due to multi-buffer feature is enabled and some ops need extra local buffer.)\nloc(\"/tmp/tmpflzfdkyd/kernel.ttadapter.mlir\":2:1): error: Failed to run BiShengHIR pipeline\n\nloc(\"/tmp/tmpflzfdkyd/kernel.ttadapter.mlir\":3:3): error: ub overflow, requires 1746432 bits while 1572864 bits available! (possible reason: tiling basic block is too large or block number is more than what user expect due to multi-buffer feature is enabled and some ops need extra local buffer.)\n[ERROR] Failed to run BiShengIR pipeline\n\n\n[INFO]: The compiled kernel cache is in /root/.triton/cache/_TJuUbMERyuAARW4nfuPtZ1A5k-IiJshonMRuCu_L_4\n\n///------------------[ERROR][Triton][END]------------------\n\n"
+    }
+  ]
+}

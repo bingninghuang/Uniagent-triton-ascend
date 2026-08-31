@@ -1,0 +1,103 @@
+{
+  "op_name": "kernelbench_l4_105_FlexAttentionBwd",
+  "total_cases": 50,
+  "passed_cases": 49,
+  "failed_cases": 1,
+  "failures": [
+    {
+      "case_idx": 1,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            2,
+            128,
+            16
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            2,
+            128,
+            16
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            2,
+            128,
+            16
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            2,
+            128,
+            16
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            2,
+            128,
+            16
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            2,
+            128
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": false
+        },
+        {
+          "type": "scalar",
+          "value": false
+        }
+      ],
+      "error_type": "AccuracyError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card0/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 898, in run_single_case\n    compare(\n  File \"/opt/workspace_card0/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 677, in compare\n    _compare_float_output(fw_finite, impl_finite, ctx)\n  File \"/opt/workspace_card0/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 596, in _compare_float_output\n    _check_accuracy_npu_benchmark(fw_finite, impl_finite, ctx.data_type)\n  File \"/opt/workspace_card0/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 845, in _check_accuracy_npu_benchmark\n    raise AccuracyError(\nAccuracyError: 验证失败 dtype=torch.float16: max_error_cap_violations=383/8192 (atol=9.000000e-02, rtol=9.765625e-04, max_abs_diff=1.402344e+00, ok=False), matched_ratio=0.777832 (req>=0.9, ok=False), MERE=4.928890e-01 (rel_thr=9.765625e-04, ok=False); small_count=6937, normal_count=1255\n前 10 个 max_error_cap 违例位置:\n  位置[11\n... [truncated 4085 chars] ...\n 位置[16] (小值域): framework=-2.527237e-04, impl=-1.873970e-04, |diff|=6.532669e-05 (允许<=1.525879e-05)\n  位置[17] (小值域): framework=-2.088547e-04, impl=-1.568794e-04, |diff|=5.197525e-05 (允许<=1.525879e-05)\n  位置[18] (小值域): framework=-1.778603e-04, impl=-1.341105e-04, |diff|=4.374981e-05 (允许<=1.525879e-05)\n  位置[19] (小值域): framework=-2.074242e-04, impl=-1.714230e-04, |diff|=3.600121e-05 (允许<=1.525879e-05)\n  位置[20] (小值域): framework=-3.321171e-04, impl=-2.717972e-04, |diff|=6.031990e-05 (允许<=1.525879e-05)\n  位置[21] (小值域): framework=-3.118515e-04, impl=-2.522469e-04, |diff|=5.960464e-05 (允许<=1.525879e-05)\n  位置[22] (小值域): framework=-2.434254e-04, impl=-1.735687e-04, |diff|=6.985664e-05 (允许<=1.525879e-05)\n  位置[23] (小值域): framework=-2.385378e-04, impl=-1.733303e-04, |diff|=6.520748e-05 (允许<=1.525879e-05)\n  位置[24] (小值域): framework=-1.817942e-04, impl=-1.304150e-04, |diff|=5.137920e-05 (允许<=1.525879e-05)\n  位置[25] (小值域): framework=-1.744032e-04, impl=-1.248121e-04, |diff|=4.959106e-05 (允许<=1.525879e-05)\n\n",
+      "metrics": {
+        "matched_ratio": 0.77783203125,
+        "max_abs_diff": 1.40234375,
+        "MERE": 0.4928889870643616,
+        "rel_threshold": 0.0009765625,
+        "small_value_threshold": 0.00048828125,
+        "small_value_error": 1.52587890625e-05,
+        "atol": 0.09,
+        "rtol": 0.0009765625,
+        "max_error_cap_violation_count": 383,
+        "required_matched_ratio": 0.9,
+        "total_finite": 8192,
+        "matched_count": 6372,
+        "small_count": 6937,
+        "normal_count": 1255,
+        "checks": {
+          "max_error_cap": false,
+          "required_matched_ratio": false,
+          "MERE": false
+        }
+      }
+    }
+  ]
+}

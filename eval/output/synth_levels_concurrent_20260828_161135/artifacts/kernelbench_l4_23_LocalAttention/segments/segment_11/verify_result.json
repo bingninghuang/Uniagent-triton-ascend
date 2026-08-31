@@ -1,0 +1,1208 @@
+{
+  "op_name": "kernelbench_l4_23_LocalAttention",
+  "total_cases": 50,
+  "passed_cases": 0,
+  "failed_cases": 50,
+  "failures": [
+    {
+      "case_idx": 1,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            7,
+            72
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": 3
+        },
+        {
+          "type": "scalar",
+          "value": 3
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card1/agent_workdir/output/verify/kernelbench_l4_23_LocalAttention_triton_ascend_impl.py\", line 339, in forward\n    _proj_gemm_kernel[grid_qkv](\n  File \"/usr/local/python3.11.14/lib/p\n... [truncated 374 chars] ...\n           ^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 303, in compile\n    module = src.make_ir(options, codegen_fns, module_map, context)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 46:13:\n        p_i = idx - tt * pblk\n        q2 = tt // nblk\n        n_i = tt - q2 * nblk\n        bb = q2 // H\n        hh = q2 - bb * H\n\n        p0 = p_i * BM\n        n0 = n_i * BN\n\n        offs_m = p0 + tl.arange(0, BM)\n        offs_n = n0 + tl.arange(0, BN)\n        fl = float(L)\n             ^\nTypeError(\"float() argument must be a string or a real number, not 'tensor'\")\n"
+    },
+    {
+      "case_idx": 2,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            11,
+            96
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 4
+        },
+        {
+          "type": "scalar",
+          "value": 5
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card1/agent_workdir/output/verify/kernelbench_l4_23_LocalAttention_triton_ascend_impl.py\", line 339, in forward\n    _proj_gemm_kernel[grid_qkv](\n  File \"/usr/local/python3.11.14/lib/p\n... [truncated 374 chars] ...\n           ^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 303, in compile\n    module = src.make_ir(options, codegen_fns, module_map, context)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 46:13:\n        p_i = idx - tt * pblk\n        q2 = tt // nblk\n        n_i = tt - q2 * nblk\n        bb = q2 // H\n        hh = q2 - bb * H\n\n        p0 = p_i * BM\n        n0 = n_i * BN\n\n        offs_m = p0 + tl.arange(0, BM)\n        offs_n = n0 + tl.arange(0, BN)\n        fl = float(L)\n             ^\nTypeError(\"float() argument must be a string or a real number, not 'tensor'\")\n"
+    },
+    {
+      "case_idx": 3,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            13,
+            120
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "scalar",
+          "value": 5
+        },
+        {
+          "type": "scalar",
+          "value": 7
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card1/agent_workdir/output/verify/kernelbench_l4_23_LocalAttention_triton_ascend_impl.py\", line 339, in forward\n    _proj_gemm_kernel[grid_qkv](\n  File \"/usr/local/python3.11.14/lib/p\n... [truncated 374 chars] ...\n           ^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 303, in compile\n    module = src.make_ir(options, codegen_fns, module_map, context)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 46:13:\n        p_i = idx - tt * pblk\n        q2 = tt // nblk\n        n_i = tt - q2 * nblk\n        bb = q2 // H\n        hh = q2 - bb * H\n\n        p0 = p_i * BM\n        n0 = n_i * BN\n\n        offs_m = p0 + tl.arange(0, BM)\n        offs_n = n0 + tl.arange(0, BN)\n        fl = float(L)\n             ^\nTypeError(\"float() argument must be a string or a real number, not 'tensor'\")\n"
+    },
+    {
+      "case_idx": 4,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            3,
+            48
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": 2
+        },
+        {
+          "type": "scalar",
+          "value": 3
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card1/agent_workdir/output/verify/kernelbench_l4_23_LocalAttention_triton_ascend_impl.py\", line 339, in forward\n    _proj_gemm_kernel[grid_qkv](\n  File \"/usr/local/python3.11.14/lib/p\n... [truncated 374 chars] ...\n           ^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 303, in compile\n    module = src.make_ir(options, codegen_fns, module_map, context)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 46:13:\n        p_i = idx - tt * pblk\n        q2 = tt // nblk\n        n_i = tt - q2 * nblk\n        bb = q2 // H\n        hh = q2 - bb * H\n\n        p0 = p_i * BM\n        n0 = n_i * BN\n\n        offs_m = p0 + tl.arange(0, BM)\n        offs_n = n0 + tl.arange(0, BN)\n        fl = float(L)\n             ^\nTypeError(\"float() argument must be a string or a real number, not 'tensor'\")\n"
+    },
+    {
+      "case_idx": 5,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            3,
+            5,
+            60
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 3
+        },
+        {
+          "type": "scalar",
+          "value": 5
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card1/agent_workdir/output/verify/kernelbench_l4_23_LocalAttention_triton_ascend_impl.py\", line 339, in forward\n    _proj_gemm_kernel[grid_qkv](\n  File \"/usr/local/python3.11.14/lib/p\n... [truncated 374 chars] ...\n           ^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 303, in compile\n    module = src.make_ir(options, codegen_fns, module_map, context)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 46:13:\n        p_i = idx - tt * pblk\n        q2 = tt // nblk\n        n_i = tt - q2 * nblk\n        bb = q2 // H\n        hh = q2 - bb * H\n\n        p0 = p_i * BM\n        n0 = n_i * BN\n\n        offs_m = p0 + tl.arange(0, BM)\n        offs_n = n0 + tl.arange(0, BN)\n        fl = float(L)\n             ^\nTypeError(\"float() argument must be a string or a real number, not 'tensor'\")\n"
+    },
+    {
+      "case_idx": 6,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            23,
+            160
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "scalar",
+          "value": 5
+        },
+        {
+          "type": "scalar",
+          "value": 23
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card1/agent_workdir/output/verify/kernelbench_l4_23_LocalAttention_triton_ascend_impl.py\", line 339, in forward\n    _proj_gemm_kernel[grid_qkv](\n  File \"/usr/local/python3.11.14/lib/p\n... [truncated 374 chars] ...\n           ^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 303, in compile\n    module = src.make_ir(options, codegen_fns, module_map, context)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 46:13:\n        p_i = idx - tt * pblk\n        q2 = tt // nblk\n        n_i = tt - q2 * nblk\n        bb = q2 // H\n        hh = q2 - bb * H\n\n        p0 = p_i * BM\n        n0 = n_i * BN\n\n        offs_m = p0 + tl.arange(0, BM)\n        offs_n = n0 + tl.arange(0, BN)\n        fl = float(L)\n             ^\nTypeError(\"float() argument must be a string or a real number, not 'tensor'\")\n"
+    },
+    {
+      "case_idx": 7,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            29,
+            192
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": 3
+        },
+        {
+          "type": "scalar",
+          "value": 29
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card1/agent_workdir/output/verify/kernelbench_l4_23_LocalAttention_triton_ascend_impl.py\", line 339, in forward\n    _proj_gemm_kernel[grid_qkv](\n  File \"/usr/local/python3.11.14/lib/p\n... [truncated 374 chars] ...\n           ^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 303, in compile\n    module = src.make_ir(options, codegen_fns, module_map, context)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 46:13:\n        p_i = idx - tt * pblk\n        q2 = tt // nblk\n        n_i = tt - q2 * nblk\n        bb = q2 // H\n        hh = q2 - bb * H\n\n        p0 = p_i * BM\n        n0 = n_i * BN\n\n        offs_m = p0 + tl.arange(0, BM)\n        offs_n = n0 + tl.arange(0, BN)\n        fl = float(L)\n             ^\nTypeError(\"float() argument must be a string or a real number, not 'tensor'\")\n"
+    },
+    {
+      "case_idx": 8,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            3,
+            31,
+            224
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 4
+        },
+        {
+          "type": "scalar",
+          "value": 31
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card1/agent_workdir/output/verify/kernelbench_l4_23_LocalAttention_triton_ascend_impl.py\", line 339, in forward\n    _proj_gemm_kernel[grid_qkv](\n  File \"/usr/local/python3.11.14/lib/p\n... [truncated 374 chars] ...\n           ^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 303, in compile\n    module = src.make_ir(options, codegen_fns, module_map, context)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 46:13:\n        p_i = idx - tt * pblk\n        q2 = tt // nblk\n        n_i = tt - q2 * nblk\n        bb = q2 // H\n        hh = q2 - bb * H\n\n        p0 = p_i * BM\n        n0 = n_i * BN\n\n        offs_m = p0 + tl.arange(0, BM)\n        offs_n = n0 + tl.arange(0, BN)\n        fl = float(L)\n             ^\nTypeError(\"float() argument must be a string or a real number, not 'tensor'\")\n"
+    },
+    {
+      "case_idx": 9,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            37,
+            240
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "scalar",
+          "value": 5
+        },
+        {
+          "type": "scalar",
+          "value": 37
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card1/agent_workdir/output/verify/kernelbench_l4_23_LocalAttention_triton_ascend_impl.py\", line 339, in forward\n    _proj_gemm_kernel[grid_qkv](\n  File \"/usr/local/python3.11.14/lib/p\n... [truncated 374 chars] ...\n           ^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 303, in compile\n    module = src.make_ir(options, codegen_fns, module_map, context)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 46:13:\n        p_i = idx - tt * pblk\n        q2 = tt // nblk\n        n_i = tt - q2 * nblk\n        bb = q2 // H\n        hh = q2 - bb * H\n\n        p0 = p_i * BM\n        n0 = n_i * BN\n\n        offs_m = p0 + tl.arange(0, BM)\n        offs_n = n0 + tl.arange(0, BN)\n        fl = float(L)\n             ^\nTypeError(\"float() argument must be a string or a real number, not 'tensor'\")\n"
+    },
+    {
+      "case_idx": 10,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            43,
+            256
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": 4
+        },
+        {
+          "type": "scalar",
+          "value": 43
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card1/agent_workdir/output/verify/kernelbench_l4_23_LocalAttention_triton_ascend_impl.py\", line 339, in forward\n    _proj_gemm_kernel[grid_qkv](\n  File \"/usr/local/python3.11.14/lib/p\n... [truncated 374 chars] ...\n           ^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 303, in compile\n    module = src.make_ir(options, codegen_fns, module_map, context)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 46:13:\n        p_i = idx - tt * pblk\n        q2 = tt // nblk\n        n_i = tt - q2 * nblk\n        bb = q2 // H\n        hh = q2 - bb * H\n\n        p0 = p_i * BM\n        n0 = n_i * BN\n\n        offs_m = p0 + tl.arange(0, BM)\n        offs_n = n0 + tl.arange(0, BN)\n        fl = float(L)\n             ^\nTypeError(\"float() argument must be a string or a real number, not 'tensor'\")\n"
+    },
+    {
+      "case_idx": 11,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            47,
+            288
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 6
+        },
+        {
+          "type": "scalar",
+          "value": 3
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card1/agent_workdir/output/verify/kernelbench_l4_23_LocalAttention_triton_ascend_impl.py\", line 339, in forward\n    _proj_gemm_kernel[grid_qkv](\n  File \"/usr/local/python3.11.14/lib/p\n... [truncated 374 chars] ...\n           ^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 303, in compile\n    module = src.make_ir(options, codegen_fns, module_map, context)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 46:13:\n        p_i = idx - tt * pblk\n        q2 = tt // nblk\n        n_i = tt - q2 * nblk\n        bb = q2 // H\n        hh = q2 - bb * H\n\n        p0 = p_i * BM\n        n0 = n_i * BN\n\n        offs_m = p0 + tl.arange(0, BM)\n        offs_n = n0 + tl.arange(0, BN)\n        fl = float(L)\n             ^\nTypeError(\"float() argument must be a string or a real number, not 'tensor'\")\n"
+    },
+    {
+      "case_idx": 12,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            53,
+            320
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "scalar",
+          "value": 5
+        },
+        {
+          "type": "scalar",
+          "value": 5
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card1/agent_workdir/output/verify/kernelbench_l4_23_LocalAttention_triton_ascend_impl.py\", line 339, in forward\n    _proj_gemm_kernel[grid_qkv](\n  File \"/usr/local/python3.11.14/lib/p\n... [truncated 374 chars] ...\n           ^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 303, in compile\n    module = src.make_ir(options, codegen_fns, module_map, context)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 46:13:\n        p_i = idx - tt * pblk\n        q2 = tt // nblk\n        n_i = tt - q2 * nblk\n        bb = q2 // H\n        hh = q2 - bb * H\n\n        p0 = p_i * BM\n        n0 = n_i * BN\n\n        offs_m = p0 + tl.arange(0, BM)\n        offs_n = n0 + tl.arange(0, BN)\n        fl = float(L)\n             ^\nTypeError(\"float() argument must be a string or a real number, not 'tensor'\")\n"
+    },
+    {
+      "case_idx": 13,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            3,
+            59,
+            360
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": 6
+        },
+        {
+          "type": "scalar",
+          "value": 7
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card1/agent_workdir/output/verify/kernelbench_l4_23_LocalAttention_triton_ascend_impl.py\", line 339, in forward\n    _proj_gemm_kernel[grid_qkv](\n  File \"/usr/local/python3.11.14/lib/p\n... [truncated 374 chars] ...\n           ^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 303, in compile\n    module = src.make_ir(options, codegen_fns, module_map, context)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 46:13:\n        p_i = idx - tt * pblk\n        q2 = tt // nblk\n        n_i = tt - q2 * nblk\n        bb = q2 // H\n        hh = q2 - bb * H\n\n        p0 = p_i * BM\n        n0 = n_i * BN\n\n        offs_m = p0 + tl.arange(0, BM)\n        offs_n = n0 + tl.arange(0, BN)\n        fl = float(L)\n             ^\nTypeError(\"float() argument must be a string or a real number, not 'tensor'\")\n"
+    },
+    {
+      "case_idx": 14,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            17,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 4
+        },
+        {
+          "type": "scalar",
+          "value": 11
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card1/agent_workdir/output/verify/kernelbench_l4_23_LocalAttention_triton_ascend_impl.py\", line 339, in forward\n    _proj_gemm_kernel[grid_qkv](\n  File \"/usr/local/python3.11.14/lib/p\n... [truncated 374 chars] ...\n           ^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 303, in compile\n    module = src.make_ir(options, codegen_fns, module_map, context)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 46:13:\n        p_i = idx - tt * pblk\n        q2 = tt // nblk\n        n_i = tt - q2 * nblk\n        bb = q2 // H\n        hh = q2 - bb * H\n\n        p0 = p_i * BM\n        n0 = n_i * BN\n\n        offs_m = p0 + tl.arange(0, BM)\n        offs_n = n0 + tl.arange(0, BN)\n        fl = float(L)\n             ^\nTypeError(\"float() argument must be a string or a real number, not 'tensor'\")\n"
+    },
+    {
+      "case_idx": 15,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            19,
+            144
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "scalar",
+          "value": 3
+        },
+        {
+          "type": "scalar",
+          "value": 17
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card1/agent_workdir/output/verify/kernelbench_l4_23_LocalAttention_triton_ascend_impl.py\", line 339, in forward\n    _proj_gemm_kernel[grid_qkv](\n  File \"/usr/local/python3.11.14/lib/p\n... [truncated 374 chars] ...\n           ^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 303, in compile\n    module = src.make_ir(options, codegen_fns, module_map, context)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 46:13:\n        p_i = idx - tt * pblk\n        q2 = tt // nblk\n        n_i = tt - q2 * nblk\n        bb = q2 // H\n        hh = q2 - bb * H\n\n        p0 = p_i * BM\n        n0 = n_i * BN\n\n        offs_m = p0 + tl.arange(0, BM)\n        offs_n = n0 + tl.arange(0, BN)\n        fl = float(L)\n             ^\nTypeError(\"float() argument must be a string or a real number, not 'tensor'\")\n"
+    },
+    {
+      "case_idx": 16,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            3,
+            131,
+            768
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": 12
+        },
+        {
+          "type": "scalar",
+          "value": 23
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card1/agent_workdir/output/verify/kernelbench_l4_23_LocalAttention_triton_ascend_impl.py\", line 339, in forward\n    _proj_gemm_kernel[grid_qkv](\n  File \"/usr/local/python3.11.14/lib/p\n... [truncated 374 chars] ...\n           ^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 303, in compile\n    module = src.make_ir(options, codegen_fns, module_map, context)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 46:13:\n        p_i = idx - tt * pblk\n        q2 = tt // nblk\n        n_i = tt - q2 * nblk\n        bb = q2 // H\n        hh = q2 - bb * H\n\n        p0 = p_i * BM\n        n0 = n_i * BN\n\n        offs_m = p0 + tl.arange(0, BM)\n        offs_n = n0 + tl.arange(0, BN)\n        fl = float(L)\n             ^\nTypeError(\"float() argument must be a string or a real number, not 'tensor'\")\n"
+    },
+    {
+      "case_idx": 17,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            3,
+            137,
+            800
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 10
+        },
+        {
+          "type": "scalar",
+          "value": 31
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card1/agent_workdir/output/verify/kernelbench_l4_23_LocalAttention_triton_ascend_impl.py\", line 339, in forward\n    _proj_gemm_kernel[grid_qkv](\n  File \"/usr/local/python3.11.14/lib/p\n... [truncated 374 chars] ...\n           ^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 303, in compile\n    module = src.make_ir(options, codegen_fns, module_map, context)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 46:13:\n        p_i = idx - tt * pblk\n        q2 = tt // nblk\n        n_i = tt - q2 * nblk\n        bb = q2 // H\n        hh = q2 - bb * H\n\n        p0 = p_i * BM\n        n0 = n_i * BN\n\n        offs_m = p0 + tl.arange(0, BM)\n        offs_n = n0 + tl.arange(0, BN)\n        fl = float(L)\n             ^\nTypeError(\"float() argument must be a string or a real number, not 'tensor'\")\n"
+    },
+    {
+      "case_idx": 18,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            149,
+            832
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "scalar",
+          "value": 13
+        },
+        {
+          "type": "scalar",
+          "value": 47
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card1/agent_workdir/output/verify/kernelbench_l4_23_LocalAttention_triton_ascend_impl.py\", line 339, in forward\n    _proj_gemm_kernel[grid_qkv](\n  File \"/usr/local/python3.11.14/lib/p\n... [truncated 374 chars] ...\n           ^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 303, in compile\n    module = src.make_ir(options, codegen_fns, module_map, context)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 46:13:\n        p_i = idx - tt * pblk\n        q2 = tt // nblk\n        n_i = tt - q2 * nblk\n        bb = q2 // H\n        hh = q2 - bb * H\n\n        p0 = p_i * BM\n        n0 = n_i * BN\n\n        offs_m = p0 + tl.arange(0, BM)\n        offs_n = n0 + tl.arange(0, BN)\n        fl = float(L)\n             ^\nTypeError(\"float() argument must be a string or a real number, not 'tensor'\")\n"
+    },
+    {
+      "case_idx": 19,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            157,
+            864
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": 12
+        },
+        {
+          "type": "scalar",
+          "value": 63
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card1/agent_workdir/output/verify/kernelbench_l4_23_LocalAttention_triton_ascend_impl.py\", line 339, in forward\n    _proj_gemm_kernel[grid_qkv](\n  File \"/usr/local/python3.11.14/lib/p\n... [truncated 374 chars] ...\n           ^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 303, in compile\n    module = src.make_ir(options, codegen_fns, module_map, context)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 46:13:\n        p_i = idx - tt * pblk\n        q2 = tt // nblk\n        n_i = tt - q2 * nblk\n        bb = q2 // H\n        hh = q2 - bb * H\n\n        p0 = p_i * BM\n        n0 = n_i * BN\n\n        offs_m = p0 + tl.arange(0, BM)\n        offs_n = n0 + tl.arange(0, BN)\n        fl = float(L)\n             ^\nTypeError(\"float() argument must be a string or a real number, not 'tensor'\")\n"
+    },
+    {
+      "case_idx": 20,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            167,
+            896
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 14
+        },
+        {
+          "type": "scalar",
+          "value": 79
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card1/agent_workdir/output/verify/kernelbench_l4_23_LocalAttention_triton_ascend_impl.py\", line 339, in forward\n    _proj_gemm_kernel[grid_qkv](\n  File \"/usr/local/python3.11.14/lib/p\n... [truncated 374 chars] ...\n           ^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 303, in compile\n    module = src.make_ir(options, codegen_fns, module_map, context)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 46:13:\n        p_i = idx - tt * pblk\n        q2 = tt // nblk\n        n_i = tt - q2 * nblk\n        bb = q2 // H\n        hh = q2 - bb * H\n\n        p0 = p_i * BM\n        n0 = n_i * BN\n\n        offs_m = p0 + tl.arange(0, BM)\n        offs_n = n0 + tl.arange(0, BN)\n        fl = float(L)\n             ^\nTypeError(\"float() argument must be a string or a real number, not 'tensor'\")\n"
+    },
+    {
+      "case_idx": 21,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            3,
+            179,
+            960
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "scalar",
+          "value": 15
+        },
+        {
+          "type": "scalar",
+          "value": 3
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card1/agent_workdir/output/verify/kernelbench_l4_23_LocalAttention_triton_ascend_impl.py\", line 339, in forward\n    _proj_gemm_kernel[grid_qkv](\n  File \"/usr/local/python3.11.14/lib/p\n... [truncated 374 chars] ...\n           ^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 303, in compile\n    module = src.make_ir(options, codegen_fns, module_map, context)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 46:13:\n        p_i = idx - tt * pblk\n        q2 = tt // nblk\n        n_i = tt - q2 * nblk\n        bb = q2 // H\n        hh = q2 - bb * H\n\n        p0 = p_i * BM\n        n0 = n_i * BN\n\n        offs_m = p0 + tl.arange(0, BM)\n        offs_n = n0 + tl.arange(0, BN)\n        fl = float(L)\n             ^\nTypeError(\"float() argument must be a string or a real number, not 'tensor'\")\n"
+    },
+    {
+      "case_idx": 22,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            191,
+            1024
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": 16
+        },
+        {
+          "type": "scalar",
+          "value": 5
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card1/agent_workdir/output/verify/kernelbench_l4_23_LocalAttention_triton_ascend_impl.py\", line 339, in forward\n    _proj_gemm_kernel[grid_qkv](\n  File \"/usr/local/python3.11.14/lib/p\n... [truncated 374 chars] ...\n           ^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 303, in compile\n    module = src.make_ir(options, codegen_fns, module_map, context)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 46:13:\n        p_i = idx - tt * pblk\n        q2 = tt // nblk\n        n_i = tt - q2 * nblk\n        bb = q2 // H\n        hh = q2 - bb * H\n\n        p0 = p_i * BM\n        n0 = n_i * BN\n\n        offs_m = p0 + tl.arange(0, BM)\n        offs_n = n0 + tl.arange(0, BN)\n        fl = float(L)\n             ^\nTypeError(\"float() argument must be a string or a real number, not 'tensor'\")\n"
+    },
+    {
+      "case_idx": 23,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            211,
+            1088
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 17
+        },
+        {
+          "type": "scalar",
+          "value": 7
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card1/agent_workdir/output/verify/kernelbench_l4_23_LocalAttention_triton_ascend_impl.py\", line 339, in forward\n    _proj_gemm_kernel[grid_qkv](\n  File \"/usr/local/python3.11.14/lib/p\n... [truncated 374 chars] ...\n           ^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 303, in compile\n    module = src.make_ir(options, codegen_fns, module_map, context)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 46:13:\n        p_i = idx - tt * pblk\n        q2 = tt // nblk\n        n_i = tt - q2 * nblk\n        bb = q2 // H\n        hh = q2 - bb * H\n\n        p0 = p_i * BM\n        n0 = n_i * BN\n\n        offs_m = p0 + tl.arange(0, BM)\n        offs_n = n0 + tl.arange(0, BN)\n        fl = float(L)\n             ^\nTypeError(\"float() argument must be a string or a real number, not 'tensor'\")\n"
+    },
+    {
+      "case_idx": 24,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            61,
+            384
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "scalar",
+          "value": 6
+        },
+        {
+          "type": "scalar",
+          "value": 11
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card1/agent_workdir/output/verify/kernelbench_l4_23_LocalAttention_triton_ascend_impl.py\", line 339, in forward\n    _proj_gemm_kernel[grid_qkv](\n  File \"/usr/local/python3.11.14/lib/p\n... [truncated 374 chars] ...\n           ^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 303, in compile\n    module = src.make_ir(options, codegen_fns, module_map, context)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 46:13:\n        p_i = idx - tt * pblk\n        q2 = tt // nblk\n        n_i = tt - q2 * nblk\n        bb = q2 // H\n        hh = q2 - bb * H\n\n        p0 = p_i * BM\n        n0 = n_i * BN\n\n        offs_m = p0 + tl.arange(0, BM)\n        offs_n = n0 + tl.arange(0, BN)\n        fl = float(L)\n             ^\nTypeError(\"float() argument must be a string or a real number, not 'tensor'\")\n"
+    },
+    {
+      "case_idx": 25,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            67,
+            420
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": 7
+        },
+        {
+          "type": "scalar",
+          "value": 17
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card1/agent_workdir/output/verify/kernelbench_l4_23_LocalAttention_triton_ascend_impl.py\", line 339, in forward\n    _proj_gemm_kernel[grid_qkv](\n  File \"/usr/local/python3.11.14/lib/p\n... [truncated 374 chars] ...\n           ^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 303, in compile\n    module = src.make_ir(options, codegen_fns, module_map, context)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 46:13:\n        p_i = idx - tt * pblk\n        q2 = tt // nblk\n        n_i = tt - q2 * nblk\n        bb = q2 // H\n        hh = q2 - bb * H\n\n        p0 = p_i * BM\n        n0 = n_i * BN\n\n        offs_m = p0 + tl.arange(0, BM)\n        offs_n = n0 + tl.arange(0, BN)\n        fl = float(L)\n             ^\nTypeError(\"float() argument must be a string or a real number, not 'tensor'\")\n"
+    },
+    {
+      "case_idx": 26,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            3,
+            71,
+            448
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 7
+        },
+        {
+          "type": "scalar",
+          "value": 23
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card1/agent_workdir/output/verify/kernelbench_l4_23_LocalAttention_triton_ascend_impl.py\", line 339, in forward\n    _proj_gemm_kernel[grid_qkv](\n  File \"/usr/local/python3.11.14/lib/p\n... [truncated 374 chars] ...\n           ^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 303, in compile\n    module = src.make_ir(options, codegen_fns, module_map, context)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 46:13:\n        p_i = idx - tt * pblk\n        q2 = tt // nblk\n        n_i = tt - q2 * nblk\n        bb = q2 // H\n        hh = q2 - bb * H\n\n        p0 = p_i * BM\n        n0 = n_i * BN\n\n        offs_m = p0 + tl.arange(0, BM)\n        offs_n = n0 + tl.arange(0, BN)\n        fl = float(L)\n             ^\nTypeError(\"float() argument must be a string or a real number, not 'tensor'\")\n"
+    },
+    {
+      "case_idx": 27,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            73,
+            480
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "scalar",
+          "value": 8
+        },
+        {
+          "type": "scalar",
+          "value": 31
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card1/agent_workdir/output/verify/kernelbench_l4_23_LocalAttention_triton_ascend_impl.py\", line 339, in forward\n    _proj_gemm_kernel[grid_qkv](\n  File \"/usr/local/python3.11.14/lib/p\n... [truncated 374 chars] ...\n           ^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 303, in compile\n    module = src.make_ir(options, codegen_fns, module_map, context)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 46:13:\n        p_i = idx - tt * pblk\n        q2 = tt // nblk\n        n_i = tt - q2 * nblk\n        bb = q2 // H\n        hh = q2 - bb * H\n\n        p0 = p_i * BM\n        n0 = n_i * BN\n\n        offs_m = p0 + tl.arange(0, BM)\n        offs_n = n0 + tl.arange(0, BN)\n        fl = float(L)\n             ^\nTypeError(\"float() argument must be a string or a real number, not 'tensor'\")\n"
+    },
+    {
+      "case_idx": 28,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            79,
+            512
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": 8
+        },
+        {
+          "type": "scalar",
+          "value": 47
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card1/agent_workdir/output/verify/kernelbench_l4_23_LocalAttention_triton_ascend_impl.py\", line 339, in forward\n    _proj_gemm_kernel[grid_qkv](\n  File \"/usr/local/python3.11.14/lib/p\n... [truncated 374 chars] ...\n           ^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 303, in compile\n    module = src.make_ir(options, codegen_fns, module_map, context)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 46:13:\n        p_i = idx - tt * pblk\n        q2 = tt // nblk\n        n_i = tt - q2 * nblk\n        bb = q2 // H\n        hh = q2 - bb * H\n\n        p0 = p_i * BM\n        n0 = n_i * BN\n\n        offs_m = p0 + tl.arange(0, BM)\n        offs_n = n0 + tl.arange(0, BN)\n        fl = float(L)\n             ^\nTypeError(\"float() argument must be a string or a real number, not 'tensor'\")\n"
+    },
+    {
+      "case_idx": 29,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            83,
+            540
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 9
+        },
+        {
+          "type": "scalar",
+          "value": 63
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card1/agent_workdir/output/verify/kernelbench_l4_23_LocalAttention_triton_ascend_impl.py\", line 339, in forward\n    _proj_gemm_kernel[grid_qkv](\n  File \"/usr/local/python3.11.14/lib/p\n... [truncated 374 chars] ...\n           ^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 303, in compile\n    module = src.make_ir(options, codegen_fns, module_map, context)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 46:13:\n        p_i = idx - tt * pblk\n        q2 = tt // nblk\n        n_i = tt - q2 * nblk\n        bb = q2 // H\n        hh = q2 - bb * H\n\n        p0 = p_i * BM\n        n0 = n_i * BN\n\n        offs_m = p0 + tl.arange(0, BM)\n        offs_n = n0 + tl.arange(0, BN)\n        fl = float(L)\n             ^\nTypeError(\"float() argument must be a string or a real number, not 'tensor'\")\n"
+    },
+    {
+      "case_idx": 30,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            89,
+            576
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "scalar",
+          "value": 9
+        },
+        {
+          "type": "scalar",
+          "value": 79
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card1/agent_workdir/output/verify/kernelbench_l4_23_LocalAttention_triton_ascend_impl.py\", line 339, in forward\n    _proj_gemm_kernel[grid_qkv](\n  File \"/usr/local/python3.11.14/lib/p\n... [truncated 374 chars] ...\n           ^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 303, in compile\n    module = src.make_ir(options, codegen_fns, module_map, context)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 46:13:\n        p_i = idx - tt * pblk\n        q2 = tt // nblk\n        n_i = tt - q2 * nblk\n        bb = q2 // H\n        hh = q2 - bb * H\n\n        p0 = p_i * BM\n        n0 = n_i * BN\n\n        offs_m = p0 + tl.arange(0, BM)\n        offs_n = n0 + tl.arange(0, BN)\n        fl = float(L)\n             ^\nTypeError(\"float() argument must be a string or a real number, not 'tensor'\")\n"
+    },
+    {
+      "case_idx": 31,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            97,
+            600
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": 10
+        },
+        {
+          "type": "scalar",
+          "value": 3
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card1/agent_workdir/output/verify/kernelbench_l4_23_LocalAttention_triton_ascend_impl.py\", line 339, in forward\n    _proj_gemm_kernel[grid_qkv](\n  File \"/usr/local/python3.11.14/lib/p\n... [truncated 374 chars] ...\n           ^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 303, in compile\n    module = src.make_ir(options, codegen_fns, module_map, context)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 46:13:\n        p_i = idx - tt * pblk\n        q2 = tt // nblk\n        n_i = tt - q2 * nblk\n        bb = q2 // H\n        hh = q2 - bb * H\n\n        p0 = p_i * BM\n        n0 = n_i * BN\n\n        offs_m = p0 + tl.arange(0, BM)\n        offs_n = n0 + tl.arange(0, BN)\n        fl = float(L)\n             ^\nTypeError(\"float() argument must be a string or a real number, not 'tensor'\")\n"
+    },
+    {
+      "case_idx": 32,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            101,
+            640
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 10
+        },
+        {
+          "type": "scalar",
+          "value": 5
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card1/agent_workdir/output/verify/kernelbench_l4_23_LocalAttention_triton_ascend_impl.py\", line 339, in forward\n    _proj_gemm_kernel[grid_qkv](\n  File \"/usr/local/python3.11.14/lib/p\n... [truncated 374 chars] ...\n           ^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 303, in compile\n    module = src.make_ir(options, codegen_fns, module_map, context)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 46:13:\n        p_i = idx - tt * pblk\n        q2 = tt // nblk\n        n_i = tt - q2 * nblk\n        bb = q2 // H\n        hh = q2 - bb * H\n\n        p0 = p_i * BM\n        n0 = n_i * BN\n\n        offs_m = p0 + tl.arange(0, BM)\n        offs_n = n0 + tl.arange(0, BN)\n        fl = float(L)\n             ^\nTypeError(\"float() argument must be a string or a real number, not 'tensor'\")\n"
+    },
+    {
+      "case_idx": 33,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            107,
+            672
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "scalar",
+          "value": 12
+        },
+        {
+          "type": "scalar",
+          "value": 7
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card1/agent_workdir/output/verify/kernelbench_l4_23_LocalAttention_triton_ascend_impl.py\", line 339, in forward\n    _proj_gemm_kernel[grid_qkv](\n  File \"/usr/local/python3.11.14/lib/p\n... [truncated 374 chars] ...\n           ^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 303, in compile\n    module = src.make_ir(options, codegen_fns, module_map, context)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 46:13:\n        p_i = idx - tt * pblk\n        q2 = tt // nblk\n        n_i = tt - q2 * nblk\n        bb = q2 // H\n        hh = q2 - bb * H\n\n        p0 = p_i * BM\n        n0 = n_i * BN\n\n        offs_m = p0 + tl.arange(0, BM)\n        offs_n = n0 + tl.arange(0, BN)\n        fl = float(L)\n             ^\nTypeError(\"float() argument must be a string or a real number, not 'tensor'\")\n"
+    },
+    {
+      "case_idx": 34,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            113,
+            704
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": 11
+        },
+        {
+          "type": "scalar",
+          "value": 11
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card1/agent_workdir/output/verify/kernelbench_l4_23_LocalAttention_triton_ascend_impl.py\", line 339, in forward\n    _proj_gemm_kernel[grid_qkv](\n  File \"/usr/local/python3.11.14/lib/p\n... [truncated 374 chars] ...\n           ^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 303, in compile\n    module = src.make_ir(options, codegen_fns, module_map, context)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 46:13:\n        p_i = idx - tt * pblk\n        q2 = tt // nblk\n        n_i = tt - q2 * nblk\n        bb = q2 // H\n        hh = q2 - bb * H\n\n        p0 = p_i * BM\n        n0 = n_i * BN\n\n        offs_m = p0 + tl.arange(0, BM)\n        offs_n = n0 + tl.arange(0, BN)\n        fl = float(L)\n             ^\nTypeError(\"float() argument must be a string or a real number, not 'tensor'\")\n"
+    },
+    {
+      "case_idx": 35,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            127,
+            720
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 12
+        },
+        {
+          "type": "scalar",
+          "value": 17
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card1/agent_workdir/output/verify/kernelbench_l4_23_LocalAttention_triton_ascend_impl.py\", line 339, in forward\n    _proj_gemm_kernel[grid_qkv](\n  File \"/usr/local/python3.11.14/lib/p\n... [truncated 374 chars] ...\n           ^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 303, in compile\n    module = src.make_ir(options, codegen_fns, module_map, context)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 46:13:\n        p_i = idx - tt * pblk\n        q2 = tt // nblk\n        n_i = tt - q2 * nblk\n        bb = q2 // H\n        hh = q2 - bb * H\n\n        p0 = p_i * BM\n        n0 = n_i * BN\n\n        offs_m = p0 + tl.arange(0, BM)\n        offs_n = n0 + tl.arange(0, BN)\n        fl = float(L)\n             ^\nTypeError(\"float() argument must be a string or a real number, not 'tensor'\")\n"
+    },
+    {
+      "case_idx": 36,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            3,
+            641,
+            768
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "scalar",
+          "value": 12
+        },
+        {
+          "type": "scalar",
+          "value": 23
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card1/agent_workdir/output/verify/kernelbench_l4_23_LocalAttention_triton_ascend_impl.py\", line 339, in forward\n    _proj_gemm_kernel[grid_qkv](\n  File \"/usr/local/python3.11.14/lib/p\n... [truncated 374 chars] ...\n           ^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 303, in compile\n    module = src.make_ir(options, codegen_fns, module_map, context)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 46:13:\n        p_i = idx - tt * pblk\n        q2 = tt // nblk\n        n_i = tt - q2 * nblk\n        bb = q2 // H\n        hh = q2 - bb * H\n\n        p0 = p_i * BM\n        n0 = n_i * BN\n\n        offs_m = p0 + tl.arange(0, BM)\n        offs_n = n0 + tl.arange(0, BN)\n        fl = float(L)\n             ^\nTypeError(\"float() argument must be a string or a real number, not 'tensor'\")\n"
+    },
+    {
+      "case_idx": 37,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            769,
+            640
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": 10
+        },
+        {
+          "type": "scalar",
+          "value": 31
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card1/agent_workdir/output/verify/kernelbench_l4_23_LocalAttention_triton_ascend_impl.py\", line 339, in forward\n    _proj_gemm_kernel[grid_qkv](\n  File \"/usr/local/python3.11.14/lib/p\n... [truncated 374 chars] ...\n           ^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 303, in compile\n    module = src.make_ir(options, codegen_fns, module_map, context)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 46:13:\n        p_i = idx - tt * pblk\n        q2 = tt // nblk\n        n_i = tt - q2 * nblk\n        bb = q2 // H\n        hh = q2 - bb * H\n\n        p0 = p_i * BM\n        n0 = n_i * BN\n\n        offs_m = p0 + tl.arange(0, BM)\n        offs_n = n0 + tl.arange(0, BN)\n        fl = float(L)\n             ^\nTypeError(\"float() argument must be a string or a real number, not 'tensor'\")\n"
+    },
+    {
+      "case_idx": 38,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            3,
+            897,
+            512
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 8
+        },
+        {
+          "type": "scalar",
+          "value": 47
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card1/agent_workdir/output/verify/kernelbench_l4_23_LocalAttention_triton_ascend_impl.py\", line 339, in forward\n    _proj_gemm_kernel[grid_qkv](\n  File \"/usr/local/python3.11.14/lib/p\n... [truncated 374 chars] ...\n           ^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 303, in compile\n    module = src.make_ir(options, codegen_fns, module_map, context)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 46:13:\n        p_i = idx - tt * pblk\n        q2 = tt // nblk\n        n_i = tt - q2 * nblk\n        bb = q2 // H\n        hh = q2 - bb * H\n\n        p0 = p_i * BM\n        n0 = n_i * BN\n\n        offs_m = p0 + tl.arange(0, BM)\n        offs_n = n0 + tl.arange(0, BN)\n        fl = float(L)\n             ^\nTypeError(\"float() argument must be a string or a real number, not 'tensor'\")\n"
+    },
+    {
+      "case_idx": 39,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            223,
+            1152
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "scalar",
+          "value": 18
+        },
+        {
+          "type": "scalar",
+          "value": 63
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card1/agent_workdir/output/verify/kernelbench_l4_23_LocalAttention_triton_ascend_impl.py\", line 339, in forward\n    _proj_gemm_kernel[grid_qkv](\n  File \"/usr/local/python3.11.14/lib/p\n... [truncated 374 chars] ...\n           ^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 303, in compile\n    module = src.make_ir(options, codegen_fns, module_map, context)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 46:13:\n        p_i = idx - tt * pblk\n        q2 = tt // nblk\n        n_i = tt - q2 * nblk\n        bb = q2 // H\n        hh = q2 - bb * H\n\n        p0 = p_i * BM\n        n0 = n_i * BN\n\n        offs_m = p0 + tl.arange(0, BM)\n        offs_n = n0 + tl.arange(0, BN)\n        fl = float(L)\n             ^\nTypeError(\"float() argument must be a string or a real number, not 'tensor'\")\n"
+    },
+    {
+      "case_idx": 40,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            239,
+            1200
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": 15
+        },
+        {
+          "type": "scalar",
+          "value": 79
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card1/agent_workdir/output/verify/kernelbench_l4_23_LocalAttention_triton_ascend_impl.py\", line 339, in forward\n    _proj_gemm_kernel[grid_qkv](\n  File \"/usr/local/python3.11.14/lib/p\n... [truncated 374 chars] ...\n           ^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 303, in compile\n    module = src.make_ir(options, codegen_fns, module_map, context)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 46:13:\n        p_i = idx - tt * pblk\n        q2 = tt // nblk\n        n_i = tt - q2 * nblk\n        bb = q2 // H\n        hh = q2 - bb * H\n\n        p0 = p_i * BM\n        n0 = n_i * BN\n\n        offs_m = p0 + tl.arange(0, BM)\n        offs_n = n0 + tl.arange(0, BN)\n        fl = float(L)\n             ^\nTypeError(\"float() argument must be a string or a real number, not 'tensor'\")\n"
+    },
+    {
+      "case_idx": 41,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            3,
+            257,
+            1248
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 16
+        },
+        {
+          "type": "scalar",
+          "value": 3
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card1/agent_workdir/output/verify/kernelbench_l4_23_LocalAttention_triton_ascend_impl.py\", line 339, in forward\n    _proj_gemm_kernel[grid_qkv](\n  File \"/usr/local/python3.11.14/lib/p\n... [truncated 374 chars] ...\n           ^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 303, in compile\n    module = src.make_ir(options, codegen_fns, module_map, context)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 46:13:\n        p_i = idx - tt * pblk\n        q2 = tt // nblk\n        n_i = tt - q2 * nblk\n        bb = q2 // H\n        hh = q2 - bb * H\n\n        p0 = p_i * BM\n        n0 = n_i * BN\n\n        offs_m = p0 + tl.arange(0, BM)\n        offs_n = n0 + tl.arange(0, BN)\n        fl = float(L)\n             ^\nTypeError(\"float() argument must be a string or a real number, not 'tensor'\")\n"
+    },
+    {
+      "case_idx": 42,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            277,
+            1280
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "scalar",
+          "value": 20
+        },
+        {
+          "type": "scalar",
+          "value": 5
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card1/agent_workdir/output/verify/kernelbench_l4_23_LocalAttention_triton_ascend_impl.py\", line 339, in forward\n    _proj_gemm_kernel[grid_qkv](\n  File \"/usr/local/python3.11.14/lib/p\n... [truncated 374 chars] ...\n           ^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 303, in compile\n    module = src.make_ir(options, codegen_fns, module_map, context)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 46:13:\n        p_i = idx - tt * pblk\n        q2 = tt // nblk\n        n_i = tt - q2 * nblk\n        bb = q2 // H\n        hh = q2 - bb * H\n\n        p0 = p_i * BM\n        n0 = n_i * BN\n\n        offs_m = p0 + tl.arange(0, BM)\n        offs_n = n0 + tl.arange(0, BN)\n        fl = float(L)\n             ^\nTypeError(\"float() argument must be a string or a real number, not 'tensor'\")\n"
+    },
+    {
+      "case_idx": 43,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            3,
+            293,
+            1344
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": 21
+        },
+        {
+          "type": "scalar",
+          "value": 7
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card1/agent_workdir/output/verify/kernelbench_l4_23_LocalAttention_triton_ascend_impl.py\", line 339, in forward\n    _proj_gemm_kernel[grid_qkv](\n  File \"/usr/local/python3.11.14/lib/p\n... [truncated 374 chars] ...\n           ^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 303, in compile\n    module = src.make_ir(options, codegen_fns, module_map, context)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 46:13:\n        p_i = idx - tt * pblk\n        q2 = tt // nblk\n        n_i = tt - q2 * nblk\n        bb = q2 // H\n        hh = q2 - bb * H\n\n        p0 = p_i * BM\n        n0 = n_i * BN\n\n        offs_m = p0 + tl.arange(0, BM)\n        offs_n = n0 + tl.arange(0, BN)\n        fl = float(L)\n             ^\nTypeError(\"float() argument must be a string or a real number, not 'tensor'\")\n"
+    },
+    {
+      "case_idx": 44,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            317,
+            1408
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 22
+        },
+        {
+          "type": "scalar",
+          "value": 11
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card1/agent_workdir/output/verify/kernelbench_l4_23_LocalAttention_triton_ascend_impl.py\", line 339, in forward\n    _proj_gemm_kernel[grid_qkv](\n  File \"/usr/local/python3.11.14/lib/p\n... [truncated 374 chars] ...\n           ^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 303, in compile\n    module = src.make_ir(options, codegen_fns, module_map, context)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 46:13:\n        p_i = idx - tt * pblk\n        q2 = tt // nblk\n        n_i = tt - q2 * nblk\n        bb = q2 // H\n        hh = q2 - bb * H\n\n        p0 = p_i * BM\n        n0 = n_i * BN\n\n        offs_m = p0 + tl.arange(0, BM)\n        offs_n = n0 + tl.arange(0, BN)\n        fl = float(L)\n             ^\nTypeError(\"float() argument must be a string or a real number, not 'tensor'\")\n"
+    },
+    {
+      "case_idx": 45,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            347,
+            1440
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "scalar",
+          "value": 18
+        },
+        {
+          "type": "scalar",
+          "value": 17
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card1/agent_workdir/output/verify/kernelbench_l4_23_LocalAttention_triton_ascend_impl.py\", line 339, in forward\n    _proj_gemm_kernel[grid_qkv](\n  File \"/usr/local/python3.11.14/lib/p\n... [truncated 374 chars] ...\n           ^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 303, in compile\n    module = src.make_ir(options, codegen_fns, module_map, context)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 46:13:\n        p_i = idx - tt * pblk\n        q2 = tt // nblk\n        n_i = tt - q2 * nblk\n        bb = q2 // H\n        hh = q2 - bb * H\n\n        p0 = p_i * BM\n        n0 = n_i * BN\n\n        offs_m = p0 + tl.arange(0, BM)\n        offs_n = n0 + tl.arange(0, BN)\n        fl = float(L)\n             ^\nTypeError(\"float() argument must be a string or a real number, not 'tensor'\")\n"
+    },
+    {
+      "case_idx": 46,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            3,
+            383,
+            1472
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": 23
+        },
+        {
+          "type": "scalar",
+          "value": 23
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card1/agent_workdir/output/verify/kernelbench_l4_23_LocalAttention_triton_ascend_impl.py\", line 339, in forward\n    _proj_gemm_kernel[grid_qkv](\n  File \"/usr/local/python3.11.14/lib/p\n... [truncated 374 chars] ...\n           ^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 303, in compile\n    module = src.make_ir(options, codegen_fns, module_map, context)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 46:13:\n        p_i = idx - tt * pblk\n        q2 = tt // nblk\n        n_i = tt - q2 * nblk\n        bb = q2 // H\n        hh = q2 - bb * H\n\n        p0 = p_i * BM\n        n0 = n_i * BN\n\n        offs_m = p0 + tl.arange(0, BM)\n        offs_n = n0 + tl.arange(0, BN)\n        fl = float(L)\n             ^\nTypeError(\"float() argument must be a string or a real number, not 'tensor'\")\n"
+    },
+    {
+      "case_idx": 47,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            419,
+            1536
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 24
+        },
+        {
+          "type": "scalar",
+          "value": 31
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card1/agent_workdir/output/verify/kernelbench_l4_23_LocalAttention_triton_ascend_impl.py\", line 339, in forward\n    _proj_gemm_kernel[grid_qkv](\n  File \"/usr/local/python3.11.14/lib/p\n... [truncated 374 chars] ...\n           ^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 303, in compile\n    module = src.make_ir(options, codegen_fns, module_map, context)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 46:13:\n        p_i = idx - tt * pblk\n        q2 = tt // nblk\n        n_i = tt - q2 * nblk\n        bb = q2 // H\n        hh = q2 - bb * H\n\n        p0 = p_i * BM\n        n0 = n_i * BN\n\n        offs_m = p0 + tl.arange(0, BM)\n        offs_n = n0 + tl.arange(0, BN)\n        fl = float(L)\n             ^\nTypeError(\"float() argument must be a string or a real number, not 'tensor'\")\n"
+    },
+    {
+      "case_idx": 48,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            3,
+            463,
+            1280
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "scalar",
+          "value": 16
+        },
+        {
+          "type": "scalar",
+          "value": 47
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card1/agent_workdir/output/verify/kernelbench_l4_23_LocalAttention_triton_ascend_impl.py\", line 339, in forward\n    _proj_gemm_kernel[grid_qkv](\n  File \"/usr/local/python3.11.14/lib/p\n... [truncated 374 chars] ...\n           ^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 303, in compile\n    module = src.make_ir(options, codegen_fns, module_map, context)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 46:13:\n        p_i = idx - tt * pblk\n        q2 = tt // nblk\n        n_i = tt - q2 * nblk\n        bb = q2 // H\n        hh = q2 - bb * H\n\n        p0 = p_i * BM\n        n0 = n_i * BN\n\n        offs_m = p0 + tl.arange(0, BM)\n        offs_n = n0 + tl.arange(0, BN)\n        fl = float(L)\n             ^\nTypeError(\"float() argument must be a string or a real number, not 'tensor'\")\n"
+    },
+    {
+      "case_idx": 49,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            509,
+            1024
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": 16
+        },
+        {
+          "type": "scalar",
+          "value": 63
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card1/agent_workdir/output/verify/kernelbench_l4_23_LocalAttention_triton_ascend_impl.py\", line 339, in forward\n    _proj_gemm_kernel[grid_qkv](\n  File \"/usr/local/python3.11.14/lib/p\n... [truncated 374 chars] ...\n           ^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 303, in compile\n    module = src.make_ir(options, codegen_fns, module_map, context)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 46:13:\n        p_i = idx - tt * pblk\n        q2 = tt // nblk\n        n_i = tt - q2 * nblk\n        bb = q2 // H\n        hh = q2 - bb * H\n\n        p0 = p_i * BM\n        n0 = n_i * BN\n\n        offs_m = p0 + tl.arange(0, BM)\n        offs_n = n0 + tl.arange(0, BN)\n        fl = float(L)\n             ^\nTypeError(\"float() argument must be a string or a real number, not 'tensor'\")\n"
+    },
+    {
+      "case_idx": 50,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            577,
+            896
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 14
+        },
+        {
+          "type": "scalar",
+          "value": 79
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card1/agent_workdir/output/verify/kernelbench_l4_23_LocalAttention_triton_ascend_impl.py\", line 339, in forward\n    _proj_gemm_kernel[grid_qkv](\n  File \"/usr/local/python3.11.14/lib/p\n... [truncated 374 chars] ...\n           ^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 303, in compile\n    module = src.make_ir(options, codegen_fns, module_map, context)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 46:13:\n        p_i = idx - tt * pblk\n        q2 = tt // nblk\n        n_i = tt - q2 * nblk\n        bb = q2 // H\n        hh = q2 - bb * H\n\n        p0 = p_i * BM\n        n0 = n_i * BN\n\n        offs_m = p0 + tl.arange(0, BM)\n        offs_n = n0 + tl.arange(0, BN)\n        fl = float(L)\n             ^\nTypeError(\"float() argument must be a string or a real number, not 'tensor'\")\n"
+    }
+  ]
+}

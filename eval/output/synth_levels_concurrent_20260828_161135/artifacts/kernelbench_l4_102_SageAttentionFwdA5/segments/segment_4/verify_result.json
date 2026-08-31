@@ -1,0 +1,2658 @@
+{
+  "op_name": "kernelbench_l4_102_SageAttentionFwdA5",
+  "total_cases": 50,
+  "passed_cases": 0,
+  "failed_cases": 50,
+  "failures": [
+    {
+      "case_idx": 1,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            32,
+            1024,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            32,
+            1024,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            32,
+            1024,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": "HND"
+        },
+        {
+          "type": "scalar",
+          "value": 0
+        },
+        {
+          "type": "scalar",
+          "value": 0.08838834764831845
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card1/agent_workdir/output/verify/kernelbench_l4_102_SageAttentionFwdA5_triton_ascend_impl.py\", line 235, in forward\n    _sage_attn_fwd_kernel[(npids,)](\n  File \"/usr/local/python3.11\n... [truncated 608 chars] ...\n^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 34:14:\n    pid = tl.program_id(0)\n    n_units = BH * GRID_M\n    # group_size is derived (not a kernel arg) so it is a plain i32 value\n    # even when Hkv == H or Hkv == 1.\n    group_size = H // Hkv\n\n    for unit in range(pid, n_units, NUM_PIDS):\n        # --- scalar index decode: int div/mod degrade to slow scalar\n        # instructions on Ascend; float32 division stays on the vector pipe\n        # (values are small integral floats so results are exact).\n        u_f = unit.to(tl.float32)\n        bh = (u_f // GRID_M.to(tl.float32)).to(tl.int32)\n              ^\nTypeError('unexpected type fp32')\n"
+    },
+    {
+      "case_idx": 2,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            32,
+            1024,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            32,
+            1024,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            32,
+            1024,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": "HND"
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        },
+        {
+          "type": "scalar",
+          "value": 0.08838834764831845
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card1/agent_workdir/output/verify/kernelbench_l4_102_SageAttentionFwdA5_triton_ascend_impl.py\", line 235, in forward\n    _sage_attn_fwd_kernel[(npids,)](\n  File \"/usr/local/python3.11\n... [truncated 608 chars] ...\n^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 34:14:\n    pid = tl.program_id(0)\n    n_units = BH * GRID_M\n    # group_size is derived (not a kernel arg) so it is a plain i32 value\n    # even when Hkv == H or Hkv == 1.\n    group_size = H // Hkv\n\n    for unit in range(pid, n_units, NUM_PIDS):\n        # --- scalar index decode: int div/mod degrade to slow scalar\n        # instructions on Ascend; float32 division stays on the vector pipe\n        # (values are small integral floats so results are exact).\n        u_f = unit.to(tl.float32)\n        bh = (u_f // GRID_M.to(tl.float32)).to(tl.int32)\n              ^\nTypeError('unexpected type fp32')\n"
+    },
+    {
+      "case_idx": 3,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            32,
+            2048,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            32,
+            2048,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            32,
+            2048,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": "HND"
+        },
+        {
+          "type": "scalar",
+          "value": 0
+        },
+        {
+          "type": "scalar",
+          "value": 0.08838834764831845
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card1/agent_workdir/output/verify/kernelbench_l4_102_SageAttentionFwdA5_triton_ascend_impl.py\", line 235, in forward\n    _sage_attn_fwd_kernel[(npids,)](\n  File \"/usr/local/python3.11\n... [truncated 608 chars] ...\n^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 34:14:\n    pid = tl.program_id(0)\n    n_units = BH * GRID_M\n    # group_size is derived (not a kernel arg) so it is a plain i32 value\n    # even when Hkv == H or Hkv == 1.\n    group_size = H // Hkv\n\n    for unit in range(pid, n_units, NUM_PIDS):\n        # --- scalar index decode: int div/mod degrade to slow scalar\n        # instructions on Ascend; float32 division stays on the vector pipe\n        # (values are small integral floats so results are exact).\n        u_f = unit.to(tl.float32)\n        bh = (u_f // GRID_M.to(tl.float32)).to(tl.int32)\n              ^\nTypeError('unexpected type fp32')\n"
+    },
+    {
+      "case_idx": 4,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            32,
+            2048,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            32,
+            2048,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            32,
+            2048,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": "HND"
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        },
+        {
+          "type": "scalar",
+          "value": 0.08838834764831845
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card1/agent_workdir/output/verify/kernelbench_l4_102_SageAttentionFwdA5_triton_ascend_impl.py\", line 235, in forward\n    _sage_attn_fwd_kernel[(npids,)](\n  File \"/usr/local/python3.11\n... [truncated 608 chars] ...\n^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 34:14:\n    pid = tl.program_id(0)\n    n_units = BH * GRID_M\n    # group_size is derived (not a kernel arg) so it is a plain i32 value\n    # even when Hkv == H or Hkv == 1.\n    group_size = H // Hkv\n\n    for unit in range(pid, n_units, NUM_PIDS):\n        # --- scalar index decode: int div/mod degrade to slow scalar\n        # instructions on Ascend; float32 division stays on the vector pipe\n        # (values are small integral floats so results are exact).\n        u_f = unit.to(tl.float32)\n        bh = (u_f // GRID_M.to(tl.float32)).to(tl.int32)\n              ^\nTypeError('unexpected type fp32')\n"
+    },
+    {
+      "case_idx": 5,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            32,
+            4096,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            32,
+            4096,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            32,
+            4096,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": "HND"
+        },
+        {
+          "type": "scalar",
+          "value": 0
+        },
+        {
+          "type": "scalar",
+          "value": 0.08838834764831845
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card1/agent_workdir/output/verify/kernelbench_l4_102_SageAttentionFwdA5_triton_ascend_impl.py\", line 235, in forward\n    _sage_attn_fwd_kernel[(npids,)](\n  File \"/usr/local/python3.11\n... [truncated 608 chars] ...\n^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 34:14:\n    pid = tl.program_id(0)\n    n_units = BH * GRID_M\n    # group_size is derived (not a kernel arg) so it is a plain i32 value\n    # even when Hkv == H or Hkv == 1.\n    group_size = H // Hkv\n\n    for unit in range(pid, n_units, NUM_PIDS):\n        # --- scalar index decode: int div/mod degrade to slow scalar\n        # instructions on Ascend; float32 division stays on the vector pipe\n        # (values are small integral floats so results are exact).\n        u_f = unit.to(tl.float32)\n        bh = (u_f // GRID_M.to(tl.float32)).to(tl.int32)\n              ^\nTypeError('unexpected type fp32')\n"
+    },
+    {
+      "case_idx": 6,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            32,
+            4096,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            32,
+            4096,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            32,
+            4096,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": "HND"
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        },
+        {
+          "type": "scalar",
+          "value": 0.08838834764831845
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card1/agent_workdir/output/verify/kernelbench_l4_102_SageAttentionFwdA5_triton_ascend_impl.py\", line 235, in forward\n    _sage_attn_fwd_kernel[(npids,)](\n  File \"/usr/local/python3.11\n... [truncated 608 chars] ...\n^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 34:14:\n    pid = tl.program_id(0)\n    n_units = BH * GRID_M\n    # group_size is derived (not a kernel arg) so it is a plain i32 value\n    # even when Hkv == H or Hkv == 1.\n    group_size = H // Hkv\n\n    for unit in range(pid, n_units, NUM_PIDS):\n        # --- scalar index decode: int div/mod degrade to slow scalar\n        # instructions on Ascend; float32 division stays on the vector pipe\n        # (values are small integral floats so results are exact).\n        u_f = unit.to(tl.float32)\n        bh = (u_f // GRID_M.to(tl.float32)).to(tl.int32)\n              ^\nTypeError('unexpected type fp32')\n"
+    },
+    {
+      "case_idx": 7,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            16,
+            8192,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            16,
+            8192,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            16,
+            8192,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": "HND"
+        },
+        {
+          "type": "scalar",
+          "value": 0
+        },
+        {
+          "type": "scalar",
+          "value": 0.08838834764831845
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card1/agent_workdir/output/verify/kernelbench_l4_102_SageAttentionFwdA5_triton_ascend_impl.py\", line 235, in forward\n    _sage_attn_fwd_kernel[(npids,)](\n  File \"/usr/local/python3.11\n... [truncated 608 chars] ...\n^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 34:14:\n    pid = tl.program_id(0)\n    n_units = BH * GRID_M\n    # group_size is derived (not a kernel arg) so it is a plain i32 value\n    # even when Hkv == H or Hkv == 1.\n    group_size = H // Hkv\n\n    for unit in range(pid, n_units, NUM_PIDS):\n        # --- scalar index decode: int div/mod degrade to slow scalar\n        # instructions on Ascend; float32 division stays on the vector pipe\n        # (values are small integral floats so results are exact).\n        u_f = unit.to(tl.float32)\n        bh = (u_f // GRID_M.to(tl.float32)).to(tl.int32)\n              ^\nTypeError('unexpected type fp32')\n"
+    },
+    {
+      "case_idx": 8,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            16,
+            8192,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            16,
+            8192,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            16,
+            8192,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": "HND"
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        },
+        {
+          "type": "scalar",
+          "value": 0.08838834764831845
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card1/agent_workdir/output/verify/kernelbench_l4_102_SageAttentionFwdA5_triton_ascend_impl.py\", line 235, in forward\n    _sage_attn_fwd_kernel[(npids,)](\n  File \"/usr/local/python3.11\n... [truncated 608 chars] ...\n^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 34:14:\n    pid = tl.program_id(0)\n    n_units = BH * GRID_M\n    # group_size is derived (not a kernel arg) so it is a plain i32 value\n    # even when Hkv == H or Hkv == 1.\n    group_size = H // Hkv\n\n    for unit in range(pid, n_units, NUM_PIDS):\n        # --- scalar index decode: int div/mod degrade to slow scalar\n        # instructions on Ascend; float32 division stays on the vector pipe\n        # (values are small integral floats so results are exact).\n        u_f = unit.to(tl.float32)\n        bh = (u_f // GRID_M.to(tl.float32)).to(tl.int32)\n              ^\nTypeError('unexpected type fp32')\n"
+    },
+    {
+      "case_idx": 9,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            16,
+            16384,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            16,
+            16384,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            16,
+            16384,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": "HND"
+        },
+        {
+          "type": "scalar",
+          "value": 0
+        },
+        {
+          "type": "scalar",
+          "value": 0.08838834764831845
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card1/agent_workdir/output/verify/kernelbench_l4_102_SageAttentionFwdA5_triton_ascend_impl.py\", line 235, in forward\n    _sage_attn_fwd_kernel[(npids,)](\n  File \"/usr/local/python3.11\n... [truncated 608 chars] ...\n^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 34:14:\n    pid = tl.program_id(0)\n    n_units = BH * GRID_M\n    # group_size is derived (not a kernel arg) so it is a plain i32 value\n    # even when Hkv == H or Hkv == 1.\n    group_size = H // Hkv\n\n    for unit in range(pid, n_units, NUM_PIDS):\n        # --- scalar index decode: int div/mod degrade to slow scalar\n        # instructions on Ascend; float32 division stays on the vector pipe\n        # (values are small integral floats so results are exact).\n        u_f = unit.to(tl.float32)\n        bh = (u_f // GRID_M.to(tl.float32)).to(tl.int32)\n              ^\nTypeError('unexpected type fp32')\n"
+    },
+    {
+      "case_idx": 10,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            16,
+            16384,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            16,
+            16384,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            16,
+            16384,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": "HND"
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        },
+        {
+          "type": "scalar",
+          "value": 0.08838834764831845
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card1/agent_workdir/output/verify/kernelbench_l4_102_SageAttentionFwdA5_triton_ascend_impl.py\", line 235, in forward\n    _sage_attn_fwd_kernel[(npids,)](\n  File \"/usr/local/python3.11\n... [truncated 608 chars] ...\n^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 34:14:\n    pid = tl.program_id(0)\n    n_units = BH * GRID_M\n    # group_size is derived (not a kernel arg) so it is a plain i32 value\n    # even when Hkv == H or Hkv == 1.\n    group_size = H // Hkv\n\n    for unit in range(pid, n_units, NUM_PIDS):\n        # --- scalar index decode: int div/mod degrade to slow scalar\n        # instructions on Ascend; float32 division stays on the vector pipe\n        # (values are small integral floats so results are exact).\n        u_f = unit.to(tl.float32)\n        bh = (u_f // GRID_M.to(tl.float32)).to(tl.int32)\n              ^\nTypeError('unexpected type fp32')\n"
+    },
+    {
+      "case_idx": 11,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            8,
+            32768,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            8,
+            32768,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            8,
+            32768,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": "HND"
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        },
+        {
+          "type": "scalar",
+          "value": 0.08838834764831845
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card1/agent_workdir/output/verify/kernelbench_l4_102_SageAttentionFwdA5_triton_ascend_impl.py\", line 235, in forward\n    _sage_attn_fwd_kernel[(npids,)](\n  File \"/usr/local/python3.11\n... [truncated 608 chars] ...\n^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 34:14:\n    pid = tl.program_id(0)\n    n_units = BH * GRID_M\n    # group_size is derived (not a kernel arg) so it is a plain i32 value\n    # even when Hkv == H or Hkv == 1.\n    group_size = H // Hkv\n\n    for unit in range(pid, n_units, NUM_PIDS):\n        # --- scalar index decode: int div/mod degrade to slow scalar\n        # instructions on Ascend; float32 division stays on the vector pipe\n        # (values are small integral floats so results are exact).\n        u_f = unit.to(tl.float32)\n        bh = (u_f // GRID_M.to(tl.float32)).to(tl.int32)\n              ^\nTypeError('unexpected type fp32')\n"
+    },
+    {
+      "case_idx": 12,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            8,
+            32768,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            8,
+            32768,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            8,
+            32768,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": "HND"
+        },
+        {
+          "type": "scalar",
+          "value": 0
+        },
+        {
+          "type": "scalar",
+          "value": 0.08838834764831845
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card1/agent_workdir/output/verify/kernelbench_l4_102_SageAttentionFwdA5_triton_ascend_impl.py\", line 235, in forward\n    _sage_attn_fwd_kernel[(npids,)](\n  File \"/usr/local/python3.11\n... [truncated 608 chars] ...\n^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 34:14:\n    pid = tl.program_id(0)\n    n_units = BH * GRID_M\n    # group_size is derived (not a kernel arg) so it is a plain i32 value\n    # even when Hkv == H or Hkv == 1.\n    group_size = H // Hkv\n\n    for unit in range(pid, n_units, NUM_PIDS):\n        # --- scalar index decode: int div/mod degrade to slow scalar\n        # instructions on Ascend; float32 division stays on the vector pipe\n        # (values are small integral floats so results are exact).\n        u_f = unit.to(tl.float32)\n        bh = (u_f // GRID_M.to(tl.float32)).to(tl.int32)\n              ^\nTypeError('unexpected type fp32')\n"
+    },
+    {
+      "case_idx": 13,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            32,
+            1024,
+            128
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            32,
+            1024,
+            128
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            32,
+            1024,
+            128
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "scalar",
+          "value": "HND"
+        },
+        {
+          "type": "scalar",
+          "value": 0
+        },
+        {
+          "type": "scalar",
+          "value": 0.08838834764831845
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card1/agent_workdir/output/verify/kernelbench_l4_102_SageAttentionFwdA5_triton_ascend_impl.py\", line 235, in forward\n    _sage_attn_fwd_kernel[(npids,)](\n  File \"/usr/local/python3.11\n... [truncated 608 chars] ...\n^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 34:14:\n    pid = tl.program_id(0)\n    n_units = BH * GRID_M\n    # group_size is derived (not a kernel arg) so it is a plain i32 value\n    # even when Hkv == H or Hkv == 1.\n    group_size = H // Hkv\n\n    for unit in range(pid, n_units, NUM_PIDS):\n        # --- scalar index decode: int div/mod degrade to slow scalar\n        # instructions on Ascend; float32 division stays on the vector pipe\n        # (values are small integral floats so results are exact).\n        u_f = unit.to(tl.float32)\n        bh = (u_f // GRID_M.to(tl.float32)).to(tl.int32)\n              ^\nTypeError('unexpected type fp32')\n"
+    },
+    {
+      "case_idx": 14,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            32,
+            2048,
+            128
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            32,
+            2048,
+            128
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            32,
+            2048,
+            128
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "scalar",
+          "value": "HND"
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        },
+        {
+          "type": "scalar",
+          "value": 0.08838834764831845
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card1/agent_workdir/output/verify/kernelbench_l4_102_SageAttentionFwdA5_triton_ascend_impl.py\", line 235, in forward\n    _sage_attn_fwd_kernel[(npids,)](\n  File \"/usr/local/python3.11\n... [truncated 608 chars] ...\n^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 34:14:\n    pid = tl.program_id(0)\n    n_units = BH * GRID_M\n    # group_size is derived (not a kernel arg) so it is a plain i32 value\n    # even when Hkv == H or Hkv == 1.\n    group_size = H // Hkv\n\n    for unit in range(pid, n_units, NUM_PIDS):\n        # --- scalar index decode: int div/mod degrade to slow scalar\n        # instructions on Ascend; float32 division stays on the vector pipe\n        # (values are small integral floats so results are exact).\n        u_f = unit.to(tl.float32)\n        bh = (u_f // GRID_M.to(tl.float32)).to(tl.int32)\n              ^\nTypeError('unexpected type fp32')\n"
+    },
+    {
+      "case_idx": 15,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            32,
+            4096,
+            128
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            32,
+            4096,
+            128
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            32,
+            4096,
+            128
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "scalar",
+          "value": "HND"
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        },
+        {
+          "type": "scalar",
+          "value": 0.08838834764831845
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card1/agent_workdir/output/verify/kernelbench_l4_102_SageAttentionFwdA5_triton_ascend_impl.py\", line 235, in forward\n    _sage_attn_fwd_kernel[(npids,)](\n  File \"/usr/local/python3.11\n... [truncated 608 chars] ...\n^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 34:14:\n    pid = tl.program_id(0)\n    n_units = BH * GRID_M\n    # group_size is derived (not a kernel arg) so it is a plain i32 value\n    # even when Hkv == H or Hkv == 1.\n    group_size = H // Hkv\n\n    for unit in range(pid, n_units, NUM_PIDS):\n        # --- scalar index decode: int div/mod degrade to slow scalar\n        # instructions on Ascend; float32 division stays on the vector pipe\n        # (values are small integral floats so results are exact).\n        u_f = unit.to(tl.float32)\n        bh = (u_f // GRID_M.to(tl.float32)).to(tl.int32)\n              ^\nTypeError('unexpected type fp32')\n"
+    },
+    {
+      "case_idx": 16,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            32,
+            4096,
+            128
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            32,
+            4096,
+            128
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            32,
+            4096,
+            128
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "scalar",
+          "value": "HND"
+        },
+        {
+          "type": "scalar",
+          "value": 0
+        },
+        {
+          "type": "scalar",
+          "value": 0.08838834764831845
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card1/agent_workdir/output/verify/kernelbench_l4_102_SageAttentionFwdA5_triton_ascend_impl.py\", line 235, in forward\n    _sage_attn_fwd_kernel[(npids,)](\n  File \"/usr/local/python3.11\n... [truncated 608 chars] ...\n^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 34:14:\n    pid = tl.program_id(0)\n    n_units = BH * GRID_M\n    # group_size is derived (not a kernel arg) so it is a plain i32 value\n    # even when Hkv == H or Hkv == 1.\n    group_size = H // Hkv\n\n    for unit in range(pid, n_units, NUM_PIDS):\n        # --- scalar index decode: int div/mod degrade to slow scalar\n        # instructions on Ascend; float32 division stays on the vector pipe\n        # (values are small integral floats so results are exact).\n        u_f = unit.to(tl.float32)\n        bh = (u_f // GRID_M.to(tl.float32)).to(tl.int32)\n              ^\nTypeError('unexpected type fp32')\n"
+    },
+    {
+      "case_idx": 17,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            16,
+            8192,
+            128
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            16,
+            8192,
+            128
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            16,
+            8192,
+            128
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "scalar",
+          "value": "HND"
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        },
+        {
+          "type": "scalar",
+          "value": 0.08838834764831845
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card1/agent_workdir/output/verify/kernelbench_l4_102_SageAttentionFwdA5_triton_ascend_impl.py\", line 235, in forward\n    _sage_attn_fwd_kernel[(npids,)](\n  File \"/usr/local/python3.11\n... [truncated 608 chars] ...\n^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 34:14:\n    pid = tl.program_id(0)\n    n_units = BH * GRID_M\n    # group_size is derived (not a kernel arg) so it is a plain i32 value\n    # even when Hkv == H or Hkv == 1.\n    group_size = H // Hkv\n\n    for unit in range(pid, n_units, NUM_PIDS):\n        # --- scalar index decode: int div/mod degrade to slow scalar\n        # instructions on Ascend; float32 division stays on the vector pipe\n        # (values are small integral floats so results are exact).\n        u_f = unit.to(tl.float32)\n        bh = (u_f // GRID_M.to(tl.float32)).to(tl.int32)\n              ^\nTypeError('unexpected type fp32')\n"
+    },
+    {
+      "case_idx": 18,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            8,
+            16384,
+            128
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            8,
+            16384,
+            128
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            8,
+            16384,
+            128
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "scalar",
+          "value": "HND"
+        },
+        {
+          "type": "scalar",
+          "value": 0
+        },
+        {
+          "type": "scalar",
+          "value": 0.08838834764831845
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card1/agent_workdir/output/verify/kernelbench_l4_102_SageAttentionFwdA5_triton_ascend_impl.py\", line 235, in forward\n    _sage_attn_fwd_kernel[(npids,)](\n  File \"/usr/local/python3.11\n... [truncated 608 chars] ...\n^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 34:14:\n    pid = tl.program_id(0)\n    n_units = BH * GRID_M\n    # group_size is derived (not a kernel arg) so it is a plain i32 value\n    # even when Hkv == H or Hkv == 1.\n    group_size = H // Hkv\n\n    for unit in range(pid, n_units, NUM_PIDS):\n        # --- scalar index decode: int div/mod degrade to slow scalar\n        # instructions on Ascend; float32 division stays on the vector pipe\n        # (values are small integral floats so results are exact).\n        u_f = unit.to(tl.float32)\n        bh = (u_f // GRID_M.to(tl.float32)).to(tl.int32)\n              ^\nTypeError('unexpected type fp32')\n"
+    },
+    {
+      "case_idx": 19,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            1024,
+            32,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            1024,
+            32,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            1024,
+            32,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": "NHD"
+        },
+        {
+          "type": "scalar",
+          "value": 0
+        },
+        {
+          "type": "scalar",
+          "value": 0.08838834764831845
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card1/agent_workdir/output/verify/kernelbench_l4_102_SageAttentionFwdA5_triton_ascend_impl.py\", line 235, in forward\n    _sage_attn_fwd_kernel[(npids,)](\n  File \"/usr/local/python3.11\n... [truncated 608 chars] ...\n^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 34:14:\n    pid = tl.program_id(0)\n    n_units = BH * GRID_M\n    # group_size is derived (not a kernel arg) so it is a plain i32 value\n    # even when Hkv == H or Hkv == 1.\n    group_size = H // Hkv\n\n    for unit in range(pid, n_units, NUM_PIDS):\n        # --- scalar index decode: int div/mod degrade to slow scalar\n        # instructions on Ascend; float32 division stays on the vector pipe\n        # (values are small integral floats so results are exact).\n        u_f = unit.to(tl.float32)\n        bh = (u_f // GRID_M.to(tl.float32)).to(tl.int32)\n              ^\nTypeError('unexpected type fp32')\n"
+    },
+    {
+      "case_idx": 20,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            1024,
+            32,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            1024,
+            32,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            1024,
+            32,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": "NHD"
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        },
+        {
+          "type": "scalar",
+          "value": 0.08838834764831845
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card1/agent_workdir/output/verify/kernelbench_l4_102_SageAttentionFwdA5_triton_ascend_impl.py\", line 235, in forward\n    _sage_attn_fwd_kernel[(npids,)](\n  File \"/usr/local/python3.11\n... [truncated 608 chars] ...\n^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 34:14:\n    pid = tl.program_id(0)\n    n_units = BH * GRID_M\n    # group_size is derived (not a kernel arg) so it is a plain i32 value\n    # even when Hkv == H or Hkv == 1.\n    group_size = H // Hkv\n\n    for unit in range(pid, n_units, NUM_PIDS):\n        # --- scalar index decode: int div/mod degrade to slow scalar\n        # instructions on Ascend; float32 division stays on the vector pipe\n        # (values are small integral floats so results are exact).\n        u_f = unit.to(tl.float32)\n        bh = (u_f // GRID_M.to(tl.float32)).to(tl.int32)\n              ^\nTypeError('unexpected type fp32')\n"
+    },
+    {
+      "case_idx": 21,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            1024,
+            32,
+            64
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            1024,
+            32,
+            64
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            1024,
+            32,
+            64
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": "NHD"
+        },
+        {
+          "type": "scalar",
+          "value": 0
+        },
+        {
+          "type": "scalar",
+          "value": 0.125
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card1/agent_workdir/output/verify/kernelbench_l4_102_SageAttentionFwdA5_triton_ascend_impl.py\", line 235, in forward\n    _sage_attn_fwd_kernel[(npids,)](\n  File \"/usr/local/python3.11\n... [truncated 608 chars] ...\n^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 34:14:\n    pid = tl.program_id(0)\n    n_units = BH * GRID_M\n    # group_size is derived (not a kernel arg) so it is a plain i32 value\n    # even when Hkv == H or Hkv == 1.\n    group_size = H // Hkv\n\n    for unit in range(pid, n_units, NUM_PIDS):\n        # --- scalar index decode: int div/mod degrade to slow scalar\n        # instructions on Ascend; float32 division stays on the vector pipe\n        # (values are small integral floats so results are exact).\n        u_f = unit.to(tl.float32)\n        bh = (u_f // GRID_M.to(tl.float32)).to(tl.int32)\n              ^\nTypeError('unexpected type fp32')\n"
+    },
+    {
+      "case_idx": 22,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            2048,
+            16,
+            128
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            2048,
+            16,
+            128
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            2048,
+            16,
+            128
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "scalar",
+          "value": "NHD"
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        },
+        {
+          "type": "scalar",
+          "value": 0.08838834764831845
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card1/agent_workdir/output/verify/kernelbench_l4_102_SageAttentionFwdA5_triton_ascend_impl.py\", line 235, in forward\n    _sage_attn_fwd_kernel[(npids,)](\n  File \"/usr/local/python3.11\n... [truncated 608 chars] ...\n^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 34:14:\n    pid = tl.program_id(0)\n    n_units = BH * GRID_M\n    # group_size is derived (not a kernel arg) so it is a plain i32 value\n    # even when Hkv == H or Hkv == 1.\n    group_size = H // Hkv\n\n    for unit in range(pid, n_units, NUM_PIDS):\n        # --- scalar index decode: int div/mod degrade to slow scalar\n        # instructions on Ascend; float32 division stays on the vector pipe\n        # (values are small integral floats so results are exact).\n        u_f = unit.to(tl.float32)\n        bh = (u_f // GRID_M.to(tl.float32)).to(tl.int32)\n              ^\nTypeError('unexpected type fp32')\n"
+    },
+    {
+      "case_idx": 23,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            2048,
+            16,
+            64
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            2048,
+            16,
+            64
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            2048,
+            16,
+            64
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "scalar",
+          "value": "NHD"
+        },
+        {
+          "type": "scalar",
+          "value": 0
+        },
+        {
+          "type": "scalar",
+          "value": 0.125
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card1/agent_workdir/output/verify/kernelbench_l4_102_SageAttentionFwdA5_triton_ascend_impl.py\", line 235, in forward\n    _sage_attn_fwd_kernel[(npids,)](\n  File \"/usr/local/python3.11\n... [truncated 608 chars] ...\n^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 34:14:\n    pid = tl.program_id(0)\n    n_units = BH * GRID_M\n    # group_size is derived (not a kernel arg) so it is a plain i32 value\n    # even when Hkv == H or Hkv == 1.\n    group_size = H // Hkv\n\n    for unit in range(pid, n_units, NUM_PIDS):\n        # --- scalar index decode: int div/mod degrade to slow scalar\n        # instructions on Ascend; float32 division stays on the vector pipe\n        # (values are small integral floats so results are exact).\n        u_f = unit.to(tl.float32)\n        bh = (u_f // GRID_M.to(tl.float32)).to(tl.int32)\n              ^\nTypeError('unexpected type fp32')\n"
+    },
+    {
+      "case_idx": 24,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            8192,
+            8,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            8192,
+            8,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            8192,
+            8,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": "NHD"
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        },
+        {
+          "type": "scalar",
+          "value": 0.08838834764831845
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card1/agent_workdir/output/verify/kernelbench_l4_102_SageAttentionFwdA5_triton_ascend_impl.py\", line 235, in forward\n    _sage_attn_fwd_kernel[(npids,)](\n  File \"/usr/local/python3.11\n... [truncated 608 chars] ...\n^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 34:14:\n    pid = tl.program_id(0)\n    n_units = BH * GRID_M\n    # group_size is derived (not a kernel arg) so it is a plain i32 value\n    # even when Hkv == H or Hkv == 1.\n    group_size = H // Hkv\n\n    for unit in range(pid, n_units, NUM_PIDS):\n        # --- scalar index decode: int div/mod degrade to slow scalar\n        # instructions on Ascend; float32 division stays on the vector pipe\n        # (values are small integral floats so results are exact).\n        u_f = unit.to(tl.float32)\n        bh = (u_f // GRID_M.to(tl.float32)).to(tl.int32)\n              ^\nTypeError('unexpected type fp32')\n"
+    },
+    {
+      "case_idx": 25,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            32,
+            1024,
+            64
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            32,
+            1024,
+            64
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            32,
+            1024,
+            64
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": "HND"
+        },
+        {
+          "type": "scalar",
+          "value": 0
+        },
+        {
+          "type": "scalar",
+          "value": 0.125
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card1/agent_workdir/output/verify/kernelbench_l4_102_SageAttentionFwdA5_triton_ascend_impl.py\", line 235, in forward\n    _sage_attn_fwd_kernel[(npids,)](\n  File \"/usr/local/python3.11\n... [truncated 608 chars] ...\n^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 34:14:\n    pid = tl.program_id(0)\n    n_units = BH * GRID_M\n    # group_size is derived (not a kernel arg) so it is a plain i32 value\n    # even when Hkv == H or Hkv == 1.\n    group_size = H // Hkv\n\n    for unit in range(pid, n_units, NUM_PIDS):\n        # --- scalar index decode: int div/mod degrade to slow scalar\n        # instructions on Ascend; float32 division stays on the vector pipe\n        # (values are small integral floats so results are exact).\n        u_f = unit.to(tl.float32)\n        bh = (u_f // GRID_M.to(tl.float32)).to(tl.int32)\n              ^\nTypeError('unexpected type fp32')\n"
+    },
+    {
+      "case_idx": 26,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            32,
+            1024,
+            64
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            32,
+            1024,
+            64
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            32,
+            1024,
+            64
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": "HND"
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        },
+        {
+          "type": "scalar",
+          "value": 0.125
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card1/agent_workdir/output/verify/kernelbench_l4_102_SageAttentionFwdA5_triton_ascend_impl.py\", line 235, in forward\n    _sage_attn_fwd_kernel[(npids,)](\n  File \"/usr/local/python3.11\n... [truncated 608 chars] ...\n^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 34:14:\n    pid = tl.program_id(0)\n    n_units = BH * GRID_M\n    # group_size is derived (not a kernel arg) so it is a plain i32 value\n    # even when Hkv == H or Hkv == 1.\n    group_size = H // Hkv\n\n    for unit in range(pid, n_units, NUM_PIDS):\n        # --- scalar index decode: int div/mod degrade to slow scalar\n        # instructions on Ascend; float32 division stays on the vector pipe\n        # (values are small integral floats so results are exact).\n        u_f = unit.to(tl.float32)\n        bh = (u_f // GRID_M.to(tl.float32)).to(tl.int32)\n              ^\nTypeError('unexpected type fp32')\n"
+    },
+    {
+      "case_idx": 27,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            32,
+            2048,
+            64
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            32,
+            2048,
+            64
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            32,
+            2048,
+            64
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "scalar",
+          "value": "HND"
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        },
+        {
+          "type": "scalar",
+          "value": 0.125
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card1/agent_workdir/output/verify/kernelbench_l4_102_SageAttentionFwdA5_triton_ascend_impl.py\", line 235, in forward\n    _sage_attn_fwd_kernel[(npids,)](\n  File \"/usr/local/python3.11\n... [truncated 608 chars] ...\n^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 34:14:\n    pid = tl.program_id(0)\n    n_units = BH * GRID_M\n    # group_size is derived (not a kernel arg) so it is a plain i32 value\n    # even when Hkv == H or Hkv == 1.\n    group_size = H // Hkv\n\n    for unit in range(pid, n_units, NUM_PIDS):\n        # --- scalar index decode: int div/mod degrade to slow scalar\n        # instructions on Ascend; float32 division stays on the vector pipe\n        # (values are small integral floats so results are exact).\n        u_f = unit.to(tl.float32)\n        bh = (u_f // GRID_M.to(tl.float32)).to(tl.int32)\n              ^\nTypeError('unexpected type fp32')\n"
+    },
+    {
+      "case_idx": 28,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            32,
+            4096,
+            64
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            32,
+            4096,
+            64
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            32,
+            4096,
+            64
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": "HND"
+        },
+        {
+          "type": "scalar",
+          "value": 0
+        },
+        {
+          "type": "scalar",
+          "value": 0.125
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card1/agent_workdir/output/verify/kernelbench_l4_102_SageAttentionFwdA5_triton_ascend_impl.py\", line 235, in forward\n    _sage_attn_fwd_kernel[(npids,)](\n  File \"/usr/local/python3.11\n... [truncated 608 chars] ...\n^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 34:14:\n    pid = tl.program_id(0)\n    n_units = BH * GRID_M\n    # group_size is derived (not a kernel arg) so it is a plain i32 value\n    # even when Hkv == H or Hkv == 1.\n    group_size = H // Hkv\n\n    for unit in range(pid, n_units, NUM_PIDS):\n        # --- scalar index decode: int div/mod degrade to slow scalar\n        # instructions on Ascend; float32 division stays on the vector pipe\n        # (values are small integral floats so results are exact).\n        u_f = unit.to(tl.float32)\n        bh = (u_f // GRID_M.to(tl.float32)).to(tl.int32)\n              ^\nTypeError('unexpected type fp32')\n"
+    },
+    {
+      "case_idx": 29,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            8,
+            8192,
+            64
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            8,
+            8192,
+            64
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            8,
+            8192,
+            64
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": "HND"
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        },
+        {
+          "type": "scalar",
+          "value": 0.125
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card1/agent_workdir/output/verify/kernelbench_l4_102_SageAttentionFwdA5_triton_ascend_impl.py\", line 235, in forward\n    _sage_attn_fwd_kernel[(npids,)](\n  File \"/usr/local/python3.11\n... [truncated 608 chars] ...\n^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 34:14:\n    pid = tl.program_id(0)\n    n_units = BH * GRID_M\n    # group_size is derived (not a kernel arg) so it is a plain i32 value\n    # even when Hkv == H or Hkv == 1.\n    group_size = H // Hkv\n\n    for unit in range(pid, n_units, NUM_PIDS):\n        # --- scalar index decode: int div/mod degrade to slow scalar\n        # instructions on Ascend; float32 division stays on the vector pipe\n        # (values are small integral floats so results are exact).\n        u_f = unit.to(tl.float32)\n        bh = (u_f // GRID_M.to(tl.float32)).to(tl.int32)\n              ^\nTypeError('unexpected type fp32')\n"
+    },
+    {
+      "case_idx": 30,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            32,
+            1024,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            8,
+            1024,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            8,
+            1024,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": "HND"
+        },
+        {
+          "type": "scalar",
+          "value": 0
+        },
+        {
+          "type": "scalar",
+          "value": 0.08838834764831845
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card1/agent_workdir/output/verify/kernelbench_l4_102_SageAttentionFwdA5_triton_ascend_impl.py\", line 235, in forward\n    _sage_attn_fwd_kernel[(npids,)](\n  File \"/usr/local/python3.11\n... [truncated 608 chars] ...\n^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 34:14:\n    pid = tl.program_id(0)\n    n_units = BH * GRID_M\n    # group_size is derived (not a kernel arg) so it is a plain i32 value\n    # even when Hkv == H or Hkv == 1.\n    group_size = H // Hkv\n\n    for unit in range(pid, n_units, NUM_PIDS):\n        # --- scalar index decode: int div/mod degrade to slow scalar\n        # instructions on Ascend; float32 division stays on the vector pipe\n        # (values are small integral floats so results are exact).\n        u_f = unit.to(tl.float32)\n        bh = (u_f // GRID_M.to(tl.float32)).to(tl.int32)\n              ^\nTypeError('unexpected type fp32')\n"
+    },
+    {
+      "case_idx": 31,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            32,
+            2048,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            8,
+            2048,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            8,
+            2048,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": "HND"
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        },
+        {
+          "type": "scalar",
+          "value": 0.08838834764831845
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card1/agent_workdir/output/verify/kernelbench_l4_102_SageAttentionFwdA5_triton_ascend_impl.py\", line 235, in forward\n    _sage_attn_fwd_kernel[(npids,)](\n  File \"/usr/local/python3.11\n... [truncated 608 chars] ...\n^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 34:14:\n    pid = tl.program_id(0)\n    n_units = BH * GRID_M\n    # group_size is derived (not a kernel arg) so it is a plain i32 value\n    # even when Hkv == H or Hkv == 1.\n    group_size = H // Hkv\n\n    for unit in range(pid, n_units, NUM_PIDS):\n        # --- scalar index decode: int div/mod degrade to slow scalar\n        # instructions on Ascend; float32 division stays on the vector pipe\n        # (values are small integral floats so results are exact).\n        u_f = unit.to(tl.float32)\n        bh = (u_f // GRID_M.to(tl.float32)).to(tl.int32)\n              ^\nTypeError('unexpected type fp32')\n"
+    },
+    {
+      "case_idx": 32,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            32,
+            2048,
+            128
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            4,
+            2048,
+            128
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            4,
+            2048,
+            128
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "scalar",
+          "value": "HND"
+        },
+        {
+          "type": "scalar",
+          "value": 0
+        },
+        {
+          "type": "scalar",
+          "value": 0.08838834764831845
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card1/agent_workdir/output/verify/kernelbench_l4_102_SageAttentionFwdA5_triton_ascend_impl.py\", line 235, in forward\n    _sage_attn_fwd_kernel[(npids,)](\n  File \"/usr/local/python3.11\n... [truncated 608 chars] ...\n^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 34:14:\n    pid = tl.program_id(0)\n    n_units = BH * GRID_M\n    # group_size is derived (not a kernel arg) so it is a plain i32 value\n    # even when Hkv == H or Hkv == 1.\n    group_size = H // Hkv\n\n    for unit in range(pid, n_units, NUM_PIDS):\n        # --- scalar index decode: int div/mod degrade to slow scalar\n        # instructions on Ascend; float32 division stays on the vector pipe\n        # (values are small integral floats so results are exact).\n        u_f = unit.to(tl.float32)\n        bh = (u_f // GRID_M.to(tl.float32)).to(tl.int32)\n              ^\nTypeError('unexpected type fp32')\n"
+    },
+    {
+      "case_idx": 33,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            32,
+            1024,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            1,
+            1024,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            1,
+            1024,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": "HND"
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        },
+        {
+          "type": "scalar",
+          "value": 0.08838834764831845
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card1/agent_workdir/output/verify/kernelbench_l4_102_SageAttentionFwdA5_triton_ascend_impl.py\", line 235, in forward\n    _sage_attn_fwd_kernel[(npids,)](\n  File \"/usr/local/python3.11\n... [truncated 608 chars] ...\n^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 34:14:\n    pid = tl.program_id(0)\n    n_units = BH * GRID_M\n    # group_size is derived (not a kernel arg) so it is a plain i32 value\n    # even when Hkv == H or Hkv == 1.\n    group_size = H // Hkv\n\n    for unit in range(pid, n_units, NUM_PIDS):\n        # --- scalar index decode: int div/mod degrade to slow scalar\n        # instructions on Ascend; float32 division stays on the vector pipe\n        # (values are small integral floats so results are exact).\n        u_f = unit.to(tl.float32)\n        bh = (u_f // GRID_M.to(tl.float32)).to(tl.int32)\n              ^\nTypeError('unexpected type fp32')\n"
+    },
+    {
+      "case_idx": 34,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            16,
+            4096,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            4,
+            4096,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            4,
+            4096,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": "HND"
+        },
+        {
+          "type": "scalar",
+          "value": 0
+        },
+        {
+          "type": "scalar",
+          "value": 0.08838834764831845
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card1/agent_workdir/output/verify/kernelbench_l4_102_SageAttentionFwdA5_triton_ascend_impl.py\", line 235, in forward\n    _sage_attn_fwd_kernel[(npids,)](\n  File \"/usr/local/python3.11\n... [truncated 608 chars] ...\n^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 34:14:\n    pid = tl.program_id(0)\n    n_units = BH * GRID_M\n    # group_size is derived (not a kernel arg) so it is a plain i32 value\n    # even when Hkv == H or Hkv == 1.\n    group_size = H // Hkv\n\n    for unit in range(pid, n_units, NUM_PIDS):\n        # --- scalar index decode: int div/mod degrade to slow scalar\n        # instructions on Ascend; float32 division stays on the vector pipe\n        # (values are small integral floats so results are exact).\n        u_f = unit.to(tl.float32)\n        bh = (u_f // GRID_M.to(tl.float32)).to(tl.int32)\n              ^\nTypeError('unexpected type fp32')\n"
+    },
+    {
+      "case_idx": 35,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            16,
+            2048,
+            128
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            2,
+            2048,
+            128
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            2,
+            2048,
+            128
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "scalar",
+          "value": "HND"
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        },
+        {
+          "type": "scalar",
+          "value": 0.08838834764831845
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card1/agent_workdir/output/verify/kernelbench_l4_102_SageAttentionFwdA5_triton_ascend_impl.py\", line 235, in forward\n    _sage_attn_fwd_kernel[(npids,)](\n  File \"/usr/local/python3.11\n... [truncated 608 chars] ...\n^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 34:14:\n    pid = tl.program_id(0)\n    n_units = BH * GRID_M\n    # group_size is derived (not a kernel arg) so it is a plain i32 value\n    # even when Hkv == H or Hkv == 1.\n    group_size = H // Hkv\n\n    for unit in range(pid, n_units, NUM_PIDS):\n        # --- scalar index decode: int div/mod degrade to slow scalar\n        # instructions on Ascend; float32 division stays on the vector pipe\n        # (values are small integral floats so results are exact).\n        u_f = unit.to(tl.float32)\n        bh = (u_f // GRID_M.to(tl.float32)).to(tl.int32)\n              ^\nTypeError('unexpected type fp32')\n"
+    },
+    {
+      "case_idx": 36,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            2048,
+            32,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            2048,
+            8,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            2048,
+            8,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": "NHD"
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        },
+        {
+          "type": "scalar",
+          "value": 0.08838834764831845
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card1/agent_workdir/output/verify/kernelbench_l4_102_SageAttentionFwdA5_triton_ascend_impl.py\", line 235, in forward\n    _sage_attn_fwd_kernel[(npids,)](\n  File \"/usr/local/python3.11\n... [truncated 608 chars] ...\n^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 34:14:\n    pid = tl.program_id(0)\n    n_units = BH * GRID_M\n    # group_size is derived (not a kernel arg) so it is a plain i32 value\n    # even when Hkv == H or Hkv == 1.\n    group_size = H // Hkv\n\n    for unit in range(pid, n_units, NUM_PIDS):\n        # --- scalar index decode: int div/mod degrade to slow scalar\n        # instructions on Ascend; float32 division stays on the vector pipe\n        # (values are small integral floats so results are exact).\n        u_f = unit.to(tl.float32)\n        bh = (u_f // GRID_M.to(tl.float32)).to(tl.int32)\n              ^\nTypeError('unexpected type fp32')\n"
+    },
+    {
+      "case_idx": 37,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            32,
+            2048,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            16,
+            2048,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            16,
+            2048,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": "HND"
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        },
+        {
+          "type": "scalar",
+          "value": 0.08838834764831845
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card1/agent_workdir/output/verify/kernelbench_l4_102_SageAttentionFwdA5_triton_ascend_impl.py\", line 235, in forward\n    _sage_attn_fwd_kernel[(npids,)](\n  File \"/usr/local/python3.11\n... [truncated 608 chars] ...\n^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 34:14:\n    pid = tl.program_id(0)\n    n_units = BH * GRID_M\n    # group_size is derived (not a kernel arg) so it is a plain i32 value\n    # even when Hkv == H or Hkv == 1.\n    group_size = H // Hkv\n\n    for unit in range(pid, n_units, NUM_PIDS):\n        # --- scalar index decode: int div/mod degrade to slow scalar\n        # instructions on Ascend; float32 division stays on the vector pipe\n        # (values are small integral floats so results are exact).\n        u_f = unit.to(tl.float32)\n        bh = (u_f // GRID_M.to(tl.float32)).to(tl.int32)\n              ^\nTypeError('unexpected type fp32')\n"
+    },
+    {
+      "case_idx": 38,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            1024,
+            32,
+            64
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            1024,
+            1,
+            64
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            1024,
+            1,
+            64
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": "NHD"
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        },
+        {
+          "type": "scalar",
+          "value": 0.125
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card1/agent_workdir/output/verify/kernelbench_l4_102_SageAttentionFwdA5_triton_ascend_impl.py\", line 235, in forward\n    _sage_attn_fwd_kernel[(npids,)](\n  File \"/usr/local/python3.11\n... [truncated 608 chars] ...\n^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 34:14:\n    pid = tl.program_id(0)\n    n_units = BH * GRID_M\n    # group_size is derived (not a kernel arg) so it is a plain i32 value\n    # even when Hkv == H or Hkv == 1.\n    group_size = H // Hkv\n\n    for unit in range(pid, n_units, NUM_PIDS):\n        # --- scalar index decode: int div/mod degrade to slow scalar\n        # instructions on Ascend; float32 division stays on the vector pipe\n        # (values are small integral floats so results are exact).\n        u_f = unit.to(tl.float32)\n        bh = (u_f // GRID_M.to(tl.float32)).to(tl.int32)\n              ^\nTypeError('unexpected type fp32')\n"
+    },
+    {
+      "case_idx": 39,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            32,
+            2048,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            32,
+            2048,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            32,
+            2048,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": "HND"
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        },
+        {
+          "type": "scalar",
+          "value": 0.08838834764831845
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card1/agent_workdir/output/verify/kernelbench_l4_102_SageAttentionFwdA5_triton_ascend_impl.py\", line 235, in forward\n    _sage_attn_fwd_kernel[(npids,)](\n  File \"/usr/local/python3.11\n... [truncated 608 chars] ...\n^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 34:14:\n    pid = tl.program_id(0)\n    n_units = BH * GRID_M\n    # group_size is derived (not a kernel arg) so it is a plain i32 value\n    # even when Hkv == H or Hkv == 1.\n    group_size = H // Hkv\n\n    for unit in range(pid, n_units, NUM_PIDS):\n        # --- scalar index decode: int div/mod degrade to slow scalar\n        # instructions on Ascend; float32 division stays on the vector pipe\n        # (values are small integral floats so results are exact).\n        u_f = unit.to(tl.float32)\n        bh = (u_f // GRID_M.to(tl.float32)).to(tl.int32)\n              ^\nTypeError('unexpected type fp32')\n"
+    },
+    {
+      "case_idx": 40,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            8,
+            32,
+            1024,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            8,
+            32,
+            1024,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            8,
+            32,
+            1024,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": "HND"
+        },
+        {
+          "type": "scalar",
+          "value": 0
+        },
+        {
+          "type": "scalar",
+          "value": 0.08838834764831845
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card1/agent_workdir/output/verify/kernelbench_l4_102_SageAttentionFwdA5_triton_ascend_impl.py\", line 235, in forward\n    _sage_attn_fwd_kernel[(npids,)](\n  File \"/usr/local/python3.11\n... [truncated 608 chars] ...\n^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 34:14:\n    pid = tl.program_id(0)\n    n_units = BH * GRID_M\n    # group_size is derived (not a kernel arg) so it is a plain i32 value\n    # even when Hkv == H or Hkv == 1.\n    group_size = H // Hkv\n\n    for unit in range(pid, n_units, NUM_PIDS):\n        # --- scalar index decode: int div/mod degrade to slow scalar\n        # instructions on Ascend; float32 division stays on the vector pipe\n        # (values are small integral floats so results are exact).\n        u_f = unit.to(tl.float32)\n        bh = (u_f // GRID_M.to(tl.float32)).to(tl.int32)\n              ^\nTypeError('unexpected type fp32')\n"
+    },
+    {
+      "case_idx": 41,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            3,
+            32,
+            1024,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            3,
+            32,
+            1024,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            3,
+            32,
+            1024,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": "HND"
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        },
+        {
+          "type": "scalar",
+          "value": 0.08838834764831845
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card1/agent_workdir/output/verify/kernelbench_l4_102_SageAttentionFwdA5_triton_ascend_impl.py\", line 235, in forward\n    _sage_attn_fwd_kernel[(npids,)](\n  File \"/usr/local/python3.11\n... [truncated 608 chars] ...\n^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 34:14:\n    pid = tl.program_id(0)\n    n_units = BH * GRID_M\n    # group_size is derived (not a kernel arg) so it is a plain i32 value\n    # even when Hkv == H or Hkv == 1.\n    group_size = H // Hkv\n\n    for unit in range(pid, n_units, NUM_PIDS):\n        # --- scalar index decode: int div/mod degrade to slow scalar\n        # instructions on Ascend; float32 division stays on the vector pipe\n        # (values are small integral floats so results are exact).\n        u_f = unit.to(tl.float32)\n        bh = (u_f // GRID_M.to(tl.float32)).to(tl.int32)\n              ^\nTypeError('unexpected type fp32')\n"
+    },
+    {
+      "case_idx": 42,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            64,
+            1024,
+            128
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            64,
+            1024,
+            128
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            64,
+            1024,
+            128
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "scalar",
+          "value": "HND"
+        },
+        {
+          "type": "scalar",
+          "value": 0
+        },
+        {
+          "type": "scalar",
+          "value": 0.08838834764831845
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card1/agent_workdir/output/verify/kernelbench_l4_102_SageAttentionFwdA5_triton_ascend_impl.py\", line 235, in forward\n    _sage_attn_fwd_kernel[(npids,)](\n  File \"/usr/local/python3.11\n... [truncated 608 chars] ...\n^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 34:14:\n    pid = tl.program_id(0)\n    n_units = BH * GRID_M\n    # group_size is derived (not a kernel arg) so it is a plain i32 value\n    # even when Hkv == H or Hkv == 1.\n    group_size = H // Hkv\n\n    for unit in range(pid, n_units, NUM_PIDS):\n        # --- scalar index decode: int div/mod degrade to slow scalar\n        # instructions on Ascend; float32 division stays on the vector pipe\n        # (values are small integral floats so results are exact).\n        u_f = unit.to(tl.float32)\n        bh = (u_f // GRID_M.to(tl.float32)).to(tl.int32)\n              ^\nTypeError('unexpected type fp32')\n"
+    },
+    {
+      "case_idx": 43,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            8,
+            2048,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            8,
+            2048,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            8,
+            2048,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": "HND"
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        },
+        {
+          "type": "scalar",
+          "value": 0.08838834764831845
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card1/agent_workdir/output/verify/kernelbench_l4_102_SageAttentionFwdA5_triton_ascend_impl.py\", line 235, in forward\n    _sage_attn_fwd_kernel[(npids,)](\n  File \"/usr/local/python3.11\n... [truncated 608 chars] ...\n^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 34:14:\n    pid = tl.program_id(0)\n    n_units = BH * GRID_M\n    # group_size is derived (not a kernel arg) so it is a plain i32 value\n    # even when Hkv == H or Hkv == 1.\n    group_size = H // Hkv\n\n    for unit in range(pid, n_units, NUM_PIDS):\n        # --- scalar index decode: int div/mod degrade to slow scalar\n        # instructions on Ascend; float32 division stays on the vector pipe\n        # (values are small integral floats so results are exact).\n        u_f = unit.to(tl.float32)\n        bh = (u_f // GRID_M.to(tl.float32)).to(tl.int32)\n              ^\nTypeError('unexpected type fp32')\n"
+    },
+    {
+      "case_idx": 44,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            32,
+            1024,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            32,
+            1024,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            32,
+            1024,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": "HND"
+        },
+        {
+          "type": "scalar",
+          "value": 0
+        },
+        {
+          "type": "scalar",
+          "value": 0.05
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card1/agent_workdir/output/verify/kernelbench_l4_102_SageAttentionFwdA5_triton_ascend_impl.py\", line 235, in forward\n    _sage_attn_fwd_kernel[(npids,)](\n  File \"/usr/local/python3.11\n... [truncated 608 chars] ...\n^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 34:14:\n    pid = tl.program_id(0)\n    n_units = BH * GRID_M\n    # group_size is derived (not a kernel arg) so it is a plain i32 value\n    # even when Hkv == H or Hkv == 1.\n    group_size = H // Hkv\n\n    for unit in range(pid, n_units, NUM_PIDS):\n        # --- scalar index decode: int div/mod degrade to slow scalar\n        # instructions on Ascend; float32 division stays on the vector pipe\n        # (values are small integral floats so results are exact).\n        u_f = unit.to(tl.float32)\n        bh = (u_f // GRID_M.to(tl.float32)).to(tl.int32)\n              ^\nTypeError('unexpected type fp32')\n"
+    },
+    {
+      "case_idx": 45,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            32,
+            2048,
+            128
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            32,
+            2048,
+            128
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            32,
+            2048,
+            128
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "scalar",
+          "value": "HND"
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        },
+        {
+          "type": "scalar",
+          "value": 0.125
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card1/agent_workdir/output/verify/kernelbench_l4_102_SageAttentionFwdA5_triton_ascend_impl.py\", line 235, in forward\n    _sage_attn_fwd_kernel[(npids,)](\n  File \"/usr/local/python3.11\n... [truncated 608 chars] ...\n^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 34:14:\n    pid = tl.program_id(0)\n    n_units = BH * GRID_M\n    # group_size is derived (not a kernel arg) so it is a plain i32 value\n    # even when Hkv == H or Hkv == 1.\n    group_size = H // Hkv\n\n    for unit in range(pid, n_units, NUM_PIDS):\n        # --- scalar index decode: int div/mod degrade to slow scalar\n        # instructions on Ascend; float32 division stays on the vector pipe\n        # (values are small integral floats so results are exact).\n        u_f = unit.to(tl.float32)\n        bh = (u_f // GRID_M.to(tl.float32)).to(tl.int32)\n              ^\nTypeError('unexpected type fp32')\n"
+    },
+    {
+      "case_idx": 46,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            32,
+            1024,
+            64
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            32,
+            1024,
+            64
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            32,
+            1024,
+            64
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": "HND"
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        },
+        {
+          "type": "scalar",
+          "value": 0.2
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card1/agent_workdir/output/verify/kernelbench_l4_102_SageAttentionFwdA5_triton_ascend_impl.py\", line 235, in forward\n    _sage_attn_fwd_kernel[(npids,)](\n  File \"/usr/local/python3.11\n... [truncated 608 chars] ...\n^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 34:14:\n    pid = tl.program_id(0)\n    n_units = BH * GRID_M\n    # group_size is derived (not a kernel arg) so it is a plain i32 value\n    # even when Hkv == H or Hkv == 1.\n    group_size = H // Hkv\n\n    for unit in range(pid, n_units, NUM_PIDS):\n        # --- scalar index decode: int div/mod degrade to slow scalar\n        # instructions on Ascend; float32 division stays on the vector pipe\n        # (values are small integral floats so results are exact).\n        u_f = unit.to(tl.float32)\n        bh = (u_f // GRID_M.to(tl.float32)).to(tl.int32)\n              ^\nTypeError('unexpected type fp32')\n"
+    },
+    {
+      "case_idx": 47,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            32,
+            2048,
+            64
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            32,
+            2048,
+            64
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            32,
+            2048,
+            64
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": "HND"
+        },
+        {
+          "type": "scalar",
+          "value": 0
+        },
+        {
+          "type": "scalar",
+          "value": 1.0
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card1/agent_workdir/output/verify/kernelbench_l4_102_SageAttentionFwdA5_triton_ascend_impl.py\", line 235, in forward\n    _sage_attn_fwd_kernel[(npids,)](\n  File \"/usr/local/python3.11\n... [truncated 608 chars] ...\n^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 34:14:\n    pid = tl.program_id(0)\n    n_units = BH * GRID_M\n    # group_size is derived (not a kernel arg) so it is a plain i32 value\n    # even when Hkv == H or Hkv == 1.\n    group_size = H // Hkv\n\n    for unit in range(pid, n_units, NUM_PIDS):\n        # --- scalar index decode: int div/mod degrade to slow scalar\n        # instructions on Ascend; float32 division stays on the vector pipe\n        # (values are small integral floats so results are exact).\n        u_f = unit.to(tl.float32)\n        bh = (u_f // GRID_M.to(tl.float32)).to(tl.int32)\n              ^\nTypeError('unexpected type fp32')\n"
+    },
+    {
+      "case_idx": 48,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            16,
+            16384,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            4,
+            16384,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            4,
+            16384,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": "HND"
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        },
+        {
+          "type": "scalar",
+          "value": 0.08838834764831845
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card1/agent_workdir/output/verify/kernelbench_l4_102_SageAttentionFwdA5_triton_ascend_impl.py\", line 235, in forward\n    _sage_attn_fwd_kernel[(npids,)](\n  File \"/usr/local/python3.11\n... [truncated 608 chars] ...\n^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 34:14:\n    pid = tl.program_id(0)\n    n_units = BH * GRID_M\n    # group_size is derived (not a kernel arg) so it is a plain i32 value\n    # even when Hkv == H or Hkv == 1.\n    group_size = H // Hkv\n\n    for unit in range(pid, n_units, NUM_PIDS):\n        # --- scalar index decode: int div/mod degrade to slow scalar\n        # instructions on Ascend; float32 division stays on the vector pipe\n        # (values are small integral floats so results are exact).\n        u_f = unit.to(tl.float32)\n        bh = (u_f // GRID_M.to(tl.float32)).to(tl.int32)\n              ^\nTypeError('unexpected type fp32')\n"
+    },
+    {
+      "case_idx": 49,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            16384,
+            8,
+            64
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            16384,
+            8,
+            64
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            16384,
+            8,
+            64
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "scalar",
+          "value": "NHD"
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        },
+        {
+          "type": "scalar",
+          "value": 0.125
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card1/agent_workdir/output/verify/kernelbench_l4_102_SageAttentionFwdA5_triton_ascend_impl.py\", line 235, in forward\n    _sage_attn_fwd_kernel[(npids,)](\n  File \"/usr/local/python3.11\n... [truncated 608 chars] ...\n^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 34:14:\n    pid = tl.program_id(0)\n    n_units = BH * GRID_M\n    # group_size is derived (not a kernel arg) so it is a plain i32 value\n    # even when Hkv == H or Hkv == 1.\n    group_size = H // Hkv\n\n    for unit in range(pid, n_units, NUM_PIDS):\n        # --- scalar index decode: int div/mod degrade to slow scalar\n        # instructions on Ascend; float32 division stays on the vector pipe\n        # (values are small integral floats so results are exact).\n        u_f = unit.to(tl.float32)\n        bh = (u_f // GRID_M.to(tl.float32)).to(tl.int32)\n              ^\nTypeError('unexpected type fp32')\n"
+    },
+    {
+      "case_idx": 50,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            32,
+            8192,
+            128
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            8,
+            8192,
+            128
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            8,
+            8192,
+            128
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "scalar",
+          "value": "HND"
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        },
+        {
+          "type": "scalar",
+          "value": 0.08838834764831845
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card1/agent_workdir/output/verify/kernelbench_l4_102_SageAttentionFwdA5_triton_ascend_impl.py\", line 235, in forward\n    _sage_attn_fwd_kernel[(npids,)](\n  File \"/usr/local/python3.11\n... [truncated 608 chars] ...\n^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 34:14:\n    pid = tl.program_id(0)\n    n_units = BH * GRID_M\n    # group_size is derived (not a kernel arg) so it is a plain i32 value\n    # even when Hkv == H or Hkv == 1.\n    group_size = H // Hkv\n\n    for unit in range(pid, n_units, NUM_PIDS):\n        # --- scalar index decode: int div/mod degrade to slow scalar\n        # instructions on Ascend; float32 division stays on the vector pipe\n        # (values are small integral floats so results are exact).\n        u_f = unit.to(tl.float32)\n        bh = (u_f // GRID_M.to(tl.float32)).to(tl.int32)\n              ^\nTypeError('unexpected type fp32')\n"
+    }
+  ]
+}

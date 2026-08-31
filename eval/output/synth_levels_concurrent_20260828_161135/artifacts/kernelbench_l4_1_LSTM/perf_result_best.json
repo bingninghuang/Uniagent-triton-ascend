@@ -1,0 +1,5214 @@
+{
+  "op_name": "kernelbench_l4_1_LSTM",
+  "warmup": 5,
+  "repeats": 20,
+  "max_retries": 3,
+  "total_cases": 60,
+  "passed_cases": 44,
+  "failed_cases": 16,
+  "skipped_cases": 0,
+  "skip_indices": [],
+  "nan_indices": [],
+  "inf_indices": [],
+  "zero_indices": [],
+  "negative_indices": [],
+  "none_indices": [],
+  "framework": {
+    "avg_latency_ms": 0.0339,
+    "peak_memory_mb": 7.19,
+    "operators": {
+      "aclnnAdd_AddAiCore_Add": 1.6737,
+      "aclnnCast_CastAiCore_Cast": 0.7392,
+      "aclnnMatmul_MatMulCommon_MatMulV2": 3.973,
+      "aclnnMul_MulAiCore_Mul": 1.3512,
+      "aclnnSigmoid_SigmoidAiCore_Sigmoid": 1.3024,
+      "aclnnSigmoid_SliceAiCore_Slice": 1.3619,
+      "aclnnStack_PackAiCore_Pack": 13.838,
+      "aclnnTanh_SliceAiCore_Slice": 1.3602,
+      "aclnnTanh_Tanh_Tanh": 1.8114,
+      "aclnnStack_ConcatD_ConcatD": 5.9465,
+      "aclnnCast_SliceAiCore_Slice": 0.2577,
+      "aclnnMatmul_SliceAiCore_Slice": 0.241
+    },
+    "kernel_metrics": {}
+  },
+  "implementation": {
+    "avg_latency_ms": 3.9281,
+    "peak_memory_mb": 2.87,
+    "operators": {
+      "_lstm_fwd_kernel": 3928.1
+    },
+    "kernel_metrics": {
+      "_lstm_fwd_kernel": {
+        "aiv_vec_ratio": 0.1277,
+        "aiv_mte2_ratio": 0.1789,
+        "aiv_mte3_ratio": 0.1215,
+        "aiv_scalar_ratio": 0.4053,
+        "aic_mac_ratio": 0.2049,
+        "aic_mte1_ratio": 0.391,
+        "cube_utilization(%)": 5.4847
+      }
+    }
+  },
+  "speedup_vs_torch": 0.1267,
+  "per_shape_results": [
+    {
+      "case_idx": 1,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            32,
+            768
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            128,
+            768
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            128,
+            32
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            32,
+            32
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            32,
+            32
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": false
+        },
+        {
+          "type": "scalar",
+          "value": 0.0
+        }
+      ],
+      "status": "pass",
+      "framework": {
+        "avg_latency_ms": 0.0174,
+        "peak_memory_mb": 1.01
+      },
+      "implementation": {
+        "avg_latency_ms": 0.0077,
+        "peak_memory_mb": 0.32,
+        "kernel_metrics": {
+          "_lstm_fwd_kernel": {
+            "aiv_vec_ratio": 0.0979,
+            "aiv_mte2_ratio": 0.154,
+            "aiv_mte3_ratio": 0.1018,
+            "aiv_scalar_ratio": 0.3139,
+            "aic_mac_ratio": 0.2285,
+            "aic_mte1_ratio": 0.3799,
+            "cube_utilization(%)": 7.6161
+          }
+        }
+      },
+      "speedup_vs_torch": 2.2597,
+      "error_type": null,
+      "error_msg": null
+    },
+    {
+      "case_idx": 2,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            256,
+            1,
+            64
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            128,
+            64
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            128,
+            32
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            1,
+            32
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            1,
+            32
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": false
+        },
+        {
+          "type": "scalar",
+          "value": 0.0
+        }
+      ],
+      "status": "pass",
+      "framework": {
+        "avg_latency_ms": 0.0479,
+        "peak_memory_mb": 0.33
+      },
+      "implementation": {
+        "avg_latency_ms": 0.6649,
+        "peak_memory_mb": 0.1,
+        "kernel_metrics": {
+          "_lstm_fwd_kernel": {
+            "aiv_vec_ratio": 0.2303,
+            "aiv_mte2_ratio": 0.3091,
+            "aiv_mte3_ratio": 0.0866,
+            "aiv_scalar_ratio": 0.6819,
+            "aic_mac_ratio": 0.1401,
+            "aic_mte1_ratio": 0.1704,
+            "cube_utilization(%)": 4.997
+          }
+        }
+      },
+      "speedup_vs_torch": 0.072,
+      "error_type": null,
+      "error_msg": null
+    },
+    {
+      "case_idx": 3,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            8,
+            16,
+            32
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            256,
+            32
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            256,
+            64
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            16,
+            64
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            16,
+            64
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": false
+        },
+        {
+          "type": "scalar",
+          "value": 0.0
+        }
+      ],
+      "status": "pass",
+      "framework": {
+        "avg_latency_ms": 0.0208,
+        "peak_memory_mb": 0.36
+      },
+      "implementation": {
+        "avg_latency_ms": 0.0245,
+        "peak_memory_mb": 0.19,
+        "kernel_metrics": {
+          "_lstm_fwd_kernel": {
+            "aiv_vec_ratio": 0.1754,
+            "aiv_mte2_ratio": 0.2054,
+            "aiv_mte3_ratio": 0.1088,
+            "aiv_scalar_ratio": 0.6235,
+            "aic_mac_ratio": 0.1649,
+            "aic_mte1_ratio": 0.2769,
+            "cube_utilization(%)": 4.8953
+          }
+        }
+      },
+      "speedup_vs_torch": 0.849,
+      "error_type": null,
+      "error_msg": null
+    },
+    {
+      "case_idx": 4,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            512,
+            4,
+            64
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1024,
+            64
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1024,
+            256
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            4,
+            256
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            4,
+            256
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": false
+        },
+        {
+          "type": "scalar",
+          "value": 0.0
+        }
+      ],
+      "status": "pass",
+      "framework": {
+        "avg_latency_ms": 0.058,
+        "peak_memory_mb": 9.82
+      },
+      "implementation": {
+        "avg_latency_ms": 12.9048,
+        "peak_memory_mb": 3.8,
+        "kernel_metrics": {
+          "_lstm_fwd_kernel": {
+            "aiv_vec_ratio": 0.0844,
+            "aiv_mte2_ratio": 0.0381,
+            "aiv_mte3_ratio": 0.0222,
+            "aiv_scalar_ratio": 0.1762,
+            "aic_mac_ratio": 0.2061,
+            "aic_mte1_ratio": 0.4254,
+            "cube_utilization(%)": 5.0004
+          }
+        }
+      },
+      "speedup_vs_torch": 0.0045,
+      "error_type": null,
+      "error_msg": null
+    },
+    {
+      "case_idx": 5,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            2,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            512,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            512,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            512
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            512
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            2,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            2,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": false
+        },
+        {
+          "type": "scalar",
+          "value": 0.0
+        }
+      ],
+      "status": "pass",
+      "framework": {
+        "avg_latency_ms": 0.0179,
+        "peak_memory_mb": 1.05
+      },
+      "implementation": {
+        "avg_latency_ms": 0.0398,
+        "peak_memory_mb": 0.35,
+        "kernel_metrics": {
+          "_lstm_fwd_kernel": {
+            "aiv_vec_ratio": 0.2026,
+            "aiv_mte2_ratio": 0.263,
+            "aiv_mte3_ratio": 0.1989,
+            "aiv_scalar_ratio": 0.5483,
+            "aic_mac_ratio": 0.1541,
+            "aic_mte1_ratio": 0.3216,
+            "cube_utilization(%)": 4.8838
+          }
+        }
+      },
+      "speedup_vs_torch": 0.4497,
+      "error_type": null,
+      "error_msg": null
+    },
+    {
+      "case_idx": 6,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            32,
+            4,
+            256
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            128,
+            256
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            128,
+            32
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            4,
+            32
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            4,
+            32
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": false
+        },
+        {
+          "type": "scalar",
+          "value": 0.0
+        }
+      ],
+      "status": "pass",
+      "framework": {
+        "avg_latency_ms": 0.0365,
+        "peak_memory_mb": 0.45
+      },
+      "implementation": {
+        "avg_latency_ms": 0.0731,
+        "peak_memory_mb": 0.17,
+        "kernel_metrics": {
+          "_lstm_fwd_kernel": {
+            "aiv_vec_ratio": 0.1983,
+            "aiv_mte2_ratio": 0.255,
+            "aiv_mte3_ratio": 0.1075,
+            "aiv_scalar_ratio": 0.6106,
+            "aic_mac_ratio": 0.2533,
+            "aic_mte1_ratio": 0.3906,
+            "cube_utilization(%)": 4.9654
+          }
+        }
+      },
+      "speedup_vs_torch": 0.4993,
+      "error_type": null,
+      "error_msg": null
+    },
+    {
+      "case_idx": 7,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            64,
+            512
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            128,
+            512
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            128,
+            32
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            1,
+            32
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            1,
+            32
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": true
+        },
+        {
+          "type": "scalar",
+          "value": 0.0
+        }
+      ],
+      "status": "pass",
+      "framework": {
+        "avg_latency_ms": 0.0442,
+        "peak_memory_mb": 0.71
+      },
+      "implementation": {
+        "avg_latency_ms": 0.2393,
+        "peak_memory_mb": 0.23,
+        "kernel_metrics": {
+          "_lstm_fwd_kernel": {
+            "aiv_vec_ratio": 0.1597,
+            "aiv_mte2_ratio": 0.2069,
+            "aiv_mte3_ratio": 0.0636,
+            "aiv_scalar_ratio": 0.4718,
+            "aic_mac_ratio": 0.2566,
+            "aic_mte1_ratio": 0.4121,
+            "cube_utilization(%)": 4.9899
+          }
+        }
+      },
+      "speedup_vs_torch": 0.1847,
+      "error_type": null,
+      "error_msg": null
+    },
+    {
+      "case_idx": 8,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            32,
+            1,
+            768
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            128,
+            768
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            128,
+            32
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            128
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            128
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            32,
+            32
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            32,
+            32
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": true
+        },
+        {
+          "type": "scalar",
+          "value": 0.0
+        }
+      ],
+      "status": "pass",
+      "framework": {
+        "avg_latency_ms": 0.016,
+        "peak_memory_mb": 1.04
+      },
+      "implementation": {
+        "avg_latency_ms": 0.0096,
+        "peak_memory_mb": 0.54,
+        "kernel_metrics": {
+          "_lstm_fwd_kernel": {
+            "aiv_vec_ratio": 0.0601,
+            "aiv_mte2_ratio": 0.1071,
+            "aiv_mte3_ratio": 0.0651,
+            "aiv_scalar_ratio": 0.2165,
+            "aic_mac_ratio": 0.2278,
+            "aic_mte1_ratio": 0.4667,
+            "cube_utilization(%)": 8.1814
+          }
+        }
+      },
+      "speedup_vs_torch": 1.6667,
+      "error_type": null,
+      "error_msg": null
+    },
+    {
+      "case_idx": 9,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            64,
+            64
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            128,
+            64
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            128,
+            32
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            4,
+            32
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            4,
+            32
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": true
+        },
+        {
+          "type": "scalar",
+          "value": 0.0
+        }
+      ],
+      "status": "pass",
+      "framework": {
+        "avg_latency_ms": 0.0542,
+        "peak_memory_mb": 0.24
+      },
+      "implementation": {
+        "avg_latency_ms": 0.1694,
+        "peak_memory_mb": 0.1,
+        "kernel_metrics": {
+          "_lstm_fwd_kernel": {
+            "aiv_vec_ratio": 0.2285,
+            "aiv_mte2_ratio": 0.3062,
+            "aiv_mte3_ratio": 0.0908,
+            "aiv_scalar_ratio": 0.6784,
+            "aic_mac_ratio": 0.1378,
+            "aic_mte1_ratio": 0.1678,
+            "cube_utilization(%)": 4.9851
+          }
+        }
+      },
+      "speedup_vs_torch": 0.32,
+      "error_type": null,
+      "error_msg": null
+    },
+    {
+      "case_idx": 10,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            8,
+            32,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            512,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            512,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            512
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            512
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            32,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            32,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": false
+        },
+        {
+          "type": "scalar",
+          "value": 0.0
+        }
+      ],
+      "status": "pass",
+      "framework": {
+        "avg_latency_ms": 0.0279,
+        "peak_memory_mb": 1.58
+      },
+      "implementation": {
+        "avg_latency_ms": 0.0767,
+        "peak_memory_mb": 0.62,
+        "kernel_metrics": {
+          "_lstm_fwd_kernel": {
+            "aiv_vec_ratio": 0.2016,
+            "aiv_mte2_ratio": 0.2987,
+            "aiv_mte3_ratio": 0.2315,
+            "aiv_scalar_ratio": 0.569,
+            "aic_mac_ratio": 0.1602,
+            "aic_mte1_ratio": 0.3238,
+            "cube_utilization(%)": 9.812
+          }
+        }
+      },
+      "speedup_vs_torch": 0.3638,
+      "error_type": null,
+      "error_msg": null
+    },
+    {
+      "case_idx": 11,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            8,
+            4,
+            512
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            256,
+            512
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            256,
+            64
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            256
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            256
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            8,
+            64
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            8,
+            64
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": true
+        },
+        {
+          "type": "scalar",
+          "value": 0.0
+        }
+      ],
+      "status": "pass",
+      "framework": {
+        "avg_latency_ms": 0.0228,
+        "peak_memory_mb": 1.25
+      },
+      "implementation": {
+        "avg_latency_ms": 0.0257,
+        "peak_memory_mb": 0.41,
+        "kernel_metrics": {
+          "_lstm_fwd_kernel": {
+            "aiv_vec_ratio": 0.1356,
+            "aiv_mte2_ratio": 0.165,
+            "aiv_mte3_ratio": 0.0718,
+            "aiv_scalar_ratio": 0.423,
+            "aic_mac_ratio": 0.1878,
+            "aic_mte1_ratio": 0.4286,
+            "cube_utilization(%)": 4.8931
+          }
+        }
+      },
+      "speedup_vs_torch": 0.8872,
+      "error_type": null,
+      "error_msg": null
+    },
+    {
+      "case_idx": 12,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            1,
+            768
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            512,
+            768
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            512,
+            128
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            2,
+            128
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            2,
+            128
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": true
+        },
+        {
+          "type": "scalar",
+          "value": 0.0
+        }
+      ],
+      "status": "pass",
+      "framework": {
+        "avg_latency_ms": 0.0138,
+        "peak_memory_mb": 3.54
+      },
+      "implementation": {
+        "avg_latency_ms": 0.0305,
+        "peak_memory_mb": 1.78,
+        "kernel_metrics": {
+          "_lstm_fwd_kernel": {
+            "aiv_vec_ratio": 0.0399,
+            "aiv_mte2_ratio": 0.0301,
+            "aiv_mte3_ratio": 0.0224,
+            "aiv_scalar_ratio": 0.1185,
+            "aic_mac_ratio": 0.2204,
+            "aic_mte1_ratio": 0.4414,
+            "cube_utilization(%)": 4.87
+          }
+        }
+      },
+      "speedup_vs_torch": 0.4525,
+      "error_type": null,
+      "error_msg": null
+    },
+    {
+      "case_idx": 13,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            8,
+            16,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            128,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            128,
+            32
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            16,
+            32
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            16,
+            32
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": false
+        },
+        {
+          "type": "scalar",
+          "value": 0.0
+        }
+      ],
+      "status": "pass",
+      "framework": {
+        "avg_latency_ms": 0.021,
+        "peak_memory_mb": 0.29
+      },
+      "implementation": {
+        "avg_latency_ms": 0.0197,
+        "peak_memory_mb": 0.12,
+        "kernel_metrics": {
+          "_lstm_fwd_kernel": {
+            "aiv_vec_ratio": 0.1867,
+            "aiv_mte2_ratio": 0.2777,
+            "aiv_mte3_ratio": 0.1538,
+            "aiv_scalar_ratio": 0.6558,
+            "aic_mac_ratio": 0.1599,
+            "aic_mte1_ratio": 0.228,
+            "cube_utilization(%)": 4.8714
+          }
+        }
+      },
+      "speedup_vs_torch": 1.066,
+      "error_type": null,
+      "error_msg": null
+    },
+    {
+      "case_idx": 14,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            4,
+            256
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1024,
+            256
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1024,
+            256
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            4,
+            256
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            4,
+            256
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": false
+        },
+        {
+          "type": "scalar",
+          "value": 0.0
+        }
+      ],
+      "status": "pass",
+      "framework": {
+        "avg_latency_ms": 0.0183,
+        "peak_memory_mb": 4.15
+      },
+      "implementation": {
+        "avg_latency_ms": 0.1365,
+        "peak_memory_mb": 2.08,
+        "kernel_metrics": {
+          "_lstm_fwd_kernel": {
+            "aiv_vec_ratio": 0.0649,
+            "aiv_mte2_ratio": 0.039,
+            "aiv_mte3_ratio": 0.0231,
+            "aiv_scalar_ratio": 0.1426,
+            "aic_mac_ratio": 0.2318,
+            "aic_mte1_ratio": 0.4784,
+            "cube_utilization(%)": 4.9483
+          }
+        }
+      },
+      "speedup_vs_torch": 0.1341,
+      "error_type": null,
+      "error_msg": null
+    },
+    {
+      "case_idx": 15,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            16,
+            64,
+            768
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2048,
+            768
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2048,
+            512
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2048
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2048
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            16,
+            512
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            16,
+            512
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": true
+        },
+        {
+          "type": "scalar",
+          "value": 0.0
+        }
+      ],
+      "status": "pass",
+      "framework": {
+        "avg_latency_ms": 0.0634,
+        "peak_memory_mb": 27.44
+      },
+      "implementation": {
+        "avg_latency_ms": 6.4632,
+        "peak_memory_mb": 7.75,
+        "kernel_metrics": {
+          "_lstm_fwd_kernel": {
+            "aiv_vec_ratio": 0.1432,
+            "aiv_mte2_ratio": 0.3835,
+            "aiv_mte3_ratio": 0.3915,
+            "aiv_scalar_ratio": 0.6551,
+            "aic_mac_ratio": 0.2747,
+            "aic_mte1_ratio": 0.5655,
+            "cube_utilization(%)": 4.9984
+          }
+        }
+      },
+      "speedup_vs_torch": 0.0098,
+      "error_type": null,
+      "error_msg": null
+    },
+    {
+      "case_idx": 16,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            128,
+            1,
+            64
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2048,
+            64
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2048,
+            512
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2048
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2048
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            1,
+            512
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            1,
+            512
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": false
+        },
+        {
+          "type": "scalar",
+          "value": 0.0
+        }
+      ],
+      "status": "pass",
+      "framework": {
+        "avg_latency_ms": 0.05,
+        "peak_memory_mb": 9.95
+      },
+      "implementation": {
+        "avg_latency_ms": 10.9709,
+        "peak_memory_mb": 4.83,
+        "kernel_metrics": {
+          "_lstm_fwd_kernel": {
+            "aiv_vec_ratio": 0.0578,
+            "aiv_mte2_ratio": 0.0268,
+            "aiv_mte3_ratio": 0.0124,
+            "aiv_scalar_ratio": 0.1186,
+            "aic_mac_ratio": 0.2181,
+            "aic_mte1_ratio": 0.4423,
+            "cube_utilization(%)": 4.9998
+          }
+        }
+      },
+      "speedup_vs_torch": 0.0046,
+      "error_type": null,
+      "error_msg": null
+    },
+    {
+      "case_idx": 17,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            16,
+            64,
+            768
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            256,
+            768
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            256,
+            64
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            16,
+            64
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            16,
+            64
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": true
+        },
+        {
+          "type": "scalar",
+          "value": 0.0
+        }
+      ],
+      "status": "pass",
+      "framework": {
+        "avg_latency_ms": 0.0547,
+        "peak_memory_mb": 8.47
+      },
+      "implementation": {
+        "avg_latency_ms": 0.6531,
+        "peak_memory_mb": 4.11,
+        "kernel_metrics": {
+          "_lstm_fwd_kernel": {
+            "aiv_vec_ratio": 0.051,
+            "aiv_mte2_ratio": 0.0558,
+            "aiv_mte3_ratio": 0.0296,
+            "aiv_scalar_ratio": 0.1719,
+            "aic_mac_ratio": 0.2947,
+            "aic_mte1_ratio": 0.5872,
+            "cube_utilization(%)": 4.9957
+          }
+        }
+      },
+      "speedup_vs_torch": 0.0838,
+      "error_type": null,
+      "error_msg": null
+    },
+    {
+      "case_idx": 18,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            256,
+            4,
+            512
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1024,
+            512
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1024,
+            256
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            4,
+            256
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            4,
+            256
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": false
+        },
+        {
+          "type": "scalar",
+          "value": 0.0
+        }
+      ],
+      "status": "pass",
+      "framework": {
+        "avg_latency_ms": 0.0519,
+        "peak_memory_mb": 13.19
+      },
+      "implementation": {
+        "avg_latency_ms": 11.9389,
+        "peak_memory_mb": 6.05,
+        "kernel_metrics": {
+          "_lstm_fwd_kernel": {
+            "aiv_vec_ratio": 0.046,
+            "aiv_mte2_ratio": 0.024,
+            "aiv_mte3_ratio": 0.0122,
+            "aiv_scalar_ratio": 0.0953,
+            "aic_mac_ratio": 0.2465,
+            "aic_mte1_ratio": 0.504,
+            "cube_utilization(%)": 5.0002
+          }
+        }
+      },
+      "speedup_vs_torch": 0.0043,
+      "error_type": null,
+      "error_msg": null
+    },
+    {
+      "case_idx": 19,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            4,
+            768
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            512,
+            768
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            512,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            4,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            4,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": false
+        },
+        {
+          "type": "scalar",
+          "value": 0.0
+        }
+      ],
+      "status": "pass",
+      "framework": {
+        "avg_latency_ms": 0.0176,
+        "peak_memory_mb": 3.58
+      },
+      "implementation": {
+        "avg_latency_ms": 0.0401,
+        "peak_memory_mb": 0.98,
+        "kernel_metrics": {
+          "_lstm_fwd_kernel": {
+            "aiv_vec_ratio": 0.0894,
+            "aiv_mte2_ratio": 0.1291,
+            "aiv_mte3_ratio": 0.1114,
+            "aiv_scalar_ratio": 0.2686,
+            "aic_mac_ratio": 0.1941,
+            "aic_mte1_ratio": 0.4378,
+            "cube_utilization(%)": 4.8789
+          }
+        }
+      },
+      "speedup_vs_torch": 0.4389,
+      "error_type": null,
+      "error_msg": null
+    },
+    {
+      "case_idx": 20,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            256,
+            32
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            512,
+            32
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            512,
+            128
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            512
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            512
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            2,
+            128
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            2,
+            128
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": true
+        },
+        {
+          "type": "scalar",
+          "value": 0.0
+        }
+      ],
+      "status": "pass",
+      "framework": {
+        "avg_latency_ms": 0.0526,
+        "peak_memory_mb": 1.66
+      },
+      "implementation": {
+        "avg_latency_ms": 2.1671,
+        "peak_memory_mb": 0.66,
+        "kernel_metrics": {
+          "_lstm_fwd_kernel": {
+            "aiv_vec_ratio": 0.1464,
+            "aiv_mte2_ratio": 0.0697,
+            "aiv_mte3_ratio": 0.0317,
+            "aiv_scalar_ratio": 0.3028,
+            "aic_mac_ratio": 0.1772,
+            "aic_mte1_ratio": 0.3293,
+            "cube_utilization(%)": 4.999
+          }
+        }
+      },
+      "speedup_vs_torch": 0.0243,
+      "error_type": null,
+      "error_msg": null
+    },
+    {
+      "case_idx": 21,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            16,
+            4,
+            64
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            512,
+            64
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            512,
+            128
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            16,
+            128
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            16,
+            128
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": true
+        },
+        {
+          "type": "scalar",
+          "value": 0.0
+        }
+      ],
+      "status": "pass",
+      "framework": {
+        "avg_latency_ms": 0.0209,
+        "peak_memory_mb": 1.01
+      },
+      "implementation": {
+        "avg_latency_ms": 0.0342,
+        "peak_memory_mb": 0.5,
+        "kernel_metrics": {
+          "_lstm_fwd_kernel": {
+            "aiv_vec_ratio": 0.1247,
+            "aiv_mte2_ratio": 0.0822,
+            "aiv_mte3_ratio": 0.0898,
+            "aiv_scalar_ratio": 0.3224,
+            "aic_mac_ratio": 0.1889,
+            "aic_mte1_ratio": 0.3732,
+            "cube_utilization(%)": 4.8813
+          }
+        }
+      },
+      "speedup_vs_torch": 0.6111,
+      "error_type": null,
+      "error_msg": null
+    },
+    {
+      "case_idx": 22,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            32,
+            4,
+            32
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            128,
+            32
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            128,
+            32
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            128
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            128
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            4,
+            32
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            4,
+            32
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": false
+        },
+        {
+          "type": "scalar",
+          "value": 0.0
+        }
+      ],
+      "status": "pass",
+      "framework": {
+        "avg_latency_ms": 0.0364,
+        "peak_memory_mb": 0.16
+      },
+      "implementation": {
+        "avg_latency_ms": 0.0822,
+        "peak_memory_mb": 0.08,
+        "kernel_metrics": {
+          "_lstm_fwd_kernel": {
+            "aiv_vec_ratio": 0.199,
+            "aiv_mte2_ratio": 0.2668,
+            "aiv_mte3_ratio": 0.0544,
+            "aiv_scalar_ratio": 0.6184,
+            "aic_mac_ratio": 0.1502,
+            "aic_mte1_ratio": 0.1746,
+            "cube_utilization(%)": 4.9695
+          }
+        }
+      },
+      "speedup_vs_torch": 0.4428,
+      "error_type": null,
+      "error_msg": null
+    },
+    {
+      "case_idx": 23,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            32,
+            512
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            128,
+            512
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            128,
+            32
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            32,
+            32
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            32,
+            32
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": false
+        },
+        {
+          "type": "scalar",
+          "value": 0.0
+        }
+      ],
+      "status": "pass",
+      "framework": {
+        "avg_latency_ms": 0.019,
+        "peak_memory_mb": 0.8
+      },
+      "implementation": {
+        "avg_latency_ms": 0.0105,
+        "peak_memory_mb": 0.27,
+        "kernel_metrics": {
+          "_lstm_fwd_kernel": {
+            "aiv_vec_ratio": 0.1292,
+            "aiv_mte2_ratio": 0.2053,
+            "aiv_mte3_ratio": 0.1094,
+            "aiv_scalar_ratio": 0.5413,
+            "aic_mac_ratio": 0.1939,
+            "aic_mte1_ratio": 0.3123,
+            "cube_utilization(%)": 9.3838
+          }
+        }
+      },
+      "speedup_vs_torch": 1.8095,
+      "error_type": null,
+      "error_msg": null
+    },
+    {
+      "case_idx": 24,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            256,
+            64
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1024,
+            64
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1024,
+            256
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1024
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1024
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            2,
+            256
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            2,
+            256
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": true
+        },
+        {
+          "type": "scalar",
+          "value": 0.0
+        }
+      ],
+      "status": "pass",
+      "framework": {
+        "avg_latency_ms": 0.0595,
+        "peak_memory_mb": 3.55
+      },
+      "implementation": {
+        "avg_latency_ms": 6.8785,
+        "peak_memory_mb": 1.04,
+        "kernel_metrics": {
+          "_lstm_fwd_kernel": {
+            "aiv_vec_ratio": 0.1849,
+            "aiv_mte2_ratio": 0.2922,
+            "aiv_mte3_ratio": 0.2927,
+            "aiv_scalar_ratio": 0.5837,
+            "aic_mac_ratio": 0.183,
+            "aic_mte1_ratio": 0.3589,
+            "cube_utilization(%)": 4.9997
+          }
+        }
+      },
+      "speedup_vs_torch": 0.0087,
+      "error_type": null,
+      "error_msg": null
+    },
+    {
+      "case_idx": 25,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            8,
+            16,
+            512
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            256,
+            512
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            256,
+            64
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            8,
+            64
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            8,
+            64
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": true
+        },
+        {
+          "type": "scalar",
+          "value": 0.0
+        }
+      ],
+      "status": "pass",
+      "framework": {
+        "avg_latency_ms": 0.0367,
+        "peak_memory_mb": 1.45
+      },
+      "implementation": {
+        "avg_latency_ms": 0.0903,
+        "peak_memory_mb": 0.52,
+        "kernel_metrics": {
+          "_lstm_fwd_kernel": {
+            "aiv_vec_ratio": 0.1172,
+            "aiv_mte2_ratio": 0.1284,
+            "aiv_mte3_ratio": 0.0706,
+            "aiv_scalar_ratio": 0.3574,
+            "aic_mac_ratio": 0.2107,
+            "aic_mte1_ratio": 0.4824,
+            "cube_utilization(%)": 4.9697
+          }
+        }
+      },
+      "speedup_vs_torch": 0.4064,
+      "error_type": null,
+      "error_msg": null
+    },
+    {
+      "case_idx": 26,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            8,
+            1,
+            32
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            256,
+            32
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            256,
+            64
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            256
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            256
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            1,
+            64
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            1,
+            64
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": false
+        },
+        {
+          "type": "scalar",
+          "value": 0.0
+        }
+      ],
+      "status": "pass",
+      "framework": {
+        "avg_latency_ms": 0.0162,
+        "peak_memory_mb": 0.21
+      },
+      "implementation": {
+        "avg_latency_ms": 0.0286,
+        "peak_memory_mb": 0.13,
+        "kernel_metrics": {
+          "_lstm_fwd_kernel": {
+            "aiv_vec_ratio": 0.2366,
+            "aiv_mte2_ratio": 0.2734,
+            "aiv_mte3_ratio": 0.113,
+            "aiv_scalar_ratio": 0.7068,
+            "aic_mac_ratio": 0.1229,
+            "aic_mte1_ratio": 0.2123,
+            "cube_utilization(%)": 4.9099
+          }
+        }
+      },
+      "speedup_vs_torch": 0.5664,
+      "error_type": null,
+      "error_msg": null
+    },
+    {
+      "case_idx": 27,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            1,
+            512
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            256,
+            512
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            256,
+            64
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            256
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            256
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            1,
+            64
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            1,
+            64
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": false
+        },
+        {
+          "type": "scalar",
+          "value": 0.0
+        }
+      ],
+      "status": "pass",
+      "framework": {
+        "avg_latency_ms": 0.01,
+        "peak_memory_mb": 1.15
+      },
+      "implementation": {
+        "avg_latency_ms": 0.0113,
+        "peak_memory_mb": 0.59,
+        "kernel_metrics": {
+          "_lstm_fwd_kernel": {
+            "aiv_vec_ratio": 0.0665,
+            "aiv_mte2_ratio": 0.0774,
+            "aiv_mte3_ratio": 0.0273,
+            "aiv_scalar_ratio": 0.1898,
+            "aic_mac_ratio": 0.2175,
+            "aic_mte1_ratio": 0.4304,
+            "cube_utilization(%)": 4.2853
+          }
+        }
+      },
+      "speedup_vs_torch": 0.885,
+      "error_type": null,
+      "error_msg": null
+    },
+    {
+      "case_idx": 28,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            16,
+            2,
+            32
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            512,
+            32
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            512,
+            128
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            16,
+            128
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            16,
+            128
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": true
+        },
+        {
+          "type": "scalar",
+          "value": 0.0
+        }
+      ],
+      "status": "pass",
+      "framework": {
+        "avg_latency_ms": 0.0198,
+        "peak_memory_mb": 0.85
+      },
+      "implementation": {
+        "avg_latency_ms": 0.0186,
+        "peak_memory_mb": 0.41,
+        "kernel_metrics": {
+          "_lstm_fwd_kernel": {
+            "aiv_vec_ratio": 0.1171,
+            "aiv_mte2_ratio": 0.0903,
+            "aiv_mte3_ratio": 0.1004,
+            "aiv_scalar_ratio": 0.335,
+            "aic_mac_ratio": 0.1704,
+            "aic_mte1_ratio": 0.3091,
+            "cube_utilization(%)": 4.7807
+          }
+        }
+      },
+      "speedup_vs_torch": 1.0645,
+      "error_type": null,
+      "error_msg": null
+    },
+    {
+      "case_idx": 29,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            32,
+            64
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2048,
+            64
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2048,
+            512
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            32,
+            512
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            32,
+            512
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": false
+        },
+        {
+          "type": "scalar",
+          "value": 0.0
+        }
+      ],
+      "status": "pass",
+      "framework": {
+        "avg_latency_ms": 0.032,
+        "peak_memory_mb": 10.64
+      },
+      "implementation": {
+        "avg_latency_ms": 0.3486,
+        "peak_memory_mb": 2.86,
+        "kernel_metrics": {
+          "_lstm_fwd_kernel": {
+            "aiv_vec_ratio": 0.1559,
+            "aiv_mte2_ratio": 0.5518,
+            "aiv_mte3_ratio": 0.5158,
+            "aiv_scalar_ratio": 0.8128,
+            "aic_mac_ratio": 0.2145,
+            "aic_mte1_ratio": 0.4099,
+            "cube_utilization(%)": 9.7627
+          }
+        }
+      },
+      "speedup_vs_torch": 0.0918,
+      "error_type": null,
+      "error_msg": null
+    },
+    {
+      "case_idx": 30,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            2,
+            256
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            256,
+            256
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            256,
+            64
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            1,
+            64
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            1,
+            64
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": true
+        },
+        {
+          "type": "scalar",
+          "value": 0.0
+        }
+      ],
+      "status": "pass",
+      "framework": {
+        "avg_latency_ms": 0.0119,
+        "peak_memory_mb": 0.64
+      },
+      "implementation": {
+        "avg_latency_ms": 0.0099,
+        "peak_memory_mb": 0.24,
+        "kernel_metrics": {
+          "_lstm_fwd_kernel": {
+            "aiv_vec_ratio": 0.1573,
+            "aiv_mte2_ratio": 0.1808,
+            "aiv_mte3_ratio": 0.1169,
+            "aiv_scalar_ratio": 0.5585,
+            "aic_mac_ratio": 0.1535,
+            "aic_mte1_ratio": 0.336,
+            "cube_utilization(%)": 4.744
+          }
+        }
+      },
+      "speedup_vs_torch": 1.202,
+      "error_type": null,
+      "error_msg": null
+    },
+    {
+      "case_idx": 31,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            32,
+            256
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1024,
+            256
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1024,
+            256
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            32,
+            256
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            32,
+            256
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": false
+        },
+        {
+          "type": "scalar",
+          "value": 0.0
+        }
+      ],
+      "status": "pass",
+      "framework": {
+        "avg_latency_ms": 0.0183,
+        "peak_memory_mb": 4.57
+      },
+      "implementation": {
+        "avg_latency_ms": 0.0318,
+        "peak_memory_mb": 2.32,
+        "kernel_metrics": {
+          "_lstm_fwd_kernel": {
+            "aiv_vec_ratio": 0.0679,
+            "aiv_mte2_ratio": 0.0741,
+            "aiv_mte3_ratio": 0.0823,
+            "aiv_scalar_ratio": 0.2201,
+            "aic_mac_ratio": 0.2612,
+            "aic_mte1_ratio": 0.4744,
+            "cube_utilization(%)": 9.5164
+          }
+        }
+      },
+      "speedup_vs_torch": 0.5755,
+      "error_type": null,
+      "error_msg": null
+    },
+    {
+      "case_idx": 32,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            2,
+            768
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            512,
+            768
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            512,
+            128
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            2,
+            128
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            2,
+            128
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": false
+        },
+        {
+          "type": "scalar",
+          "value": 0.0
+        }
+      ],
+      "status": "pass",
+      "framework": {
+        "avg_latency_ms": 0.0155,
+        "peak_memory_mb": 3.56
+      },
+      "implementation": {
+        "avg_latency_ms": 0.0563,
+        "peak_memory_mb": 1.79,
+        "kernel_metrics": {
+          "_lstm_fwd_kernel": {
+            "aiv_vec_ratio": 0.0408,
+            "aiv_mte2_ratio": 0.0267,
+            "aiv_mte3_ratio": 0.0162,
+            "aiv_scalar_ratio": 0.1019,
+            "aic_mac_ratio": 0.2361,
+            "aic_mte1_ratio": 0.4731,
+            "cube_utilization(%)": 4.9299
+          }
+        }
+      },
+      "speedup_vs_torch": 0.2753,
+      "error_type": null,
+      "error_msg": null
+    },
+    {
+      "case_idx": 33,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            4,
+            64
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1024,
+            64
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1024,
+            256
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1024
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1024
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            4,
+            256
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            4,
+            256
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": false
+        },
+        {
+          "type": "scalar",
+          "value": 0.0
+        }
+      ],
+      "status": "pass",
+      "framework": {
+        "avg_latency_ms": 0.0203,
+        "peak_memory_mb": 2.63
+      },
+      "implementation": {
+        "avg_latency_ms": 0.1149,
+        "peak_memory_mb": 0.74,
+        "kernel_metrics": {
+          "_lstm_fwd_kernel": {
+            "aiv_vec_ratio": 0.1797,
+            "aiv_mte2_ratio": 0.3488,
+            "aiv_mte3_ratio": 0.3174,
+            "aiv_scalar_ratio": 0.6265,
+            "aic_mac_ratio": 0.1736,
+            "aic_mte1_ratio": 0.3375,
+            "cube_utilization(%)": 4.9343
+          }
+        }
+      },
+      "speedup_vs_torch": 0.1767,
+      "error_type": null,
+      "error_msg": null
+    },
+    {
+      "case_idx": 34,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            1,
+            256
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2048,
+            256
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2048,
+            512
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2048
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2048
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            1,
+            512
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            1,
+            512
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": false
+        },
+        {
+          "type": "scalar",
+          "value": 0.0
+        }
+      ],
+      "status": "pass",
+      "framework": {
+        "avg_latency_ms": 0.0173,
+        "peak_memory_mb": 12.11
+      },
+      "implementation": {
+        "avg_latency_ms": 0.2086,
+        "peak_memory_mb": 6.06,
+        "kernel_metrics": {
+          "_lstm_fwd_kernel": {
+            "aiv_vec_ratio": 0.0498,
+            "aiv_mte2_ratio": 0.0313,
+            "aiv_mte3_ratio": 0.018,
+            "aiv_scalar_ratio": 0.109,
+            "aic_mac_ratio": 0.2325,
+            "aic_mte1_ratio": 0.4753,
+            "cube_utilization(%)": 4.9426
+          }
+        }
+      },
+      "speedup_vs_torch": 0.0829,
+      "error_type": null,
+      "error_msg": null
+    },
+    {
+      "case_idx": 35,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            8,
+            128,
+            64
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1024,
+            64
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1024,
+            256
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1024
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1024
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            8,
+            256
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            8,
+            256
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": true
+        },
+        {
+          "type": "scalar",
+          "value": 0.0
+        }
+      ],
+      "status": "pass",
+      "framework": {
+        "avg_latency_ms": 0.0538,
+        "peak_memory_mb": 6.2
+      },
+      "implementation": {
+        "avg_latency_ms": 3.3591,
+        "peak_memory_mb": 2.58,
+        "kernel_metrics": {
+          "_lstm_fwd_kernel": {
+            "aiv_vec_ratio": 0.0943,
+            "aiv_mte2_ratio": 0.046,
+            "aiv_mte3_ratio": 0.0235,
+            "aiv_scalar_ratio": 0.1992,
+            "aic_mac_ratio": 0.1981,
+            "aic_mte1_ratio": 0.4087,
+            "cube_utilization(%)": 4.9987
+          }
+        }
+      },
+      "speedup_vs_torch": 0.016,
+      "error_type": null,
+      "error_msg": null
+    },
+    {
+      "case_idx": 36,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            8,
+            1,
+            64
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1024,
+            64
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1024,
+            256
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            8,
+            256
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            8,
+            256
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": true
+        },
+        {
+          "type": "scalar",
+          "value": 0.0
+        }
+      ],
+      "status": "pass",
+      "framework": {
+        "avg_latency_ms": 0.018,
+        "peak_memory_mb": 2.64
+      },
+      "implementation": {
+        "avg_latency_ms": 0.0315,
+        "peak_memory_mb": 0.75,
+        "kernel_metrics": {
+          "_lstm_fwd_kernel": {
+            "aiv_vec_ratio": 0.16,
+            "aiv_mte2_ratio": 0.3345,
+            "aiv_mte3_ratio": 0.3232,
+            "aiv_scalar_ratio": 0.5961,
+            "aic_mac_ratio": 0.1642,
+            "aic_mte1_ratio": 0.3168,
+            "cube_utilization(%)": 4.7546
+          }
+        }
+      },
+      "speedup_vs_torch": 0.5714,
+      "error_type": null,
+      "error_msg": null
+    },
+    {
+      "case_idx": 37,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            128,
+            256
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2048,
+            256
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2048,
+            512
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2048
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2048
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            2,
+            512
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            2,
+            512
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": true
+        },
+        {
+          "type": "scalar",
+          "value": 0.0
+        }
+      ],
+      "status": "pass",
+      "framework": {
+        "avg_latency_ms": 0.0553,
+        "peak_memory_mb": 14.17
+      },
+      "implementation": {
+        "avg_latency_ms": 12.9052,
+        "peak_memory_mb": 6.81,
+        "kernel_metrics": {
+          "_lstm_fwd_kernel": {
+            "aiv_vec_ratio": 0.0491,
+            "aiv_mte2_ratio": 0.0268,
+            "aiv_mte3_ratio": 0.0112,
+            "aiv_scalar_ratio": 0.1055,
+            "aic_mac_ratio": 0.2376,
+            "aic_mte1_ratio": 0.4919,
+            "cube_utilization(%)": 5.0
+          }
+        }
+      },
+      "speedup_vs_torch": 0.0043,
+      "error_type": null,
+      "error_msg": null
+    },
+    {
+      "case_idx": 38,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            256,
+            1,
+            32
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2048,
+            32
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2048,
+            512
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2048
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2048
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            1,
+            512
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            1,
+            512
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": false
+        },
+        {
+          "type": "scalar",
+          "value": 0.0
+        }
+      ],
+      "status": "pass",
+      "framework": {
+        "avg_latency_ms": 0.0556,
+        "peak_memory_mb": 9.47
+      },
+      "implementation": {
+        "avg_latency_ms": 23.5389,
+        "peak_memory_mb": 2.49,
+        "kernel_metrics": {
+          "_lstm_fwd_kernel": {
+            "aiv_vec_ratio": 0.1593,
+            "aiv_mte2_ratio": 0.4029,
+            "aiv_mte3_ratio": 0.3871,
+            "aiv_scalar_ratio": 0.6763,
+            "aic_mac_ratio": 0.1956,
+            "aic_mte1_ratio": 0.3774,
+            "cube_utilization(%)": 5.0002
+          }
+        }
+      },
+      "speedup_vs_torch": 0.0024,
+      "error_type": null,
+      "error_msg": null
+    },
+    {
+      "case_idx": 39,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            256,
+            16,
+            512
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1024,
+            512
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1024,
+            256
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1024
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1024
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            16,
+            256
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            16,
+            256
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": false
+        },
+        {
+          "type": "scalar",
+          "value": 0.0
+        }
+      ],
+      "status": "pass",
+      "framework": {
+        "avg_latency_ms": 0.0514,
+        "peak_memory_mb": 35.36
+      },
+      "implementation": {
+        "avg_latency_ms": 9.6915,
+        "peak_memory_mb": 15.14,
+        "kernel_metrics": {
+          "_lstm_fwd_kernel": {
+            "aiv_vec_ratio": 0.0643,
+            "aiv_mte2_ratio": 0.0351,
+            "aiv_mte3_ratio": 0.0316,
+            "aiv_scalar_ratio": 0.145,
+            "aic_mac_ratio": 0.3052,
+            "aic_mte1_ratio": 0.5639,
+            "cube_utilization(%)": 4.9995
+          }
+        }
+      },
+      "speedup_vs_torch": 0.0053,
+      "error_type": null,
+      "error_msg": null
+    },
+    {
+      "case_idx": 40,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            512,
+            64
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            128,
+            64
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            128,
+            32
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            128
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            128
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            1,
+            32
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            1,
+            32
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": true
+        },
+        {
+          "type": "scalar",
+          "value": 0.0
+        }
+      ],
+      "status": "pass",
+      "framework": {
+        "avg_latency_ms": 0.0489,
+        "peak_memory_mb": 0.74
+      },
+      "implementation": {
+        "avg_latency_ms": 1.2989,
+        "peak_memory_mb": 0.25,
+        "kernel_metrics": {
+          "_lstm_fwd_kernel": {
+            "aiv_vec_ratio": 0.1981,
+            "aiv_mte2_ratio": 0.2835,
+            "aiv_mte3_ratio": 0.0513,
+            "aiv_scalar_ratio": 0.6289,
+            "aic_mac_ratio": 0.1663,
+            "aic_mte1_ratio": 0.2118,
+            "cube_utilization(%)": 4.9989
+          }
+        }
+      },
+      "speedup_vs_torch": 0.0376,
+      "error_type": null,
+      "error_msg": null
+    },
+    {
+      "case_idx": 41,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            512,
+            16,
+            512
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            256,
+            512
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            256,
+            64
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            16,
+            64
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            16,
+            64
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": false
+        },
+        {
+          "type": "scalar",
+          "value": 0.0
+        }
+      ],
+      "status": "pass",
+      "framework": {
+        "avg_latency_ms": 0.0588,
+        "peak_memory_mb": 39.44
+      },
+      "implementation": {
+        "avg_latency_ms": 3.6373,
+        "peak_memory_mb": 18.61,
+        "kernel_metrics": {
+          "_lstm_fwd_kernel": {
+            "aiv_vec_ratio": 0.0734,
+            "aiv_mte2_ratio": 0.08,
+            "aiv_mte3_ratio": 0.04,
+            "aiv_scalar_ratio": 0.2422,
+            "aic_mac_ratio": 0.295,
+            "aic_mte1_ratio": 0.5784,
+            "cube_utilization(%)": 4.9992
+          }
+        }
+      },
+      "speedup_vs_torch": 0.0162,
+      "error_type": null,
+      "error_msg": null
+    },
+    {
+      "case_idx": 42,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            16,
+            512,
+            768
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2048,
+            768
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2048,
+            512
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2048
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2048
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            16,
+            512
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            16,
+            512
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": true
+        },
+        {
+          "type": "scalar",
+          "value": 0.0
+        }
+      ],
+      "status": "pass",
+      "framework": {
+        "avg_latency_ms": 0.0729,
+        "peak_memory_mb": 69.67
+      },
+      "implementation": {
+        "avg_latency_ms": 63.6248,
+        "peak_memory_mb": 25.25,
+        "kernel_metrics": {
+          "_lstm_fwd_kernel": {
+            "aiv_vec_ratio": 0.1163,
+            "aiv_mte2_ratio": 0.2918,
+            "aiv_mte3_ratio": 0.3039,
+            "aiv_scalar_ratio": 0.5158,
+            "aic_mac_ratio": 0.2231,
+            "aic_mte1_ratio": 0.4646,
+            "cube_utilization(%)": 5.0004
+          }
+        }
+      },
+      "speedup_vs_torch": 0.0011,
+      "error_type": null,
+      "error_msg": null
+    },
+    {
+      "case_idx": 43,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            8,
+            4,
+            768
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            512,
+            768
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            512,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            4,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            4,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": false
+        },
+        {
+          "type": "scalar",
+          "value": 0.0
+        }
+      ],
+      "status": "pass",
+      "framework": {
+        "avg_latency_ms": 0.0218,
+        "peak_memory_mb": 3.66
+      },
+      "implementation": {
+        "avg_latency_ms": 0.1471,
+        "peak_memory_mb": 1.02,
+        "kernel_metrics": {
+          "_lstm_fwd_kernel": {
+            "aiv_vec_ratio": 0.0913,
+            "aiv_mte2_ratio": 0.1536,
+            "aiv_mte3_ratio": 0.1263,
+            "aiv_scalar_ratio": 0.2791,
+            "aic_mac_ratio": 0.208,
+            "aic_mte1_ratio": 0.4702,
+            "cube_utilization(%)": 4.9691
+          }
+        }
+      },
+      "speedup_vs_torch": 0.1482,
+      "error_type": null,
+      "error_msg": null
+    },
+    {
+      "case_idx": 44,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            1,
+            256
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            512,
+            256
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            512,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            512
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            512
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            1,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            1,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": false
+        },
+        {
+          "type": "scalar",
+          "value": 0.0
+        }
+      ],
+      "status": "pass",
+      "framework": {
+        "avg_latency_ms": 0.0126,
+        "peak_memory_mb": 1.53
+      },
+      "implementation": {
+        "avg_latency_ms": 0.0225,
+        "peak_memory_mb": 0.46,
+        "kernel_metrics": {
+          "_lstm_fwd_kernel": {
+            "aiv_vec_ratio": 0.1885,
+            "aiv_mte2_ratio": 0.2455,
+            "aiv_mte3_ratio": 0.189,
+            "aiv_scalar_ratio": 0.5191,
+            "aic_mac_ratio": 0.1809,
+            "aic_mte1_ratio": 0.3851,
+            "cube_utilization(%)": 4.814
+          }
+        }
+      },
+      "speedup_vs_torch": 0.56,
+      "error_type": null,
+      "error_msg": null
+    },
+    {
+      "case_idx": 45,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            256,
+            512
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            256,
+            512
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            256,
+            64
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            256
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            256
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            4,
+            64
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            4,
+            64
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": true
+        },
+        {
+          "type": "scalar",
+          "value": 0.0
+        }
+      ],
+      "status": "fail",
+      "framework": null,
+      "implementation": null,
+      "speedup_vs_torch": null,
+      "error_type": "BrokenPipeError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card0/agent_workdir/tools/triton-op-verifier/scripts/benchmark.py\", line 854, in _run_shape_case\n    fw_perf, impl_perf, speedup = run_single_benchmark(\n                                  ^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card0/agent_workdir/tools/triton-op-verifier/scripts/benchmark.py\", line 648, in run_single_benchmark\n    framework_operators, framework_latency_ms, framework_peak_memory, fw_kernel_metrics = _measure_framework(\n                                                                                          ^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card0/agent_workdir/tools/triton-op-verifier/scripts/benchmark.py\", line 519, in _measure_framework\n    operators, latency_ms, peak_memory, kernel_metrics = measure_single(\n                                                         ^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card0/agent_workdir/tools/triton-op-verifier/scripts/benchmark.py\", line 476, in measure_single\n\n... [truncated 98 chars] ...\n/opt/workspace_card0/agent_workdir/tools/triton-op-verifier/scripts/benchmark.py\", line 419, in run_profiler_with_config\n    experimental_config = experimental_config_cls(\n                          ^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch_npu/profiler/experimental_config.py\", line 94, in __init__\n    self._export_type = self._conver_export_type_to_list(export_type)\n                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch_npu/profiler/experimental_config.py\", line 133, in _conver_export_type_to_list\n    print_warn_msg(f\"Invalid parameter export_type: {export_type}, reset it to text.\")\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch_npu/profiler/analysis/prof_common_func/_constant.py\", line 244, in print_warn_msg\n    print(f\"{time_str} [WARNING] [{os.getpid()}] profiler.py: {message}\", flush=True)\nBrokenPipeError: [Errno 32] Broken pipe\n"
+    },
+    {
+      "case_idx": 46,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            16,
+            64
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            512,
+            64
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            512,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            512
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            512
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            2,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            2,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": true
+        },
+        {
+          "type": "scalar",
+          "value": 0.0
+        }
+      ],
+      "status": "fail",
+      "framework": null,
+      "implementation": null,
+      "speedup_vs_torch": null,
+      "error_type": "BrokenPipeError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card0/agent_workdir/tools/triton-op-verifier/scripts/benchmark.py\", line 854, in _run_shape_case\n    fw_perf, impl_perf, speedup = run_single_benchmark(\n                                  ^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card0/agent_workdir/tools/triton-op-verifier/scripts/benchmark.py\", line 648, in run_single_benchmark\n    framework_operators, framework_latency_ms, framework_peak_memory, fw_kernel_metrics = _measure_framework(\n                                                                                          ^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card0/agent_workdir/tools/triton-op-verifier/scripts/benchmark.py\", line 519, in _measure_framework\n    operators, latency_ms, peak_memory, kernel_metrics = measure_single(\n                                                         ^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card0/agent_workdir/tools/triton-op-verifier/scripts/benchmark.py\", line 476, in measure_single\n\n... [truncated 98 chars] ...\n/opt/workspace_card0/agent_workdir/tools/triton-op-verifier/scripts/benchmark.py\", line 419, in run_profiler_with_config\n    experimental_config = experimental_config_cls(\n                          ^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch_npu/profiler/experimental_config.py\", line 94, in __init__\n    self._export_type = self._conver_export_type_to_list(export_type)\n                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch_npu/profiler/experimental_config.py\", line 133, in _conver_export_type_to_list\n    print_warn_msg(f\"Invalid parameter export_type: {export_type}, reset it to text.\")\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch_npu/profiler/analysis/prof_common_func/_constant.py\", line 244, in print_warn_msg\n    print(f\"{time_str} [WARNING] [{os.getpid()}] profiler.py: {message}\", flush=True)\nBrokenPipeError: [Errno 32] Broken pipe\n"
+    },
+    {
+      "case_idx": 47,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            16,
+            32,
+            768
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2048,
+            768
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2048,
+            512
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            32,
+            512
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            32,
+            512
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": false
+        },
+        {
+          "type": "scalar",
+          "value": 0.0
+        }
+      ],
+      "status": "fail",
+      "framework": null,
+      "implementation": null,
+      "speedup_vs_torch": null,
+      "error_type": "BrokenPipeError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card0/agent_workdir/tools/triton-op-verifier/scripts/benchmark.py\", line 854, in _run_shape_case\n    fw_perf, impl_perf, speedup = run_single_benchmark(\n                                  ^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card0/agent_workdir/tools/triton-op-verifier/scripts/benchmark.py\", line 648, in run_single_benchmark\n    framework_operators, framework_latency_ms, framework_peak_memory, fw_kernel_metrics = _measure_framework(\n                                                                                          ^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card0/agent_workdir/tools/triton-op-verifier/scripts/benchmark.py\", line 519, in _measure_framework\n    operators, latency_ms, peak_memory, kernel_metrics = measure_single(\n                                                         ^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card0/agent_workdir/tools/triton-op-verifier/scripts/benchmark.py\", line 476, in measure_single\n\n... [truncated 98 chars] ...\n/opt/workspace_card0/agent_workdir/tools/triton-op-verifier/scripts/benchmark.py\", line 419, in run_profiler_with_config\n    experimental_config = experimental_config_cls(\n                          ^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch_npu/profiler/experimental_config.py\", line 94, in __init__\n    self._export_type = self._conver_export_type_to_list(export_type)\n                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch_npu/profiler/experimental_config.py\", line 133, in _conver_export_type_to_list\n    print_warn_msg(f\"Invalid parameter export_type: {export_type}, reset it to text.\")\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch_npu/profiler/analysis/prof_common_func/_constant.py\", line 244, in print_warn_msg\n    print(f\"{time_str} [WARNING] [{os.getpid()}] profiler.py: {message}\", flush=True)\nBrokenPipeError: [Errno 32] Broken pipe\n"
+    },
+    {
+      "case_idx": 48,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            256,
+            32
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            128,
+            32
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            128,
+            32
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            2,
+            32
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            2,
+            32
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": true
+        },
+        {
+          "type": "scalar",
+          "value": 0.0
+        }
+      ],
+      "status": "fail",
+      "framework": null,
+      "implementation": null,
+      "speedup_vs_torch": null,
+      "error_type": "BrokenPipeError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card0/agent_workdir/tools/triton-op-verifier/scripts/benchmark.py\", line 854, in _run_shape_case\n    fw_perf, impl_perf, speedup = run_single_benchmark(\n                                  ^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card0/agent_workdir/tools/triton-op-verifier/scripts/benchmark.py\", line 648, in run_single_benchmark\n    framework_operators, framework_latency_ms, framework_peak_memory, fw_kernel_metrics = _measure_framework(\n                                                                                          ^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card0/agent_workdir/tools/triton-op-verifier/scripts/benchmark.py\", line 519, in _measure_framework\n    operators, latency_ms, peak_memory, kernel_metrics = measure_single(\n                                                         ^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card0/agent_workdir/tools/triton-op-verifier/scripts/benchmark.py\", line 476, in measure_single\n\n... [truncated 98 chars] ...\n/opt/workspace_card0/agent_workdir/tools/triton-op-verifier/scripts/benchmark.py\", line 419, in run_profiler_with_config\n    experimental_config = experimental_config_cls(\n                          ^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch_npu/profiler/experimental_config.py\", line 94, in __init__\n    self._export_type = self._conver_export_type_to_list(export_type)\n                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch_npu/profiler/experimental_config.py\", line 133, in _conver_export_type_to_list\n    print_warn_msg(f\"Invalid parameter export_type: {export_type}, reset it to text.\")\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch_npu/profiler/analysis/prof_common_func/_constant.py\", line 244, in print_warn_msg\n    print(f\"{time_str} [WARNING] [{os.getpid()}] profiler.py: {message}\", flush=True)\nBrokenPipeError: [Errno 32] Broken pipe\n"
+    },
+    {
+      "case_idx": 49,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            32,
+            8,
+            768
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            512,
+            768
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            512,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            32,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            32,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": true
+        },
+        {
+          "type": "scalar",
+          "value": 0.0
+        }
+      ],
+      "status": "fail",
+      "framework": null,
+      "implementation": null,
+      "speedup_vs_torch": null,
+      "error_type": "BrokenPipeError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card0/agent_workdir/tools/triton-op-verifier/scripts/benchmark.py\", line 854, in _run_shape_case\n    fw_perf, impl_perf, speedup = run_single_benchmark(\n                                  ^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card0/agent_workdir/tools/triton-op-verifier/scripts/benchmark.py\", line 648, in run_single_benchmark\n    framework_operators, framework_latency_ms, framework_peak_memory, fw_kernel_metrics = _measure_framework(\n                                                                                          ^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card0/agent_workdir/tools/triton-op-verifier/scripts/benchmark.py\", line 519, in _measure_framework\n    operators, latency_ms, peak_memory, kernel_metrics = measure_single(\n                                                         ^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card0/agent_workdir/tools/triton-op-verifier/scripts/benchmark.py\", line 476, in measure_single\n\n... [truncated 98 chars] ...\n/opt/workspace_card0/agent_workdir/tools/triton-op-verifier/scripts/benchmark.py\", line 419, in run_profiler_with_config\n    experimental_config = experimental_config_cls(\n                          ^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch_npu/profiler/experimental_config.py\", line 94, in __init__\n    self._export_type = self._conver_export_type_to_list(export_type)\n                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch_npu/profiler/experimental_config.py\", line 133, in _conver_export_type_to_list\n    print_warn_msg(f\"Invalid parameter export_type: {export_type}, reset it to text.\")\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch_npu/profiler/analysis/prof_common_func/_constant.py\", line 244, in print_warn_msg\n    print(f\"{time_str} [WARNING] [{os.getpid()}] profiler.py: {message}\", flush=True)\nBrokenPipeError: [Errno 32] Broken pipe\n"
+    },
+    {
+      "case_idx": 50,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            64,
+            4,
+            32
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            128,
+            32
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            128,
+            32
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            4,
+            32
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            4,
+            32
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": false
+        },
+        {
+          "type": "scalar",
+          "value": 0.0
+        }
+      ],
+      "status": "fail",
+      "framework": null,
+      "implementation": null,
+      "speedup_vs_torch": null,
+      "error_type": "BrokenPipeError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card0/agent_workdir/tools/triton-op-verifier/scripts/benchmark.py\", line 854, in _run_shape_case\n    fw_perf, impl_perf, speedup = run_single_benchmark(\n                                  ^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card0/agent_workdir/tools/triton-op-verifier/scripts/benchmark.py\", line 648, in run_single_benchmark\n    framework_operators, framework_latency_ms, framework_peak_memory, fw_kernel_metrics = _measure_framework(\n                                                                                          ^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card0/agent_workdir/tools/triton-op-verifier/scripts/benchmark.py\", line 519, in _measure_framework\n    operators, latency_ms, peak_memory, kernel_metrics = measure_single(\n                                                         ^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card0/agent_workdir/tools/triton-op-verifier/scripts/benchmark.py\", line 476, in measure_single\n\n... [truncated 98 chars] ...\n/opt/workspace_card0/agent_workdir/tools/triton-op-verifier/scripts/benchmark.py\", line 419, in run_profiler_with_config\n    experimental_config = experimental_config_cls(\n                          ^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch_npu/profiler/experimental_config.py\", line 94, in __init__\n    self._export_type = self._conver_export_type_to_list(export_type)\n                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch_npu/profiler/experimental_config.py\", line 133, in _conver_export_type_to_list\n    print_warn_msg(f\"Invalid parameter export_type: {export_type}, reset it to text.\")\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch_npu/profiler/analysis/prof_common_func/_constant.py\", line 244, in print_warn_msg\n    print(f\"{time_str} [WARNING] [{os.getpid()}] profiler.py: {message}\", flush=True)\nBrokenPipeError: [Errno 32] Broken pipe\n"
+    },
+    {
+      "case_idx": 51,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            32,
+            4,
+            64
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            512,
+            64
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            512,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            512
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            512
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            32,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            32,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": true
+        },
+        {
+          "type": "scalar",
+          "value": 0.0
+        }
+      ],
+      "status": "fail",
+      "framework": null,
+      "implementation": null,
+      "speedup_vs_torch": null,
+      "error_type": "BrokenPipeError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card0/agent_workdir/tools/triton-op-verifier/scripts/benchmark.py\", line 854, in _run_shape_case\n    fw_perf, impl_perf, speedup = run_single_benchmark(\n                                  ^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card0/agent_workdir/tools/triton-op-verifier/scripts/benchmark.py\", line 648, in run_single_benchmark\n    framework_operators, framework_latency_ms, framework_peak_memory, fw_kernel_metrics = _measure_framework(\n                                                                                          ^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card0/agent_workdir/tools/triton-op-verifier/scripts/benchmark.py\", line 519, in _measure_framework\n    operators, latency_ms, peak_memory, kernel_metrics = measure_single(\n                                                         ^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card0/agent_workdir/tools/triton-op-verifier/scripts/benchmark.py\", line 476, in measure_single\n\n... [truncated 98 chars] ...\n/opt/workspace_card0/agent_workdir/tools/triton-op-verifier/scripts/benchmark.py\", line 419, in run_profiler_with_config\n    experimental_config = experimental_config_cls(\n                          ^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch_npu/profiler/experimental_config.py\", line 94, in __init__\n    self._export_type = self._conver_export_type_to_list(export_type)\n                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch_npu/profiler/experimental_config.py\", line 133, in _conver_export_type_to_list\n    print_warn_msg(f\"Invalid parameter export_type: {export_type}, reset it to text.\")\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch_npu/profiler/analysis/prof_common_func/_constant.py\", line 244, in print_warn_msg\n    print(f\"{time_str} [WARNING] [{os.getpid()}] profiler.py: {message}\", flush=True)\nBrokenPipeError: [Errno 32] Broken pipe\n"
+    },
+    {
+      "case_idx": 52,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            16,
+            4,
+            32
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            128,
+            32
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            128,
+            32
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            128
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            128
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            16,
+            32
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            16,
+            32
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": true
+        },
+        {
+          "type": "scalar",
+          "value": 0.0
+        }
+      ],
+      "status": "fail",
+      "framework": null,
+      "implementation": null,
+      "speedup_vs_torch": null,
+      "error_type": "BrokenPipeError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card0/agent_workdir/tools/triton-op-verifier/scripts/benchmark.py\", line 854, in _run_shape_case\n    fw_perf, impl_perf, speedup = run_single_benchmark(\n                                  ^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card0/agent_workdir/tools/triton-op-verifier/scripts/benchmark.py\", line 648, in run_single_benchmark\n    framework_operators, framework_latency_ms, framework_peak_memory, fw_kernel_metrics = _measure_framework(\n                                                                                          ^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card0/agent_workdir/tools/triton-op-verifier/scripts/benchmark.py\", line 519, in _measure_framework\n    operators, latency_ms, peak_memory, kernel_metrics = measure_single(\n                                                         ^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card0/agent_workdir/tools/triton-op-verifier/scripts/benchmark.py\", line 476, in measure_single\n\n... [truncated 98 chars] ...\n/opt/workspace_card0/agent_workdir/tools/triton-op-verifier/scripts/benchmark.py\", line 419, in run_profiler_with_config\n    experimental_config = experimental_config_cls(\n                          ^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch_npu/profiler/experimental_config.py\", line 94, in __init__\n    self._export_type = self._conver_export_type_to_list(export_type)\n                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch_npu/profiler/experimental_config.py\", line 133, in _conver_export_type_to_list\n    print_warn_msg(f\"Invalid parameter export_type: {export_type}, reset it to text.\")\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch_npu/profiler/analysis/prof_common_func/_constant.py\", line 244, in print_warn_msg\n    print(f\"{time_str} [WARNING] [{os.getpid()}] profiler.py: {message}\", flush=True)\nBrokenPipeError: [Errno 32] Broken pipe\n"
+    },
+    {
+      "case_idx": 53,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            4,
+            256
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            256,
+            256
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            256,
+            64
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            4,
+            64
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            4,
+            64
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": false
+        },
+        {
+          "type": "scalar",
+          "value": 0.0
+        }
+      ],
+      "status": "fail",
+      "framework": null,
+      "implementation": null,
+      "speedup_vs_torch": null,
+      "error_type": "BrokenPipeError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card0/agent_workdir/tools/triton-op-verifier/scripts/benchmark.py\", line 854, in _run_shape_case\n    fw_perf, impl_perf, speedup = run_single_benchmark(\n                                  ^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card0/agent_workdir/tools/triton-op-verifier/scripts/benchmark.py\", line 648, in run_single_benchmark\n    framework_operators, framework_latency_ms, framework_peak_memory, fw_kernel_metrics = _measure_framework(\n                                                                                          ^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card0/agent_workdir/tools/triton-op-verifier/scripts/benchmark.py\", line 519, in _measure_framework\n    operators, latency_ms, peak_memory, kernel_metrics = measure_single(\n                                                         ^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card0/agent_workdir/tools/triton-op-verifier/scripts/benchmark.py\", line 476, in measure_single\n\n... [truncated 98 chars] ...\n/opt/workspace_card0/agent_workdir/tools/triton-op-verifier/scripts/benchmark.py\", line 419, in run_profiler_with_config\n    experimental_config = experimental_config_cls(\n                          ^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch_npu/profiler/experimental_config.py\", line 94, in __init__\n    self._export_type = self._conver_export_type_to_list(export_type)\n                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch_npu/profiler/experimental_config.py\", line 133, in _conver_export_type_to_list\n    print_warn_msg(f\"Invalid parameter export_type: {export_type}, reset it to text.\")\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch_npu/profiler/analysis/prof_common_func/_constant.py\", line 244, in print_warn_msg\n    print(f\"{time_str} [WARNING] [{os.getpid()}] profiler.py: {message}\", flush=True)\nBrokenPipeError: [Errno 32] Broken pipe\n"
+    },
+    {
+      "case_idx": 54,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            4,
+            64
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            256,
+            64
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            256,
+            64
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            256
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            256
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            4,
+            64
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            4,
+            64
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": false
+        },
+        {
+          "type": "scalar",
+          "value": 0.0
+        }
+      ],
+      "status": "fail",
+      "framework": null,
+      "implementation": null,
+      "speedup_vs_torch": null,
+      "error_type": "BrokenPipeError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card0/agent_workdir/tools/triton-op-verifier/scripts/benchmark.py\", line 854, in _run_shape_case\n    fw_perf, impl_perf, speedup = run_single_benchmark(\n                                  ^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card0/agent_workdir/tools/triton-op-verifier/scripts/benchmark.py\", line 648, in run_single_benchmark\n    framework_operators, framework_latency_ms, framework_peak_memory, fw_kernel_metrics = _measure_framework(\n                                                                                          ^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card0/agent_workdir/tools/triton-op-verifier/scripts/benchmark.py\", line 519, in _measure_framework\n    operators, latency_ms, peak_memory, kernel_metrics = measure_single(\n                                                         ^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card0/agent_workdir/tools/triton-op-verifier/scripts/benchmark.py\", line 476, in measure_single\n\n... [truncated 98 chars] ...\n/opt/workspace_card0/agent_workdir/tools/triton-op-verifier/scripts/benchmark.py\", line 419, in run_profiler_with_config\n    experimental_config = experimental_config_cls(\n                          ^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch_npu/profiler/experimental_config.py\", line 94, in __init__\n    self._export_type = self._conver_export_type_to_list(export_type)\n                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch_npu/profiler/experimental_config.py\", line 133, in _conver_export_type_to_list\n    print_warn_msg(f\"Invalid parameter export_type: {export_type}, reset it to text.\")\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch_npu/profiler/analysis/prof_common_func/_constant.py\", line 244, in print_warn_msg\n    print(f\"{time_str} [WARNING] [{os.getpid()}] profiler.py: {message}\", flush=True)\nBrokenPipeError: [Errno 32] Broken pipe\n"
+    },
+    {
+      "case_idx": 55,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            64,
+            64
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            256,
+            64
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            256,
+            64
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            1,
+            64
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            1,
+            64
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": true
+        },
+        {
+          "type": "scalar",
+          "value": 0.0
+        }
+      ],
+      "status": "fail",
+      "framework": null,
+      "implementation": null,
+      "speedup_vs_torch": null,
+      "error_type": "BrokenPipeError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card0/agent_workdir/tools/triton-op-verifier/scripts/benchmark.py\", line 854, in _run_shape_case\n    fw_perf, impl_perf, speedup = run_single_benchmark(\n                                  ^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card0/agent_workdir/tools/triton-op-verifier/scripts/benchmark.py\", line 648, in run_single_benchmark\n    framework_operators, framework_latency_ms, framework_peak_memory, fw_kernel_metrics = _measure_framework(\n                                                                                          ^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card0/agent_workdir/tools/triton-op-verifier/scripts/benchmark.py\", line 519, in _measure_framework\n    operators, latency_ms, peak_memory, kernel_metrics = measure_single(\n                                                         ^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card0/agent_workdir/tools/triton-op-verifier/scripts/benchmark.py\", line 476, in measure_single\n\n... [truncated 98 chars] ...\n/opt/workspace_card0/agent_workdir/tools/triton-op-verifier/scripts/benchmark.py\", line 419, in run_profiler_with_config\n    experimental_config = experimental_config_cls(\n                          ^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch_npu/profiler/experimental_config.py\", line 94, in __init__\n    self._export_type = self._conver_export_type_to_list(export_type)\n                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch_npu/profiler/experimental_config.py\", line 133, in _conver_export_type_to_list\n    print_warn_msg(f\"Invalid parameter export_type: {export_type}, reset it to text.\")\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch_npu/profiler/analysis/prof_common_func/_constant.py\", line 244, in print_warn_msg\n    print(f\"{time_str} [WARNING] [{os.getpid()}] profiler.py: {message}\", flush=True)\nBrokenPipeError: [Errno 32] Broken pipe\n"
+    },
+    {
+      "case_idx": 56,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            16,
+            768
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            256,
+            768
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            256,
+            64
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            256
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            256
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            2,
+            64
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            2,
+            64
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": true
+        },
+        {
+          "type": "scalar",
+          "value": 0.0
+        }
+      ],
+      "status": "fail",
+      "framework": null,
+      "implementation": null,
+      "speedup_vs_torch": null,
+      "error_type": "BrokenPipeError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card0/agent_workdir/tools/triton-op-verifier/scripts/benchmark.py\", line 854, in _run_shape_case\n    fw_perf, impl_perf, speedup = run_single_benchmark(\n                                  ^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card0/agent_workdir/tools/triton-op-verifier/scripts/benchmark.py\", line 648, in run_single_benchmark\n    framework_operators, framework_latency_ms, framework_peak_memory, fw_kernel_metrics = _measure_framework(\n                                                                                          ^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card0/agent_workdir/tools/triton-op-verifier/scripts/benchmark.py\", line 519, in _measure_framework\n    operators, latency_ms, peak_memory, kernel_metrics = measure_single(\n                                                         ^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card0/agent_workdir/tools/triton-op-verifier/scripts/benchmark.py\", line 476, in measure_single\n\n... [truncated 98 chars] ...\n/opt/workspace_card0/agent_workdir/tools/triton-op-verifier/scripts/benchmark.py\", line 419, in run_profiler_with_config\n    experimental_config = experimental_config_cls(\n                          ^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch_npu/profiler/experimental_config.py\", line 94, in __init__\n    self._export_type = self._conver_export_type_to_list(export_type)\n                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch_npu/profiler/experimental_config.py\", line 133, in _conver_export_type_to_list\n    print_warn_msg(f\"Invalid parameter export_type: {export_type}, reset it to text.\")\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch_npu/profiler/analysis/prof_common_func/_constant.py\", line 244, in print_warn_msg\n    print(f\"{time_str} [WARNING] [{os.getpid()}] profiler.py: {message}\", flush=True)\nBrokenPipeError: [Errno 32] Broken pipe\n"
+    },
+    {
+      "case_idx": 57,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            8,
+            8,
+            256
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            256,
+            256
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            256,
+            64
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            256
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            256
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            8,
+            64
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            8,
+            64
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": true
+        },
+        {
+          "type": "scalar",
+          "value": 0.0
+        }
+      ],
+      "status": "fail",
+      "framework": null,
+      "implementation": null,
+      "speedup_vs_torch": null,
+      "error_type": "BrokenPipeError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card0/agent_workdir/tools/triton-op-verifier/scripts/benchmark.py\", line 854, in _run_shape_case\n    fw_perf, impl_perf, speedup = run_single_benchmark(\n                                  ^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card0/agent_workdir/tools/triton-op-verifier/scripts/benchmark.py\", line 648, in run_single_benchmark\n    framework_operators, framework_latency_ms, framework_peak_memory, fw_kernel_metrics = _measure_framework(\n                                                                                          ^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card0/agent_workdir/tools/triton-op-verifier/scripts/benchmark.py\", line 519, in _measure_framework\n    operators, latency_ms, peak_memory, kernel_metrics = measure_single(\n                                                         ^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card0/agent_workdir/tools/triton-op-verifier/scripts/benchmark.py\", line 476, in measure_single\n\n... [truncated 98 chars] ...\n/opt/workspace_card0/agent_workdir/tools/triton-op-verifier/scripts/benchmark.py\", line 419, in run_profiler_with_config\n    experimental_config = experimental_config_cls(\n                          ^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch_npu/profiler/experimental_config.py\", line 94, in __init__\n    self._export_type = self._conver_export_type_to_list(export_type)\n                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch_npu/profiler/experimental_config.py\", line 133, in _conver_export_type_to_list\n    print_warn_msg(f\"Invalid parameter export_type: {export_type}, reset it to text.\")\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch_npu/profiler/analysis/prof_common_func/_constant.py\", line 244, in print_warn_msg\n    print(f\"{time_str} [WARNING] [{os.getpid()}] profiler.py: {message}\", flush=True)\nBrokenPipeError: [Errno 32] Broken pipe\n"
+    },
+    {
+      "case_idx": 58,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            8,
+            8,
+            64
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            128,
+            64
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            128,
+            32
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            8,
+            32
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            8,
+            32
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": true
+        },
+        {
+          "type": "scalar",
+          "value": 0.0
+        }
+      ],
+      "status": "fail",
+      "framework": null,
+      "implementation": null,
+      "speedup_vs_torch": null,
+      "error_type": "BrokenPipeError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card0/agent_workdir/tools/triton-op-verifier/scripts/benchmark.py\", line 854, in _run_shape_case\n    fw_perf, impl_perf, speedup = run_single_benchmark(\n                                  ^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card0/agent_workdir/tools/triton-op-verifier/scripts/benchmark.py\", line 648, in run_single_benchmark\n    framework_operators, framework_latency_ms, framework_peak_memory, fw_kernel_metrics = _measure_framework(\n                                                                                          ^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card0/agent_workdir/tools/triton-op-verifier/scripts/benchmark.py\", line 519, in _measure_framework\n    operators, latency_ms, peak_memory, kernel_metrics = measure_single(\n                                                         ^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card0/agent_workdir/tools/triton-op-verifier/scripts/benchmark.py\", line 476, in measure_single\n\n... [truncated 98 chars] ...\n/opt/workspace_card0/agent_workdir/tools/triton-op-verifier/scripts/benchmark.py\", line 419, in run_profiler_with_config\n    experimental_config = experimental_config_cls(\n                          ^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch_npu/profiler/experimental_config.py\", line 94, in __init__\n    self._export_type = self._conver_export_type_to_list(export_type)\n                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch_npu/profiler/experimental_config.py\", line 133, in _conver_export_type_to_list\n    print_warn_msg(f\"Invalid parameter export_type: {export_type}, reset it to text.\")\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch_npu/profiler/analysis/prof_common_func/_constant.py\", line 244, in print_warn_msg\n    print(f\"{time_str} [WARNING] [{os.getpid()}] profiler.py: {message}\", flush=True)\nBrokenPipeError: [Errno 32] Broken pipe\n"
+    },
+    {
+      "case_idx": 59,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            256,
+            8,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            512,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            512,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            512
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            512
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            8,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            8,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": false
+        },
+        {
+          "type": "scalar",
+          "value": 0.0
+        }
+      ],
+      "status": "fail",
+      "framework": null,
+      "implementation": null,
+      "speedup_vs_torch": null,
+      "error_type": "BrokenPipeError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card0/agent_workdir/tools/triton-op-verifier/scripts/benchmark.py\", line 854, in _run_shape_case\n    fw_perf, impl_perf, speedup = run_single_benchmark(\n                                  ^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card0/agent_workdir/tools/triton-op-verifier/scripts/benchmark.py\", line 648, in run_single_benchmark\n    framework_operators, framework_latency_ms, framework_peak_memory, fw_kernel_metrics = _measure_framework(\n                                                                                          ^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card0/agent_workdir/tools/triton-op-verifier/scripts/benchmark.py\", line 519, in _measure_framework\n    operators, latency_ms, peak_memory, kernel_metrics = measure_single(\n                                                         ^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card0/agent_workdir/tools/triton-op-verifier/scripts/benchmark.py\", line 476, in measure_single\n\n... [truncated 98 chars] ...\n/opt/workspace_card0/agent_workdir/tools/triton-op-verifier/scripts/benchmark.py\", line 419, in run_profiler_with_config\n    experimental_config = experimental_config_cls(\n                          ^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch_npu/profiler/experimental_config.py\", line 94, in __init__\n    self._export_type = self._conver_export_type_to_list(export_type)\n                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch_npu/profiler/experimental_config.py\", line 133, in _conver_export_type_to_list\n    print_warn_msg(f\"Invalid parameter export_type: {export_type}, reset it to text.\")\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch_npu/profiler/analysis/prof_common_func/_constant.py\", line 244, in print_warn_msg\n    print(f\"{time_str} [WARNING] [{os.getpid()}] profiler.py: {message}\", flush=True)\nBrokenPipeError: [Errno 32] Broken pipe\n"
+    },
+    {
+      "case_idx": 60,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            512,
+            4,
+            128
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            256,
+            128
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            256,
+            64
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            4,
+            64
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            4,
+            64
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": false
+        },
+        {
+          "type": "scalar",
+          "value": 0.0
+        }
+      ],
+      "status": "fail",
+      "framework": null,
+      "implementation": null,
+      "speedup_vs_torch": null,
+      "error_type": "BrokenPipeError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card0/agent_workdir/tools/triton-op-verifier/scripts/benchmark.py\", line 854, in _run_shape_case\n    fw_perf, impl_perf, speedup = run_single_benchmark(\n                                  ^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card0/agent_workdir/tools/triton-op-verifier/scripts/benchmark.py\", line 648, in run_single_benchmark\n    framework_operators, framework_latency_ms, framework_peak_memory, fw_kernel_metrics = _measure_framework(\n                                                                                          ^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card0/agent_workdir/tools/triton-op-verifier/scripts/benchmark.py\", line 519, in _measure_framework\n    operators, latency_ms, peak_memory, kernel_metrics = measure_single(\n                                                         ^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card0/agent_workdir/tools/triton-op-verifier/scripts/benchmark.py\", line 476, in measure_single\n\n... [truncated 98 chars] ...\n/opt/workspace_card0/agent_workdir/tools/triton-op-verifier/scripts/benchmark.py\", line 419, in run_profiler_with_config\n    experimental_config = experimental_config_cls(\n                          ^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch_npu/profiler/experimental_config.py\", line 94, in __init__\n    self._export_type = self._conver_export_type_to_list(export_type)\n                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch_npu/profiler/experimental_config.py\", line 133, in _conver_export_type_to_list\n    print_warn_msg(f\"Invalid parameter export_type: {export_type}, reset it to text.\")\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch_npu/profiler/analysis/prof_common_func/_constant.py\", line 244, in print_warn_msg\n    print(f\"{time_str} [WARNING] [{os.getpid()}] profiler.py: {message}\", flush=True)\nBrokenPipeError: [Errno 32] Broken pipe\n"
+    }
+  ]
+}

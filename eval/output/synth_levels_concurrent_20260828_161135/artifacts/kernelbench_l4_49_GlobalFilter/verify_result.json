@@ -1,0 +1,1408 @@
+{
+  "op_name": "kernelbench_l4_49_GlobalFilter",
+  "total_cases": 50,
+  "passed_cases": 0,
+  "failed_cases": 50,
+  "failures": [
+    {
+      "case_idx": 1,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            49,
+            32
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": 32
+        },
+        {
+          "type": "scalar",
+          "value": 7
+        },
+        {
+          "type": "scalar",
+          "value": 7
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/language/core.py\", line 35, in wrapper\n    return fn(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/triton_patch/language/core.py\", line 240, in load\n    return semantic.load(pointer, mask, other, boundary_check, padding_option, cache_modifier, eviction_policy,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/triton_patch/language/semantic.py\", line 542, in load\n    return _load_legacy(ptr, mask, other, boundary_check, padding, cache, eviction, is_volatile, care_padding, builder)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/triton_patch/languag\n... [truncated 2116 chars] ...\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 23:14:\n    cnt = bpc + tl.where(pid < rem, 1, 0)\n\n    c2 = tl.arange(0, CB)[None, :]\n    for blk in range(start, start + cnt):\n        pb = (blk // ncb).to(tl.int32)\n        pc = (blk - pb * ncb).to(tl.int32)\n        i3 = tl.arange(0, H_P)[:, None, None]\n        j3 = tl.arange(0, W_P)[None, :, None]\n        c3 = c2[None, None, :]\n        m3 = (i3 < H) & (j3 < W)\n        idx = (pb * (H * W) + i3 * W + j3) * C + pc * CB + c3\n        F_r = tl.load(fr_ptr + idx, mask=m3, other=0.0).to(tl.float32)\n              ^\nValueError('Cannot broadcast, rank mismatch: [8, 8, 1], [1, 8, 8, 4]')\n"
+    },
+    {
+      "case_idx": 2,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            77,
+            32
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 32
+        },
+        {
+          "type": "scalar",
+          "value": 11
+        },
+        {
+          "type": "scalar",
+          "value": 7
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/language/core.py\", line 35, in wrapper\n    return fn(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/triton_patch/language/core.py\", line 240, in load\n    return semantic.load(pointer, mask, other, boundary_check, padding_option, cache_modifier, eviction_policy,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/triton_patch/language/semantic.py\", line 542, in load\n    return _load_legacy(ptr, mask, other, boundary_check, padding, cache, eviction, is_volatile, care_padding, builder)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/triton_patch/languag\n... [truncated 2120 chars] ...\n       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 23:14:\n    cnt = bpc + tl.where(pid < rem, 1, 0)\n\n    c2 = tl.arange(0, CB)[None, :]\n    for blk in range(start, start + cnt):\n        pb = (blk // ncb).to(tl.int32)\n        pc = (blk - pb * ncb).to(tl.int32)\n        i3 = tl.arange(0, H_P)[:, None, None]\n        j3 = tl.arange(0, W_P)[None, :, None]\n        c3 = c2[None, None, :]\n        m3 = (i3 < H) & (j3 < W)\n        idx = (pb * (H * W) + i3 * W + j3) * C + pc * CB + c3\n        F_r = tl.load(fr_ptr + idx, mask=m3, other=0.0).to(tl.float32)\n              ^\nValueError('Cannot broadcast, rank mismatch: [16, 8, 1], [1, 16, 8, 4]')\n"
+    },
+    {
+      "case_idx": 3,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            77,
+            32
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "scalar",
+          "value": 32
+        },
+        {
+          "type": "scalar",
+          "value": 7
+        },
+        {
+          "type": "scalar",
+          "value": 11
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/language/core.py\", line 35, in wrapper\n    return fn(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/triton_patch/language/core.py\", line 240, in load\n    return semantic.load(pointer, mask, other, boundary_check, padding_option, cache_modifier, eviction_policy,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/triton_patch/language/semantic.py\", line 542, in load\n    return _load_legacy(ptr, mask, other, boundary_check, padding, cache, eviction, is_volatile, care_padding, builder)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/triton_patch/languag\n... [truncated 2120 chars] ...\n       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 23:14:\n    cnt = bpc + tl.where(pid < rem, 1, 0)\n\n    c2 = tl.arange(0, CB)[None, :]\n    for blk in range(start, start + cnt):\n        pb = (blk // ncb).to(tl.int32)\n        pc = (blk - pb * ncb).to(tl.int32)\n        i3 = tl.arange(0, H_P)[:, None, None]\n        j3 = tl.arange(0, W_P)[None, :, None]\n        c3 = c2[None, None, :]\n        m3 = (i3 < H) & (j3 < W)\n        idx = (pb * (H * W) + i3 * W + j3) * C + pc * CB + c3\n        F_r = tl.load(fr_ptr + idx, mask=m3, other=0.0).to(tl.float32)\n              ^\nValueError('Cannot broadcast, rank mismatch: [8, 16, 1], [1, 8, 16, 4]')\n"
+    },
+    {
+      "case_idx": 4,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            91,
+            32
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": 32
+        },
+        {
+          "type": "scalar",
+          "value": 7
+        },
+        {
+          "type": "scalar",
+          "value": 13
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/language/core.py\", line 35, in wrapper\n    return fn(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/triton_patch/language/core.py\", line 240, in load\n    return semantic.load(pointer, mask, other, boundary_check, padding_option, cache_modifier, eviction_policy,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/triton_patch/language/semantic.py\", line 542, in load\n    return _load_legacy(ptr, mask, other, boundary_check, padding, cache, eviction, is_volatile, care_padding, builder)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/triton_patch/languag\n... [truncated 2120 chars] ...\n       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 23:14:\n    cnt = bpc + tl.where(pid < rem, 1, 0)\n\n    c2 = tl.arange(0, CB)[None, :]\n    for blk in range(start, start + cnt):\n        pb = (blk // ncb).to(tl.int32)\n        pc = (blk - pb * ncb).to(tl.int32)\n        i3 = tl.arange(0, H_P)[:, None, None]\n        j3 = tl.arange(0, W_P)[None, :, None]\n        c3 = c2[None, None, :]\n        m3 = (i3 < H) & (j3 < W)\n        idx = (pb * (H * W) + i3 * W + j3) * C + pc * CB + c3\n        F_r = tl.load(fr_ptr + idx, mask=m3, other=0.0).to(tl.float32)\n              ^\nValueError('Cannot broadcast, rank mismatch: [8, 16, 1], [1, 8, 16, 4]')\n"
+    },
+    {
+      "case_idx": 5,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            119,
+            64
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 64
+        },
+        {
+          "type": "scalar",
+          "value": 7
+        },
+        {
+          "type": "scalar",
+          "value": 17
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/language/core.py\", line 35, in wrapper\n    return fn(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/triton_patch/language/core.py\", line 240, in load\n    return semantic.load(pointer, mask, other, boundary_check, padding_option, cache_modifier, eviction_policy,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/triton_patch/language/semantic.py\", line 542, in load\n    return _load_legacy(ptr, mask, other, boundary_check, padding, cache, eviction, is_volatile, care_padding, builder)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/triton_patch/languag\n... [truncated 2120 chars] ...\n       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 23:14:\n    cnt = bpc + tl.where(pid < rem, 1, 0)\n\n    c2 = tl.arange(0, CB)[None, :]\n    for blk in range(start, start + cnt):\n        pb = (blk // ncb).to(tl.int32)\n        pc = (blk - pb * ncb).to(tl.int32)\n        i3 = tl.arange(0, H_P)[:, None, None]\n        j3 = tl.arange(0, W_P)[None, :, None]\n        c3 = c2[None, None, :]\n        m3 = (i3 < H) & (j3 < W)\n        idx = (pb * (H * W) + i3 * W + j3) * C + pc * CB + c3\n        F_r = tl.load(fr_ptr + idx, mask=m3, other=0.0).to(tl.float32)\n              ^\nValueError('Cannot broadcast, rank mismatch: [8, 32, 1], [1, 8, 32, 4]')\n"
+    },
+    {
+      "case_idx": 6,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            133,
+            32
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "scalar",
+          "value": 32
+        },
+        {
+          "type": "scalar",
+          "value": 19
+        },
+        {
+          "type": "scalar",
+          "value": 7
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/language/core.py\", line 35, in wrapper\n    return fn(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/triton_patch/language/core.py\", line 240, in load\n    return semantic.load(pointer, mask, other, boundary_check, padding_option, cache_modifier, eviction_policy,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/triton_patch/language/semantic.py\", line 542, in load\n    return _load_legacy(ptr, mask, other, boundary_check, padding, cache, eviction, is_volatile, care_padding, builder)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/triton_patch/languag\n... [truncated 2120 chars] ...\n       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 23:14:\n    cnt = bpc + tl.where(pid < rem, 1, 0)\n\n    c2 = tl.arange(0, CB)[None, :]\n    for blk in range(start, start + cnt):\n        pb = (blk // ncb).to(tl.int32)\n        pc = (blk - pb * ncb).to(tl.int32)\n        i3 = tl.arange(0, H_P)[:, None, None]\n        j3 = tl.arange(0, W_P)[None, :, None]\n        c3 = c2[None, None, :]\n        m3 = (i3 < H) & (j3 < W)\n        idx = (pb * (H * W) + i3 * W + j3) * C + pc * CB + c3\n        F_r = tl.load(fr_ptr + idx, mask=m3, other=0.0).to(tl.float32)\n              ^\nValueError('Cannot broadcast, rank mismatch: [32, 8, 1], [1, 32, 8, 4]')\n"
+    },
+    {
+      "case_idx": 7,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            187,
+            64
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": 64
+        },
+        {
+          "type": "scalar",
+          "value": 11
+        },
+        {
+          "type": "scalar",
+          "value": 17
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/language/core.py\", line 35, in wrapper\n    return fn(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/triton_patch/language/core.py\", line 240, in load\n    return semantic.load(pointer, mask, other, boundary_check, padding_option, cache_modifier, eviction_policy,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/triton_patch/language/semantic.py\", line 542, in load\n    return _load_legacy(ptr, mask, other, boundary_check, padding, cache, eviction, is_volatile, care_padding, builder)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/triton_patch/languag\n... [truncated 2124 chars] ...\n     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 23:14:\n    cnt = bpc + tl.where(pid < rem, 1, 0)\n\n    c2 = tl.arange(0, CB)[None, :]\n    for blk in range(start, start + cnt):\n        pb = (blk // ncb).to(tl.int32)\n        pc = (blk - pb * ncb).to(tl.int32)\n        i3 = tl.arange(0, H_P)[:, None, None]\n        j3 = tl.arange(0, W_P)[None, :, None]\n        c3 = c2[None, None, :]\n        m3 = (i3 < H) & (j3 < W)\n        idx = (pb * (H * W) + i3 * W + j3) * C + pc * CB + c3\n        F_r = tl.load(fr_ptr + idx, mask=m3, other=0.0).to(tl.float32)\n              ^\nValueError('Cannot broadcast, rank mismatch: [16, 32, 1], [1, 16, 32, 4]')\n"
+    },
+    {
+      "case_idx": 8,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            403,
+            32
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 32
+        },
+        {
+          "type": "scalar",
+          "value": 31
+        },
+        {
+          "type": "scalar",
+          "value": 13
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/language/core.py\", line 35, in wrapper\n    return fn(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/triton_patch/language/core.py\", line 240, in load\n    return semantic.load(pointer, mask, other, boundary_check, padding_option, cache_modifier, eviction_policy,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/triton_patch/language/semantic.py\", line 542, in load\n    return _load_legacy(ptr, mask, other, boundary_check, padding, cache, eviction, is_volatile, care_padding, builder)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/triton_patch/languag\n... [truncated 2124 chars] ...\n     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 23:14:\n    cnt = bpc + tl.where(pid < rem, 1, 0)\n\n    c2 = tl.arange(0, CB)[None, :]\n    for blk in range(start, start + cnt):\n        pb = (blk // ncb).to(tl.int32)\n        pc = (blk - pb * ncb).to(tl.int32)\n        i3 = tl.arange(0, H_P)[:, None, None]\n        j3 = tl.arange(0, W_P)[None, :, None]\n        c3 = c2[None, None, :]\n        m3 = (i3 < H) & (j3 < W)\n        idx = (pb * (H * W) + i3 * W + j3) * C + pc * CB + c3\n        F_r = tl.load(fr_ptr + idx, mask=m3, other=0.0).to(tl.float32)\n              ^\nValueError('Cannot broadcast, rank mismatch: [32, 16, 1], [1, 32, 16, 2]')\n"
+    },
+    {
+      "case_idx": 9,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            217,
+            32
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "scalar",
+          "value": 32
+        },
+        {
+          "type": "scalar",
+          "value": 7
+        },
+        {
+          "type": "scalar",
+          "value": 31
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/language/core.py\", line 35, in wrapper\n    return fn(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/triton_patch/language/core.py\", line 240, in load\n    return semantic.load(pointer, mask, other, boundary_check, padding_option, cache_modifier, eviction_policy,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/triton_patch/language/semantic.py\", line 542, in load\n    return _load_legacy(ptr, mask, other, boundary_check, padding, cache, eviction, is_volatile, care_padding, builder)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/triton_patch/languag\n... [truncated 2120 chars] ...\n       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 23:14:\n    cnt = bpc + tl.where(pid < rem, 1, 0)\n\n    c2 = tl.arange(0, CB)[None, :]\n    for blk in range(start, start + cnt):\n        pb = (blk // ncb).to(tl.int32)\n        pc = (blk - pb * ncb).to(tl.int32)\n        i3 = tl.arange(0, H_P)[:, None, None]\n        j3 = tl.arange(0, W_P)[None, :, None]\n        c3 = c2[None, None, :]\n        m3 = (i3 < H) & (j3 < W)\n        idx = (pb * (H * W) + i3 * W + j3) * C + pc * CB + c3\n        F_r = tl.load(fr_ptr + idx, mask=m3, other=0.0).to(tl.float32)\n              ^\nValueError('Cannot broadcast, rank mismatch: [8, 32, 1], [1, 8, 32, 4]')\n"
+    },
+    {
+      "case_idx": 10,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            289,
+            32
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": 32
+        },
+        {
+          "type": "scalar",
+          "value": 17
+        },
+        {
+          "type": "scalar",
+          "value": 17
+        }
+      ],
+      "error_type": "MLIRCompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 310, in compile\n    next_module = compile_ir(module, metadata)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/ascend/compiler.py\", line 778, in <lambda>\n    lambda src, metadata: linalg_to_bin_enable_npu_compile_A2_A3(\n                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/ascend/compiler.py\", line 549, in linalg_to_bin_enable_npu_compile_A2_A3\n    ret = subprocess.run(cmd_list, capture_output=True, check=True)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/subprocess.py\", line 571, in run\n    raise CalledProcessError(retcode, process.args,\nsubprocess.CalledProcessError: Command '['/usr/local/Ascend/cann-9.0.0/tools/bishengi\n... [truncated 3276 chars] ...\nl buffer.)\nloc(\"/tmp/tmpmd_dlrx3/kernel.ttadapter.mlir\":2:1): error: Failed to run BiShengHIR pipeline\n\nloc(\"/tmp/tmpmd_dlrx3/kernel.ttadapter.mlir\":3:3): error: ub overflow, requires 2449408 bits while 1572864 bits available! (possible reason: tiling basic block is too large or block number is more than what user expect due to multi-buffer feature is enabled and some ops need extra local buffer.)\nloc(\"/tmp/tmpmd_dlrx3/kernel.ttadapter.mlir\":2:1): error: Failed to run BiShengHIR pipeline\n\nloc(\"/tmp/tmpmd_dlrx3/kernel.ttadapter.mlir\":3:3): error: ub overflow, requires 2449408 bits while 1572864 bits available! (possible reason: tiling basic block is too large or block number is more than what user expect due to multi-buffer feature is enabled and some ops need extra local buffer.)\n[ERROR] Failed to run BiShengIR pipeline\n\n\n[INFO]: The compiled kernel cache is in /root/.triton/cache/jPkwEyLUjm-jXkM_qeSk_ZW5cbNX1HpQvRyBNaljneQ\n\n///------------------[ERROR][Triton][END]------------------\n\n"
+    },
+    {
+      "case_idx": 11,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            299,
+            32
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 32
+        },
+        {
+          "type": "scalar",
+          "value": 23
+        },
+        {
+          "type": "scalar",
+          "value": 13
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/language/core.py\", line 35, in wrapper\n    return fn(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/triton_patch/language/core.py\", line 240, in load\n    return semantic.load(pointer, mask, other, boundary_check, padding_option, cache_modifier, eviction_policy,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/triton_patch/language/semantic.py\", line 542, in load\n    return _load_legacy(ptr, mask, other, boundary_check, padding, cache, eviction, is_volatile, care_padding, builder)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/triton_patch/languag\n... [truncated 2124 chars] ...\n     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 23:14:\n    cnt = bpc + tl.where(pid < rem, 1, 0)\n\n    c2 = tl.arange(0, CB)[None, :]\n    for blk in range(start, start + cnt):\n        pb = (blk // ncb).to(tl.int32)\n        pc = (blk - pb * ncb).to(tl.int32)\n        i3 = tl.arange(0, H_P)[:, None, None]\n        j3 = tl.arange(0, W_P)[None, :, None]\n        c3 = c2[None, None, :]\n        m3 = (i3 < H) & (j3 < W)\n        idx = (pb * (H * W) + i3 * W + j3) * C + pc * CB + c3\n        F_r = tl.load(fr_ptr + idx, mask=m3, other=0.0).to(tl.float32)\n              ^\nValueError('Cannot broadcast, rank mismatch: [32, 16, 1], [1, 32, 16, 4]')\n"
+    },
+    {
+      "case_idx": 12,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            341,
+            32
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "scalar",
+          "value": 32
+        },
+        {
+          "type": "scalar",
+          "value": 31
+        },
+        {
+          "type": "scalar",
+          "value": 11
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/language/core.py\", line 35, in wrapper\n    return fn(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/triton_patch/language/core.py\", line 240, in load\n    return semantic.load(pointer, mask, other, boundary_check, padding_option, cache_modifier, eviction_policy,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/triton_patch/language/semantic.py\", line 542, in load\n    return _load_legacy(ptr, mask, other, boundary_check, padding, cache, eviction, is_volatile, care_padding, builder)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/triton_patch/languag\n... [truncated 2124 chars] ...\n     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 23:14:\n    cnt = bpc + tl.where(pid < rem, 1, 0)\n\n    c2 = tl.arange(0, CB)[None, :]\n    for blk in range(start, start + cnt):\n        pb = (blk // ncb).to(tl.int32)\n        pc = (blk - pb * ncb).to(tl.int32)\n        i3 = tl.arange(0, H_P)[:, None, None]\n        j3 = tl.arange(0, W_P)[None, :, None]\n        c3 = c2[None, None, :]\n        m3 = (i3 < H) & (j3 < W)\n        idx = (pb * (H * W) + i3 * W + j3) * C + pc * CB + c3\n        F_r = tl.load(fr_ptr + idx, mask=m3, other=0.0).to(tl.float32)\n              ^\nValueError('Cannot broadcast, rank mismatch: [32, 16, 1], [1, 32, 16, 4]')\n"
+    },
+    {
+      "case_idx": 13,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            203,
+            64
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": 64
+        },
+        {
+          "type": "scalar",
+          "value": 29
+        },
+        {
+          "type": "scalar",
+          "value": 7
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/language/core.py\", line 35, in wrapper\n    return fn(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/triton_patch/language/core.py\", line 240, in load\n    return semantic.load(pointer, mask, other, boundary_check, padding_option, cache_modifier, eviction_policy,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/triton_patch/language/semantic.py\", line 542, in load\n    return _load_legacy(ptr, mask, other, boundary_check, padding, cache, eviction, is_volatile, care_padding, builder)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/triton_patch/languag\n... [truncated 2120 chars] ...\n       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 23:14:\n    cnt = bpc + tl.where(pid < rem, 1, 0)\n\n    c2 = tl.arange(0, CB)[None, :]\n    for blk in range(start, start + cnt):\n        pb = (blk // ncb).to(tl.int32)\n        pc = (blk - pb * ncb).to(tl.int32)\n        i3 = tl.arange(0, H_P)[:, None, None]\n        j3 = tl.arange(0, W_P)[None, :, None]\n        c3 = c2[None, None, :]\n        m3 = (i3 < H) & (j3 < W)\n        idx = (pb * (H * W) + i3 * W + j3) * C + pc * CB + c3\n        F_r = tl.load(fr_ptr + idx, mask=m3, other=0.0).to(tl.float32)\n              ^\nValueError('Cannot broadcast, rank mismatch: [32, 8, 1], [1, 32, 8, 8]')\n"
+    },
+    {
+      "case_idx": 14,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            217,
+            32
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 32
+        },
+        {
+          "type": "scalar",
+          "value": 31
+        },
+        {
+          "type": "scalar",
+          "value": 7
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/language/core.py\", line 35, in wrapper\n    return fn(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/triton_patch/language/core.py\", line 240, in load\n    return semantic.load(pointer, mask, other, boundary_check, padding_option, cache_modifier, eviction_policy,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/triton_patch/language/semantic.py\", line 542, in load\n    return _load_legacy(ptr, mask, other, boundary_check, padding, cache, eviction, is_volatile, care_padding, builder)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/triton_patch/languag\n... [truncated 2120 chars] ...\n       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 23:14:\n    cnt = bpc + tl.where(pid < rem, 1, 0)\n\n    c2 = tl.arange(0, CB)[None, :]\n    for blk in range(start, start + cnt):\n        pb = (blk // ncb).to(tl.int32)\n        pc = (blk - pb * ncb).to(tl.int32)\n        i3 = tl.arange(0, H_P)[:, None, None]\n        j3 = tl.arange(0, W_P)[None, :, None]\n        c3 = c2[None, None, :]\n        m3 = (i3 < H) & (j3 < W)\n        idx = (pb * (H * W) + i3 * W + j3) * C + pc * CB + c3\n        F_r = tl.load(fr_ptr + idx, mask=m3, other=0.0).to(tl.float32)\n              ^\nValueError('Cannot broadcast, rank mismatch: [32, 8, 1], [1, 32, 8, 8]')\n"
+    },
+    {
+      "case_idx": 15,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            217,
+            64
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "scalar",
+          "value": 64
+        },
+        {
+          "type": "scalar",
+          "value": 31
+        },
+        {
+          "type": "scalar",
+          "value": 7
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/language/core.py\", line 35, in wrapper\n    return fn(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/triton_patch/language/core.py\", line 240, in load\n    return semantic.load(pointer, mask, other, boundary_check, padding_option, cache_modifier, eviction_policy,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/triton_patch/language/semantic.py\", line 542, in load\n    return _load_legacy(ptr, mask, other, boundary_check, padding, cache, eviction, is_volatile, care_padding, builder)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/triton_patch/languag\n... [truncated 2120 chars] ...\n       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 23:14:\n    cnt = bpc + tl.where(pid < rem, 1, 0)\n\n    c2 = tl.arange(0, CB)[None, :]\n    for blk in range(start, start + cnt):\n        pb = (blk // ncb).to(tl.int32)\n        pc = (blk - pb * ncb).to(tl.int32)\n        i3 = tl.arange(0, H_P)[:, None, None]\n        j3 = tl.arange(0, W_P)[None, :, None]\n        c3 = c2[None, None, :]\n        m3 = (i3 < H) & (j3 < W)\n        idx = (pb * (H * W) + i3 * W + j3) * C + pc * CB + c3\n        F_r = tl.load(fr_ptr + idx, mask=m3, other=0.0).to(tl.float32)\n              ^\nValueError('Cannot broadcast, rank mismatch: [32, 8, 1], [1, 32, 8, 8]')\n"
+    },
+    {
+      "case_idx": 16,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            493,
+            64
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": 64
+        },
+        {
+          "type": "scalar",
+          "value": 29
+        },
+        {
+          "type": "scalar",
+          "value": 17
+        }
+      ],
+      "error_type": "MLIRCompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 310, in compile\n    next_module = compile_ir(module, metadata)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/ascend/compiler.py\", line 778, in <lambda>\n    lambda src, metadata: linalg_to_bin_enable_npu_compile_A2_A3(\n                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/ascend/compiler.py\", line 549, in linalg_to_bin_enable_npu_compile_A2_A3\n    ret = subprocess.run(cmd_list, capture_output=True, check=True)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/subprocess.py\", line 571, in run\n    raise CalledProcessError(retcode, process.args,\nsubprocess.CalledProcessError: Command '['/usr/local/Ascend/cann-9.0.0/tools/bishengi\n... [truncated 3276 chars] ...\nl buffer.)\nloc(\"/tmp/tmp4a05dxvc/kernel.ttadapter.mlir\":2:1): error: Failed to run BiShengHIR pipeline\n\nloc(\"/tmp/tmp4a05dxvc/kernel.ttadapter.mlir\":3:3): error: ub overflow, requires 2400256 bits while 1572864 bits available! (possible reason: tiling basic block is too large or block number is more than what user expect due to multi-buffer feature is enabled and some ops need extra local buffer.)\nloc(\"/tmp/tmp4a05dxvc/kernel.ttadapter.mlir\":2:1): error: Failed to run BiShengHIR pipeline\n\nloc(\"/tmp/tmp4a05dxvc/kernel.ttadapter.mlir\":3:3): error: ub overflow, requires 2400256 bits while 1572864 bits available! (possible reason: tiling basic block is too large or block number is more than what user expect due to multi-buffer feature is enabled and some ops need extra local buffer.)\n[ERROR] Failed to run BiShengIR pipeline\n\n\n[INFO]: The compiled kernel cache is in /root/.triton/cache/kN7eGQY2RpjzyjBbYY2sAZPN1Pn2uYVcvV0EONwJQzA\n\n///------------------[ERROR][Triton][END]------------------\n\n"
+    },
+    {
+      "case_idx": 17,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            247,
+            64
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 64
+        },
+        {
+          "type": "scalar",
+          "value": 19
+        },
+        {
+          "type": "scalar",
+          "value": 13
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/language/core.py\", line 35, in wrapper\n    return fn(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/triton_patch/language/core.py\", line 240, in load\n    return semantic.load(pointer, mask, other, boundary_check, padding_option, cache_modifier, eviction_policy,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/triton_patch/language/semantic.py\", line 542, in load\n    return _load_legacy(ptr, mask, other, boundary_check, padding, cache, eviction, is_volatile, care_padding, builder)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/triton_patch/languag\n... [truncated 2124 chars] ...\n     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 23:14:\n    cnt = bpc + tl.where(pid < rem, 1, 0)\n\n    c2 = tl.arange(0, CB)[None, :]\n    for blk in range(start, start + cnt):\n        pb = (blk // ncb).to(tl.int32)\n        pc = (blk - pb * ncb).to(tl.int32)\n        i3 = tl.arange(0, H_P)[:, None, None]\n        j3 = tl.arange(0, W_P)[None, :, None]\n        c3 = c2[None, None, :]\n        m3 = (i3 < H) & (j3 < W)\n        idx = (pb * (H * W) + i3 * W + j3) * C + pc * CB + c3\n        F_r = tl.load(fr_ptr + idx, mask=m3, other=0.0).to(tl.float32)\n              ^\nValueError('Cannot broadcast, rank mismatch: [32, 16, 1], [1, 32, 16, 8]')\n"
+    },
+    {
+      "case_idx": 18,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            527,
+            32
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "scalar",
+          "value": 32
+        },
+        {
+          "type": "scalar",
+          "value": 17
+        },
+        {
+          "type": "scalar",
+          "value": 31
+        }
+      ],
+      "error_type": "MLIRCompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 310, in compile\n    next_module = compile_ir(module, metadata)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/ascend/compiler.py\", line 778, in <lambda>\n    lambda src, metadata: linalg_to_bin_enable_npu_compile_A2_A3(\n                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/ascend/compiler.py\", line 549, in linalg_to_bin_enable_npu_compile_A2_A3\n    ret = subprocess.run(cmd_list, capture_output=True, check=True)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/subprocess.py\", line 571, in run\n    raise CalledProcessError(retcode, process.args,\nsubprocess.CalledProcessError: Command '['/usr/local/Ascend/cann-9.0.0/tools/bishengi\n... [truncated 3276 chars] ...\nl buffer.)\nloc(\"/tmp/tmpm3mwpaf0/kernel.ttadapter.mlir\":2:1): error: Failed to run BiShengHIR pipeline\n\nloc(\"/tmp/tmpm3mwpaf0/kernel.ttadapter.mlir\":3:3): error: ub overflow, requires 2138112 bits while 1572864 bits available! (possible reason: tiling basic block is too large or block number is more than what user expect due to multi-buffer feature is enabled and some ops need extra local buffer.)\nloc(\"/tmp/tmpm3mwpaf0/kernel.ttadapter.mlir\":2:1): error: Failed to run BiShengHIR pipeline\n\nloc(\"/tmp/tmpm3mwpaf0/kernel.ttadapter.mlir\":3:3): error: ub overflow, requires 2138112 bits while 1572864 bits available! (possible reason: tiling basic block is too large or block number is more than what user expect due to multi-buffer feature is enabled and some ops need extra local buffer.)\n[ERROR] Failed to run BiShengIR pipeline\n\n\n[INFO]: The compiled kernel cache is in /root/.triton/cache/VnsAmRrczf5IE_Vv3OD0EMaZLC1DX0hCtX8uoSKyCMQ\n\n///------------------[ERROR][Triton][END]------------------\n\n"
+    },
+    {
+      "case_idx": 19,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            143,
+            256
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": 256
+        },
+        {
+          "type": "scalar",
+          "value": 11
+        },
+        {
+          "type": "scalar",
+          "value": 13
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/language/core.py\", line 35, in wrapper\n    return fn(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/triton_patch/language/core.py\", line 240, in load\n    return semantic.load(pointer, mask, other, boundary_check, padding_option, cache_modifier, eviction_policy,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/triton_patch/language/semantic.py\", line 542, in load\n    return _load_legacy(ptr, mask, other, boundary_check, padding, cache, eviction, is_volatile, care_padding, builder)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/triton_patch/languag\n... [truncated 2126 chars] ...\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 23:14:\n    cnt = bpc + tl.where(pid < rem, 1, 0)\n\n    c2 = tl.arange(0, CB)[None, :]\n    for blk in range(start, start + cnt):\n        pb = (blk // ncb).to(tl.int32)\n        pc = (blk - pb * ncb).to(tl.int32)\n        i3 = tl.arange(0, H_P)[:, None, None]\n        j3 = tl.arange(0, W_P)[None, :, None]\n        c3 = c2[None, None, :]\n        m3 = (i3 < H) & (j3 < W)\n        idx = (pb * (H * W) + i3 * W + j3) * C + pc * CB + c3\n        F_r = tl.load(fr_ptr + idx, mask=m3, other=0.0).to(tl.float32)\n              ^\nValueError('Cannot broadcast, rank mismatch: [16, 16, 1], [1, 16, 16, 16]')\n"
+    },
+    {
+      "case_idx": 20,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            143,
+            64
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 64
+        },
+        {
+          "type": "scalar",
+          "value": 11
+        },
+        {
+          "type": "scalar",
+          "value": 13
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/language/core.py\", line 35, in wrapper\n    return fn(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/triton_patch/language/core.py\", line 240, in load\n    return semantic.load(pointer, mask, other, boundary_check, padding_option, cache_modifier, eviction_policy,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/triton_patch/language/semantic.py\", line 542, in load\n    return _load_legacy(ptr, mask, other, boundary_check, padding, cache, eviction, is_volatile, care_padding, builder)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/triton_patch/languag\n... [truncated 2126 chars] ...\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 23:14:\n    cnt = bpc + tl.where(pid < rem, 1, 0)\n\n    c2 = tl.arange(0, CB)[None, :]\n    for blk in range(start, start + cnt):\n        pb = (blk // ncb).to(tl.int32)\n        pc = (blk - pb * ncb).to(tl.int32)\n        i3 = tl.arange(0, H_P)[:, None, None]\n        j3 = tl.arange(0, W_P)[None, :, None]\n        c3 = c2[None, None, :]\n        m3 = (i3 < H) & (j3 < W)\n        idx = (pb * (H * W) + i3 * W + j3) * C + pc * CB + c3\n        F_r = tl.load(fr_ptr + idx, mask=m3, other=0.0).to(tl.float32)\n              ^\nValueError('Cannot broadcast, rank mismatch: [16, 16, 1], [1, 16, 16, 16]')\n"
+    },
+    {
+      "case_idx": 21,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            319,
+            128
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "scalar",
+          "value": 128
+        },
+        {
+          "type": "scalar",
+          "value": 29
+        },
+        {
+          "type": "scalar",
+          "value": 11
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/language/core.py\", line 35, in wrapper\n    return fn(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/triton_patch/language/core.py\", line 240, in load\n    return semantic.load(pointer, mask, other, boundary_check, padding_option, cache_modifier, eviction_policy,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/triton_patch/language/semantic.py\", line 542, in load\n    return _load_legacy(ptr, mask, other, boundary_check, padding, cache, eviction, is_volatile, care_padding, builder)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/triton_patch/languag\n... [truncated 2124 chars] ...\n     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 23:14:\n    cnt = bpc + tl.where(pid < rem, 1, 0)\n\n    c2 = tl.arange(0, CB)[None, :]\n    for blk in range(start, start + cnt):\n        pb = (blk // ncb).to(tl.int32)\n        pc = (blk - pb * ncb).to(tl.int32)\n        i3 = tl.arange(0, H_P)[:, None, None]\n        j3 = tl.arange(0, W_P)[None, :, None]\n        c3 = c2[None, None, :]\n        m3 = (i3 < H) & (j3 < W)\n        idx = (pb * (H * W) + i3 * W + j3) * C + pc * CB + c3\n        F_r = tl.load(fr_ptr + idx, mask=m3, other=0.0).to(tl.float32)\n              ^\nValueError('Cannot broadcast, rank mismatch: [32, 16, 1], [1, 32, 16, 8]')\n"
+    },
+    {
+      "case_idx": 22,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            91,
+            512
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": 512
+        },
+        {
+          "type": "scalar",
+          "value": 13
+        },
+        {
+          "type": "scalar",
+          "value": 7
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/language/core.py\", line 35, in wrapper\n    return fn(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/triton_patch/language/core.py\", line 240, in load\n    return semantic.load(pointer, mask, other, boundary_check, padding_option, cache_modifier, eviction_policy,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/triton_patch/language/semantic.py\", line 542, in load\n    return _load_legacy(ptr, mask, other, boundary_check, padding, cache, eviction, is_volatile, care_padding, builder)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/triton_patch/languag\n... [truncated 2122 chars] ...\n      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 23:14:\n    cnt = bpc + tl.where(pid < rem, 1, 0)\n\n    c2 = tl.arange(0, CB)[None, :]\n    for blk in range(start, start + cnt):\n        pb = (blk // ncb).to(tl.int32)\n        pc = (blk - pb * ncb).to(tl.int32)\n        i3 = tl.arange(0, H_P)[:, None, None]\n        j3 = tl.arange(0, W_P)[None, :, None]\n        c3 = c2[None, None, :]\n        m3 = (i3 < H) & (j3 < W)\n        idx = (pb * (H * W) + i3 * W + j3) * C + pc * CB + c3\n        F_r = tl.load(fr_ptr + idx, mask=m3, other=0.0).to(tl.float32)\n              ^\nValueError('Cannot broadcast, rank mismatch: [16, 8, 1], [1, 16, 8, 32]')\n"
+    },
+    {
+      "case_idx": 23,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            119,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 128
+        },
+        {
+          "type": "scalar",
+          "value": 7
+        },
+        {
+          "type": "scalar",
+          "value": 17
+        }
+      ],
+      "error_type": "MLIRCompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 310, in compile\n    next_module = compile_ir(module, metadata)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/ascend/compiler.py\", line 778, in <lambda>\n    lambda src, metadata: linalg_to_bin_enable_npu_compile_A2_A3(\n                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/ascend/compiler.py\", line 549, in linalg_to_bin_enable_npu_compile_A2_A3\n    ret = subprocess.run(cmd_list, capture_output=True, check=True)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/subprocess.py\", line 571, in run\n    raise CalledProcessError(retcode, process.args,\nsubprocess.CalledProcessError: Command '['/usr/local/Ascend/cann-9.0.0/tools/bishengi\n... [truncated 3276 chars] ...\nl buffer.)\nloc(\"/tmp/tmprfcga0t_/kernel.ttadapter.mlir\":2:1): error: Failed to run BiShengHIR pipeline\n\nloc(\"/tmp/tmprfcga0t_/kernel.ttadapter.mlir\":3:3): error: ub overflow, requires 2173696 bits while 1572864 bits available! (possible reason: tiling basic block is too large or block number is more than what user expect due to multi-buffer feature is enabled and some ops need extra local buffer.)\nloc(\"/tmp/tmprfcga0t_/kernel.ttadapter.mlir\":2:1): error: Failed to run BiShengHIR pipeline\n\nloc(\"/tmp/tmprfcga0t_/kernel.ttadapter.mlir\":3:3): error: ub overflow, requires 2173696 bits while 1572864 bits available! (possible reason: tiling basic block is too large or block number is more than what user expect due to multi-buffer feature is enabled and some ops need extra local buffer.)\n[ERROR] Failed to run BiShengIR pipeline\n\n\n[INFO]: The compiled kernel cache is in /root/.triton/cache/9H2xe6ONeTaIlq9-y8Tn0q0cMTF54xMLYvue5M96fmE\n\n///------------------[ERROR][Triton][END]------------------\n\n"
+    },
+    {
+      "case_idx": 24,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            121,
+            512
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "scalar",
+          "value": 512
+        },
+        {
+          "type": "scalar",
+          "value": 11
+        },
+        {
+          "type": "scalar",
+          "value": 11
+        }
+      ],
+      "error_type": "MLIRCompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 310, in compile\n    next_module = compile_ir(module, metadata)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/ascend/compiler.py\", line 778, in <lambda>\n    lambda src, metadata: linalg_to_bin_enable_npu_compile_A2_A3(\n                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/ascend/compiler.py\", line 549, in linalg_to_bin_enable_npu_compile_A2_A3\n    ret = subprocess.run(cmd_list, capture_output=True, check=True)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/subprocess.py\", line 571, in run\n    raise CalledProcessError(retcode, process.args,\nsubprocess.CalledProcessError: Command '['/usr/local/Ascend/cann-9.0.0/tools/bishengi\n... [truncated 3276 chars] ...\nl buffer.)\nloc(\"/tmp/tmpx21nzk3x/kernel.ttadapter.mlir\":2:1): error: Failed to run BiShengHIR pipeline\n\nloc(\"/tmp/tmpx21nzk3x/kernel.ttadapter.mlir\":3:3): error: ub overflow, requires 2132992 bits while 1572864 bits available! (possible reason: tiling basic block is too large or block number is more than what user expect due to multi-buffer feature is enabled and some ops need extra local buffer.)\nloc(\"/tmp/tmpx21nzk3x/kernel.ttadapter.mlir\":2:1): error: Failed to run BiShengHIR pipeline\n\nloc(\"/tmp/tmpx21nzk3x/kernel.ttadapter.mlir\":3:3): error: ub overflow, requires 2132992 bits while 1572864 bits available! (possible reason: tiling basic block is too large or block number is more than what user expect due to multi-buffer feature is enabled and some ops need extra local buffer.)\n[ERROR] Failed to run BiShengIR pipeline\n\n\n[INFO]: The compiled kernel cache is in /root/.triton/cache/XQ7pF8RwEO31wHTYfJoGXXenkWFwH35UcdAiyFxflG0\n\n///------------------[ERROR][Triton][END]------------------\n\n"
+    },
+    {
+      "case_idx": 25,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            133,
+            128
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": 128
+        },
+        {
+          "type": "scalar",
+          "value": 19
+        },
+        {
+          "type": "scalar",
+          "value": 7
+        }
+      ],
+      "error_type": "MLIRCompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 310, in compile\n    next_module = compile_ir(module, metadata)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/ascend/compiler.py\", line 778, in <lambda>\n    lambda src, metadata: linalg_to_bin_enable_npu_compile_A2_A3(\n                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/ascend/compiler.py\", line 549, in linalg_to_bin_enable_npu_compile_A2_A3\n    ret = subprocess.run(cmd_list, capture_output=True, check=True)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/subprocess.py\", line 571, in run\n    raise CalledProcessError(retcode, process.args,\nsubprocess.CalledProcessError: Command '['/usr/local/Ascend/cann-9.0.0/tools/bishengi\n... [truncated 3276 chars] ...\nl buffer.)\nloc(\"/tmp/tmpwi5m_7c4/kernel.ttadapter.mlir\":2:1): error: Failed to run BiShengHIR pipeline\n\nloc(\"/tmp/tmpwi5m_7c4/kernel.ttadapter.mlir\":3:3): error: ub overflow, requires 2403328 bits while 1572864 bits available! (possible reason: tiling basic block is too large or block number is more than what user expect due to multi-buffer feature is enabled and some ops need extra local buffer.)\nloc(\"/tmp/tmpwi5m_7c4/kernel.ttadapter.mlir\":2:1): error: Failed to run BiShengHIR pipeline\n\nloc(\"/tmp/tmpwi5m_7c4/kernel.ttadapter.mlir\":3:3): error: ub overflow, requires 2403328 bits while 1572864 bits available! (possible reason: tiling basic block is too large or block number is more than what user expect due to multi-buffer feature is enabled and some ops need extra local buffer.)\n[ERROR] Failed to run BiShengIR pipeline\n\n\n[INFO]: The compiled kernel cache is in /root/.triton/cache/xbpB3itN8Okp8gRZbx8ZB8qRntrDXmAap_E_yowFbA4\n\n///------------------[ERROR][Triton][END]------------------\n\n"
+    },
+    {
+      "case_idx": 26,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            589,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 128
+        },
+        {
+          "type": "scalar",
+          "value": 31
+        },
+        {
+          "type": "scalar",
+          "value": 19
+        }
+      ],
+      "error_type": "MLIRCompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 310, in compile\n    next_module = compile_ir(module, metadata)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/ascend/compiler.py\", line 778, in <lambda>\n    lambda src, metadata: linalg_to_bin_enable_npu_compile_A2_A3(\n                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/ascend/compiler.py\", line 549, in linalg_to_bin_enable_npu_compile_A2_A3\n    ret = subprocess.run(cmd_list, capture_output=True, check=True)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/subprocess.py\", line 571, in run\n    raise CalledProcessError(retcode, process.args,\nsubprocess.CalledProcessError: Command '['/usr/local/Ascend/cann-9.0.0/tools/bishengi\n... [truncated 3276 chars] ...\nl buffer.)\nloc(\"/tmp/tmpfzfdewwr/kernel.ttadapter.mlir\":2:1): error: Failed to run BiShengHIR pipeline\n\nloc(\"/tmp/tmpfzfdewwr/kernel.ttadapter.mlir\":3:3): error: ub overflow, requires 2132992 bits while 1572864 bits available! (possible reason: tiling basic block is too large or block number is more than what user expect due to multi-buffer feature is enabled and some ops need extra local buffer.)\nloc(\"/tmp/tmpfzfdewwr/kernel.ttadapter.mlir\":2:1): error: Failed to run BiShengHIR pipeline\n\nloc(\"/tmp/tmpfzfdewwr/kernel.ttadapter.mlir\":3:3): error: ub overflow, requires 2132992 bits while 1572864 bits available! (possible reason: tiling basic block is too large or block number is more than what user expect due to multi-buffer feature is enabled and some ops need extra local buffer.)\n[ERROR] Failed to run BiShengIR pipeline\n\n\n[INFO]: The compiled kernel cache is in /root/.triton/cache/XsmTSNnVKI03NWnj-MXtydFloht9lKOz8fMakVrhm1E\n\n///------------------[ERROR][Triton][END]------------------\n\n"
+    },
+    {
+      "case_idx": 27,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            299,
+            256
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "scalar",
+          "value": 256
+        },
+        {
+          "type": "scalar",
+          "value": 23
+        },
+        {
+          "type": "scalar",
+          "value": 13
+        }
+      ],
+      "error_type": "MLIRCompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 310, in compile\n    next_module = compile_ir(module, metadata)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/ascend/compiler.py\", line 778, in <lambda>\n    lambda src, metadata: linalg_to_bin_enable_npu_compile_A2_A3(\n                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/ascend/compiler.py\", line 549, in linalg_to_bin_enable_npu_compile_A2_A3\n    ret = subprocess.run(cmd_list, capture_output=True, check=True)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/subprocess.py\", line 571, in run\n    raise CalledProcessError(retcode, process.args,\nsubprocess.CalledProcessError: Command '['/usr/local/Ascend/cann-9.0.0/tools/bishengi\n... [truncated 3276 chars] ...\nl buffer.)\nloc(\"/tmp/tmpzasjjcds/kernel.ttadapter.mlir\":2:1): error: Failed to run BiShengHIR pipeline\n\nloc(\"/tmp/tmpzasjjcds/kernel.ttadapter.mlir\":3:3): error: ub overflow, requires 2127872 bits while 1572864 bits available! (possible reason: tiling basic block is too large or block number is more than what user expect due to multi-buffer feature is enabled and some ops need extra local buffer.)\nloc(\"/tmp/tmpzasjjcds/kernel.ttadapter.mlir\":2:1): error: Failed to run BiShengHIR pipeline\n\nloc(\"/tmp/tmpzasjjcds/kernel.ttadapter.mlir\":3:3): error: ub overflow, requires 2127872 bits while 1572864 bits available! (possible reason: tiling basic block is too large or block number is more than what user expect due to multi-buffer feature is enabled and some ops need extra local buffer.)\n[ERROR] Failed to run BiShengIR pipeline\n\n\n[INFO]: The compiled kernel cache is in /root/.triton/cache/SPnFTnsdEIyx1PvvZfaQ9eOwsGRaCZaK478erU65tH0\n\n///------------------[ERROR][Triton][END]------------------\n\n"
+    },
+    {
+      "case_idx": 28,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            77,
+            256
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": 256
+        },
+        {
+          "type": "scalar",
+          "value": 11
+        },
+        {
+          "type": "scalar",
+          "value": 7
+        }
+      ],
+      "error_type": "MLIRCompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 310, in compile\n    next_module = compile_ir(module, metadata)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/ascend/compiler.py\", line 778, in <lambda>\n    lambda src, metadata: linalg_to_bin_enable_npu_compile_A2_A3(\n                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/ascend/compiler.py\", line 549, in linalg_to_bin_enable_npu_compile_A2_A3\n    ret = subprocess.run(cmd_list, capture_output=True, check=True)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/subprocess.py\", line 571, in run\n    raise CalledProcessError(retcode, process.args,\nsubprocess.CalledProcessError: Command '['/usr/local/Ascend/cann-9.0.0/tools/bishengi\n... [truncated 3276 chars] ...\nl buffer.)\nloc(\"/tmp/tmp2uyxfjt8/kernel.ttadapter.mlir\":2:1): error: Failed to run BiShengHIR pipeline\n\nloc(\"/tmp/tmp2uyxfjt8/kernel.ttadapter.mlir\":3:3): error: ub overflow, requires 2409984 bits while 1572864 bits available! (possible reason: tiling basic block is too large or block number is more than what user expect due to multi-buffer feature is enabled and some ops need extra local buffer.)\nloc(\"/tmp/tmp2uyxfjt8/kernel.ttadapter.mlir\":2:1): error: Failed to run BiShengHIR pipeline\n\nloc(\"/tmp/tmp2uyxfjt8/kernel.ttadapter.mlir\":3:3): error: ub overflow, requires 2409984 bits while 1572864 bits available! (possible reason: tiling basic block is too large or block number is more than what user expect due to multi-buffer feature is enabled and some ops need extra local buffer.)\n[ERROR] Failed to run BiShengIR pipeline\n\n\n[INFO]: The compiled kernel cache is in /root/.triton/cache/SCenNxlmqMWq_QoP4aVFzn60xmkOj6M0kP4sQVXc2WY\n\n///------------------[ERROR][Triton][END]------------------\n\n"
+    },
+    {
+      "case_idx": 29,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            161,
+            256
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 256
+        },
+        {
+          "type": "scalar",
+          "value": 23
+        },
+        {
+          "type": "scalar",
+          "value": 7
+        }
+      ],
+      "error_type": "MLIRCompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 310, in compile\n    next_module = compile_ir(module, metadata)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/ascend/compiler.py\", line 778, in <lambda>\n    lambda src, metadata: linalg_to_bin_enable_npu_compile_A2_A3(\n                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/ascend/compiler.py\", line 549, in linalg_to_bin_enable_npu_compile_A2_A3\n    ret = subprocess.run(cmd_list, capture_output=True, check=True)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/subprocess.py\", line 571, in run\n    raise CalledProcessError(retcode, process.args,\nsubprocess.CalledProcessError: Command '['/usr/local/Ascend/cann-9.0.0/tools/bishengi\n... [truncated 3276 chars] ...\nl buffer.)\nloc(\"/tmp/tmppvqj3fst/kernel.ttadapter.mlir\":2:1): error: Failed to run BiShengHIR pipeline\n\nloc(\"/tmp/tmppvqj3fst/kernel.ttadapter.mlir\":3:3): error: ub overflow, requires 2141184 bits while 1572864 bits available! (possible reason: tiling basic block is too large or block number is more than what user expect due to multi-buffer feature is enabled and some ops need extra local buffer.)\nloc(\"/tmp/tmppvqj3fst/kernel.ttadapter.mlir\":2:1): error: Failed to run BiShengHIR pipeline\n\nloc(\"/tmp/tmppvqj3fst/kernel.ttadapter.mlir\":3:3): error: ub overflow, requires 2141184 bits while 1572864 bits available! (possible reason: tiling basic block is too large or block number is more than what user expect due to multi-buffer feature is enabled and some ops need extra local buffer.)\n[ERROR] Failed to run BiShengIR pipeline\n\n\n[INFO]: The compiled kernel cache is in /root/.triton/cache/FZy-HRE9ehq2HHSR9k7TTPy-pYs9qogu5A3w7pL3rQE\n\n///------------------[ERROR][Triton][END]------------------\n\n"
+    },
+    {
+      "case_idx": 30,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            169,
+            128
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "scalar",
+          "value": 128
+        },
+        {
+          "type": "scalar",
+          "value": 13
+        },
+        {
+          "type": "scalar",
+          "value": 13
+        }
+      ],
+      "error_type": "MLIRCompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 310, in compile\n    next_module = compile_ir(module, metadata)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/ascend/compiler.py\", line 778, in <lambda>\n    lambda src, metadata: linalg_to_bin_enable_npu_compile_A2_A3(\n                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/ascend/compiler.py\", line 549, in linalg_to_bin_enable_npu_compile_A2_A3\n    ret = subprocess.run(cmd_list, capture_output=True, check=True)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/subprocess.py\", line 571, in run\n    raise CalledProcessError(retcode, process.args,\nsubprocess.CalledProcessError: Command '['/usr/local/Ascend/cann-9.0.0/tools/bishengi\n... [truncated 3276 chars] ...\nl buffer.)\nloc(\"/tmp/tmp9xxanfbv/kernel.ttadapter.mlir\":2:1): error: Failed to run BiShengHIR pipeline\n\nloc(\"/tmp/tmp9xxanfbv/kernel.ttadapter.mlir\":3:3): error: ub overflow, requires 2131968 bits while 1572864 bits available! (possible reason: tiling basic block is too large or block number is more than what user expect due to multi-buffer feature is enabled and some ops need extra local buffer.)\nloc(\"/tmp/tmp9xxanfbv/kernel.ttadapter.mlir\":2:1): error: Failed to run BiShengHIR pipeline\n\nloc(\"/tmp/tmp9xxanfbv/kernel.ttadapter.mlir\":3:3): error: ub overflow, requires 2131968 bits while 1572864 bits available! (possible reason: tiling basic block is too large or block number is more than what user expect due to multi-buffer feature is enabled and some ops need extra local buffer.)\n[ERROR] Failed to run BiShengIR pipeline\n\n\n[INFO]: The compiled kernel cache is in /root/.triton/cache/dUqmLUukkWincJ3yinIzOElOnyNUdG51CUR8I3UOFYI\n\n///------------------[ERROR][Triton][END]------------------\n\n"
+    },
+    {
+      "case_idx": 31,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            341,
+            128
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": 128
+        },
+        {
+          "type": "scalar",
+          "value": 11
+        },
+        {
+          "type": "scalar",
+          "value": 31
+        }
+      ],
+      "error_type": "MLIRCompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 310, in compile\n    next_module = compile_ir(module, metadata)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/ascend/compiler.py\", line 778, in <lambda>\n    lambda src, metadata: linalg_to_bin_enable_npu_compile_A2_A3(\n                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/ascend/compiler.py\", line 549, in linalg_to_bin_enable_npu_compile_A2_A3\n    ret = subprocess.run(cmd_list, capture_output=True, check=True)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/subprocess.py\", line 571, in run\n    raise CalledProcessError(retcode, process.args,\nsubprocess.CalledProcessError: Command '['/usr/local/Ascend/cann-9.0.0/tools/bishengi\n... [truncated 3276 chars] ...\nl buffer.)\nloc(\"/tmp/tmpxoxev_zh/kernel.ttadapter.mlir\":2:1): error: Failed to run BiShengHIR pipeline\n\nloc(\"/tmp/tmpxoxev_zh/kernel.ttadapter.mlir\":3:3): error: ub overflow, requires 2404352 bits while 1572864 bits available! (possible reason: tiling basic block is too large or block number is more than what user expect due to multi-buffer feature is enabled and some ops need extra local buffer.)\nloc(\"/tmp/tmpxoxev_zh/kernel.ttadapter.mlir\":2:1): error: Failed to run BiShengHIR pipeline\n\nloc(\"/tmp/tmpxoxev_zh/kernel.ttadapter.mlir\":3:3): error: ub overflow, requires 2404352 bits while 1572864 bits available! (possible reason: tiling basic block is too large or block number is more than what user expect due to multi-buffer feature is enabled and some ops need extra local buffer.)\n[ERROR] Failed to run BiShengIR pipeline\n\n\n[INFO]: The compiled kernel cache is in /root/.triton/cache/XRRF-9pAI_HH_n_OGK7hk0cBrvtjetpNq6lin3LlS-U\n\n///------------------[ERROR][Triton][END]------------------\n\n"
+    },
+    {
+      "case_idx": 32,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            361,
+            256
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 256
+        },
+        {
+          "type": "scalar",
+          "value": 19
+        },
+        {
+          "type": "scalar",
+          "value": 19
+        }
+      ],
+      "error_type": "MLIRCompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 310, in compile\n    next_module = compile_ir(module, metadata)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/ascend/compiler.py\", line 778, in <lambda>\n    lambda src, metadata: linalg_to_bin_enable_npu_compile_A2_A3(\n                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/ascend/compiler.py\", line 549, in linalg_to_bin_enable_npu_compile_A2_A3\n    ret = subprocess.run(cmd_list, capture_output=True, check=True)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/subprocess.py\", line 571, in run\n    raise CalledProcessError(retcode, process.args,\nsubprocess.CalledProcessError: Command '['/usr/local/Ascend/cann-9.0.0/tools/bishengi\n... [truncated 3276 chars] ...\nl buffer.)\nloc(\"/tmp/tmph2oow9h_/kernel.ttadapter.mlir\":2:1): error: Failed to run BiShengHIR pipeline\n\nloc(\"/tmp/tmph2oow9h_/kernel.ttadapter.mlir\":3:3): error: ub overflow, requires 2132992 bits while 1572864 bits available! (possible reason: tiling basic block is too large or block number is more than what user expect due to multi-buffer feature is enabled and some ops need extra local buffer.)\nloc(\"/tmp/tmph2oow9h_/kernel.ttadapter.mlir\":2:1): error: Failed to run BiShengHIR pipeline\n\nloc(\"/tmp/tmph2oow9h_/kernel.ttadapter.mlir\":3:3): error: ub overflow, requires 2132992 bits while 1572864 bits available! (possible reason: tiling basic block is too large or block number is more than what user expect due to multi-buffer feature is enabled and some ops need extra local buffer.)\n[ERROR] Failed to run BiShengIR pipeline\n\n\n[INFO]: The compiled kernel cache is in /root/.triton/cache/MOLZ7Xg1_o3v7wHolLeJ81bCNwOaHSIWrEs8qmzfl5o\n\n///------------------[ERROR][Triton][END]------------------\n\n"
+    },
+    {
+      "case_idx": 33,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            91,
+            256
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "scalar",
+          "value": 256
+        },
+        {
+          "type": "scalar",
+          "value": 13
+        },
+        {
+          "type": "scalar",
+          "value": 7
+        }
+      ],
+      "error_type": "MLIRCompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 310, in compile\n    next_module = compile_ir(module, metadata)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/ascend/compiler.py\", line 778, in <lambda>\n    lambda src, metadata: linalg_to_bin_enable_npu_compile_A2_A3(\n                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/ascend/compiler.py\", line 549, in linalg_to_bin_enable_npu_compile_A2_A3\n    ret = subprocess.run(cmd_list, capture_output=True, check=True)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/subprocess.py\", line 571, in run\n    raise CalledProcessError(retcode, process.args,\nsubprocess.CalledProcessError: Command '['/usr/local/Ascend/cann-9.0.0/tools/bishengi\n... [truncated 3276 chars] ...\nl buffer.)\nloc(\"/tmp/tmpu626inv6/kernel.ttadapter.mlir\":2:1): error: Failed to run BiShengHIR pipeline\n\nloc(\"/tmp/tmpu626inv6/kernel.ttadapter.mlir\":3:3): error: ub overflow, requires 2148352 bits while 1572864 bits available! (possible reason: tiling basic block is too large or block number is more than what user expect due to multi-buffer feature is enabled and some ops need extra local buffer.)\nloc(\"/tmp/tmpu626inv6/kernel.ttadapter.mlir\":2:1): error: Failed to run BiShengHIR pipeline\n\nloc(\"/tmp/tmpu626inv6/kernel.ttadapter.mlir\":3:3): error: ub overflow, requires 2148352 bits while 1572864 bits available! (possible reason: tiling basic block is too large or block number is more than what user expect due to multi-buffer feature is enabled and some ops need extra local buffer.)\n[ERROR] Failed to run BiShengIR pipeline\n\n\n[INFO]: The compiled kernel cache is in /root/.triton/cache/ijCsFBzXu7S9ylUtuwPMGrj7Ko41L2kHvc-kugNZmRQ\n\n///------------------[ERROR][Triton][END]------------------\n\n"
+    },
+    {
+      "case_idx": 34,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            209,
+            128
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": 128
+        },
+        {
+          "type": "scalar",
+          "value": 19
+        },
+        {
+          "type": "scalar",
+          "value": 11
+        }
+      ],
+      "error_type": "MLIRCompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 310, in compile\n    next_module = compile_ir(module, metadata)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/ascend/compiler.py\", line 778, in <lambda>\n    lambda src, metadata: linalg_to_bin_enable_npu_compile_A2_A3(\n                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/ascend/compiler.py\", line 549, in linalg_to_bin_enable_npu_compile_A2_A3\n    ret = subprocess.run(cmd_list, capture_output=True, check=True)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/subprocess.py\", line 571, in run\n    raise CalledProcessError(retcode, process.args,\nsubprocess.CalledProcessError: Command '['/usr/local/Ascend/cann-9.0.0/tools/bishengi\n... [truncated 3276 chars] ...\nl buffer.)\nloc(\"/tmp/tmpdta3hujz/kernel.ttadapter.mlir\":2:1): error: Failed to run BiShengHIR pipeline\n\nloc(\"/tmp/tmpdta3hujz/kernel.ttadapter.mlir\":3:3): error: ub overflow, requires 2386944 bits while 1572864 bits available! (possible reason: tiling basic block is too large or block number is more than what user expect due to multi-buffer feature is enabled and some ops need extra local buffer.)\nloc(\"/tmp/tmpdta3hujz/kernel.ttadapter.mlir\":2:1): error: Failed to run BiShengHIR pipeline\n\nloc(\"/tmp/tmpdta3hujz/kernel.ttadapter.mlir\":3:3): error: ub overflow, requires 2386944 bits while 1572864 bits available! (possible reason: tiling basic block is too large or block number is more than what user expect due to multi-buffer feature is enabled and some ops need extra local buffer.)\n[ERROR] Failed to run BiShengIR pipeline\n\n\n[INFO]: The compiled kernel cache is in /root/.triton/cache/2urr5Adp2T6QhZXo-mGHxQgMlvCiyrP9KEPXO8zfE1o\n\n///------------------[ERROR][Triton][END]------------------\n\n"
+    },
+    {
+      "case_idx": 35,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            899,
+            64
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 64
+        },
+        {
+          "type": "scalar",
+          "value": 31
+        },
+        {
+          "type": "scalar",
+          "value": 29
+        }
+      ],
+      "error_type": "MLIRCompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 310, in compile\n    next_module = compile_ir(module, metadata)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/ascend/compiler.py\", line 778, in <lambda>\n    lambda src, metadata: linalg_to_bin_enable_npu_compile_A2_A3(\n                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/ascend/compiler.py\", line 549, in linalg_to_bin_enable_npu_compile_A2_A3\n    ret = subprocess.run(cmd_list, capture_output=True, check=True)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/subprocess.py\", line 571, in run\n    raise CalledProcessError(retcode, process.args,\nsubprocess.CalledProcessError: Command '['/usr/local/Ascend/cann-9.0.0/tools/bishengi\n... [truncated 3276 chars] ...\nl buffer.)\nloc(\"/tmp/tmp6h_ov9lf/kernel.ttadapter.mlir\":2:1): error: Failed to run BiShengHIR pipeline\n\nloc(\"/tmp/tmp6h_ov9lf/kernel.ttadapter.mlir\":3:3): error: ub overflow, requires 2134016 bits while 1572864 bits available! (possible reason: tiling basic block is too large or block number is more than what user expect due to multi-buffer feature is enabled and some ops need extra local buffer.)\nloc(\"/tmp/tmp6h_ov9lf/kernel.ttadapter.mlir\":2:1): error: Failed to run BiShengHIR pipeline\n\nloc(\"/tmp/tmp6h_ov9lf/kernel.ttadapter.mlir\":3:3): error: ub overflow, requires 2134016 bits while 1572864 bits available! (possible reason: tiling basic block is too large or block number is more than what user expect due to multi-buffer feature is enabled and some ops need extra local buffer.)\n[ERROR] Failed to run BiShengIR pipeline\n\n\n[INFO]: The compiled kernel cache is in /root/.triton/cache/gPcYz_XUGQhqesxO_qQp0Rn8Ee-Bccm57vPBHXG1Kos\n\n///------------------[ERROR][Triton][END]------------------\n\n"
+    },
+    {
+      "case_idx": 36,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            589,
+            256
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "scalar",
+          "value": 256
+        },
+        {
+          "type": "scalar",
+          "value": 19
+        },
+        {
+          "type": "scalar",
+          "value": 31
+        }
+      ],
+      "error_type": "MLIRCompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 310, in compile\n    next_module = compile_ir(module, metadata)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/ascend/compiler.py\", line 778, in <lambda>\n    lambda src, metadata: linalg_to_bin_enable_npu_compile_A2_A3(\n                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/ascend/compiler.py\", line 549, in linalg_to_bin_enable_npu_compile_A2_A3\n    ret = subprocess.run(cmd_list, capture_output=True, check=True)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/subprocess.py\", line 571, in run\n    raise CalledProcessError(retcode, process.args,\nsubprocess.CalledProcessError: Command '['/usr/local/Ascend/cann-9.0.0/tools/bishengi\n... [truncated 3276 chars] ...\nl buffer.)\nloc(\"/tmp/tmpc8cwkfg1/kernel.ttadapter.mlir\":2:1): error: Failed to run BiShengHIR pipeline\n\nloc(\"/tmp/tmpc8cwkfg1/kernel.ttadapter.mlir\":3:3): error: ub overflow, requires 2130944 bits while 1572864 bits available! (possible reason: tiling basic block is too large or block number is more than what user expect due to multi-buffer feature is enabled and some ops need extra local buffer.)\nloc(\"/tmp/tmpc8cwkfg1/kernel.ttadapter.mlir\":2:1): error: Failed to run BiShengHIR pipeline\n\nloc(\"/tmp/tmpc8cwkfg1/kernel.ttadapter.mlir\":3:3): error: ub overflow, requires 2130944 bits while 1572864 bits available! (possible reason: tiling basic block is too large or block number is more than what user expect due to multi-buffer feature is enabled and some ops need extra local buffer.)\n[ERROR] Failed to run BiShengIR pipeline\n\n\n[INFO]: The compiled kernel cache is in /root/.triton/cache/PYrmz9kY3CJ9Sstzv0bThnVM_1uxiXQldadH0HXEwf4\n\n///------------------[ERROR][Triton][END]------------------\n\n"
+    },
+    {
+      "case_idx": 37,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            299,
+            256
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": 256
+        },
+        {
+          "type": "scalar",
+          "value": 13
+        },
+        {
+          "type": "scalar",
+          "value": 23
+        }
+      ],
+      "error_type": "MLIRCompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 310, in compile\n    next_module = compile_ir(module, metadata)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/ascend/compiler.py\", line 778, in <lambda>\n    lambda src, metadata: linalg_to_bin_enable_npu_compile_A2_A3(\n                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/ascend/compiler.py\", line 549, in linalg_to_bin_enable_npu_compile_A2_A3\n    ret = subprocess.run(cmd_list, capture_output=True, check=True)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/subprocess.py\", line 571, in run\n    raise CalledProcessError(retcode, process.args,\nsubprocess.CalledProcessError: Command '['/usr/local/Ascend/cann-9.0.0/tools/bishengi\n... [truncated 3276 chars] ...\nl buffer.)\nloc(\"/tmp/tmpi29i4a20/kernel.ttadapter.mlir\":2:1): error: Failed to run BiShengHIR pipeline\n\nloc(\"/tmp/tmpi29i4a20/kernel.ttadapter.mlir\":3:3): error: ub overflow, requires 2404352 bits while 1572864 bits available! (possible reason: tiling basic block is too large or block number is more than what user expect due to multi-buffer feature is enabled and some ops need extra local buffer.)\nloc(\"/tmp/tmpi29i4a20/kernel.ttadapter.mlir\":2:1): error: Failed to run BiShengHIR pipeline\n\nloc(\"/tmp/tmpi29i4a20/kernel.ttadapter.mlir\":3:3): error: ub overflow, requires 2404352 bits while 1572864 bits available! (possible reason: tiling basic block is too large or block number is more than what user expect due to multi-buffer feature is enabled and some ops need extra local buffer.)\n[ERROR] Failed to run BiShengIR pipeline\n\n\n[INFO]: The compiled kernel cache is in /root/.triton/cache/zjC6I9Kjfy2uWWfNHW2LiQOuXxVLOeSTiMVDuHs6fjI\n\n///------------------[ERROR][Triton][END]------------------\n\n"
+    },
+    {
+      "case_idx": 38,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            323,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 128
+        },
+        {
+          "type": "scalar",
+          "value": 17
+        },
+        {
+          "type": "scalar",
+          "value": 19
+        }
+      ],
+      "error_type": "MLIRCompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 310, in compile\n    next_module = compile_ir(module, metadata)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/ascend/compiler.py\", line 778, in <lambda>\n    lambda src, metadata: linalg_to_bin_enable_npu_compile_A2_A3(\n                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/ascend/compiler.py\", line 549, in linalg_to_bin_enable_npu_compile_A2_A3\n    ret = subprocess.run(cmd_list, capture_output=True, check=True)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/subprocess.py\", line 571, in run\n    raise CalledProcessError(retcode, process.args,\nsubprocess.CalledProcessError: Command '['/usr/local/Ascend/cann-9.0.0/tools/bishengi\n... [truncated 3276 chars] ...\nl buffer.)\nloc(\"/tmp/tmpa4hmsf_s/kernel.ttadapter.mlir\":2:1): error: Failed to run BiShengHIR pipeline\n\nloc(\"/tmp/tmpa4hmsf_s/kernel.ttadapter.mlir\":3:3): error: ub overflow, requires 2134016 bits while 1572864 bits available! (possible reason: tiling basic block is too large or block number is more than what user expect due to multi-buffer feature is enabled and some ops need extra local buffer.)\nloc(\"/tmp/tmpa4hmsf_s/kernel.ttadapter.mlir\":2:1): error: Failed to run BiShengHIR pipeline\n\nloc(\"/tmp/tmpa4hmsf_s/kernel.ttadapter.mlir\":3:3): error: ub overflow, requires 2134016 bits while 1572864 bits available! (possible reason: tiling basic block is too large or block number is more than what user expect due to multi-buffer feature is enabled and some ops need extra local buffer.)\n[ERROR] Failed to run BiShengIR pipeline\n\n\n[INFO]: The compiled kernel cache is in /root/.triton/cache/YuhxhjprIRCDb-hLjGY2IS1aVAEQHufXnFRAhB5OIgU\n\n///------------------[ERROR][Triton][END]------------------\n\n"
+    },
+    {
+      "case_idx": 39,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            361,
+            512
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "scalar",
+          "value": 512
+        },
+        {
+          "type": "scalar",
+          "value": 19
+        },
+        {
+          "type": "scalar",
+          "value": 19
+        }
+      ],
+      "error_type": "MLIRCompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 310, in compile\n    next_module = compile_ir(module, metadata)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/ascend/compiler.py\", line 778, in <lambda>\n    lambda src, metadata: linalg_to_bin_enable_npu_compile_A2_A3(\n                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/ascend/compiler.py\", line 549, in linalg_to_bin_enable_npu_compile_A2_A3\n    ret = subprocess.run(cmd_list, capture_output=True, check=True)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/subprocess.py\", line 571, in run\n    raise CalledProcessError(retcode, process.args,\nsubprocess.CalledProcessError: Command '['/usr/local/Ascend/cann-9.0.0/tools/bishengi\n... [truncated 3276 chars] ...\nl buffer.)\nloc(\"/tmp/tmp27qxf2_r/kernel.ttadapter.mlir\":2:1): error: Failed to run BiShengHIR pipeline\n\nloc(\"/tmp/tmp27qxf2_r/kernel.ttadapter.mlir\":3:3): error: ub overflow, requires 2130944 bits while 1572864 bits available! (possible reason: tiling basic block is too large or block number is more than what user expect due to multi-buffer feature is enabled and some ops need extra local buffer.)\nloc(\"/tmp/tmp27qxf2_r/kernel.ttadapter.mlir\":2:1): error: Failed to run BiShengHIR pipeline\n\nloc(\"/tmp/tmp27qxf2_r/kernel.ttadapter.mlir\":3:3): error: ub overflow, requires 2130944 bits while 1572864 bits available! (possible reason: tiling basic block is too large or block number is more than what user expect due to multi-buffer feature is enabled and some ops need extra local buffer.)\n[ERROR] Failed to run BiShengIR pipeline\n\n\n[INFO]: The compiled kernel cache is in /root/.triton/cache/0vuFy4-Q8S4ChC2rOaSMFqAhpDJ1uUUKiixTyvLSAUU\n\n///------------------[ERROR][Triton][END]------------------\n\n"
+    },
+    {
+      "case_idx": 40,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            391,
+            128
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": 128
+        },
+        {
+          "type": "scalar",
+          "value": 23
+        },
+        {
+          "type": "scalar",
+          "value": 17
+        }
+      ],
+      "error_type": "MLIRCompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 310, in compile\n    next_module = compile_ir(module, metadata)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/ascend/compiler.py\", line 778, in <lambda>\n    lambda src, metadata: linalg_to_bin_enable_npu_compile_A2_A3(\n                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/ascend/compiler.py\", line 549, in linalg_to_bin_enable_npu_compile_A2_A3\n    ret = subprocess.run(cmd_list, capture_output=True, check=True)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/subprocess.py\", line 571, in run\n    raise CalledProcessError(retcode, process.args,\nsubprocess.CalledProcessError: Command '['/usr/local/Ascend/cann-9.0.0/tools/bishengi\n... [truncated 3276 chars] ...\nl buffer.)\nloc(\"/tmp/tmp1pcj1aqr/kernel.ttadapter.mlir\":2:1): error: Failed to run BiShengHIR pipeline\n\nloc(\"/tmp/tmp1pcj1aqr/kernel.ttadapter.mlir\":3:3): error: ub overflow, requires 2397184 bits while 1572864 bits available! (possible reason: tiling basic block is too large or block number is more than what user expect due to multi-buffer feature is enabled and some ops need extra local buffer.)\nloc(\"/tmp/tmp1pcj1aqr/kernel.ttadapter.mlir\":2:1): error: Failed to run BiShengHIR pipeline\n\nloc(\"/tmp/tmp1pcj1aqr/kernel.ttadapter.mlir\":3:3): error: ub overflow, requires 2397184 bits while 1572864 bits available! (possible reason: tiling basic block is too large or block number is more than what user expect due to multi-buffer feature is enabled and some ops need extra local buffer.)\n[ERROR] Failed to run BiShengIR pipeline\n\n\n[INFO]: The compiled kernel cache is in /root/.triton/cache/pOo38ajqRNDyYhA6YyP35Eq1faSynZJwLcfefHBBMc0\n\n///------------------[ERROR][Triton][END]------------------\n\n"
+    },
+    {
+      "case_idx": 41,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            391,
+            512
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 512
+        },
+        {
+          "type": "scalar",
+          "value": 17
+        },
+        {
+          "type": "scalar",
+          "value": 23
+        }
+      ],
+      "error_type": "MLIRCompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 310, in compile\n    next_module = compile_ir(module, metadata)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/ascend/compiler.py\", line 778, in <lambda>\n    lambda src, metadata: linalg_to_bin_enable_npu_compile_A2_A3(\n                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/ascend/compiler.py\", line 549, in linalg_to_bin_enable_npu_compile_A2_A3\n    ret = subprocess.run(cmd_list, capture_output=True, check=True)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/subprocess.py\", line 571, in run\n    raise CalledProcessError(retcode, process.args,\nsubprocess.CalledProcessError: Command '['/usr/local/Ascend/cann-9.0.0/tools/bishengi\n... [truncated 3276 chars] ...\nl buffer.)\nloc(\"/tmp/tmpw1zeagnu/kernel.ttadapter.mlir\":2:1): error: Failed to run BiShengHIR pipeline\n\nloc(\"/tmp/tmpw1zeagnu/kernel.ttadapter.mlir\":3:3): error: ub overflow, requires 2132992 bits while 1572864 bits available! (possible reason: tiling basic block is too large or block number is more than what user expect due to multi-buffer feature is enabled and some ops need extra local buffer.)\nloc(\"/tmp/tmpw1zeagnu/kernel.ttadapter.mlir\":2:1): error: Failed to run BiShengHIR pipeline\n\nloc(\"/tmp/tmpw1zeagnu/kernel.ttadapter.mlir\":3:3): error: ub overflow, requires 2132992 bits while 1572864 bits available! (possible reason: tiling basic block is too large or block number is more than what user expect due to multi-buffer feature is enabled and some ops need extra local buffer.)\n[ERROR] Failed to run BiShengIR pipeline\n\n\n[INFO]: The compiled kernel cache is in /root/.triton/cache/z6w-SiocJQzEsfM3X-e9kvHNcfmy2nHOJ5PhY8XBOeI\n\n///------------------[ERROR][Triton][END]------------------\n\n"
+    },
+    {
+      "case_idx": 42,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            299,
+            256
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "scalar",
+          "value": 256
+        },
+        {
+          "type": "scalar",
+          "value": 13
+        },
+        {
+          "type": "scalar",
+          "value": 23
+        }
+      ],
+      "error_type": "MLIRCompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 310, in compile\n    next_module = compile_ir(module, metadata)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/ascend/compiler.py\", line 778, in <lambda>\n    lambda src, metadata: linalg_to_bin_enable_npu_compile_A2_A3(\n                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/ascend/compiler.py\", line 549, in linalg_to_bin_enable_npu_compile_A2_A3\n    ret = subprocess.run(cmd_list, capture_output=True, check=True)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/subprocess.py\", line 571, in run\n    raise CalledProcessError(retcode, process.args,\nsubprocess.CalledProcessError: Command '['/usr/local/Ascend/cann-9.0.0/tools/bishengi\n... [truncated 3276 chars] ...\nl buffer.)\nloc(\"/tmp/tmp5vs2555a/kernel.ttadapter.mlir\":2:1): error: Failed to run BiShengHIR pipeline\n\nloc(\"/tmp/tmp5vs2555a/kernel.ttadapter.mlir\":3:3): error: ub overflow, requires 2140672 bits while 1572864 bits available! (possible reason: tiling basic block is too large or block number is more than what user expect due to multi-buffer feature is enabled and some ops need extra local buffer.)\nloc(\"/tmp/tmp5vs2555a/kernel.ttadapter.mlir\":2:1): error: Failed to run BiShengHIR pipeline\n\nloc(\"/tmp/tmp5vs2555a/kernel.ttadapter.mlir\":3:3): error: ub overflow, requires 2140672 bits while 1572864 bits available! (possible reason: tiling basic block is too large or block number is more than what user expect due to multi-buffer feature is enabled and some ops need extra local buffer.)\n[ERROR] Failed to run BiShengIR pipeline\n\n\n[INFO]: The compiled kernel cache is in /root/.triton/cache/vDMsUKGbAEzQXfZBrf1LwmMvLdj4qLLlZRyL9TVBgjc\n\n///------------------[ERROR][Triton][END]------------------\n\n"
+    },
+    {
+      "case_idx": 43,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            323,
+            256
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": 256
+        },
+        {
+          "type": "scalar",
+          "value": 17
+        },
+        {
+          "type": "scalar",
+          "value": 19
+        }
+      ],
+      "error_type": "MLIRCompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 310, in compile\n    next_module = compile_ir(module, metadata)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/ascend/compiler.py\", line 778, in <lambda>\n    lambda src, metadata: linalg_to_bin_enable_npu_compile_A2_A3(\n                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/ascend/compiler.py\", line 549, in linalg_to_bin_enable_npu_compile_A2_A3\n    ret = subprocess.run(cmd_list, capture_output=True, check=True)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/subprocess.py\", line 571, in run\n    raise CalledProcessError(retcode, process.args,\nsubprocess.CalledProcessError: Command '['/usr/local/Ascend/cann-9.0.0/tools/bishengi\n... [truncated 3276 chars] ...\nl buffer.)\nloc(\"/tmp/tmp840g06gc/kernel.ttadapter.mlir\":2:1): error: Failed to run BiShengHIR pipeline\n\nloc(\"/tmp/tmp840g06gc/kernel.ttadapter.mlir\":3:3): error: ub overflow, requires 2397184 bits while 1572864 bits available! (possible reason: tiling basic block is too large or block number is more than what user expect due to multi-buffer feature is enabled and some ops need extra local buffer.)\nloc(\"/tmp/tmp840g06gc/kernel.ttadapter.mlir\":2:1): error: Failed to run BiShengHIR pipeline\n\nloc(\"/tmp/tmp840g06gc/kernel.ttadapter.mlir\":3:3): error: ub overflow, requires 2397184 bits while 1572864 bits available! (possible reason: tiling basic block is too large or block number is more than what user expect due to multi-buffer feature is enabled and some ops need extra local buffer.)\n[ERROR] Failed to run BiShengIR pipeline\n\n\n[INFO]: The compiled kernel cache is in /root/.triton/cache/wdGVEnTqjnbj3rY8RM13NjJ7fmxTOQuf-4RXFHNttBA\n\n///------------------[ERROR][Triton][END]------------------\n\n"
+    },
+    {
+      "case_idx": 44,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            377,
+            512
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 512
+        },
+        {
+          "type": "scalar",
+          "value": 13
+        },
+        {
+          "type": "scalar",
+          "value": 29
+        }
+      ],
+      "error_type": "MLIRCompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 310, in compile\n    next_module = compile_ir(module, metadata)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/ascend/compiler.py\", line 778, in <lambda>\n    lambda src, metadata: linalg_to_bin_enable_npu_compile_A2_A3(\n                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/ascend/compiler.py\", line 549, in linalg_to_bin_enable_npu_compile_A2_A3\n    ret = subprocess.run(cmd_list, capture_output=True, check=True)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/subprocess.py\", line 571, in run\n    raise CalledProcessError(retcode, process.args,\nsubprocess.CalledProcessError: Command '['/usr/local/Ascend/cann-9.0.0/tools/bishengi\n... [truncated 3276 chars] ...\nl buffer.)\nloc(\"/tmp/tmp6uycb1d3/kernel.ttadapter.mlir\":2:1): error: Failed to run BiShengHIR pipeline\n\nloc(\"/tmp/tmp6uycb1d3/kernel.ttadapter.mlir\":3:3): error: ub overflow, requires 2143744 bits while 1572864 bits available! (possible reason: tiling basic block is too large or block number is more than what user expect due to multi-buffer feature is enabled and some ops need extra local buffer.)\nloc(\"/tmp/tmp6uycb1d3/kernel.ttadapter.mlir\":2:1): error: Failed to run BiShengHIR pipeline\n\nloc(\"/tmp/tmp6uycb1d3/kernel.ttadapter.mlir\":3:3): error: ub overflow, requires 2143744 bits while 1572864 bits available! (possible reason: tiling basic block is too large or block number is more than what user expect due to multi-buffer feature is enabled and some ops need extra local buffer.)\n[ERROR] Failed to run BiShengIR pipeline\n\n\n[INFO]: The compiled kernel cache is in /root/.triton/cache/Vo2XWwwdR5J95mAD6ENFvUMNiXCNrQ2uJwhMf5XA4gU\n\n///------------------[ERROR][Triton][END]------------------\n\n"
+    },
+    {
+      "case_idx": 45,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            437,
+            512
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "scalar",
+          "value": 512
+        },
+        {
+          "type": "scalar",
+          "value": 23
+        },
+        {
+          "type": "scalar",
+          "value": 19
+        }
+      ],
+      "error_type": "MLIRCompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 310, in compile\n    next_module = compile_ir(module, metadata)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/ascend/compiler.py\", line 778, in <lambda>\n    lambda src, metadata: linalg_to_bin_enable_npu_compile_A2_A3(\n                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/ascend/compiler.py\", line 549, in linalg_to_bin_enable_npu_compile_A2_A3\n    ret = subprocess.run(cmd_list, capture_output=True, check=True)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/subprocess.py\", line 571, in run\n    raise CalledProcessError(retcode, process.args,\nsubprocess.CalledProcessError: Command '['/usr/local/Ascend/cann-9.0.0/tools/bishengi\n... [truncated 3276 chars] ...\nl buffer.)\nloc(\"/tmp/tmppwf8zknh/kernel.ttadapter.mlir\":2:1): error: Failed to run BiShengHIR pipeline\n\nloc(\"/tmp/tmppwf8zknh/kernel.ttadapter.mlir\":3:3): error: ub overflow, requires 2134016 bits while 1572864 bits available! (possible reason: tiling basic block is too large or block number is more than what user expect due to multi-buffer feature is enabled and some ops need extra local buffer.)\nloc(\"/tmp/tmppwf8zknh/kernel.ttadapter.mlir\":2:1): error: Failed to run BiShengHIR pipeline\n\nloc(\"/tmp/tmppwf8zknh/kernel.ttadapter.mlir\":3:3): error: ub overflow, requires 2134016 bits while 1572864 bits available! (possible reason: tiling basic block is too large or block number is more than what user expect due to multi-buffer feature is enabled and some ops need extra local buffer.)\n[ERROR] Failed to run BiShengIR pipeline\n\n\n[INFO]: The compiled kernel cache is in /root/.triton/cache/Qy7mZZdWQAA2WpjjtdHb9pwPo39XrLnGitX7WO35Bj8\n\n///------------------[ERROR][Triton][END]------------------\n\n"
+    },
+    {
+      "case_idx": 46,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            961,
+            256
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": 256
+        },
+        {
+          "type": "scalar",
+          "value": 31
+        },
+        {
+          "type": "scalar",
+          "value": 31
+        }
+      ],
+      "error_type": "MLIRCompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 310, in compile\n    next_module = compile_ir(module, metadata)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/ascend/compiler.py\", line 778, in <lambda>\n    lambda src, metadata: linalg_to_bin_enable_npu_compile_A2_A3(\n                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/ascend/compiler.py\", line 549, in linalg_to_bin_enable_npu_compile_A2_A3\n    ret = subprocess.run(cmd_list, capture_output=True, check=True)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/subprocess.py\", line 571, in run\n    raise CalledProcessError(retcode, process.args,\nsubprocess.CalledProcessError: Command '['/usr/local/Ascend/cann-9.0.0/tools/bishengi\n... [truncated 3276 chars] ...\nl buffer.)\nloc(\"/tmp/tmpdp8kpok7/kernel.ttadapter.mlir\":2:1): error: Failed to run BiShengHIR pipeline\n\nloc(\"/tmp/tmpdp8kpok7/kernel.ttadapter.mlir\":3:3): error: ub overflow, requires 2397184 bits while 1572864 bits available! (possible reason: tiling basic block is too large or block number is more than what user expect due to multi-buffer feature is enabled and some ops need extra local buffer.)\nloc(\"/tmp/tmpdp8kpok7/kernel.ttadapter.mlir\":2:1): error: Failed to run BiShengHIR pipeline\n\nloc(\"/tmp/tmpdp8kpok7/kernel.ttadapter.mlir\":3:3): error: ub overflow, requires 2397184 bits while 1572864 bits available! (possible reason: tiling basic block is too large or block number is more than what user expect due to multi-buffer feature is enabled and some ops need extra local buffer.)\n[ERROR] Failed to run BiShengIR pipeline\n\n\n[INFO]: The compiled kernel cache is in /root/.triton/cache/XMZtEQjvsg1dozyNrZPYJ374Ja5AwCtLFxD6Lvjy8go\n\n///------------------[ERROR][Triton][END]------------------\n\n"
+    },
+    {
+      "case_idx": 47,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            527,
+            512
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 512
+        },
+        {
+          "type": "scalar",
+          "value": 31
+        },
+        {
+          "type": "scalar",
+          "value": 17
+        }
+      ],
+      "error_type": "MLIRCompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 310, in compile\n    next_module = compile_ir(module, metadata)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/ascend/compiler.py\", line 778, in <lambda>\n    lambda src, metadata: linalg_to_bin_enable_npu_compile_A2_A3(\n                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/ascend/compiler.py\", line 549, in linalg_to_bin_enable_npu_compile_A2_A3\n    ret = subprocess.run(cmd_list, capture_output=True, check=True)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/subprocess.py\", line 571, in run\n    raise CalledProcessError(retcode, process.args,\nsubprocess.CalledProcessError: Command '['/usr/local/Ascend/cann-9.0.0/tools/bishengi\n... [truncated 3276 chars] ...\nl buffer.)\nloc(\"/tmp/tmptkcp48tt/kernel.ttadapter.mlir\":2:1): error: Failed to run BiShengHIR pipeline\n\nloc(\"/tmp/tmptkcp48tt/kernel.ttadapter.mlir\":3:3): error: ub overflow, requires 2134016 bits while 1572864 bits available! (possible reason: tiling basic block is too large or block number is more than what user expect due to multi-buffer feature is enabled and some ops need extra local buffer.)\nloc(\"/tmp/tmptkcp48tt/kernel.ttadapter.mlir\":2:1): error: Failed to run BiShengHIR pipeline\n\nloc(\"/tmp/tmptkcp48tt/kernel.ttadapter.mlir\":3:3): error: ub overflow, requires 2134016 bits while 1572864 bits available! (possible reason: tiling basic block is too large or block number is more than what user expect due to multi-buffer feature is enabled and some ops need extra local buffer.)\n[ERROR] Failed to run BiShengIR pipeline\n\n\n[INFO]: The compiled kernel cache is in /root/.triton/cache/P36Z3Net6jpVPxIQZ7KZg6kaW1BCNFbjETaPgvGIml8\n\n///------------------[ERROR][Triton][END]------------------\n\n"
+    },
+    {
+      "case_idx": 48,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            319,
+            512
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "scalar",
+          "value": 512
+        },
+        {
+          "type": "scalar",
+          "value": 29
+        },
+        {
+          "type": "scalar",
+          "value": 11
+        }
+      ],
+      "error_type": "MLIRCompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 310, in compile\n    next_module = compile_ir(module, metadata)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/ascend/compiler.py\", line 778, in <lambda>\n    lambda src, metadata: linalg_to_bin_enable_npu_compile_A2_A3(\n                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/ascend/compiler.py\", line 549, in linalg_to_bin_enable_npu_compile_A2_A3\n    ret = subprocess.run(cmd_list, capture_output=True, check=True)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/subprocess.py\", line 571, in run\n    raise CalledProcessError(retcode, process.args,\nsubprocess.CalledProcessError: Command '['/usr/local/Ascend/cann-9.0.0/tools/bishengi\n... [truncated 3276 chars] ...\nl buffer.)\nloc(\"/tmp/tmpsylxnxih/kernel.ttadapter.mlir\":2:1): error: Failed to run BiShengHIR pipeline\n\nloc(\"/tmp/tmpsylxnxih/kernel.ttadapter.mlir\":3:3): error: ub overflow, requires 2125824 bits while 1572864 bits available! (possible reason: tiling basic block is too large or block number is more than what user expect due to multi-buffer feature is enabled and some ops need extra local buffer.)\nloc(\"/tmp/tmpsylxnxih/kernel.ttadapter.mlir\":2:1): error: Failed to run BiShengHIR pipeline\n\nloc(\"/tmp/tmpsylxnxih/kernel.ttadapter.mlir\":3:3): error: ub overflow, requires 2125824 bits while 1572864 bits available! (possible reason: tiling basic block is too large or block number is more than what user expect due to multi-buffer feature is enabled and some ops need extra local buffer.)\n[ERROR] Failed to run BiShengIR pipeline\n\n\n[INFO]: The compiled kernel cache is in /root/.triton/cache/nDe3swUrSpUKnfeoaqC9FzV5yiFGeg7Y17dOlGBWgmo\n\n///------------------[ERROR][Triton][END]------------------\n\n"
+    },
+    {
+      "case_idx": 49,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            713,
+            512
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": 512
+        },
+        {
+          "type": "scalar",
+          "value": 23
+        },
+        {
+          "type": "scalar",
+          "value": 31
+        }
+      ],
+      "error_type": "MLIRCompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 310, in compile\n    next_module = compile_ir(module, metadata)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/ascend/compiler.py\", line 778, in <lambda>\n    lambda src, metadata: linalg_to_bin_enable_npu_compile_A2_A3(\n                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/ascend/compiler.py\", line 549, in linalg_to_bin_enable_npu_compile_A2_A3\n    ret = subprocess.run(cmd_list, capture_output=True, check=True)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/subprocess.py\", line 571, in run\n    raise CalledProcessError(retcode, process.args,\nsubprocess.CalledProcessError: Command '['/usr/local/Ascend/cann-9.0.0/tools/bishengi\n... [truncated 3276 chars] ...\nl buffer.)\nloc(\"/tmp/tmpge0lq7iz/kernel.ttadapter.mlir\":2:1): error: Failed to run BiShengHIR pipeline\n\nloc(\"/tmp/tmpge0lq7iz/kernel.ttadapter.mlir\":3:3): error: ub overflow, requires 2397184 bits while 1572864 bits available! (possible reason: tiling basic block is too large or block number is more than what user expect due to multi-buffer feature is enabled and some ops need extra local buffer.)\nloc(\"/tmp/tmpge0lq7iz/kernel.ttadapter.mlir\":2:1): error: Failed to run BiShengHIR pipeline\n\nloc(\"/tmp/tmpge0lq7iz/kernel.ttadapter.mlir\":3:3): error: ub overflow, requires 2397184 bits while 1572864 bits available! (possible reason: tiling basic block is too large or block number is more than what user expect due to multi-buffer feature is enabled and some ops need extra local buffer.)\n[ERROR] Failed to run BiShengIR pipeline\n\n\n[INFO]: The compiled kernel cache is in /root/.triton/cache/NCxjDFp7CHs_mqR2Vtphr34rOBtzIKxmHiohuMw6LOg\n\n///------------------[ERROR][Triton][END]------------------\n\n"
+    },
+    {
+      "case_idx": 50,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            667,
+            512
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 512
+        },
+        {
+          "type": "scalar",
+          "value": 29
+        },
+        {
+          "type": "scalar",
+          "value": 23
+        }
+      ],
+      "error_type": "MLIRCompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 310, in compile\n    next_module = compile_ir(module, metadata)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/ascend/compiler.py\", line 778, in <lambda>\n    lambda src, metadata: linalg_to_bin_enable_npu_compile_A2_A3(\n                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/ascend/compiler.py\", line 549, in linalg_to_bin_enable_npu_compile_A2_A3\n    ret = subprocess.run(cmd_list, capture_output=True, check=True)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/subprocess.py\", line 571, in run\n    raise CalledProcessError(retcode, process.args,\nsubprocess.CalledProcessError: Command '['/usr/local/Ascend/cann-9.0.0/tools/bishengi\n... [truncated 3276 chars] ...\nl buffer.)\nloc(\"/tmp/tmpcgzhl04m/kernel.ttadapter.mlir\":2:1): error: Failed to run BiShengHIR pipeline\n\nloc(\"/tmp/tmpcgzhl04m/kernel.ttadapter.mlir\":3:3): error: ub overflow, requires 2134016 bits while 1572864 bits available! (possible reason: tiling basic block is too large or block number is more than what user expect due to multi-buffer feature is enabled and some ops need extra local buffer.)\nloc(\"/tmp/tmpcgzhl04m/kernel.ttadapter.mlir\":2:1): error: Failed to run BiShengHIR pipeline\n\nloc(\"/tmp/tmpcgzhl04m/kernel.ttadapter.mlir\":3:3): error: ub overflow, requires 2134016 bits while 1572864 bits available! (possible reason: tiling basic block is too large or block number is more than what user expect due to multi-buffer feature is enabled and some ops need extra local buffer.)\n[ERROR] Failed to run BiShengIR pipeline\n\n\n[INFO]: The compiled kernel cache is in /root/.triton/cache/028T1CSEoZym5ORODusbLDofZfbiXV_8SIPZctPIFZ4\n\n///------------------[ERROR][Triton][END]------------------\n\n"
+    }
+  ]
+}

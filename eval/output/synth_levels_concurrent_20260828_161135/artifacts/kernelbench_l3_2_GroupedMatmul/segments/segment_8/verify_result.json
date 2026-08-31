@@ -1,0 +1,747 @@
+{
+  "op_name": "kernelbench_l3_2_GroupedMatmul",
+  "total_cases": 50,
+  "passed_cases": 28,
+  "failed_cases": 22,
+  "failures": [
+    {
+      "case_idx": 1,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            8,
+            16
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            16,
+            32
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2
+          ],
+          "dtype": "torch.int32"
+        }
+      ],
+      "error_type": "MLIRCompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 310, in compile\n    next_module = compile_ir(module, metadata)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/ascend/compiler.py\", line 767, in <lambda>\n    stages[\"ttadapter\"] = lambda src, metadata: ttir_to_linalg(\n                                                ^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/ascend/compiler.py\", line 135, in ttir_to_linalg\n    ret = subprocess.run(cmd_list, capture_output=True, check=True)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/subprocess.py\", line 571, in run\n    raise CalledProcessError(retcode, process.args,\nsubprocess.CalledProcessError: Command '['/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/a\n... [truncated 4791 chars] ...\ne no location!\n<unknown>:0: note: see current operation: \"linalg.yield\"(%arg21) : (f32) -> ()\n<unknown>:0: warning: %105 = \"arith.mulf\"(%arg16, %arg17) <{fastmath = #arith.fastmath<none>}> : (f32, f32) -> f32 and its users all have no location!\n<unknown>:0: note: see current operation: %105 = \"arith.mulf\"(%arg16, %arg17) <{fastmath = #arith.fastmath<none>}> : (f32, f32) -> f32\n<unknown>:0: warning: %106 = \"arith.addf\"(%arg18, %105) <{fastmath = #arith.fastmath<none>}> : (f32, f32) -> f32 and its users all have no location!\n<unknown>:0: note: see current operation: %106 = \"arith.addf\"(%arg18, %105) <{fastmath = #arith.fastmath<none>}> : (f32, f32) -> f32\n<unknown>:0: warning: \"linalg.yield\"(%106) : (f32) -> () and its users all have no location!\n<unknown>:0: note: see current operation: \"linalg.yield\"(%106) : (f32) -> ()\n\n\n[INFO]: The compiled kernel cache is in /root/.triton/cache/UmqkN4eEI7hEEzYyOFuGCQHRnKkU2PnBV18BILtnYX4\n\n///------------------[ERROR][Triton][END]------------------\n\n"
+    },
+    {
+      "case_idx": 2,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            32,
+            16
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            16,
+            8
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            4
+          ],
+          "dtype": "torch.int32"
+        }
+      ],
+      "error_type": "MLIRCompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 310, in compile\n    next_module = compile_ir(module, metadata)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/ascend/compiler.py\", line 767, in <lambda>\n    stages[\"ttadapter\"] = lambda src, metadata: ttir_to_linalg(\n                                                ^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/ascend/compiler.py\", line 135, in ttir_to_linalg\n    ret = subprocess.run(cmd_list, capture_output=True, check=True)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/subprocess.py\", line 571, in run\n    raise CalledProcessError(retcode, process.args,\nsubprocess.CalledProcessError: Command '['/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/a\n... [truncated 4609 chars] ...\n all have no location!\n<unknown>:0: note: see current operation: \"linalg.yield\"(%arg19) : (f32) -> ()\n<unknown>:0: warning: %97 = \"arith.mulf\"(%arg14, %arg15) <{fastmath = #arith.fastmath<none>}> : (f32, f32) -> f32 and its users all have no location!\n<unknown>:0: note: see current operation: %97 = \"arith.mulf\"(%arg14, %arg15) <{fastmath = #arith.fastmath<none>}> : (f32, f32) -> f32\n<unknown>:0: warning: %98 = \"arith.addf\"(%arg16, %97) <{fastmath = #arith.fastmath<none>}> : (f32, f32) -> f32 and its users all have no location!\n<unknown>:0: note: see current operation: %98 = \"arith.addf\"(%arg16, %97) <{fastmath = #arith.fastmath<none>}> : (f32, f32) -> f32\n<unknown>:0: warning: \"linalg.yield\"(%98) : (f32) -> () and its users all have no location!\n<unknown>:0: note: see current operation: \"linalg.yield\"(%98) : (f32) -> ()\n\n\n[INFO]: The compiled kernel cache is in /root/.triton/cache/hZY0L0wSV-vUuAVDOiAWcz44j9D0-U4uLjdJn5Bn1Yo\n\n///------------------[ERROR][Triton][END]------------------\n\n"
+    },
+    {
+      "case_idx": 3,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            64,
+            32
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            8,
+            32,
+            16
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            8
+          ],
+          "dtype": "torch.int32"
+        }
+      ],
+      "error_type": "MLIRCompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 310, in compile\n    next_module = compile_ir(module, metadata)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/ascend/compiler.py\", line 767, in <lambda>\n    stages[\"ttadapter\"] = lambda src, metadata: ttir_to_linalg(\n                                                ^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/ascend/compiler.py\", line 135, in ttir_to_linalg\n    ret = subprocess.run(cmd_list, capture_output=True, check=True)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/subprocess.py\", line 571, in run\n    raise CalledProcessError(retcode, process.args,\nsubprocess.CalledProcessError: Command '['/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/a\n... [truncated 4965 chars] ...\ne no location!\n<unknown>:0: note: see current operation: \"linalg.yield\"(%arg21) : (f32) -> ()\n<unknown>:0: warning: %109 = \"arith.mulf\"(%arg16, %arg17) <{fastmath = #arith.fastmath<none>}> : (f32, f32) -> f32 and its users all have no location!\n<unknown>:0: note: see current operation: %109 = \"arith.mulf\"(%arg16, %arg17) <{fastmath = #arith.fastmath<none>}> : (f32, f32) -> f32\n<unknown>:0: warning: %110 = \"arith.addf\"(%arg18, %109) <{fastmath = #arith.fastmath<none>}> : (f32, f32) -> f32 and its users all have no location!\n<unknown>:0: note: see current operation: %110 = \"arith.addf\"(%arg18, %109) <{fastmath = #arith.fastmath<none>}> : (f32, f32) -> f32\n<unknown>:0: warning: \"linalg.yield\"(%110) : (f32) -> () and its users all have no location!\n<unknown>:0: note: see current operation: \"linalg.yield\"(%110) : (f32) -> ()\n\n\n[INFO]: The compiled kernel cache is in /root/.triton/cache/yDoWBUMKbRgmrhDXxhMfYjXhUj_HyWEmMRr2MlHdwHo\n\n///------------------[ERROR][Triton][END]------------------\n\n"
+    },
+    {
+      "case_idx": 4,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            16,
+            32
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            32,
+            64
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2
+          ],
+          "dtype": "torch.int32"
+        }
+      ],
+      "error_type": "MLIRCompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 310, in compile\n    next_module = compile_ir(module, metadata)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/ascend/compiler.py\", line 767, in <lambda>\n    stages[\"ttadapter\"] = lambda src, metadata: ttir_to_linalg(\n                                                ^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/ascend/compiler.py\", line 135, in ttir_to_linalg\n    ret = subprocess.run(cmd_list, capture_output=True, check=True)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/subprocess.py\", line 571, in run\n    raise CalledProcessError(retcode, process.args,\nsubprocess.CalledProcessError: Command '['/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/a\n... [truncated 4965 chars] ...\ne no location!\n<unknown>:0: note: see current operation: \"linalg.yield\"(%arg21) : (f32) -> ()\n<unknown>:0: warning: %113 = \"arith.mulf\"(%arg16, %arg17) <{fastmath = #arith.fastmath<none>}> : (f32, f32) -> f32 and its users all have no location!\n<unknown>:0: note: see current operation: %113 = \"arith.mulf\"(%arg16, %arg17) <{fastmath = #arith.fastmath<none>}> : (f32, f32) -> f32\n<unknown>:0: warning: %114 = \"arith.addf\"(%arg18, %113) <{fastmath = #arith.fastmath<none>}> : (f32, f32) -> f32 and its users all have no location!\n<unknown>:0: note: see current operation: %114 = \"arith.addf\"(%arg18, %113) <{fastmath = #arith.fastmath<none>}> : (f32, f32) -> f32\n<unknown>:0: warning: \"linalg.yield\"(%114) : (f32) -> () and its users all have no location!\n<unknown>:0: note: see current operation: \"linalg.yield\"(%114) : (f32) -> ()\n\n\n[INFO]: The compiled kernel cache is in /root/.triton/cache/6lwpji84XxhyMgI_fmyDL641aHxu3SggKHQeWSPW5ys\n\n///------------------[ERROR][Triton][END]------------------\n\n"
+    },
+    {
+      "case_idx": 5,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            24,
+            16
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            3,
+            16,
+            8
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            3
+          ],
+          "dtype": "torch.int32"
+        }
+      ],
+      "error_type": "MLIRCompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 310, in compile\n    next_module = compile_ir(module, metadata)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/ascend/compiler.py\", line 767, in <lambda>\n    stages[\"ttadapter\"] = lambda src, metadata: ttir_to_linalg(\n                                                ^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/ascend/compiler.py\", line 135, in ttir_to_linalg\n    ret = subprocess.run(cmd_list, capture_output=True, check=True)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/subprocess.py\", line 571, in run\n    raise CalledProcessError(retcode, process.args,\nsubprocess.CalledProcessError: Command '['/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/a\n... [truncated 4609 chars] ...\n all have no location!\n<unknown>:0: note: see current operation: \"linalg.yield\"(%arg19) : (f32) -> ()\n<unknown>:0: warning: %97 = \"arith.mulf\"(%arg14, %arg15) <{fastmath = #arith.fastmath<none>}> : (f32, f32) -> f32 and its users all have no location!\n<unknown>:0: note: see current operation: %97 = \"arith.mulf\"(%arg14, %arg15) <{fastmath = #arith.fastmath<none>}> : (f32, f32) -> f32\n<unknown>:0: warning: %98 = \"arith.addf\"(%arg16, %97) <{fastmath = #arith.fastmath<none>}> : (f32, f32) -> f32 and its users all have no location!\n<unknown>:0: note: see current operation: %98 = \"arith.addf\"(%arg16, %97) <{fastmath = #arith.fastmath<none>}> : (f32, f32) -> f32\n<unknown>:0: warning: \"linalg.yield\"(%98) : (f32) -> () and its users all have no location!\n<unknown>:0: note: see current operation: \"linalg.yield\"(%98) : (f32) -> ()\n\n\n[INFO]: The compiled kernel cache is in /root/.triton/cache/P1eSprdZtWvEadhdiII2E7AVk0PMJVDoOge9tLOw1DA\n\n///------------------[ERROR][Triton][END]------------------\n\n"
+    },
+    {
+      "case_idx": 6,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            40,
+            32
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            5,
+            32,
+            16
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            5
+          ],
+          "dtype": "torch.int32"
+        }
+      ],
+      "error_type": "MLIRCompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 310, in compile\n    next_module = compile_ir(module, metadata)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/ascend/compiler.py\", line 767, in <lambda>\n    stages[\"ttadapter\"] = lambda src, metadata: ttir_to_linalg(\n                                                ^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/ascend/compiler.py\", line 135, in ttir_to_linalg\n    ret = subprocess.run(cmd_list, capture_output=True, check=True)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/subprocess.py\", line 571, in run\n    raise CalledProcessError(retcode, process.args,\nsubprocess.CalledProcessError: Command '['/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/a\n... [truncated 4965 chars] ...\ne no location!\n<unknown>:0: note: see current operation: \"linalg.yield\"(%arg21) : (f32) -> ()\n<unknown>:0: warning: %109 = \"arith.mulf\"(%arg16, %arg17) <{fastmath = #arith.fastmath<none>}> : (f32, f32) -> f32 and its users all have no location!\n<unknown>:0: note: see current operation: %109 = \"arith.mulf\"(%arg16, %arg17) <{fastmath = #arith.fastmath<none>}> : (f32, f32) -> f32\n<unknown>:0: warning: %110 = \"arith.addf\"(%arg18, %109) <{fastmath = #arith.fastmath<none>}> : (f32, f32) -> f32 and its users all have no location!\n<unknown>:0: note: see current operation: %110 = \"arith.addf\"(%arg18, %109) <{fastmath = #arith.fastmath<none>}> : (f32, f32) -> f32\n<unknown>:0: warning: \"linalg.yield\"(%110) : (f32) -> () and its users all have no location!\n<unknown>:0: note: see current operation: \"linalg.yield\"(%110) : (f32) -> ()\n\n\n[INFO]: The compiled kernel cache is in /root/.triton/cache/T2cSgYBoN_ODg-oldT_kxzs_fuyezDN-KWN2fObFvxo\n\n///------------------[ERROR][Triton][END]------------------\n\n"
+    },
+    {
+      "case_idx": 7,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            56,
+            64
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            7,
+            64,
+            32
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            7
+          ],
+          "dtype": "torch.int32"
+        }
+      ],
+      "error_type": "MLIRCompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 310, in compile\n    next_module = compile_ir(module, metadata)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/ascend/compiler.py\", line 767, in <lambda>\n    stages[\"ttadapter\"] = lambda src, metadata: ttir_to_linalg(\n                                                ^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/ascend/compiler.py\", line 135, in ttir_to_linalg\n    ret = subprocess.run(cmd_list, capture_output=True, check=True)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/subprocess.py\", line 571, in run\n    raise CalledProcessError(retcode, process.args,\nsubprocess.CalledProcessError: Command '['/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/a\n... [truncated 4965 chars] ...\ne no location!\n<unknown>:0: note: see current operation: \"linalg.yield\"(%arg21) : (f32) -> ()\n<unknown>:0: warning: %113 = \"arith.mulf\"(%arg16, %arg17) <{fastmath = #arith.fastmath<none>}> : (f32, f32) -> f32 and its users all have no location!\n<unknown>:0: note: see current operation: %113 = \"arith.mulf\"(%arg16, %arg17) <{fastmath = #arith.fastmath<none>}> : (f32, f32) -> f32\n<unknown>:0: warning: %114 = \"arith.addf\"(%arg18, %113) <{fastmath = #arith.fastmath<none>}> : (f32, f32) -> f32 and its users all have no location!\n<unknown>:0: note: see current operation: %114 = \"arith.addf\"(%arg18, %113) <{fastmath = #arith.fastmath<none>}> : (f32, f32) -> f32\n<unknown>:0: warning: \"linalg.yield\"(%114) : (f32) -> () and its users all have no location!\n<unknown>:0: note: see current operation: \"linalg.yield\"(%114) : (f32) -> ()\n\n\n[INFO]: The compiled kernel cache is in /root/.triton/cache/6BkB3ze2IL2s9Arl3BhpQ6Kqyq-UoTC6-WRS8AaSk08\n\n///------------------[ERROR][Triton][END]------------------\n\n"
+    },
+    {
+      "case_idx": 8,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            72,
+            128
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            9,
+            128,
+            64
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            9
+          ],
+          "dtype": "torch.int32"
+        }
+      ],
+      "error_type": "MLIRCompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 310, in compile\n    next_module = compile_ir(module, metadata)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/ascend/compiler.py\", line 767, in <lambda>\n    stages[\"ttadapter\"] = lambda src, metadata: ttir_to_linalg(\n                                                ^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/ascend/compiler.py\", line 135, in ttir_to_linalg\n    ret = subprocess.run(cmd_list, capture_output=True, check=True)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/subprocess.py\", line 571, in run\n    raise CalledProcessError(retcode, process.args,\nsubprocess.CalledProcessError: Command '['/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/a\n... [truncated 4967 chars] ...\ne no location!\n<unknown>:0: note: see current operation: \"linalg.yield\"(%arg23) : (i32) -> ()\n<unknown>:0: warning: %113 = \"arith.mulf\"(%arg16, %arg17) <{fastmath = #arith.fastmath<none>}> : (f32, f32) -> f32 and its users all have no location!\n<unknown>:0: note: see current operation: %113 = \"arith.mulf\"(%arg16, %arg17) <{fastmath = #arith.fastmath<none>}> : (f32, f32) -> f32\n<unknown>:0: warning: %114 = \"arith.addf\"(%arg18, %113) <{fastmath = #arith.fastmath<none>}> : (f32, f32) -> f32 and its users all have no location!\n<unknown>:0: note: see current operation: %114 = \"arith.addf\"(%arg18, %113) <{fastmath = #arith.fastmath<none>}> : (f32, f32) -> f32\n<unknown>:0: warning: \"linalg.yield\"(%114) : (f32) -> () and its users all have no location!\n<unknown>:0: note: see current operation: \"linalg.yield\"(%114) : (f32) -> ()\n\n\n[INFO]: The compiled kernel cache is in /root/.triton/cache/F6HPUpefWEOkhKUS4_7eiGVAXDD3uyo_SKNs9PQ_Izc\n\n///------------------[ERROR][Triton][END]------------------\n\n"
+    },
+    {
+      "case_idx": 9,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            48,
+            64
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            6,
+            64,
+            128
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            6
+          ],
+          "dtype": "torch.int32"
+        }
+      ],
+      "error_type": "MLIRCompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 310, in compile\n    next_module = compile_ir(module, metadata)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/ascend/compiler.py\", line 767, in <lambda>\n    stages[\"ttadapter\"] = lambda src, metadata: ttir_to_linalg(\n                                                ^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/ascend/compiler.py\", line 135, in ttir_to_linalg\n    ret = subprocess.run(cmd_list, capture_output=True, check=True)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/subprocess.py\", line 571, in run\n    raise CalledProcessError(retcode, process.args,\nsubprocess.CalledProcessError: Command '['/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/a\n... [truncated 5139 chars] ...\ne no location!\n<unknown>:0: note: see current operation: \"linalg.yield\"(%arg23) : (f32) -> ()\n<unknown>:0: warning: %126 = \"arith.mulf\"(%arg16, %arg17) <{fastmath = #arith.fastmath<none>}> : (f32, f32) -> f32 and its users all have no location!\n<unknown>:0: note: see current operation: %126 = \"arith.mulf\"(%arg16, %arg17) <{fastmath = #arith.fastmath<none>}> : (f32, f32) -> f32\n<unknown>:0: warning: %127 = \"arith.addf\"(%arg18, %126) <{fastmath = #arith.fastmath<none>}> : (f32, f32) -> f32 and its users all have no location!\n<unknown>:0: note: see current operation: %127 = \"arith.addf\"(%arg18, %126) <{fastmath = #arith.fastmath<none>}> : (f32, f32) -> f32\n<unknown>:0: warning: \"linalg.yield\"(%127) : (f32) -> () and its users all have no location!\n<unknown>:0: note: see current operation: \"linalg.yield\"(%127) : (f32) -> ()\n\n\n[INFO]: The compiled kernel cache is in /root/.triton/cache/J0FQR-3eUbKpGkJLG4pSm8e2ZcTbz2m-I-M3ViEemRc\n\n///------------------[ERROR][Triton][END]------------------\n\n"
+    },
+    {
+      "case_idx": 10,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            80,
+            256
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            10,
+            256,
+            128
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            10
+          ],
+          "dtype": "torch.int32"
+        }
+      ],
+      "error_type": "MLIRCompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 310, in compile\n    next_module = compile_ir(module, metadata)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/ascend/compiler.py\", line 767, in <lambda>\n    stages[\"ttadapter\"] = lambda src, metadata: ttir_to_linalg(\n                                                ^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/ascend/compiler.py\", line 135, in ttir_to_linalg\n    ret = subprocess.run(cmd_list, capture_output=True, check=True)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/subprocess.py\", line 571, in run\n    raise CalledProcessError(retcode, process.args,\nsubprocess.CalledProcessError: Command '['/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/a\n... [truncated 5315 chars] ...\ne no location!\n<unknown>:0: note: see current operation: \"linalg.yield\"(%arg25) : (i32) -> ()\n<unknown>:0: warning: %134 = \"arith.mulf\"(%arg18, %arg19) <{fastmath = #arith.fastmath<none>}> : (f32, f32) -> f32 and its users all have no location!\n<unknown>:0: note: see current operation: %134 = \"arith.mulf\"(%arg18, %arg19) <{fastmath = #arith.fastmath<none>}> : (f32, f32) -> f32\n<unknown>:0: warning: %135 = \"arith.addf\"(%arg20, %134) <{fastmath = #arith.fastmath<none>}> : (f32, f32) -> f32 and its users all have no location!\n<unknown>:0: note: see current operation: %135 = \"arith.addf\"(%arg20, %134) <{fastmath = #arith.fastmath<none>}> : (f32, f32) -> f32\n<unknown>:0: warning: \"linalg.yield\"(%135) : (f32) -> () and its users all have no location!\n<unknown>:0: note: see current operation: \"linalg.yield\"(%135) : (f32) -> ()\n\n\n[INFO]: The compiled kernel cache is in /root/.triton/cache/ma1iJn644laII2fnI1onEERSqL0aU5AeMhhfVwuXZOw\n\n///------------------[ERROR][Triton][END]------------------\n\n"
+    },
+    {
+      "case_idx": 11,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            160,
+            1024
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            16,
+            1024,
+            1280
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            16
+          ],
+          "dtype": "torch.int32"
+        }
+      ],
+      "error_type": "MLIRCompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 310, in compile\n    next_module = compile_ir(module, metadata)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/ascend/compiler.py\", line 767, in <lambda>\n    stages[\"ttadapter\"] = lambda src, metadata: ttir_to_linalg(\n                                                ^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/ascend/compiler.py\", line 135, in ttir_to_linalg\n    ret = subprocess.run(cmd_list, capture_output=True, check=True)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/subprocess.py\", line 571, in run\n    raise CalledProcessError(retcode, process.args,\nsubprocess.CalledProcessError: Command '['/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/a\n... [truncated 5315 chars] ...\ne no location!\n<unknown>:0: note: see current operation: \"linalg.yield\"(%arg26) : (i32) -> ()\n<unknown>:0: warning: %135 = \"arith.mulf\"(%arg19, %arg20) <{fastmath = #arith.fastmath<none>}> : (f32, f32) -> f32 and its users all have no location!\n<unknown>:0: note: see current operation: %135 = \"arith.mulf\"(%arg19, %arg20) <{fastmath = #arith.fastmath<none>}> : (f32, f32) -> f32\n<unknown>:0: warning: %136 = \"arith.addf\"(%arg21, %135) <{fastmath = #arith.fastmath<none>}> : (f32, f32) -> f32 and its users all have no location!\n<unknown>:0: note: see current operation: %136 = \"arith.addf\"(%arg21, %135) <{fastmath = #arith.fastmath<none>}> : (f32, f32) -> f32\n<unknown>:0: warning: \"linalg.yield\"(%136) : (f32) -> () and its users all have no location!\n<unknown>:0: note: see current operation: \"linalg.yield\"(%136) : (f32) -> ()\n\n\n[INFO]: The compiled kernel cache is in /root/.triton/cache/m5N2sE7HH4VMNfHDy9As3pfqBv5czJsHW1TPgFxQkPc\n\n///------------------[ERROR][Triton][END]------------------\n\n"
+    },
+    {
+      "case_idx": 14,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            3,
+            32,
+            16
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            3,
+            16,
+            8
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        }
+      ],
+      "error_type": "AccuracyError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card4/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 898, in run_single_case\n    compare(\n  File \"/opt/workspace_card4/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 677, in compare\n    _compare_float_output(fw_finite, impl_finite, ctx)\n  File \"/opt/workspace_card4/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 596, in _compare_float_output\n    _check_accuracy_npu_benchmark(fw_finite, impl_finite, ctx.data_type)\n  File \"/opt/workspace_card4/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 845, in _check_accuracy_npu_benchmark\n    raise AccuracyError(\nAccuracyError: 验证失败 dtype=torch.float32: max_error_cap_violations=72/768 (atol=1.000000e-03, rtol=1.220703e-04, max_abs_diff=9.083514e+01, ok=False), matched_ratio=0.906250 (req>=0.9, ok=True), MERE=1.002388e-01 (rel_thr=1.220703e-04, ok=False); small_count=0, normal_count=768\n前 10 个 max_error_cap 违例位置:\n  位置[32]: fram\n... [truncated 1992 chars] ...\nramework=-5.876541e+00, impl=-4.162540e+00, |diff|=1.714000e+00 (允许<=atol+rtol*|golden|=1.717351e-03)\n  位置[34]: framework=8.637437e+00, impl=-4.309364e+00, |diff|=1.294680e+01 (允许<=atol+rtol*|golden|=2.054375e-03)\n  位置[35]: framework=1.198388e+01, impl=-4.663487e+00, |diff|=1.664736e+01 (允许<=atol+rtol*|golden|=2.462876e-03)\n  位置[36]: framework=2.424823e+01, impl=-4.553152e+00, |diff|=2.880138e+01 (允许<=atol+rtol*|golden|=3.959989e-03)\n  位置[37]: framework=-3.540840e+01, impl=-4.621580e+00, |diff|=3.078682e+01 (允许<=atol+rtol*|golden|=5.322315e-03)\n  位置[38]: framework=4.198638e+01, impl=-4.583705e+00, |diff|=4.657009e+01 (允许<=atol+rtol*|golden|=6.125291e-03)\n  位置[39]: framework=1.206426e+01, impl=-4.781034e+00, |diff|=1.684529e+01 (允许<=atol+rtol*|golden|=2.472688e-03)\n  位置[72]: framework=3.901883e+01, impl=-4.473776e+00, |diff|=4.349261e+01 (允许<=atol+rtol*|golden|=5.763041e-03)\n  位置[73]: framework=3.552502e+01, impl=-4.363616e+00, |diff|=3.988864e+01 (允许<=atol+rtol*|golden|=5.336551e-03)\n\n",
+      "metrics": {
+        "matched_ratio": 0.90625,
+        "max_abs_diff": 90.83513641357422,
+        "MERE": 0.10023876279592514,
+        "rel_threshold": 0.0001220703125,
+        "small_value_threshold": 6.103515625e-05,
+        "small_value_error": 9.313225746154785e-10,
+        "atol": 0.001,
+        "rtol": 0.0001220703125,
+        "max_error_cap_violation_count": 72,
+        "required_matched_ratio": 0.9,
+        "total_finite": 768,
+        "matched_count": 696,
+        "small_count": 0,
+        "normal_count": 768,
+        "checks": {
+          "max_error_cap": false,
+          "required_matched_ratio": true,
+          "MERE": false
+        }
+      }
+    },
+    {
+      "case_idx": 18,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            3,
+            32,
+            16
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            3,
+            16,
+            8
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        }
+      ],
+      "error_type": "AccuracyError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card4/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 898, in run_single_case\n    compare(\n  File \"/opt/workspace_card4/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 677, in compare\n    _compare_float_output(fw_finite, impl_finite, ctx)\n  File \"/opt/workspace_card4/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 596, in _compare_float_output\n    _check_accuracy_npu_benchmark(fw_finite, impl_finite, ctx.data_type)\n  File \"/opt/workspace_card4/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 845, in _check_accuracy_npu_benchmark\n    raise AccuracyError(\nAccuracyError: 验证失败 dtype=torch.float32: max_error_cap_violations=64/768 (atol=1.000000e-03, rtol=1.220703e-04, max_abs_diff=9.249506e+01, ok=False), matched_ratio=0.916667 (req>=0.9, ok=True), MERE=2.834237e-01 (rel_thr=1.220703e-04, ok=False); small_count=0, normal_count=768\n前 10 个 max_error_cap 违例位置:\n  位置[40]: fram\n... [truncated 2002 chars] ...\nwork=-5.896718e+00, impl=-2.844625e+00, |diff|=3.052094e+00 (允许<=atol+rtol*|golden|=1.719814e-03)\n  位置[42]: framework=-2.659430e+01, impl=-2.764158e+00, |diff|=2.383014e+01 (允许<=atol+rtol*|golden|=4.246375e-03)\n  位置[43]: framework=5.590200e+00, impl=-2.881544e+00, |diff|=8.471745e+00 (允许<=atol+rtol*|golden|=1.682397e-03)\n  位置[44]: framework=-1.493456e+01, impl=-3.012346e+00, |diff|=1.192221e+01 (允许<=atol+rtol*|golden|=2.823066e-03)\n  位置[45]: framework=1.048499e+01, impl=-2.870125e+00, |diff|=1.335511e+01 (允许<=atol+rtol*|golden|=2.279906e-03)\n  位置[46]: framework=6.988523e+00, impl=-2.761402e+00, |diff|=9.749925e+00 (允许<=atol+rtol*|golden|=1.853091e-03)\n  位置[47]: framework=6.045295e+01, impl=-2.782269e+00, |diff|=6.323522e+01 (允许<=atol+rtol*|golden|=8.379511e-03)\n  位置[168]: framework=4.390463e+01, impl=-2.786663e+00, |diff|=4.669130e+01 (允许<=atol+rtol*|golden|=6.359452e-03)\n  位置[169]: framework=-4.947383e-02, impl=-2.979224e+00, |diff|=2.929751e+00 (允许<=atol+rtol*|golden|=1.006039e-03)\n\n",
+      "metrics": {
+        "matched_ratio": 0.9166666666666666,
+        "max_abs_diff": 92.49506378173828,
+        "MERE": 0.28342369198799133,
+        "rel_threshold": 0.0001220703125,
+        "small_value_threshold": 6.103515625e-05,
+        "small_value_error": 9.313225746154785e-10,
+        "atol": 0.001,
+        "rtol": 0.0001220703125,
+        "max_error_cap_violation_count": 64,
+        "required_matched_ratio": 0.9,
+        "total_finite": 768,
+        "matched_count": 704,
+        "small_count": 0,
+        "normal_count": 768,
+        "checks": {
+          "max_error_cap": false,
+          "required_matched_ratio": true,
+          "MERE": false
+        }
+      }
+    },
+    {
+      "case_idx": 37,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            10,
+            32,
+            16
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            10,
+            16,
+            8
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        }
+      ],
+      "error_type": "AccuracyError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card4/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 898, in run_single_case\n    compare(\n  File \"/opt/workspace_card4/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 677, in compare\n    _compare_float_output(fw_finite, impl_finite, ctx)\n  File \"/opt/workspace_card4/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 596, in _compare_float_output\n    _check_accuracy_npu_benchmark(fw_finite, impl_finite, ctx.data_type)\n  File \"/opt/workspace_card4/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 845, in _check_accuracy_npu_benchmark\n    raise AccuracyError(\nAccuracyError: 验证失败 dtype=torch.float32: max_error_cap_violations=176/2560 (atol=1.000000e-03, rtol=1.220703e-04, max_abs_diff=2.988024e+02, ok=False), matched_ratio=0.931250 (req>=0.9, ok=True), MERE=6.873629e-02 (rel_thr=1.220703e-04, ok=False); small_count=0, normal_count=2560\n前 10 个 max_error_cap 违例位置:\n  位置[256]: \n... [truncated 2006 chars] ...\nmework=2.507942e+02, impl=3.709421e+00, |diff|=2.470848e+02 (允许<=atol+rtol*|golden|=3.161453e-02)\n  位置[258]: framework=2.202851e+02, impl=-1.815189e+00, |diff|=2.221003e+02 (允许<=atol+rtol*|golden|=2.789027e-02)\n  位置[259]: framework=2.410491e+02, impl=-1.190473e+00, |diff|=2.422395e+02 (允许<=atol+rtol*|golden|=3.042493e-02)\n  位置[260]: framework=2.183352e+02, impl=-5.581957e-01, |diff|=2.188934e+02 (允许<=atol+rtol*|golden|=2.765225e-02)\n  位置[261]: framework=2.593604e+02, impl=4.756649e+00, |diff|=2.546038e+02 (允许<=atol+rtol*|golden|=3.266021e-02)\n  位置[262]: framework=2.113744e+02, impl=2.227248e+00, |diff|=2.091471e+02 (允许<=atol+rtol*|golden|=2.680253e-02)\n  位置[263]: framework=2.474341e+02, impl=-2.949953e-02, |diff|=2.474636e+02 (允许<=atol+rtol*|golden|=3.120436e-02)\n  位置[424]: framework=2.405707e+02, impl=1.708954e+00, |diff|=2.388618e+02 (允许<=atol+rtol*|golden|=3.036655e-02)\n  位置[425]: framework=2.346566e+02, impl=-1.998201e+00, |diff|=2.366548e+02 (允许<=atol+rtol*|golden|=2.964461e-02)\n\n",
+      "metrics": {
+        "matched_ratio": 0.93125,
+        "max_abs_diff": 298.8023986816406,
+        "MERE": 0.06873629242181778,
+        "rel_threshold": 0.0001220703125,
+        "small_value_threshold": 6.103515625e-05,
+        "small_value_error": 9.313225746154785e-10,
+        "atol": 0.001,
+        "rtol": 0.0001220703125,
+        "max_error_cap_violation_count": 176,
+        "required_matched_ratio": 0.9,
+        "total_finite": 2560,
+        "matched_count": 2384,
+        "small_count": 0,
+        "normal_count": 2560,
+        "checks": {
+          "max_error_cap": false,
+          "required_matched_ratio": true,
+          "MERE": false
+        }
+      }
+    },
+    {
+      "case_idx": 43,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            36,
+            128
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            6,
+            128,
+            32
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            6
+          ],
+          "dtype": "torch.int32"
+        }
+      ],
+      "error_type": "MLIRCompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 310, in compile\n    next_module = compile_ir(module, metadata)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/ascend/compiler.py\", line 767, in <lambda>\n    stages[\"ttadapter\"] = lambda src, metadata: ttir_to_linalg(\n                                                ^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/ascend/compiler.py\", line 135, in ttir_to_linalg\n    ret = subprocess.run(cmd_list, capture_output=True, check=True)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/subprocess.py\", line 571, in run\n    raise CalledProcessError(retcode, process.args,\nsubprocess.CalledProcessError: Command '['/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/a\n... [truncated 5139 chars] ...\ne no location!\n<unknown>:0: note: see current operation: \"linalg.yield\"(%arg25) : (i32) -> ()\n<unknown>:0: warning: %124 = \"arith.mulf\"(%arg18, %arg19) <{fastmath = #arith.fastmath<none>}> : (f32, f32) -> f32 and its users all have no location!\n<unknown>:0: note: see current operation: %124 = \"arith.mulf\"(%arg18, %arg19) <{fastmath = #arith.fastmath<none>}> : (f32, f32) -> f32\n<unknown>:0: warning: %125 = \"arith.addf\"(%arg20, %124) <{fastmath = #arith.fastmath<none>}> : (f32, f32) -> f32 and its users all have no location!\n<unknown>:0: note: see current operation: %125 = \"arith.addf\"(%arg20, %124) <{fastmath = #arith.fastmath<none>}> : (f32, f32) -> f32\n<unknown>:0: warning: \"linalg.yield\"(%125) : (f32) -> () and its users all have no location!\n<unknown>:0: note: see current operation: \"linalg.yield\"(%125) : (f32) -> ()\n\n\n[INFO]: The compiled kernel cache is in /root/.triton/cache/AK9ra3_-4XLHnvjl4vo4S_Zhgr56452Dgo8HEu9p__w\n\n///------------------[ERROR][Triton][END]------------------\n\n"
+    },
+    {
+      "case_idx": 44,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            24,
+            256
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            256,
+            128
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            4
+          ],
+          "dtype": "torch.int32"
+        }
+      ],
+      "error_type": "MLIRCompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 310, in compile\n    next_module = compile_ir(module, metadata)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/ascend/compiler.py\", line 767, in <lambda>\n    stages[\"ttadapter\"] = lambda src, metadata: ttir_to_linalg(\n                                                ^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/ascend/compiler.py\", line 135, in ttir_to_linalg\n    ret = subprocess.run(cmd_list, capture_output=True, check=True)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/subprocess.py\", line 571, in run\n    raise CalledProcessError(retcode, process.args,\nsubprocess.CalledProcessError: Command '['/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/a\n... [truncated 5313 chars] ...\ne no location!\n<unknown>:0: note: see current operation: \"linalg.yield\"(%arg25) : (i32) -> ()\n<unknown>:0: warning: %137 = \"arith.mulf\"(%arg18, %arg19) <{fastmath = #arith.fastmath<none>}> : (f32, f32) -> f32 and its users all have no location!\n<unknown>:0: note: see current operation: %137 = \"arith.mulf\"(%arg18, %arg19) <{fastmath = #arith.fastmath<none>}> : (f32, f32) -> f32\n<unknown>:0: warning: %138 = \"arith.addf\"(%arg20, %137) <{fastmath = #arith.fastmath<none>}> : (f32, f32) -> f32 and its users all have no location!\n<unknown>:0: note: see current operation: %138 = \"arith.addf\"(%arg20, %137) <{fastmath = #arith.fastmath<none>}> : (f32, f32) -> f32\n<unknown>:0: warning: \"linalg.yield\"(%138) : (f32) -> () and its users all have no location!\n<unknown>:0: note: see current operation: \"linalg.yield\"(%138) : (f32) -> ()\n\n\n[INFO]: The compiled kernel cache is in /root/.triton/cache/JxRl6ROKu2bvcZH7AVf3d2kWhg0pccuEnl1ko9t9cXE\n\n///------------------[ERROR][Triton][END]------------------\n\n"
+    },
+    {
+      "case_idx": 45,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            16,
+            64
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            8,
+            64,
+            32
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            8
+          ],
+          "dtype": "torch.int32"
+        }
+      ],
+      "error_type": "MLIRCompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 310, in compile\n    next_module = compile_ir(module, metadata)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/ascend/compiler.py\", line 767, in <lambda>\n    stages[\"ttadapter\"] = lambda src, metadata: ttir_to_linalg(\n                                                ^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/ascend/compiler.py\", line 135, in ttir_to_linalg\n    ret = subprocess.run(cmd_list, capture_output=True, check=True)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/subprocess.py\", line 571, in run\n    raise CalledProcessError(retcode, process.args,\nsubprocess.CalledProcessError: Command '['/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/a\n... [truncated 4965 chars] ...\ne no location!\n<unknown>:0: note: see current operation: \"linalg.yield\"(%arg21) : (f32) -> ()\n<unknown>:0: warning: %113 = \"arith.mulf\"(%arg16, %arg17) <{fastmath = #arith.fastmath<none>}> : (f32, f32) -> f32 and its users all have no location!\n<unknown>:0: note: see current operation: %113 = \"arith.mulf\"(%arg16, %arg17) <{fastmath = #arith.fastmath<none>}> : (f32, f32) -> f32\n<unknown>:0: warning: %114 = \"arith.addf\"(%arg18, %113) <{fastmath = #arith.fastmath<none>}> : (f32, f32) -> f32 and its users all have no location!\n<unknown>:0: note: see current operation: %114 = \"arith.addf\"(%arg18, %113) <{fastmath = #arith.fastmath<none>}> : (f32, f32) -> f32\n<unknown>:0: warning: \"linalg.yield\"(%114) : (f32) -> () and its users all have no location!\n<unknown>:0: note: see current operation: \"linalg.yield\"(%114) : (f32) -> ()\n\n\n[INFO]: The compiled kernel cache is in /root/.triton/cache/XEp3b3oJHXDhnj8VzjEWWtjyAjojSdCWwVgoBthGnPc\n\n///------------------[ERROR][Triton][END]------------------\n\n"
+    },
+    {
+      "case_idx": 46,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            12,
+            16
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            3,
+            16,
+            8
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            3
+          ],
+          "dtype": "torch.int32"
+        }
+      ],
+      "error_type": "MLIRCompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 310, in compile\n    next_module = compile_ir(module, metadata)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/ascend/compiler.py\", line 767, in <lambda>\n    stages[\"ttadapter\"] = lambda src, metadata: ttir_to_linalg(\n                                                ^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/ascend/compiler.py\", line 135, in ttir_to_linalg\n    ret = subprocess.run(cmd_list, capture_output=True, check=True)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/subprocess.py\", line 571, in run\n    raise CalledProcessError(retcode, process.args,\nsubprocess.CalledProcessError: Command '['/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/a\n... [truncated 4609 chars] ...\n all have no location!\n<unknown>:0: note: see current operation: \"linalg.yield\"(%arg19) : (f32) -> ()\n<unknown>:0: warning: %97 = \"arith.mulf\"(%arg14, %arg15) <{fastmath = #arith.fastmath<none>}> : (f32, f32) -> f32 and its users all have no location!\n<unknown>:0: note: see current operation: %97 = \"arith.mulf\"(%arg14, %arg15) <{fastmath = #arith.fastmath<none>}> : (f32, f32) -> f32\n<unknown>:0: warning: %98 = \"arith.addf\"(%arg16, %97) <{fastmath = #arith.fastmath<none>}> : (f32, f32) -> f32 and its users all have no location!\n<unknown>:0: note: see current operation: %98 = \"arith.addf\"(%arg16, %97) <{fastmath = #arith.fastmath<none>}> : (f32, f32) -> f32\n<unknown>:0: warning: \"linalg.yield\"(%98) : (f32) -> () and its users all have no location!\n<unknown>:0: note: see current operation: \"linalg.yield\"(%98) : (f32) -> ()\n\n\n[INFO]: The compiled kernel cache is in /root/.triton/cache/evVOY1z222JCL0xfDSHg0zzR-1wo4Q-G5R-Cdd14q3g\n\n///------------------[ERROR][Triton][END]------------------\n\n"
+    },
+    {
+      "case_idx": 47,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            28,
+            32
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            7,
+            32,
+            16
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            7
+          ],
+          "dtype": "torch.int32"
+        }
+      ],
+      "error_type": "MLIRCompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 310, in compile\n    next_module = compile_ir(module, metadata)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/ascend/compiler.py\", line 767, in <lambda>\n    stages[\"ttadapter\"] = lambda src, metadata: ttir_to_linalg(\n                                                ^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/ascend/compiler.py\", line 135, in ttir_to_linalg\n    ret = subprocess.run(cmd_list, capture_output=True, check=True)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/subprocess.py\", line 571, in run\n    raise CalledProcessError(retcode, process.args,\nsubprocess.CalledProcessError: Command '['/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/a\n... [truncated 4965 chars] ...\ne no location!\n<unknown>:0: note: see current operation: \"linalg.yield\"(%arg21) : (f32) -> ()\n<unknown>:0: warning: %109 = \"arith.mulf\"(%arg16, %arg17) <{fastmath = #arith.fastmath<none>}> : (f32, f32) -> f32 and its users all have no location!\n<unknown>:0: note: see current operation: %109 = \"arith.mulf\"(%arg16, %arg17) <{fastmath = #arith.fastmath<none>}> : (f32, f32) -> f32\n<unknown>:0: warning: %110 = \"arith.addf\"(%arg18, %109) <{fastmath = #arith.fastmath<none>}> : (f32, f32) -> f32 and its users all have no location!\n<unknown>:0: note: see current operation: %110 = \"arith.addf\"(%arg18, %109) <{fastmath = #arith.fastmath<none>}> : (f32, f32) -> f32\n<unknown>:0: warning: \"linalg.yield\"(%110) : (f32) -> () and its users all have no location!\n<unknown>:0: note: see current operation: \"linalg.yield\"(%110) : (f32) -> ()\n\n\n[INFO]: The compiled kernel cache is in /root/.triton/cache/12I6LouUgW30njQ7Xas3SuNRONETftfNDdl8AP4GhKc\n\n///------------------[ERROR][Triton][END]------------------\n\n"
+    },
+    {
+      "case_idx": 48,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            30,
+            64
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            5,
+            64,
+            32
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            5
+          ],
+          "dtype": "torch.int32"
+        }
+      ],
+      "error_type": "MLIRCompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 310, in compile\n    next_module = compile_ir(module, metadata)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/ascend/compiler.py\", line 767, in <lambda>\n    stages[\"ttadapter\"] = lambda src, metadata: ttir_to_linalg(\n                                                ^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/ascend/compiler.py\", line 135, in ttir_to_linalg\n    ret = subprocess.run(cmd_list, capture_output=True, check=True)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/subprocess.py\", line 571, in run\n    raise CalledProcessError(retcode, process.args,\nsubprocess.CalledProcessError: Command '['/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/a\n... [truncated 4965 chars] ...\ne no location!\n<unknown>:0: note: see current operation: \"linalg.yield\"(%arg21) : (f32) -> ()\n<unknown>:0: warning: %113 = \"arith.mulf\"(%arg16, %arg17) <{fastmath = #arith.fastmath<none>}> : (f32, f32) -> f32 and its users all have no location!\n<unknown>:0: note: see current operation: %113 = \"arith.mulf\"(%arg16, %arg17) <{fastmath = #arith.fastmath<none>}> : (f32, f32) -> f32\n<unknown>:0: warning: %114 = \"arith.addf\"(%arg18, %113) <{fastmath = #arith.fastmath<none>}> : (f32, f32) -> f32 and its users all have no location!\n<unknown>:0: note: see current operation: %114 = \"arith.addf\"(%arg18, %113) <{fastmath = #arith.fastmath<none>}> : (f32, f32) -> f32\n<unknown>:0: warning: \"linalg.yield\"(%114) : (f32) -> () and its users all have no location!\n<unknown>:0: note: see current operation: \"linalg.yield\"(%114) : (f32) -> ()\n\n\n[INFO]: The compiled kernel cache is in /root/.triton/cache/JdfnvU4V40dP62_nsYy0osy5CYg7GaJVvPWjVuxx1Go\n\n///------------------[ERROR][Triton][END]------------------\n\n"
+    },
+    {
+      "case_idx": 49,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            18,
+            128
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            3,
+            128,
+            64
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            3
+          ],
+          "dtype": "torch.int32"
+        }
+      ],
+      "error_type": "MLIRCompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 310, in compile\n    next_module = compile_ir(module, metadata)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/ascend/compiler.py\", line 767, in <lambda>\n    stages[\"ttadapter\"] = lambda src, metadata: ttir_to_linalg(\n                                                ^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/ascend/compiler.py\", line 135, in ttir_to_linalg\n    ret = subprocess.run(cmd_list, capture_output=True, check=True)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/subprocess.py\", line 571, in run\n    raise CalledProcessError(retcode, process.args,\nsubprocess.CalledProcessError: Command '['/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/a\n... [truncated 4965 chars] ...\ne no location!\n<unknown>:0: note: see current operation: \"linalg.yield\"(%arg23) : (i32) -> ()\n<unknown>:0: warning: %117 = \"arith.mulf\"(%arg16, %arg17) <{fastmath = #arith.fastmath<none>}> : (f32, f32) -> f32 and its users all have no location!\n<unknown>:0: note: see current operation: %117 = \"arith.mulf\"(%arg16, %arg17) <{fastmath = #arith.fastmath<none>}> : (f32, f32) -> f32\n<unknown>:0: warning: %118 = \"arith.addf\"(%arg18, %117) <{fastmath = #arith.fastmath<none>}> : (f32, f32) -> f32 and its users all have no location!\n<unknown>:0: note: see current operation: %118 = \"arith.addf\"(%arg18, %117) <{fastmath = #arith.fastmath<none>}> : (f32, f32) -> f32\n<unknown>:0: warning: \"linalg.yield\"(%118) : (f32) -> () and its users all have no location!\n<unknown>:0: note: see current operation: \"linalg.yield\"(%118) : (f32) -> ()\n\n\n[INFO]: The compiled kernel cache is in /root/.triton/cache/9VoGCotTft35XcIcLnpPk0rPWg-SvniX2i-1AEiCLEI\n\n///------------------[ERROR][Triton][END]------------------\n\n"
+    },
+    {
+      "case_idx": 50,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            44,
+            256
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            11,
+            256,
+            128
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            11
+          ],
+          "dtype": "torch.int32"
+        }
+      ],
+      "error_type": "MLIRCompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 310, in compile\n    next_module = compile_ir(module, metadata)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/ascend/compiler.py\", line 767, in <lambda>\n    stages[\"ttadapter\"] = lambda src, metadata: ttir_to_linalg(\n                                                ^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/ascend/compiler.py\", line 135, in ttir_to_linalg\n    ret = subprocess.run(cmd_list, capture_output=True, check=True)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/subprocess.py\", line 571, in run\n    raise CalledProcessError(retcode, process.args,\nsubprocess.CalledProcessError: Command '['/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/a\n... [truncated 5315 chars] ...\ne no location!\n<unknown>:0: note: see current operation: \"linalg.yield\"(%arg25) : (i32) -> ()\n<unknown>:0: warning: %134 = \"arith.mulf\"(%arg18, %arg19) <{fastmath = #arith.fastmath<none>}> : (f32, f32) -> f32 and its users all have no location!\n<unknown>:0: note: see current operation: %134 = \"arith.mulf\"(%arg18, %arg19) <{fastmath = #arith.fastmath<none>}> : (f32, f32) -> f32\n<unknown>:0: warning: %135 = \"arith.addf\"(%arg20, %134) <{fastmath = #arith.fastmath<none>}> : (f32, f32) -> f32 and its users all have no location!\n<unknown>:0: note: see current operation: %135 = \"arith.addf\"(%arg20, %134) <{fastmath = #arith.fastmath<none>}> : (f32, f32) -> f32\n<unknown>:0: warning: \"linalg.yield\"(%135) : (f32) -> () and its users all have no location!\n<unknown>:0: note: see current operation: \"linalg.yield\"(%135) : (f32) -> ()\n\n\n[INFO]: The compiled kernel cache is in /root/.triton/cache/4NUtBya5n2JAMY9qUGL7kJ-BJeqtGW9pOtSAfS7X7I4\n\n///------------------[ERROR][Triton][END]------------------\n\n"
+    }
+  ]
+}

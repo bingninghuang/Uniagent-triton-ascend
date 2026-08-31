@@ -1,0 +1,2058 @@
+{
+  "op_name": "kernelbench_l4_11_GroupedMatmulSwigluQuantV2",
+  "total_cases": 50,
+  "passed_cases": 25,
+  "failed_cases": 25,
+  "failures": [
+    {
+      "case_idx": 2,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            96,
+            384
+          ],
+          "dtype": "torch.int8"
+        },
+        {
+          "type": "scalar",
+          "value": "[tensor([[[ -23,    9,  -34,  ..., -102,  107,  118],\n         [ -73,  -21,  -37,  ...,  -88,   23,  -93],\n         [  -7,   71,   72,  ...,   14,   64,  -42],\n         ...,\n         [ -17, -116,   55,  ...,  -15,  100,   46],\n         [ -39, -102,   54,  ...,  -66,  107,  -41],\n         [  24,   14,   94,  ...,  -46,  -20,   24]],\n\n        [[  47,  116,  -12,  ..., -108,   17,   62],\n         [  60,   85,   92,  ...,  -32,   84,  125],\n         [ 113,   -3, -122,  ...,  -45,   58,   99],\n         ...,\n         [ -46,  121,  -86,  ...,   89,  -76,   42],\n         [ 111,  -28,   43,  ...,  -33,   26,  101],\n         [ 112,   93,   96,  ...,   65,  -24,  -98]],\n\n        [[ -21,  -43,  -99,  ..., -119,  -20, -114],\n         [-114,   -7,   43,  ...,   -5,  -15,   75],\n         [ -30,   67, -127,  ...,  -34,    0,  -12],\n         ...,\n         [   9,  -83,   26,  ...,   66,  -31,  123],\n         [ 112,  120,  124,  ...,  -24,   79,   47],\n         [ -89,   85,  -41,  ...,  -55,  -77,   -5]],\n\n        [[ 107,  -62,   16,  ...,  111,   28,  -18],\n         [ -11,   27,   61,  ...,   -2, -111,  107],\n         [ -57, -107,   71,  ...,  -48,  110,  -63],\n         ...,\n         [ -22,   86,  -95,  ...,  -71,   18,   58],\n         [ -15,   92,   62,  ...,   56,  120,   85],\n         [  63,  100,   19,  ...,  -90,  -70,    5]]], dtype=torch.int8)]"
+        },
+        {
+          "type": "scalar",
+          "value": "[tensor([[ 1.9925, -3.3463,  2.5512,  ..., -0.7705,  1.4197,  2.6053],\n        [ 3.3678, -1.3264, -1.7745,  ..., -2.5853,  4.1102, -1.1828],\n        [-1.8736,  2.0272,  4.3032,  ...,  4.3557, -1.9426, -3.3963],\n        [ 4.2268, -3.5986,  1.0566,  ..., -4.8421, -0.3527, -0.7514]])]"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            96
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            4
+          ],
+          "dtype": "torch.int64"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        },
+        {
+          "type": "scalar",
+          "value": 0
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        }
+      ],
+      "error_type": "AccuracyError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card6/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 898, in run_single_case\n    compare(\n  File \"/opt/workspace_card6/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 671, in compare\n    _compare_quant_fp_to_int(fw_finite, impl_finite, ctx)\n  File \"/opt/workspace_card6/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 531, in _compare_quant_fp_to_int\n    raise AccuracyError(\nAccuracyError: 验证失败 dtype=torch.int8 (量化类 fp->int，要求|diff|<=1): 5383/18432 元素超限，max_abs_diff=127\n前 10 个量化误差超限位置:\n  位置[0]: framework=5, impl=1, |diff|=4 (允许<=1)\n  位置[1]: framework=25, impl=6, |diff|=19 (允许<=1)\n  位置[4]: framework=30, impl=7, |diff|=23 (允许<=1)\n  位置[5]: framework=-5, impl=-1, |diff|=4 (允许<=1)\n  位置[10]: framework=-6, impl=-1, |diff|=5 (允许<=1)\n  位置[11]: framework=-2, impl=0, |diff|=2 (允许<=1)\n  位置[14]: framework=-3, impl=-1, |diff|=2 (允许<=1)\n  位置[15]: framework=-10, impl=-2, |diff|=8 (允许<=1)\n  位置[17]: \n... [truncated 147 chars] ...\nexception:\n\nTraceback (most recent call last):\n  File \"/opt/workspace_card6/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card6/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 904, in run_single_case\n    raise AccuracyError(f\"[用例 {case_idx}/{total_cases}] {str(e)}\", e.metrics) from e\nAccuracyError: [用例 2/50] 验证失败 dtype=torch.int8 (量化类 fp->int，要求|diff|<=1): 5383/18432 元素超限，max_abs_diff=127\n前 10 个量化误差超限位置:\n  位置[0]: framework=5, impl=1, |diff|=4 (允许<=1)\n  位置[1]: framework=25, impl=6, |diff|=19 (允许<=1)\n  位置[4]: framework=30, impl=7, |diff|=23 (允许<=1)\n  位置[5]: framework=-5, impl=-1, |diff|=4 (允许<=1)\n  位置[10]: framework=-6, impl=-1, |diff|=5 (允许<=1)\n  位置[11]: framework=-2, impl=0, |diff|=2 (允许<=1)\n  位置[14]: framework=-3, impl=-1, |diff|=2 (允许<=1)\n  位置[15]: framework=-10, impl=-2, |diff|=8 (允许<=1)\n  位置[17]: framework=11, impl=3, |diff|=8 (允许<=1)\n  位置[20]: framework=3, impl=1, |diff|=2 (允许<=1)\n\n",
+      "metrics": {
+        "category": "quant_fp_to_int",
+        "dtype": "torch.int8",
+        "input_type": "float",
+        "max_abs_diff": 127,
+        "violation_count": 5383,
+        "total_finite": 18432,
+        "tolerance": 1
+      }
+    },
+    {
+      "case_idx": 4,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            192,
+            768
+          ],
+          "dtype": "torch.int8"
+        },
+        {
+          "type": "scalar",
+          "value": "[tensor([[[  58,  -74,  -35,  ..., -113,  -77,    7],\n         [ -12, -107,  -92,  ...,    4,   91,   80],\n         [  63,   28,  -40,  ...,  -80,  -44,   36],\n         ...,\n         [-103,  -79, -124,  ...,  -47,  -89,  -64],\n         [  59,   75,  114,  ...,  113,   22,    6],\n         [ -92,   60,   93,  ...,  -99,  113,  -84]],\n\n        [[ -60,  -79, -101,  ...,  -63, -101,  113],\n         [ -92,  -29,  -36,  ...,  -13,  111,  108],\n         [ -86,   34,  111,  ...,   63,  -85,   17],\n         ...,\n         [  28,   53, -102,  ...,  111, -124,  -59],\n         [  32,  125,  -34,  ...,   11,  -66,  -23],\n         [ 109,   85,  -96,  ...,   23,   28, -113]]], dtype=torch.int8)]"
+        },
+        {
+          "type": "scalar",
+          "value": "[tensor([[-1.4875, -3.5073,  1.7616,  ...,  2.1979, -0.1817, -0.1841],\n        [ 0.1321,  1.6984,  0.4967,  ...,  0.6939,  3.3865,  1.0050]])]"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            192
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2
+          ],
+          "dtype": "torch.int64"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        },
+        {
+          "type": "scalar",
+          "value": 0
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        },
+        {
+          "type": "scalar",
+          "value": 3
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        }
+      ],
+      "error_type": "AccuracyError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card6/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 898, in run_single_case\n    compare(\n  File \"/opt/workspace_card6/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 671, in compare\n    _compare_quant_fp_to_int(fw_finite, impl_finite, ctx)\n  File \"/opt/workspace_card6/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 531, in _compare_quant_fp_to_int\n    raise AccuracyError(\nAccuracyError: 验证失败 dtype=torch.int8 (量化类 fp->int，要求|diff|<=1): 19360/73728 元素超限，max_abs_diff=127\n前 10 个量化误差超限位置:\n  位置[1]: framework=14, impl=7, |diff|=7 (允许<=1)\n  位置[3]: framework=-3, impl=-1, |diff|=2 (允许<=1)\n  位置[8]: framework=18, impl=10, |diff|=8 (允许<=1)\n  位置[23]: framework=9, impl=5, |diff|=4 (允许<=1)\n  位置[24]: framework=4, impl=2, |diff|=2 (允许<=1)\n  位置[31]: framework=-5, impl=-3, |diff|=2 (允许<=1)\n  位置[50]: framework=-7, impl=-4, |diff|=3 (允许<=1)\n  位置[52]: framework=3, impl=1, |diff|=2 (允许<=1)\n  位置[68]: fra\n... [truncated 147 chars] ...\nexception:\n\nTraceback (most recent call last):\n  File \"/opt/workspace_card6/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card6/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 904, in run_single_case\n    raise AccuracyError(f\"[用例 {case_idx}/{total_cases}] {str(e)}\", e.metrics) from e\nAccuracyError: [用例 4/50] 验证失败 dtype=torch.int8 (量化类 fp->int，要求|diff|<=1): 19360/73728 元素超限，max_abs_diff=127\n前 10 个量化误差超限位置:\n  位置[1]: framework=14, impl=7, |diff|=7 (允许<=1)\n  位置[3]: framework=-3, impl=-1, |diff|=2 (允许<=1)\n  位置[8]: framework=18, impl=10, |diff|=8 (允许<=1)\n  位置[23]: framework=9, impl=5, |diff|=4 (允许<=1)\n  位置[24]: framework=4, impl=2, |diff|=2 (允许<=1)\n  位置[31]: framework=-5, impl=-3, |diff|=2 (允许<=1)\n  位置[50]: framework=-7, impl=-4, |diff|=3 (允许<=1)\n  位置[52]: framework=3, impl=1, |diff|=2 (允许<=1)\n  位置[68]: framework=4, impl=2, |diff|=2 (允许<=1)\n  位置[88]: framework=-18, impl=-10, |diff|=8 (允许<=1)\n\n",
+      "metrics": {
+        "category": "quant_fp_to_int",
+        "dtype": "torch.int8",
+        "input_type": "float",
+        "max_abs_diff": 127,
+        "violation_count": 19360,
+        "total_finite": 73728,
+        "tolerance": 1
+      }
+    },
+    {
+      "case_idx": 6,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            384,
+            1536
+          ],
+          "dtype": "torch.int8"
+        },
+        {
+          "type": "scalar",
+          "value": "[tensor([[[ -21,   20,   26,  ...,   33,   66,   28],\n         [  24,   -6,  -46,  ...,  -33,   29,   10],\n         [  39,  -98,  -33,  ..., -127,   79,   98],\n         ...,\n         [  34,  -18,   77,  ...,   28, -104,  -59],\n         [ -36,  -65,   69,  ...,   -7,   39,   21],\n         [  96,   51,  -69,  ...,  -52,   87,   51]],\n\n        [[ -43,   11,    1,  ...,  -52,  -83,  -90],\n         [   2, -113, -111,  ...,  -11, -125,    1],\n         [ 120, -126,  -13,  ...,  -73,  124,  -16],\n         ...,\n         [ -68,  -50,  -76,  ...,  -38,  -42,   73],\n         [ -92,  -19,   50,  ...,   79,  -60,   90],\n         [-104,  102,  -88,  ...,   78, -102,  -40]],\n\n        [[ -38,  121,  -36,  ...,   61,   14,  -59],\n         [  -7,  -71,  112,  ...,  -91, -118,   82],\n         [ -71,  103,  -41,  ...,  -80,   29,  -97],\n         ...,\n         [   1,    4,   -9,  ...,   25,   39, -111],\n         [ -80,  -89,   19,  ...,   96,  -98,   38],\n         [ 108,  -49,   61,  ...,  -23,  -74,   76]],\n\n        ...,\n\n        [[-118,   17, -121,  ...,   95, -128,  -48],\n         [  15,    3,  -64,  ...,   62,  119,   13],\n         [-107,   20, -112,  ...,  -43, -108,    2],\n         ...,\n         [  69,   -1,  111,  ..., -106, -112,  113],\n         [-113,   58,    2,  ...,  -66,   82,  -49],\n         [  30,  -64,    7,  ...,  -35,  -36,  -13]],\n\n        [[ -78,  -47,  -89,  ..., -122, -123,  -25],\n         [ -48, -116, -127,  ...,  -87,   36, -112],\n         [ -91,  110,  -29,  ...,   28,   51,  -56],\n         ...,\n         [ 101, -106, -120,  ...,  123,  -29,  -24],\n         [ 100,   86,  -88,  ...,   48,   94,  118],\n         [ -84,   28,    8,  ...,   17,  104,   11]],\n\n        [[  26,   81,   73,  ...,   86,  -79, -106],\n         [ -84,  -24,  -82,  ..., -120,   26,  116],\n         [  65, -101,  -67,  ...,   21,  -30,   27],\n         ...,\n         [  29,   62,  -10,  ...,   63,  107,   -6],\n         [  81,   91,  -38,  ...,   17,  123,  -50],\n         [-101,  -48,  -86,  ...,  -83,  -36, -125]]], dtype=torch.int8)]"
+        },
+        {
+          "type": "scalar",
+          "value": "[tensor([[-1.8561, -1.6728, -1.5418,  ..., -1.5914, -1.5968, -1.6574],\n        [-1.8247, -1.4672, -1.7614,  ..., -1.7650, -1.6280, -1.5303],\n        [-1.5221, -1.5925, -1.8472,  ..., -1.7444, -1.4975, -1.6946],\n        ...,\n        [-1.5072, -1.7572, -1.8231,  ..., -1.5000, -1.4775, -1.8523],\n        [-1.6644, -1.8854, -1.6449,  ..., -1.7177, -1.4283, -1.5904],\n        [-1.7069, -1.7519, -1.6419,  ..., -1.6201, -1.6446, -1.6354]])]"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            384
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            8
+          ],
+          "dtype": "torch.int64"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        },
+        {
+          "type": "scalar",
+          "value": 0
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        }
+      ],
+      "error_type": "AccuracyError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card6/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 898, in run_single_case\n    compare(\n  File \"/opt/workspace_card6/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 671, in compare\n    _compare_quant_fp_to_int(fw_finite, impl_finite, ctx)\n  File \"/opt/workspace_card6/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 531, in _compare_quant_fp_to_int\n    raise AccuracyError(\nAccuracyError: 验证失败 dtype=torch.int8 (量化类 fp->int，要求|diff|<=1): 111150/294912 元素超限，max_abs_diff=127\n前 10 个量化误差超限位置:\n  位置[1]: framework=42, impl=10, |diff|=32 (允许<=1)\n  位置[5]: framework=-12, impl=-3, |diff|=9 (允许<=1)\n  位置[9]: framework=3, impl=1, |diff|=2 (允许<=1)\n  位置[11]: framework=23, impl=6, |diff|=17 (允许<=1)\n  位置[12]: framework=-3, impl=-1, |diff|=2 (允许<=1)\n  位置[16]: framework=-3, impl=-1, |diff|=2 (允许<=1)\n  位置[19]: framework=2, impl=0, |diff|=2 (允许<=1)\n  位置[20]: framework=9, impl=2, |diff|=7 (允许<=1)\n  位置[24]\n... [truncated 165 chars] ...\n:\n\nTraceback (most recent call last):\n  File \"/opt/workspace_card6/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card6/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 904, in run_single_case\n    raise AccuracyError(f\"[用例 {case_idx}/{total_cases}] {str(e)}\", e.metrics) from e\nAccuracyError: [用例 6/50] 验证失败 dtype=torch.int8 (量化类 fp->int，要求|diff|<=1): 111150/294912 元素超限，max_abs_diff=127\n前 10 个量化误差超限位置:\n  位置[1]: framework=42, impl=10, |diff|=32 (允许<=1)\n  位置[5]: framework=-12, impl=-3, |diff|=9 (允许<=1)\n  位置[9]: framework=3, impl=1, |diff|=2 (允许<=1)\n  位置[11]: framework=23, impl=6, |diff|=17 (允许<=1)\n  位置[12]: framework=-3, impl=-1, |diff|=2 (允许<=1)\n  位置[16]: framework=-3, impl=-1, |diff|=2 (允许<=1)\n  位置[19]: framework=2, impl=0, |diff|=2 (允许<=1)\n  位置[20]: framework=9, impl=2, |diff|=7 (允许<=1)\n  位置[24]: framework=-24, impl=-6, |diff|=18 (允许<=1)\n  位置[26]: framework=-20, impl=-5, |diff|=15 (允许<=1)\n\n",
+      "metrics": {
+        "category": "quant_fp_to_int",
+        "dtype": "torch.int8",
+        "input_type": "float",
+        "max_abs_diff": 127,
+        "violation_count": 111150,
+        "total_finite": 294912,
+        "tolerance": 1
+      }
+    },
+    {
+      "case_idx": 8,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            64,
+            2560
+          ],
+          "dtype": "torch.int8"
+        },
+        {
+          "type": "scalar",
+          "value": "[tensor([[[ -23,   80,  -15,  ...,   91,  -83,  -65],\n         [  38, -112,   45,  ...,  -62, -124,   80],\n         [ -91,  -18,  -45,  ...,   20,   60, -122],\n         ...,\n         [ 100,   23,  114,  ...,  -58,  -78,   63],\n         [  62,   96,  -92,  ...,  -13, -106,   57],\n         [ -90,  -69,  -36,  ...,   62,   64,   79]],\n\n        [[ -78,  -44,   79,  ...,   95,  -49, -120],\n         [  49,  -46,  -66,  ...,    9,  -41, -105],\n         [-119,   27,   -8,  ...,   52,  117,   10],\n         ...,\n         [ -46,  107,  117,  ...,   69,  -60,  109],\n         [  68, -105,   76,  ...,  -21,  -26,   29],\n         [-116,  -65,  -88,  ...,  -73, -124,   74]],\n\n        [[ -24,  -99,   -1,  ...,  -18,  -49,   16],\n         [   4,   18,  -14,  ...,  109,  -69,  -73],\n         [ 111,   19,  -61,  ...,  -85,  -50, -113],\n         ...,\n         [ -89, -119,   38,  ...,  -38,  110,  -60],\n         [ -70,   23, -107,  ...,  106, -121,  -52],\n         [  -4, -113,  119,  ...,  -23,  -73, -121]],\n\n        [[  32,   28,  -48,  ...,  -42, -100,   -8],\n         [ 107,   65,  114,  ...,   20,   12,  -85],\n         [  42,  -12,  -97,  ...,   70,   84, -106],\n         ...,\n         [ -53,   72,  -96,  ...,   15,   33,  121],\n         [ -55,  -35,   96,  ...,  -74,   13,  -66],\n         [-107,   -2,  -64,  ..., -121, -126,  111]]], dtype=torch.int8)]"
+        },
+        {
+          "type": "scalar",
+          "value": "[tensor([[-4.5768, -0.1310,  3.8542,  ...,  4.0649,  1.7945, -0.9550],\n        [-0.8147,  0.8363, -3.5479,  ...,  1.2191,  0.3998,  4.1280],\n        [ 4.6829, -2.8218,  0.2589,  ..., -2.6489,  3.3914,  3.7591],\n        [-0.2655,  0.1226, -4.3647,  ..., -3.5828, -0.7236,  4.9522]])]"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            64
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            4
+          ],
+          "dtype": "torch.int64"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        },
+        {
+          "type": "scalar",
+          "value": 0
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        },
+        {
+          "type": "scalar",
+          "value": 3
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        }
+      ],
+      "error_type": "AccuracyError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card6/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 898, in run_single_case\n    compare(\n  File \"/opt/workspace_card6/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 671, in compare\n    _compare_quant_fp_to_int(fw_finite, impl_finite, ctx)\n  File \"/opt/workspace_card6/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 531, in _compare_quant_fp_to_int\n    raise AccuracyError(\nAccuracyError: 验证失败 dtype=torch.int8 (量化类 fp->int，要求|diff|<=1): 19540/81920 元素超限，max_abs_diff=127\n前 10 个量化误差超限位置:\n  位置[1]: framework=-2, impl=0, |diff|=2 (允许<=1)\n  位置[2]: framework=2, impl=0, |diff|=2 (允许<=1)\n  位置[7]: framework=13, impl=3, |diff|=10 (允许<=1)\n  位置[9]: framework=-2, impl=0, |diff|=2 (允许<=1)\n  位置[10]: framework=-9, impl=-2, |diff|=7 (允许<=1)\n  位置[11]: framework=2, impl=0, |diff|=2 (允许<=1)\n  位置[13]: framework=20, impl=4, |diff|=16 (允许<=1)\n  位置[14]: framework=-25, impl=-5, |diff|=20 (允许<=1)\n  位置[16]: f\n... [truncated 153 chars] ...\neption:\n\nTraceback (most recent call last):\n  File \"/opt/workspace_card6/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card6/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 904, in run_single_case\n    raise AccuracyError(f\"[用例 {case_idx}/{total_cases}] {str(e)}\", e.metrics) from e\nAccuracyError: [用例 8/50] 验证失败 dtype=torch.int8 (量化类 fp->int，要求|diff|<=1): 19540/81920 元素超限，max_abs_diff=127\n前 10 个量化误差超限位置:\n  位置[1]: framework=-2, impl=0, |diff|=2 (允许<=1)\n  位置[2]: framework=2, impl=0, |diff|=2 (允许<=1)\n  位置[7]: framework=13, impl=3, |diff|=10 (允许<=1)\n  位置[9]: framework=-2, impl=0, |diff|=2 (允许<=1)\n  位置[10]: framework=-9, impl=-2, |diff|=7 (允许<=1)\n  位置[11]: framework=2, impl=0, |diff|=2 (允许<=1)\n  位置[13]: framework=20, impl=4, |diff|=16 (允许<=1)\n  位置[14]: framework=-25, impl=-5, |diff|=20 (允许<=1)\n  位置[16]: framework=-2, impl=0, |diff|=2 (允许<=1)\n  位置[17]: framework=-16, impl=-3, |diff|=13 (允许<=1)\n\n",
+      "metrics": {
+        "category": "quant_fp_to_int",
+        "dtype": "torch.int8",
+        "input_type": "float",
+        "max_abs_diff": 127,
+        "violation_count": 19540,
+        "total_finite": 81920,
+        "tolerance": 1
+      }
+    },
+    {
+      "case_idx": 10,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            128,
+            384
+          ],
+          "dtype": "torch.int8"
+        },
+        {
+          "type": "scalar",
+          "value": "[tensor([[[ 126,   74,   12,  ...,   62,    0, -103],\n         [  94, -120,   74,  ...,   45,   27,  -63],\n         [ -28,   30,   -4,  ...,  -49,   16,    3],\n         ...,\n         [  43,    2,   90,  ...,   94,   80,   28],\n         [-110,   49,   53,  ...,  -49,  -71,   20],\n         [  63,  -58,   97,  ...,  -14, -102,  -50]],\n\n        [[ 104,  -37,  -62,  ...,  -47,   83,  126],\n         [   6,   19,   34,  ...,  121,    1, -111],\n         [ -30,    4, -125,  ...,  -67,  -73,   41],\n         ...,\n         [ 106,   64,   12,  ...,   66,   93,  -72],\n         [  42,   -5,  -99,  ...,  -88,  104,   64],\n         [  46,  -48,   74,  ...,   86,   73,   88]]], dtype=torch.int8)]"
+        },
+        {
+          "type": "scalar",
+          "value": "[tensor([[-1.8252e+00, -3.2862e+00, -3.9555e-01, -4.5645e+00,  3.6980e+00,\n         -4.5910e+00, -3.1732e+00,  8.8309e-01,  2.2310e-01, -4.8790e+00,\n          2.9419e+00, -3.0008e+00, -4.5936e+00,  1.8266e+00,  2.1996e+00,\n          9.8557e-01,  2.0320e+00,  3.3092e+00,  3.5477e+00,  1.9584e+00,\n         -1.7792e+00, -2.6319e+00,  1.0781e+00,  2.8097e+00, -4.9555e-01,\n         -6.1880e-01, -3.4408e+00,  4.2068e+00, -3.5120e+00, -1.6268e+00,\n         -5.2996e-02, -3.0197e+00,  2.8258e+00, -4.2397e+00,  2.0351e+00,\n          4.1665e+00,  3.7935e+00,  1.5283e+00,  4.7016e+00, -1.0318e+00,\n          3.0160e+00, -1.0415e+00, -1.8517e+00, -4.4502e-01,  3.7237e+00,\n         -2.6659e+00,  4.1476e+00, -2.8470e-01,  1.1033e+00, -3.9605e+00,\n         -2.7000e+00, -2.6499e+00, -4.0355e+00, -1.4353e+00,  1.5241e+00,\n          4.8880e+00,  7.7210e-01,  4.9292e+00,  3.3569e+00, -1.6275e+00,\n         -2.3067e+00, -3.6666e+00,  2.8878e+00, -1.1190e+00,  4.9367e+00,\n          6.0285e-01, -3.4906e+00,  2.5935e+00,  2.4999e+00,  3.9226e+00,\n         -2.9669e+00,  3.8976e+00,  2.8573e+00,  4.1072e+00,  1.1679e+00,\n         -1.8012e+00, -4.1994e+00,  8.8651e-01,  8.5471e-01, -9.1275e-02,\n         -4.1878e+00,  1.5879e+00,  5.1019e-01, -4.2683e+00,  1.2835e+00,\n         -4.1503e+00, -6.9968e-01, -1.5417e+00,  5.6213e-01,  3.9012e+00,\n          2.5675e+00,  1.1222e+00, -4.0083e+00,  4.2202e+00,  1.6262e+00,\n         -2.5964e-02, -3.2132e+00,  2.5246e+00,  1.7742e+00, -7.7192e-01,\n         -1.7633e+00,  1.8100e+00, -1.4156e+00,  2.6496e+00,  4.0732e+00,\n         -3.2576e+00,  2.2626e+00,  4.1540e+00,  3.7685e+00,  2.4547e+00,\n          2.3601e+00, -4.2294e+00, -1.7002e-01, -6.2176e-01,  2.7087e+00,\n         -1.5518e+00,  1.1605e+00, -2.9187e+00, -6.9343e-01,  1.4993e+00,\n         -4.6002e-01, -3.6735e-01,  1.3348e+00,  4.2449e+00,  1.5973e+00,\n         -3.6168e+00,  2.6065e+00,  2.5540e+00,  5.9200e-01,  2.5601e+00,\n         -4.4861e+00,  2.3447e-01,  2.4087e+00, -2.7909e+00, -8.1183e-02,\n         -1.6352e+00, -8.2426e-01, -1.8921e+00,  2.3815e+00,  3.3177e+00,\n         -4.8314e+00,  2.9968e+00,  2.6658e+00, -9.5751e-01,  4.4917e-01,\n          4.0730e+00,  3.2787e+00,  3.9094e+00,  1.2888e+00,  4.2097e+00,\n          3.2976e+00,  1.7165e+00, -1.8100e+00,  2.5158e+00, -4.4708e-01,\n          5.1748e-01,  2.9106e+00,  4.1949e-01, -4.2480e+00,  3.9300e+00,\n          3.1474e+00, -4.8939e+00, -3.2376e+00,  4.1057e+00,  4.2949e+00,\n         -4.7005e-01, -3.5346e+00, -2.8273e+00,  4.9462e+00,  3.9061e+00,\n         -3.0385e+00,  2.1898e-01, -9.5927e-01,  2.7840e+00, -1.6530e+00,\n         -1.4585e+00,  4.7719e+00,  2.4171e+00,  1.8396e+00, -4.2206e+00,\n          4.0577e+00, -3.5017e+00, -3.5705e+00,  1.9674e+00,  3.5376e+00,\n          4.6690e+00,  4.8986e-01, -1.0648e+00,  4.7077e+00, -3.3073e+00,\n         -3.8744e+00, -3.0407e-01, -3.2910e+00,  3.0157e+00, -1.9218e+00,\n         -2.8875e+00, -8.0066e-01,  1.9880e+00,  2.2898e+00, -1.4537e+00,\n         -2.5122e+00,  1.2528e+00,  1.1407e+00,  3.9205e+00, -4.2772e+00,\n          5.7775e-01,  2.9491e+00,  4.9991e-01,  2.4566e+00, -2.1301e+00,\n         -4.3984e-01, -3.4693e+00, -3.7042e-01, -5.4638e-01,  3.8475e+00,\n          2.3354e+00, -2.1404e+00, -2.2822e+00,  2.2785e+00, -4.0406e+00,\n          4.6250e+00,  7.7644e-01,  3.3680e+00, -4.6566e+00,  1.2588e+00,\n          2.9255e+00,  4.5002e+00,  3.8975e+00,  1.6858e+00, -2.7101e+00,\n         -4.0365e+00,  1.6181e+00,  3.8178e+00,  9.1711e-01,  4.0280e+00,\n         -1.2887e-01,  4.7785e+00,  2.8320e+00, -3.2842e+00,  4.8952e+00,\n         -3.9320e-01, -4.7888e+00, -1.7449e+00,  1.8708e-01,  1.4692e+00,\n          2.8749e+00,  3.9724e+00, -2.6011e+00,  7.7366e-01,  9.4640e-01,\n          4.0499e+00, -1.4248e+00, -3.7423e+00, -7.0164e-01,  2.9876e-01,\n         -2.5923e+00, -1.7908e+00, -4.4979e+00, -2.4627e-01, -1.4443e+00,\n          6.7016e-01,  1.2033e+00,  3.4566e+00, -2.8839e-01,  6.2101e-01,\n         -1.2734e+00,  7.2541e-02, -4.2218e+00,  2.0520e+00, -2.7619e+00,\n          3.5916e+00,  9.8653e-01,  2.2332e+00,  4.2333e+00,  2.8914e+00,\n         -2.4007e+00,  3.1848e+00, -4.8462e+00,  4.5873e+00, -1.6469e+00,\n          1.9960e+00, -3.7586e+00, -3.7214e-01,  3.2259e+00, -2.6330e+00,\n         -4.5929e+00, -1.9375e+00, -1.4286e+00,  2.9792e+00,  4.1554e+00,\n         -2.4325e-01, -2.1048e+00, -3.5411e+00, -4.3292e+00, -2.8618e+00,\n         -2.1994e+00, -2.0939e+00,  3.0423e+00, -3.8842e+00, -3.1618e-01,\n          3.2612e+00, -9.3443e-01,  1.2932e+00,  3.6300e+00, -1.1088e+00,\n         -2.4220e+00, -4.5287e+00, -9.2810e-02,  2.2513e+00,  2.9951e+00,\n          3.9669e-01,  1.2143e+00, -3.5930e+00,  1.0862e+00, -4.9709e+00,\n         -2.2525e+00,  1.1082e+00,  3.1486e+00,  1.5189e+00, -3.6481e+00,\n         -9.9329e-01,  2.1471e+00,  4.4283e+00,  4.8103e+00,  2.5624e+00,\n         -3.0100e+00,  2.2625e+00,  2.7738e+00, -1.6486e+00,  2.1995e+00,\n          4.6878e+00, -1.2682e+00, -4.8497e+00,  4.9849e+00, -2.6816e+00,\n         -3.6988e+00,  3.5178e+00, -2.7826e+00, -7.8757e-01, -4.8955e+00,\n          1.8039e+00,  2.6667e+00, -3.3450e+00, -2.6934e-01,  2.1910e+00,\n          3.3363e+00, -8.8411e-01,  2.4957e+00,  1.6922e+00, -4.5419e+00,\n         -3.7859e+00, -6.5274e-01,  4.9020e+00,  2.0311e-01,  3.4102e+00,\n         -3.8135e+00,  3.6502e+00,  2.7591e+00,  4.2843e+00, -3.3990e+00,\n          9.8996e-01,  3.6025e+00,  3.6048e+00,  1.8148e+00, -3.1075e+00,\n         -3.5859e+00,  4.1421e+00, -9.5483e-01, -5.9867e-01, -2.1865e+00,\n         -2.1498e+00,  3.7657e+00, -1.7796e+00, -3.2896e+00,  4.2221e+00,\n         -1.9838e+00,  4.1643e+00, -3.8974e+00,  2.0520e+00, -2.1553e+00,\n         -7.8564e-01, -8.3017e-01,  3.8551e+00,  3.7386e+00],\n        [-1.1498e+00,  1.4031e-01, -4.8100e-01,  3.5479e+00, -3.7197e+00,\n          1.8131e+00,  4.5810e+00, -4.9211e+00, -4.5642e+00,  4.3975e+00,\n         -1.8702e-02, -2.5554e-01,  1.9233e+00, -2.6032e+00,  4.5288e+00,\n          2.4356e+00,  3.3034e-01,  4.7540e+00,  8.9617e-01, -3.5584e+00,\n          1.7958e+00, -1.8148e+00,  1.9277e+00,  1.5351e-01, -7.2198e-01,\n          4.6552e+00, -4.4731e+00, -2.1996e+00,  3.3341e+00, -2.5094e+00,\n          3.7280e+00,  2.6089e+00,  1.9756e+00, -3.0218e+00,  2.0625e+00,\n          4.9886e-01, -7.7512e-01, -4.5161e+00, -3.6948e+00, -3.8626e+00,\n          5.8412e-01, -9.0549e-01, -2.9462e+00,  2.0767e+00, -1.0555e+00,\n          2.5100e+00, -3.1680e+00,  9.4759e-01,  2.1524e+00, -2.8370e+00,\n          3.9585e+00,  3.3491e+00, -4.8900e+00, -4.3369e-01,  8.4036e-01,\n          3.1766e+00,  1.6184e+00,  3.8785e-01, -2.8528e+00,  2.5912e+00,\n          1.3980e+00, -3.9062e-01, -4.7254e+00,  2.8789e+00, -7.7266e-01,\n         -4.0793e+00,  2.9726e+00, -1.0149e+00, -1.0930e+00,  1.8852e+00,\n          3.9785e+00, -3.6485e+00,  8.9765e-02, -3.1176e-01, -1.5778e+00,\n         -1.9003e-01, -1.8704e+00,  3.8223e+00,  1.1451e+00,  4.0008e-01,\n         -4.9698e+00, -7.8103e-02,  3.8444e+00,  4.2861e+00,  1.6337e+00,\n          3.4093e+00, -2.5670e+00, -4.9581e+00, -4.1812e+00,  9.2475e-02,\n         -1.2636e+00, -4.1354e+00, -9.4569e-01, -2.5370e+00, -4.5736e+00,\n          4.3171e+00, -4.1362e+00, -2.0943e+00, -1.3241e+00, -4.2798e+00,\n         -3.5861e+00,  4.3491e-02, -2.8799e+00, -2.7251e+00,  4.4176e+00,\n          9.5962e-01, -5.7388e-01,  4.0509e+00, -6.7769e-02,  4.6470e+00,\n         -5.0482e-01, -6.4498e-01, -1.6592e+00, -2.0617e+00, -3.2472e+00,\n         -4.1804e+00, -4.3087e+00,  2.3424e-01,  3.6173e+00,  2.0832e+00,\n         -1.7905e+00,  3.5084e+00, -4.7984e+00, -2.8442e+00, -4.1399e+00,\n          3.0128e+00, -3.6576e+00, -1.4485e+00, -3.0516e+00, -2.5894e-01,\n          4.5438e+00,  2.8172e+00, -2.3153e+00,  6.6281e-01, -5.8131e-01,\n         -1.2357e+00, -3.2198e+00,  2.3963e+00,  2.0217e+00, -3.3459e+00,\n          1.6243e+00, -2.1318e+00,  4.7931e+00,  3.8634e+00,  4.6924e+00,\n         -4.6641e+00, -7.0230e-01,  2.9179e-01,  2.6633e-01, -1.9787e+00,\n         -2.8522e+00,  1.6031e+00,  1.6507e+00, -4.7231e+00, -2.3809e-01,\n         -5.9481e-01, -4.9601e+00, -1.8954e+00,  1.7775e+00,  1.9125e+00,\n          2.5006e+00, -1.1045e+00, -4.9472e+00,  2.8877e+00, -2.4154e+00,\n          2.9868e+00,  1.1872e+00, -3.8816e+00, -2.4322e+00, -2.0139e+00,\n          1.8578e-01,  7.6694e-01, -8.8598e-01, -2.5442e+00,  1.9168e+00,\n          4.5650e+00,  4.1732e+00, -2.2806e+00,  3.6510e+00,  2.4289e+00,\n          3.0972e+00,  7.4673e-01,  4.5475e+00, -1.9600e+00,  3.6743e+00,\n         -3.9565e+00,  6.1178e-01,  3.1491e+00,  4.7570e+00,  2.4388e+00,\n          4.1496e+00,  2.6310e+00, -4.9827e+00, -4.1725e+00, -1.9920e+00,\n          3.7942e+00,  1.4551e+00,  4.2868e-01, -4.5464e+00, -2.7265e+00,\n          3.6713e+00, -1.1429e+00,  3.7732e+00, -1.6592e+00,  4.4205e+00,\n         -2.3746e+00, -1.3709e+00, -2.2095e+00,  4.0386e+00,  2.7246e+00,\n          4.4893e+00, -4.5163e+00,  2.1965e+00, -1.8195e+00, -3.1323e+00,\n          4.8758e+00, -1.0386e+00, -1.0900e+00, -3.0114e+00, -1.7000e-01,\n         -1.7388e+00,  2.0314e+00, -1.4274e+00, -3.2831e+00, -2.5656e+00,\n          1.5759e-02,  4.8240e+00, -3.2883e-01, -1.3017e-01, -2.7738e+00,\n          2.0550e+00,  2.1782e+00,  4.5881e-01, -1.4106e-01,  2.7144e+00,\n         -2.6808e+00,  4.0498e+00, -2.8211e+00,  3.2901e-01, -1.4896e+00,\n         -2.5775e+00, -4.7280e+00,  1.7784e+00, -7.2698e-01,  7.8918e-01,\n         -4.9007e+00,  3.1518e+00,  2.1914e+00,  4.3922e+00,  4.9664e+00,\n          2.9840e+00,  4.5638e+00, -3.7946e+00,  4.0505e+00, -2.8011e+00,\n          2.0356e+00, -4.1948e-01,  4.2159e+00, -1.1276e+00,  2.3933e+00,\n         -2.3204e+00, -9.0553e-01,  3.9690e+00, -2.9909e+00, -2.0182e+00,\n          3.8596e+00,  9.9908e-01,  2.4200e+00,  3.2427e+00,  4.0404e+00,\n         -4.6462e+00, -3.7501e+00,  4.0722e+00,  3.5215e+00,  2.0859e+00,\n         -2.1231e+00, -1.1266e+00, -2.0463e-01, -4.2946e+00, -7.0526e-01,\n          3.3312e+00, -1.8973e+00,  2.6607e+00,  4.4457e+00, -1.1095e+00,\n          3.4769e+00,  1.2780e+00, -4.7327e-01, -4.1860e+00,  4.2897e+00,\n         -1.2933e+00, -1.7822e+00,  4.7203e+00, -2.7970e+00, -1.8228e+00,\n          1.5621e+00, -3.1375e+00,  2.4573e-01, -1.9692e+00,  4.4718e+00,\n          1.9988e-01, -1.3399e+00, -3.5981e+00,  3.2825e+00, -2.5867e+00,\n         -4.2726e+00,  2.4933e+00, -1.1206e-03, -4.7444e+00, -1.2170e+00,\n          6.8281e-01,  2.3954e+00,  4.1228e+00, -3.2097e+00,  4.0291e+00,\n          4.4406e+00,  4.6111e+00, -3.0288e+00, -4.8395e+00, -2.0842e+00,\n          7.6840e-01, -4.9862e-01,  1.3955e+00, -1.6985e+00, -2.8858e+00,\n         -3.5205e+00, -2.0975e+00, -1.1105e+00,  3.3483e+00, -2.5845e+00,\n         -3.9586e+00, -6.9144e-01,  2.2426e+00,  2.3339e+00,  3.9673e+00,\n          1.0493e+00,  2.3807e+00, -1.8024e+00, -4.5871e+00, -8.5663e-02,\n          2.7983e+00, -3.7749e+00, -3.4050e+00,  3.8723e+00,  1.6537e+00,\n         -3.7652e+00,  1.5885e-01, -2.5452e+00, -4.4463e+00,  1.3716e+00,\n          9.2644e-01,  4.7365e+00,  3.4014e+00,  4.4235e+00, -2.7042e+00,\n         -8.8584e-01,  3.2302e+00, -2.8752e-01,  4.9840e+00,  4.0076e+00,\n         -3.6563e+00, -1.8779e+00,  4.4255e+00, -4.8181e+00,  2.9507e+00,\n          1.8615e+00,  4.5693e+00,  1.2448e+00,  2.3189e+00, -5.8263e-01,\n         -2.2734e+00,  3.6129e-01, -4.9986e+00, -2.0754e+00, -4.7470e+00,\n          2.6777e+00,  4.3510e+00,  3.9648e+00, -2.9755e+00,  3.4427e+00,\n          2.0749e+00, -6.3166e-01,  3.1015e+00,  2.0572e+00]])]"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            128
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2
+          ],
+          "dtype": "torch.int64"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        },
+        {
+          "type": "scalar",
+          "value": 0
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        }
+      ],
+      "error_type": "AccuracyError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card6/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 898, in run_single_case\n    compare(\n  File \"/opt/workspace_card6/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 671, in compare\n    _compare_quant_fp_to_int(fw_finite, impl_finite, ctx)\n  File \"/opt/workspace_card6/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 531, in _compare_quant_fp_to_int\n    raise AccuracyError(\nAccuracyError: 验证失败 dtype=torch.int8 (量化类 fp->int，要求|diff|<=1): 7495/24576 元素超限，max_abs_diff=127\n前 10 个量化误差超限位置:\n  位置[5]: framework=-2, impl=0, |diff|=2 (允许<=1)\n  位置[6]: framework=-2, impl=0, |diff|=2 (允许<=1)\n  位置[10]: framework=33, impl=0, |diff|=33 (允许<=1)\n  位置[11]: framework=33, impl=0, |diff|=33 (允许<=1)\n  位置[12]: framework=-13, impl=0, |diff|=13 (允许<=1)\n  位置[13]: framework=3, impl=0, |diff|=3 (允许<=1)\n  位置[16]: framework=12, impl=0, |diff|=12 (允许<=1)\n  位置[17]: framework=-9, impl=0, |diff|=9 (允许<=1)\n  位置[18]: \n... [truncated 152 chars] ...\neption:\n\nTraceback (most recent call last):\n  File \"/opt/workspace_card6/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card6/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 904, in run_single_case\n    raise AccuracyError(f\"[用例 {case_idx}/{total_cases}] {str(e)}\", e.metrics) from e\nAccuracyError: [用例 10/50] 验证失败 dtype=torch.int8 (量化类 fp->int，要求|diff|<=1): 7495/24576 元素超限，max_abs_diff=127\n前 10 个量化误差超限位置:\n  位置[5]: framework=-2, impl=0, |diff|=2 (允许<=1)\n  位置[6]: framework=-2, impl=0, |diff|=2 (允许<=1)\n  位置[10]: framework=33, impl=0, |diff|=33 (允许<=1)\n  位置[11]: framework=33, impl=0, |diff|=33 (允许<=1)\n  位置[12]: framework=-13, impl=0, |diff|=13 (允许<=1)\n  位置[13]: framework=3, impl=0, |diff|=3 (允许<=1)\n  位置[16]: framework=12, impl=0, |diff|=12 (允许<=1)\n  位置[17]: framework=-9, impl=0, |diff|=9 (允许<=1)\n  位置[18]: framework=-6, impl=0, |diff|=6 (允许<=1)\n  位置[19]: framework=15, impl=0, |diff|=15 (允许<=1)\n\n",
+      "metrics": {
+        "category": "quant_fp_to_int",
+        "dtype": "torch.int8",
+        "input_type": "float",
+        "max_abs_diff": 127,
+        "violation_count": 7495,
+        "total_finite": 24576,
+        "tolerance": 1
+      }
+    },
+    {
+      "case_idx": 12,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            256,
+            768
+          ],
+          "dtype": "torch.int8"
+        },
+        {
+          "type": "scalar",
+          "value": "[tensor([[[ -16,  -39,   80,  ...,  109,  -17,  113],\n         [ -47,  116,  -51,  ...,   23, -114,   24],\n         [  33,   80,   79,  ...,  -58,   -7,  126],\n         ...,\n         [ -46,  104,  -17,  ...,  -69,   -2,   70],\n         [  99,   10,   82,  ...,    0,  -78,  -84],\n         [  -1,   88,   13,  ...,  110,   53,  105]],\n\n        [[ 112,  -38,  -28,  ...,  -57,  -97,  103],\n         [  50,  -79,   29,  ...,  -11,   55,   84],\n         [  34,   27,   37,  ...,  -65,   26,  -35],\n         ...,\n         [ -96,  -56,   29,  ...,   -9,  -58,  102],\n         [ -11,  -54,   14,  ...,   29, -124,   33],\n         [ 113,   98,   43,  ...,  -67,  -46,  -77]],\n\n        [[  42,  -27,  121,  ...,  -83,   -2,   40],\n         [ -42,  -50,  -78,  ...,  -62,  -78,  108],\n         [  66, -116,  -52,  ...,   42,   95,  -71],\n         ...,\n         [ 118,   42, -124,  ...,   79,  -95,   41],\n         [ -14,   89,   17,  ...,   -1,  -17,  118],\n         [-119,  -57,  -63,  ...,  -48,   -1, -119]],\n\n        ...,\n\n        [[   7,   58,  111,  ...,  -57,   61,  -95],\n         [  89,   33,   71,  ...,  -19,  101,  -83],\n         [  21,  -71,   71,  ...,  -82, -118,   25],\n         ...,\n         [ 100, -113,   76,  ...,   85,   71,    1],\n         [  51,   53,   88,  ..., -103, -106,  -98],\n         [  85,   66,   22,  ...,  -37,  113,  -71]],\n\n        [[  78,   90,  101,  ...,   97,  -53,   89],\n         [-128,   58,   88,  ...,   31,   30,   -2],\n         [ 114, -108,  -20,  ...,   12,  121,   17],\n         ...,\n         [ 101,  -92,  -76,  ...,   72,   67, -119],\n         [  41,    5,  -75,  ...,   88,  -71,   60],\n         [  88,   43, -123,  ...,  125,   89,    5]],\n\n        [[ -56,  -28,  -70,  ...,  -60,   37,  119],\n         [ -42,  116,   86,  ...,  124,   92,   41],\n         [-100,   12,   87,  ...,  -91,  -33,  125],\n         ...,\n         [  38,   92,  118,  ...,  -17,   22,  -44],\n         [  12,   27,  -87,  ...,   41,  -94,   82],\n         [  89, -119,   31,  ...,  119, -125,   54]]], dtype=torch.int8)]"
+        },
+        {
+          "type": "scalar",
+          "value": "[tensor([[-5.9873, -4.4530, -1.2681,  ..., -3.2351, -5.8780, -3.9575],\n        [-6.1603, -3.9280, -5.2371,  ..., -2.6410, -1.5546, -5.8861],\n        [-8.0527, -5.0835, -5.0100,  ..., -2.4776, -4.9518, -5.0673],\n        ...,\n        [-4.0689, -4.4431, -4.5787,  ..., -2.2828, -4.7929, -5.2790],\n        [-5.0182, -3.7913, -5.3817,  ..., -4.1979, -7.1737, -4.9129],\n        [-4.2160, -2.4340, -3.1092,  ..., -1.3150, -3.0464, -5.4438]])]"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            256
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            8
+          ],
+          "dtype": "torch.int64"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        },
+        {
+          "type": "scalar",
+          "value": 0
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        },
+        {
+          "type": "scalar",
+          "value": 3
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        }
+      ],
+      "error_type": "AccuracyError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card6/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 898, in run_single_case\n    compare(\n  File \"/opt/workspace_card6/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 671, in compare\n    _compare_quant_fp_to_int(fw_finite, impl_finite, ctx)\n  File \"/opt/workspace_card6/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 531, in _compare_quant_fp_to_int\n    raise AccuracyError(\nAccuracyError: 验证失败 dtype=torch.int8 (量化类 fp->int，要求|diff|<=1): 34821/98304 元素超限，max_abs_diff=127\n前 10 个量化误差超限位置:\n  位置[0]: framework=37, impl=8, |diff|=29 (允许<=1)\n  位置[1]: framework=37, impl=8, |diff|=29 (允许<=1)\n  位置[2]: framework=-3, impl=-1, |diff|=2 (允许<=1)\n  位置[3]: framework=-4, impl=-1, |diff|=3 (允许<=1)\n  位置[11]: framework=-6, impl=-1, |diff|=5 (允许<=1)\n  位置[15]: framework=-11, impl=-2, |diff|=9 (允许<=1)\n  位置[16]: framework=-2, impl=0, |diff|=2 (允许<=1)\n  位置[17]: framework=15, impl=3, |diff|=12 (允许<=1)\n  位置[18\n... [truncated 166 chars] ...\n\n\nTraceback (most recent call last):\n  File \"/opt/workspace_card6/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card6/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 904, in run_single_case\n    raise AccuracyError(f\"[用例 {case_idx}/{total_cases}] {str(e)}\", e.metrics) from e\nAccuracyError: [用例 12/50] 验证失败 dtype=torch.int8 (量化类 fp->int，要求|diff|<=1): 34821/98304 元素超限，max_abs_diff=127\n前 10 个量化误差超限位置:\n  位置[0]: framework=37, impl=8, |diff|=29 (允许<=1)\n  位置[1]: framework=37, impl=8, |diff|=29 (允许<=1)\n  位置[2]: framework=-3, impl=-1, |diff|=2 (允许<=1)\n  位置[3]: framework=-4, impl=-1, |diff|=3 (允许<=1)\n  位置[11]: framework=-6, impl=-1, |diff|=5 (允许<=1)\n  位置[15]: framework=-11, impl=-2, |diff|=9 (允许<=1)\n  位置[16]: framework=-2, impl=0, |diff|=2 (允许<=1)\n  位置[17]: framework=15, impl=3, |diff|=12 (允许<=1)\n  位置[18]: framework=29, impl=6, |diff|=23 (允许<=1)\n  位置[21]: framework=-51, impl=-11, |diff|=40 (允许<=1)\n\n",
+      "metrics": {
+        "category": "quant_fp_to_int",
+        "dtype": "torch.int8",
+        "input_type": "float",
+        "max_abs_diff": 127,
+        "violation_count": 34821,
+        "total_finite": 98304,
+        "tolerance": 1
+      }
+    },
+    {
+      "case_idx": 14,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            512,
+            1536
+          ],
+          "dtype": "torch.int8"
+        },
+        {
+          "type": "scalar",
+          "value": "[tensor([[[   5,  -69,    2,  ...,    8,   39,   51],\n         [  25,  117,  -63,  ...,   80,   99,   35],\n         [ -60,  -50,   75,  ...,  125,  -49,   53],\n         ...,\n         [ -75,  105,   66,  ...,   41,   86,  -39],\n         [ -12,   19,   95,  ..., -118,  -28,   60],\n         [-127,  -38, -104,  ...,   78, -128,   84]],\n\n        [[  80,   21,   -6,  ...,  -29,   55,  -87],\n         [  53,   15, -102,  ...,  -99,  105,  -15],\n         [  23, -114,   31,  ...,  106,   26,  110],\n         ...,\n         [  -9,   38,  119,  ...,  123,  -66,   16],\n         [-118,  -26,  -60,  ..., -126,   -7,  -63],\n         [  31,  -53,   48,  ...,  -83,   67,  118]],\n\n        [[  55,  124, -122,  ...,  -87,  -35,   -6],\n         [-126,   47,  -31,  ...,  110, -117,   57],\n         [  95,   24, -127,  ..., -109,   54, -110],\n         ...,\n         [  50, -100,   94,  ...,  101,  -77,   65],\n         [-114, -101,   75,  ...,   27, -106,   89],\n         [  15,  -62,   99,  ...,  -19,  -51,   43]],\n\n        [[  70,  -78,  -93,  ...,   69,   99,  101],\n         [-101,   39,   -1,  ...,  -19,    2, -128],\n         [ -15,  -31,  -61,  ...,   33,    6,  -12],\n         ...,\n         [ -92,   -7,  -81,  ...,  -27,  -21,   32],\n         [  57,  116,   35,  ...,  -76,   33,   98],\n         [ -11,   78,  108,  ...,  119, -100,   57]]], dtype=torch.int8)]"
+        },
+        {
+          "type": "scalar",
+          "value": "[tensor([[2.7134, 3.5001, 3.3596,  ..., 3.1649, 3.2794, 3.1176],\n        [3.4967, 2.3272, 2.9735,  ..., 4.2110, 2.9310, 1.9735],\n        [2.4476, 2.3719, 2.6313,  ..., 2.5351, 3.3931, 2.0641],\n        [3.0849, 2.4508, 2.0153,  ..., 3.2560, 3.2282, 3.9277]])]"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            512
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            4
+          ],
+          "dtype": "torch.int64"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        },
+        {
+          "type": "scalar",
+          "value": 0
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        }
+      ],
+      "error_type": "AccuracyError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card6/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 898, in run_single_case\n    compare(\n  File \"/opt/workspace_card6/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 671, in compare\n    _compare_quant_fp_to_int(fw_finite, impl_finite, ctx)\n  File \"/opt/workspace_card6/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 531, in _compare_quant_fp_to_int\n    raise AccuracyError(\nAccuracyError: 验证失败 dtype=torch.int8 (量化类 fp->int，要求|diff|<=1): 150391/393216 元素超限，max_abs_diff=127\n前 10 个量化误差超限位置:\n  位置[3]: framework=5, impl=1, |diff|=4 (允许<=1)\n  位置[8]: framework=-35, impl=-9, |diff|=26 (允许<=1)\n  位置[9]: framework=11, impl=3, |diff|=8 (允许<=1)\n  位置[10]: framework=19, impl=5, |diff|=14 (允许<=1)\n  位置[13]: framework=-37, impl=-10, |diff|=27 (允许<=1)\n  位置[16]: framework=7, impl=2, |diff|=5 (允许<=1)\n  位置[22]: framework=30, impl=8, |diff|=22 (允许<=1)\n  位置[25]: framework=-15, impl=-4, |diff|=11 (允许<=1)\n  \n... [truncated 176 chars] ...\nceback (most recent call last):\n  File \"/opt/workspace_card6/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card6/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 904, in run_single_case\n    raise AccuracyError(f\"[用例 {case_idx}/{total_cases}] {str(e)}\", e.metrics) from e\nAccuracyError: [用例 14/50] 验证失败 dtype=torch.int8 (量化类 fp->int，要求|diff|<=1): 150391/393216 元素超限，max_abs_diff=127\n前 10 个量化误差超限位置:\n  位置[3]: framework=5, impl=1, |diff|=4 (允许<=1)\n  位置[8]: framework=-35, impl=-9, |diff|=26 (允许<=1)\n  位置[9]: framework=11, impl=3, |diff|=8 (允许<=1)\n  位置[10]: framework=19, impl=5, |diff|=14 (允许<=1)\n  位置[13]: framework=-37, impl=-10, |diff|=27 (允许<=1)\n  位置[16]: framework=7, impl=2, |diff|=5 (允许<=1)\n  位置[22]: framework=30, impl=8, |diff|=22 (允许<=1)\n  位置[25]: framework=-15, impl=-4, |diff|=11 (允许<=1)\n  位置[26]: framework=-3, impl=-1, |diff|=2 (允许<=1)\n  位置[27]: framework=-38, impl=-10, |diff|=28 (允许<=1)\n\n",
+      "metrics": {
+        "category": "quant_fp_to_int",
+        "dtype": "torch.int8",
+        "input_type": "float",
+        "max_abs_diff": 127,
+        "violation_count": 150391,
+        "total_finite": 393216,
+        "tolerance": 1
+      }
+    },
+    {
+      "case_idx": 16,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            96,
+            2560
+          ],
+          "dtype": "torch.int8"
+        },
+        {
+          "type": "scalar",
+          "value": "[tensor([[[ -46,  -13,    9,  ...,   62,  -84,   21],\n         [ 110,  -62,  -43,  ...,   17,  -12,  116],\n         [  34,  -30,  106,  ...,  -37,  -38,  111],\n         ...,\n         [  24,  -32,   45,  ...,  -72,   19,  -48],\n         [  21,   95,  -72,  ...,  -89,  -47,  -48],\n         [   0,  -32,  -27,  ...,    0,  -12, -115]],\n\n        [[  54,   -9,   72,  ...,   14,   63,   68],\n         [-113,   -3,   30,  ...,   67,  -46,  -38],\n         [ 102,  -83,  -10,  ...,  -29,   64,  -74],\n         ...,\n         [-117,  112, -105,  ...,  -52,   84,   80],\n         [ -77,   48,   25,  ...,  -57,   37, -100],\n         [   8,  -40,   83,  ..., -126,   26,  -50]]], dtype=torch.int8)]"
+        },
+        {
+          "type": "scalar",
+          "value": "[tensor([[ 3.4866,  2.6605,  2.4645,  ...,  4.0543, -1.9194, -0.3592],\n        [-3.0917,  1.7766,  0.5985,  ..., -1.9519,  0.3367,  1.5720]])]"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            96
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2
+          ],
+          "dtype": "torch.int64"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        },
+        {
+          "type": "scalar",
+          "value": 0
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        },
+        {
+          "type": "scalar",
+          "value": 3
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        }
+      ],
+      "error_type": "AccuracyError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card6/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 898, in run_single_case\n    compare(\n  File \"/opt/workspace_card6/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 671, in compare\n    _compare_quant_fp_to_int(fw_finite, impl_finite, ctx)\n  File \"/opt/workspace_card6/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 531, in _compare_quant_fp_to_int\n    raise AccuracyError(\nAccuracyError: 验证失败 dtype=torch.int8 (量化类 fp->int，要求|diff|<=1): 30834/122880 元素超限，max_abs_diff=127\n前 10 个量化误差超限位置:\n  位置[2]: framework=17, impl=0, |diff|=17 (允许<=1)\n  位置[5]: framework=5, impl=0, |diff|=5 (允许<=1)\n  位置[7]: framework=-2, impl=0, |diff|=2 (允许<=1)\n  位置[9]: framework=-6, impl=0, |diff|=6 (允许<=1)\n  位置[10]: framework=3, impl=0, |diff|=3 (允许<=1)\n  位置[20]: framework=19, impl=0, |diff|=19 (允许<=1)\n  位置[22]: framework=-2, impl=0, |diff|=2 (允许<=1)\n  位置[23]: framework=2, impl=0, |diff|=2 (允许<=1)\n  位置[25]: frame\n... [truncated 140 chars] ...\nng exception:\n\nTraceback (most recent call last):\n  File \"/opt/workspace_card6/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card6/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 904, in run_single_case\n    raise AccuracyError(f\"[用例 {case_idx}/{total_cases}] {str(e)}\", e.metrics) from e\nAccuracyError: [用例 16/50] 验证失败 dtype=torch.int8 (量化类 fp->int，要求|diff|<=1): 30834/122880 元素超限，max_abs_diff=127\n前 10 个量化误差超限位置:\n  位置[2]: framework=17, impl=0, |diff|=17 (允许<=1)\n  位置[5]: framework=5, impl=0, |diff|=5 (允许<=1)\n  位置[7]: framework=-2, impl=0, |diff|=2 (允许<=1)\n  位置[9]: framework=-6, impl=0, |diff|=6 (允许<=1)\n  位置[10]: framework=3, impl=0, |diff|=3 (允许<=1)\n  位置[20]: framework=19, impl=0, |diff|=19 (允许<=1)\n  位置[22]: framework=-2, impl=0, |diff|=2 (允许<=1)\n  位置[23]: framework=2, impl=0, |diff|=2 (允许<=1)\n  位置[25]: framework=-3, impl=0, |diff|=3 (允许<=1)\n  位置[26]: framework=-7, impl=0, |diff|=7 (允许<=1)\n\n",
+      "metrics": {
+        "category": "quant_fp_to_int",
+        "dtype": "torch.int8",
+        "input_type": "float",
+        "max_abs_diff": 127,
+        "violation_count": 30834,
+        "total_finite": 122880,
+        "tolerance": 1
+      }
+    },
+    {
+      "case_idx": 18,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            192,
+            384
+          ],
+          "dtype": "torch.int8"
+        },
+        {
+          "type": "scalar",
+          "value": "[tensor([[[ -99,  -58,   82,  ...,  -45, -114, -120],\n         [ 115,  114, -103,  ...,   19,   90,  -75],\n         [  44,  -84,  123,  ...,  -57, -118,  123],\n         ...,\n         [-109,   -1,   -1,  ...,  -13,   90,   49],\n         [ -89,  -94,   38,  ...,  103,  -67,   16],\n         [ -52,  126,   61,  ...,  -19,  103,  -63]],\n\n        [[  20,   20,  -52,  ..., -106,  -72,  -77],\n         [  58,  -40, -111,  ...,   50,   49,   49],\n         [-108,   29,   54,  ...,   20,  113,  -26],\n         ...,\n         [ -44,   97, -105,  ...,   41,   45,   37],\n         [   8,    4,   99,  ...,   14,   36,  101],\n         [  97,  -13,   12,  ...,   97,   29,   42]],\n\n        [[  97,  -63,  -69,  ...,   56,  -95,  -67],\n         [ 114,   28,   33,  ...,  -60,   -3,  -41],\n         [  24, -127,   65,  ...,  -77,   42,   59],\n         ...,\n         [ -52,   64,  -45,  ...,   18,   39,   70],\n         [  18,   84,   96,  ...,  -97,  -61,   -4],\n         [ 113,  -48,   79,  ...,  111,  -68,   41]],\n\n        ...,\n\n        [[ -62,   84,   58,  ...,   27,   32,   69],\n         [ -63,   72,  106,  ...,   -9,   40,   -9],\n         [ -42,  -63,   69,  ...,  -29,   89,  -55],\n         ...,\n         [-116,  109,  -49,  ...,    7,  -84,   85],\n         [  73,  -31,   31,  ...,  -78,   26,  -79],\n         [ -85,    1,   99,  ...,   59,  -75,  -10]],\n\n        [[  57,  125,  -85,  ...,   -4, -102,  -61],\n         [ 126,  -80,  -79,  ...,  -83,  -33,   25],\n         [-115,  104,    1,  ...,  123,   12,  117],\n         ...,\n         [  78,  -91,  -74,  ...,  102,  -14,   13],\n         [  51,  107,   -3,  ..., -127,   79,   96],\n         [ -84,  -11,    9,  ...,  -59, -101,  -54]],\n\n        [[  29,   82,  -56,  ...,   19, -123,   84],\n         [ -56,   86,  -55,  ..., -107,  -35,   92],\n         [  78,   31,  110,  ...,  -47, -119,   89],\n         ...,\n         [  -6,  -95,  -46,  ...,  -50,  -40,   23],\n         [ -90,  -12,   49,  ...,  108,  103,  -22],\n         [  19,  -66,  112,  ...,   60,  -99, -127]]], dtype=torch.int8)]"
+        },
+        {
+          "type": "scalar",
+          "value": "[tensor([[-5.7028e-01, -2.3880e+00,  5.3861e-01,  ..., -4.8248e-01,\n          4.5398e-01, -3.3664e+00],\n        [-4.5629e-01, -2.4181e+00,  8.8161e-01,  ..., -1.2387e-01,\n         -6.2719e-01,  4.1758e-01],\n        [-2.6280e+00, -2.1014e+00, -2.9510e+00,  ..., -2.5957e+00,\n         -3.8101e+00, -9.6878e-01],\n        ...,\n        [-2.0845e+00, -1.3097e+00, -1.3803e+00,  ..., -1.9424e+00,\n         -2.5244e+00, -3.3951e+00],\n        [-6.5354e-01, -2.8355e+00,  4.2218e-01,  ..., -2.4849e+00,\n         -2.8137e+00, -1.4255e-03],\n        [-2.9315e-01, -1.9400e+00, -2.3628e+00,  ..., -2.1328e+00,\n         -3.2141e+00,  1.8526e+00]])]"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            192
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            8
+          ],
+          "dtype": "torch.int64"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        },
+        {
+          "type": "scalar",
+          "value": 0
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        }
+      ],
+      "error_type": "AccuracyError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card6/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 898, in run_single_case\n    compare(\n  File \"/opt/workspace_card6/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 671, in compare\n    _compare_quant_fp_to_int(fw_finite, impl_finite, ctx)\n  File \"/opt/workspace_card6/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 531, in _compare_quant_fp_to_int\n    raise AccuracyError(\nAccuracyError: 验证失败 dtype=torch.int8 (量化类 fp->int，要求|diff|<=1): 9590/36864 元素超限，max_abs_diff=127\n前 10 个量化误差超限位置:\n  位置[9]: framework=33, impl=15, |diff|=18 (允许<=1)\n  位置[10]: framework=-127, impl=-59, |diff|=68 (允许<=1)\n  位置[11]: framework=41, impl=19, |diff|=22 (允许<=1)\n  位置[14]: framework=-13, impl=-6, |diff|=7 (允许<=1)\n  位置[17]: framework=-11, impl=-5, |diff|=6 (允许<=1)\n  位置[18]: framework=-108, impl=-50, |diff|=58 (允许<=1)\n  位置[26]: framework=20, impl=9, |diff|=11 (允许<=1)\n  位置[29]: framework=6, impl=3, |diff|=3 (允许\n... [truncated 178 chars] ...\neback (most recent call last):\n  File \"/opt/workspace_card6/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card6/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 904, in run_single_case\n    raise AccuracyError(f\"[用例 {case_idx}/{total_cases}] {str(e)}\", e.metrics) from e\nAccuracyError: [用例 18/50] 验证失败 dtype=torch.int8 (量化类 fp->int，要求|diff|<=1): 9590/36864 元素超限，max_abs_diff=127\n前 10 个量化误差超限位置:\n  位置[9]: framework=33, impl=15, |diff|=18 (允许<=1)\n  位置[10]: framework=-127, impl=-59, |diff|=68 (允许<=1)\n  位置[11]: framework=41, impl=19, |diff|=22 (允许<=1)\n  位置[14]: framework=-13, impl=-6, |diff|=7 (允许<=1)\n  位置[17]: framework=-11, impl=-5, |diff|=6 (允许<=1)\n  位置[18]: framework=-108, impl=-50, |diff|=58 (允许<=1)\n  位置[26]: framework=20, impl=9, |diff|=11 (允许<=1)\n  位置[29]: framework=6, impl=3, |diff|=3 (允许<=1)\n  位置[30]: framework=13, impl=6, |diff|=7 (允许<=1)\n  位置[32]: framework=5, impl=2, |diff|=3 (允许<=1)\n\n",
+      "metrics": {
+        "category": "quant_fp_to_int",
+        "dtype": "torch.int8",
+        "input_type": "float",
+        "max_abs_diff": 127,
+        "violation_count": 9590,
+        "total_finite": 36864,
+        "tolerance": 1
+      }
+    },
+    {
+      "case_idx": 20,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            384,
+            768
+          ],
+          "dtype": "torch.int8"
+        },
+        {
+          "type": "scalar",
+          "value": "[tensor([[[ 103,  112, -121,  ...,    3,    7,  -52],\n         [-122,   93,   79,  ...,   25,  -10,   59],\n         [-114, -119,  -84,  ...,   25,   39,   97],\n         ...,\n         [  18,   86,  -10,  ...,  -25,    5,  -68],\n         [ -81,   56,  -46,  ...,  116,   55,   16],\n         [  40,  -73,   95,  ...,    2,  -86,   30]],\n\n        [[  55,  100,  -37,  ...,  -59, -108,   46],\n         [ -18,  -29,   -8,  ..., -110,   -4, -107],\n         [  -9,   94,   13,  ..., -125, -113,  -53],\n         ...,\n         [ -79, -118,  -10,  ...,  123,   13, -112],\n         [  96,   74,  116,  ...,  -47, -121,  125],\n         [ -25, -116,   64,  ..., -113,  112,  -21]],\n\n        [[ 111,  -75,  126,  ...,  -37,   90,   58],\n         [ -96,   62,   72,  ...,  -53,   45, -100],\n         [   4,  -89,   99,  ...,   87,  -42,   87],\n         ...,\n         [ -73,  111,  -19,  ...,  -38,  -26,  -15],\n         [  55,   68,   87,  ...,  -63,   -2,   53],\n         [  17,   75,   77,  ...,   86,   15,  -46]],\n\n        [[  -2,   50,   78,  ...,  -38,   32, -120],\n         [ -79,   27,   50,  ...,  -49,  101,   59],\n         [  59, -106,   62,  ...,  -25,   -7,   42],\n         ...,\n         [  11,  -45,  -17,  ...,  -95,   60,   94],\n         [-114,   29,  -83,  ...,  -10,  -83,   25],\n         [ -76,  -18,   89,  ...,    0,   79,  108]]], dtype=torch.int8)]"
+        },
+        {
+          "type": "scalar",
+          "value": "[tensor([[-3.7509, -3.5974, -2.0847,  ..., -3.3901, -3.1475, -3.3023],\n        [-3.9140, -3.9217, -3.9230,  ..., -3.0144, -4.0591, -3.7840],\n        [-3.7557, -3.2980, -3.6453,  ..., -3.5468, -2.2544, -3.0248],\n        [-4.3569, -3.0041, -3.6995,  ..., -3.9675, -3.6951, -2.5947]])]"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            384
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            4
+          ],
+          "dtype": "torch.int64"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        },
+        {
+          "type": "scalar",
+          "value": 0
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        },
+        {
+          "type": "scalar",
+          "value": 3
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        }
+      ],
+      "error_type": "AccuracyError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card6/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 898, in run_single_case\n    compare(\n  File \"/opt/workspace_card6/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 671, in compare\n    _compare_quant_fp_to_int(fw_finite, impl_finite, ctx)\n  File \"/opt/workspace_card6/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 531, in _compare_quant_fp_to_int\n    raise AccuracyError(\nAccuracyError: 验证失败 dtype=torch.int8 (量化类 fp->int，要求|diff|<=1): 53516/147456 元素超限，max_abs_diff=111\n前 10 个量化误差超限位置:\n  位置[0]: framework=4, impl=2, |diff|=2 (允许<=1)\n  位置[3]: framework=5, impl=3, |diff|=2 (允许<=1)\n  位置[4]: framework=-20, impl=-13, |diff|=7 (允许<=1)\n  位置[6]: framework=5, impl=3, |diff|=2 (允许<=1)\n  位置[11]: framework=6, impl=4, |diff|=2 (允许<=1)\n  位置[15]: framework=10, impl=6, |diff|=4 (允许<=1)\n  位置[17]: framework=127, impl=78, |diff|=49 (允许<=1)\n  位置[19]: framework=-17, impl=-10, |diff|=7 (允许<=1)\n  位置[23]:\n... [truncated 162 chars] ...\nn:\n\nTraceback (most recent call last):\n  File \"/opt/workspace_card6/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card6/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 904, in run_single_case\n    raise AccuracyError(f\"[用例 {case_idx}/{total_cases}] {str(e)}\", e.metrics) from e\nAccuracyError: [用例 20/50] 验证失败 dtype=torch.int8 (量化类 fp->int，要求|diff|<=1): 53516/147456 元素超限，max_abs_diff=111\n前 10 个量化误差超限位置:\n  位置[0]: framework=4, impl=2, |diff|=2 (允许<=1)\n  位置[3]: framework=5, impl=3, |diff|=2 (允许<=1)\n  位置[4]: framework=-20, impl=-13, |diff|=7 (允许<=1)\n  位置[6]: framework=5, impl=3, |diff|=2 (允许<=1)\n  位置[11]: framework=6, impl=4, |diff|=2 (允许<=1)\n  位置[15]: framework=10, impl=6, |diff|=4 (允许<=1)\n  位置[17]: framework=127, impl=78, |diff|=49 (允许<=1)\n  位置[19]: framework=-17, impl=-10, |diff|=7 (允许<=1)\n  位置[23]: framework=22, impl=13, |diff|=9 (允许<=1)\n  位置[33]: framework=-31, impl=-19, |diff|=12 (允许<=1)\n\n",
+      "metrics": {
+        "category": "quant_fp_to_int",
+        "dtype": "torch.int8",
+        "input_type": "float",
+        "max_abs_diff": 111,
+        "violation_count": 53516,
+        "total_finite": 147456,
+        "tolerance": 1
+      }
+    },
+    {
+      "case_idx": 22,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            64,
+            1536
+          ],
+          "dtype": "torch.int8"
+        },
+        {
+          "type": "scalar",
+          "value": "[tensor([[[ -84,    0,  -16,  ...,   -5,   62,  -90],\n         [  45,   63,    1,  ...,  -27, -128,  -36],\n         [  40,  -91,  -70,  ...,   78,  -18,   65],\n         ...,\n         [-127,  -15,  -56,  ...,   63,   75,   75],\n         [ -24,   34,   23,  ...,  112,   74,   95],\n         [ 108,   59,   75,  ..., -116,   47,  -76]],\n\n        [[ -88,   67,    7,  ...,  111,  115,  -88],\n         [  15,   43,   50,  ...,  -64,  -59,  126],\n         [   1,   65,   96,  ...,  124,  -18,  -42],\n         ...,\n         [  10,   41,  111,  ...,  -38,  -84,  -60],\n         [  67,  -56,   19,  ...,   69,  -64,   19],\n         [ 126, -125,  -85,  ...,  104,  -81, -121]]], dtype=torch.int8)]"
+        },
+        {
+          "type": "scalar",
+          "value": "[tensor([[4.1937, 4.2693, 4.5316,  ..., 4.4988, 4.4463, 4.1113],\n        [4.4183, 3.8211, 4.3243,  ..., 4.0726, 3.9933, 4.4772]])]"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            64
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2
+          ],
+          "dtype": "torch.int64"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        },
+        {
+          "type": "scalar",
+          "value": 0
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        }
+      ],
+      "error_type": "AccuracyError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card6/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 898, in run_single_case\n    compare(\n  File \"/opt/workspace_card6/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 671, in compare\n    _compare_quant_fp_to_int(fw_finite, impl_finite, ctx)\n  File \"/opt/workspace_card6/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 531, in _compare_quant_fp_to_int\n    raise AccuracyError(\nAccuracyError: 验证失败 dtype=torch.int8 (量化类 fp->int，要求|diff|<=1): 19275/49152 元素超限，max_abs_diff=127\n前 10 个量化误差超限位置:\n  位置[6]: framework=-42, impl=-39, |diff|=3 (允许<=1)\n  位置[13]: framework=-54, impl=-51, |diff|=3 (允许<=1)\n  位置[50]: framework=39, impl=37, |diff|=2 (允许<=1)\n  位置[53]: framework=-27, impl=-25, |diff|=2 (允许<=1)\n  位置[63]: framework=25, impl=23, |diff|=2 (允许<=1)\n  位置[64]: framework=42, impl=39, |diff|=3 (允许<=1)\n  位置[69]: framework=-56, impl=-53, |diff|=3 (允许<=1)\n  位置[73]: framework=-62, impl=-58, |diff|=4 (允\n... [truncated 194 chars] ...\nost recent call last):\n  File \"/opt/workspace_card6/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card6/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 904, in run_single_case\n    raise AccuracyError(f\"[用例 {case_idx}/{total_cases}] {str(e)}\", e.metrics) from e\nAccuracyError: [用例 22/50] 验证失败 dtype=torch.int8 (量化类 fp->int，要求|diff|<=1): 19275/49152 元素超限，max_abs_diff=127\n前 10 个量化误差超限位置:\n  位置[6]: framework=-42, impl=-39, |diff|=3 (允许<=1)\n  位置[13]: framework=-54, impl=-51, |diff|=3 (允许<=1)\n  位置[50]: framework=39, impl=37, |diff|=2 (允许<=1)\n  位置[53]: framework=-27, impl=-25, |diff|=2 (允许<=1)\n  位置[63]: framework=25, impl=23, |diff|=2 (允许<=1)\n  位置[64]: framework=42, impl=39, |diff|=3 (允许<=1)\n  位置[69]: framework=-56, impl=-53, |diff|=3 (允许<=1)\n  位置[73]: framework=-62, impl=-58, |diff|=4 (允许<=1)\n  位置[126]: framework=-45, impl=-42, |diff|=3 (允许<=1)\n  位置[128]: framework=32, impl=30, |diff|=2 (允许<=1)\n\n",
+      "metrics": {
+        "category": "quant_fp_to_int",
+        "dtype": "torch.int8",
+        "input_type": "float",
+        "max_abs_diff": 127,
+        "violation_count": 19275,
+        "total_finite": 49152,
+        "tolerance": 1
+      }
+    },
+    {
+      "case_idx": 24,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            128,
+            2560
+          ],
+          "dtype": "torch.int8"
+        },
+        {
+          "type": "scalar",
+          "value": "[tensor([[[  93,   30,  -94,  ..., -100,  -89,    2],\n         [ 110, -101,   78,  ...,  -85,   32,   17],\n         [ -28,   27,  111,  ...,   77,  -76,   -3],\n         ...,\n         [   6,  -12,   26,  ...,   15,  106,   83],\n         [  11, -112,   85,  ..., -106,  126,  -29],\n         [  89,   78,  -46,  ..., -112,  -57,   25]],\n\n        [[  -6,   96,   32,  ...,  -54,  120,  116],\n         [  24,  -26,  -15,  ...,  -46,  108,  118],\n         [  18,  -55,  -41,  ...,  -58,  -70, -100],\n         ...,\n         [  55,  -14,  -20,  ...,   13,  -35,   24],\n         [ -37,  -75,   83,  ...,  -65, -101,  -25],\n         [ 101,   78,  110,  ...,  -70,  -87,   -4]],\n\n        [[ -63,  -99, -127,  ...,   70,  113,   92],\n         [ -91,   33, -124,  ...,  -27,  -56,  117],\n         [ -33,  -96,  113,  ...,   30,   88,   74],\n         ...,\n         [  25, -119, -111,  ...,   97,  -63,   60],\n         [-114,  -93,  -87,  ...,  -86,  -67,  124],\n         [-123,  -11,  -60,  ...,   72, -125,   11]],\n\n        ...,\n\n        [[ 120,  -51,  -13,  ...,  -77,  -56,  -23],\n         [ -71,   48,    6,  ...,   32,   54,   46],\n         [  30,  -48,   38,  ...,  -87,  -80,   58],\n         ...,\n         [ 104,  106,   11,  ...,   94, -119,   90],\n         [-100,  -82,    0,  ...,  111,  -88,   40],\n         [ -56,   -7,   54,  ...,  125,  -15, -107]],\n\n        [[  87,  -44, -119,  ...,  -76,  -58,  117],\n         [  94,   26,   94,  ...,  -48,   59,  -70],\n         [   6,  -64,  120,  ...,   47,   49,   17],\n         ...,\n         [-120,  -29,   85,  ...,  -47,   93,  -93],\n         [-115,   -4,   34,  ...,   15,   60, -125],\n         [  83,   11, -112,  ...,  -69,  -33,  -94]],\n\n        [[ -26,   -4, -116,  ...,   37,  -16,   22],\n         [ -46, -102,  -95,  ...,  -27,   57, -105],\n         [ 124,  -70,  -14,  ...,   85,   53,  -76],\n         ...,\n         [  68, -111,   21,  ...,  -29,   93,  120],\n         [ -97,  -86,    2,  ...,  113,  -92,   80],\n         [  12,  -92,  -15,  ...,  113,  -55,  -67]]], dtype=torch.int8)]"
+        },
+        {
+          "type": "scalar",
+          "value": "[tensor([[ 2.6892, -3.9902, -1.6398,  ...,  0.3714, -3.8766, -3.3671],\n        [ 4.4326, -0.9847,  4.5025,  ..., -4.6448,  3.1274, -0.6899],\n        [ 0.7040, -4.0850, -3.0808,  ..., -1.3089, -2.0608,  3.8711],\n        ...,\n        [-0.9910,  3.6534, -3.7265,  ..., -0.9713, -3.6978,  0.0929],\n        [-3.4719,  2.6789, -0.1091,  ..., -4.0745, -2.3562,  0.9568],\n        [-3.8744, -1.7298, -2.6940,  ...,  3.5741,  1.0049,  0.8622]])]"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            128
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            8
+          ],
+          "dtype": "torch.int64"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        },
+        {
+          "type": "scalar",
+          "value": 0
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        },
+        {
+          "type": "scalar",
+          "value": 3
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        }
+      ],
+      "error_type": "AccuracyError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card6/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 898, in run_single_case\n    compare(\n  File \"/opt/workspace_card6/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 671, in compare\n    _compare_quant_fp_to_int(fw_finite, impl_finite, ctx)\n  File \"/opt/workspace_card6/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 531, in _compare_quant_fp_to_int\n    raise AccuracyError(\nAccuracyError: 验证失败 dtype=torch.int8 (量化类 fp->int，要求|diff|<=1): 41305/163840 元素超限，max_abs_diff=127\n前 10 个量化误差超限位置:\n  位置[1]: framework=44, impl=17, |diff|=27 (允许<=1)\n  位置[3]: framework=57, impl=22, |diff|=35 (允许<=1)\n  位置[6]: framework=8, impl=3, |diff|=5 (允许<=1)\n  位置[8]: framework=5, impl=2, |diff|=3 (允许<=1)\n  位置[16]: framework=-4, impl=-2, |diff|=2 (允许<=1)\n  位置[19]: framework=4, impl=2, |diff|=2 (允许<=1)\n  位置[26]: framework=-28, impl=-11, |diff|=17 (允许<=1)\n  位置[30]: framework=-3, impl=-1, |diff|=2 (允许<=1)\n  位置[33\n... [truncated 158 chars] ...\nion:\n\nTraceback (most recent call last):\n  File \"/opt/workspace_card6/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card6/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 904, in run_single_case\n    raise AccuracyError(f\"[用例 {case_idx}/{total_cases}] {str(e)}\", e.metrics) from e\nAccuracyError: [用例 24/50] 验证失败 dtype=torch.int8 (量化类 fp->int，要求|diff|<=1): 41305/163840 元素超限，max_abs_diff=127\n前 10 个量化误差超限位置:\n  位置[1]: framework=44, impl=17, |diff|=27 (允许<=1)\n  位置[3]: framework=57, impl=22, |diff|=35 (允许<=1)\n  位置[6]: framework=8, impl=3, |diff|=5 (允许<=1)\n  位置[8]: framework=5, impl=2, |diff|=3 (允许<=1)\n  位置[16]: framework=-4, impl=-2, |diff|=2 (允许<=1)\n  位置[19]: framework=4, impl=2, |diff|=2 (允许<=1)\n  位置[26]: framework=-28, impl=-11, |diff|=17 (允许<=1)\n  位置[30]: framework=-3, impl=-1, |diff|=2 (允许<=1)\n  位置[33]: framework=3, impl=1, |diff|=2 (允许<=1)\n  位置[39]: framework=-12, impl=-5, |diff|=7 (允许<=1)\n\n",
+      "metrics": {
+        "category": "quant_fp_to_int",
+        "dtype": "torch.int8",
+        "input_type": "float",
+        "max_abs_diff": 127,
+        "violation_count": 41305,
+        "total_finite": 163840,
+        "tolerance": 1
+      }
+    },
+    {
+      "case_idx": 26,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            256,
+            384
+          ],
+          "dtype": "torch.int8"
+        },
+        {
+          "type": "scalar",
+          "value": "[tensor([[[ -53,   80,   27,  ...,   81, -111,  -88],\n         [ 123,   25,   53,  ...,   16,   67,   19],\n         [-110, -100,  -15,  ...,   35,   19, -100],\n         ...,\n         [  45,   62,   30,  ...,  -98,  -39,   81],\n         [ 117,  -80,  -28,  ...,   91,  -63,  124],\n         [ -67,    5,   44,  ...,  -28,  -23,  108]],\n\n        [[ 123,  -75,   30,  ...,  -39,  118,  -12],\n         [  48, -118,  -21,  ...,   34,  -49,   36],\n         [ -27,   45,   33,  ...,  -60,   -4, -110],\n         ...,\n         [ 118,  -69,   20,  ...,   63,  125,  100],\n         [-119,  -98,   64,  ...,   82,   75,  111],\n         [-108,   77, -104,  ...,  -29,   34,  -71]],\n\n        [[ -96,   88,  -14,  ..., -114, -102,  -85],\n         [-126,  -80,  -32,  ...,   28,  120,  -14],\n         [  99,  -62,   13,  ...,  -71,   15,  -95],\n         ...,\n         [  48,   79,   83,  ..., -112,   12, -118],\n         [  30,  -63,   89,  ..., -112,   78,  -39],\n         [  32,    3,  -60,  ...,    0,  -47, -125]],\n\n        [[ -31,   13,   23,  ...,   82,   99,   57],\n         [  75,  -82,  -66,  ...,   74,   19, -126],\n         [ 120, -104,    4,  ...,   81,   49,  -21],\n         ...,\n         [  -9,  -72,   57,  ...,  -91, -127, -118],\n         [  46,   29,   30,  ...,  -25,  109,  122],\n         [  66, -117,   83,  ...,   83,   97,   16]]], dtype=torch.int8)]"
+        },
+        {
+          "type": "scalar",
+          "value": "[tensor([[1.7307, 2.2958, 2.4588,  ..., 2.1399, 1.2407, 4.0040],\n        [0.9821, 2.7543, 0.5544,  ..., 2.2744, 3.0658, 0.8778],\n        [2.8937, 4.3758, 3.2852,  ..., 2.4443, 2.8234, 0.4941],\n        [2.5775, 1.9577, 2.1341,  ..., 1.7910, 2.3046, 2.0247]])]"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            256
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            4
+          ],
+          "dtype": "torch.int64"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        },
+        {
+          "type": "scalar",
+          "value": 0
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        }
+      ],
+      "error_type": "AccuracyError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card6/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 898, in run_single_case\n    compare(\n  File \"/opt/workspace_card6/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 671, in compare\n    _compare_quant_fp_to_int(fw_finite, impl_finite, ctx)\n  File \"/opt/workspace_card6/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 531, in _compare_quant_fp_to_int\n    raise AccuracyError(\nAccuracyError: 验证失败 dtype=torch.int8 (量化类 fp->int，要求|diff|<=1): 17944/49152 元素超限，max_abs_diff=123\n前 10 个量化误差超限位置:\n  位置[0]: framework=-14, impl=-4, |diff|=10 (允许<=1)\n  位置[4]: framework=-2, impl=0, |diff|=2 (允许<=1)\n  位置[6]: framework=6, impl=2, |diff|=4 (允许<=1)\n  位置[7]: framework=5, impl=1, |diff|=4 (允许<=1)\n  位置[8]: framework=-55, impl=-16, |diff|=39 (允许<=1)\n  位置[9]: framework=-13, impl=-4, |diff|=9 (允许<=1)\n  位置[10]: framework=16, impl=5, |diff|=11 (允许<=1)\n  位置[20]: framework=-3, impl=-1, |diff|=2 (允许<=1)\n  位置[28]\n... [truncated 154 chars] ...\nption:\n\nTraceback (most recent call last):\n  File \"/opt/workspace_card6/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card6/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 904, in run_single_case\n    raise AccuracyError(f\"[用例 {case_idx}/{total_cases}] {str(e)}\", e.metrics) from e\nAccuracyError: [用例 26/50] 验证失败 dtype=torch.int8 (量化类 fp->int，要求|diff|<=1): 17944/49152 元素超限，max_abs_diff=123\n前 10 个量化误差超限位置:\n  位置[0]: framework=-14, impl=-4, |diff|=10 (允许<=1)\n  位置[4]: framework=-2, impl=0, |diff|=2 (允许<=1)\n  位置[6]: framework=6, impl=2, |diff|=4 (允许<=1)\n  位置[7]: framework=5, impl=1, |diff|=4 (允许<=1)\n  位置[8]: framework=-55, impl=-16, |diff|=39 (允许<=1)\n  位置[9]: framework=-13, impl=-4, |diff|=9 (允许<=1)\n  位置[10]: framework=16, impl=5, |diff|=11 (允许<=1)\n  位置[20]: framework=-3, impl=-1, |diff|=2 (允许<=1)\n  位置[28]: framework=6, impl=2, |diff|=4 (允许<=1)\n  位置[31]: framework=-6, impl=-2, |diff|=4 (允许<=1)\n\n",
+      "metrics": {
+        "category": "quant_fp_to_int",
+        "dtype": "torch.int8",
+        "input_type": "float",
+        "max_abs_diff": 123,
+        "violation_count": 17944,
+        "total_finite": 49152,
+        "tolerance": 1
+      }
+    },
+    {
+      "case_idx": 28,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            512,
+            768
+          ],
+          "dtype": "torch.int8"
+        },
+        {
+          "type": "scalar",
+          "value": "[tensor([[[-107,  -73,  -36,  ...,  -23,  -31,  -66],\n         [  23,  -91,   -1,  ...,  -84,  111,  -17],\n         [  56,    9,  122,  ...,  111,  -17,   13],\n         ...,\n         [  -7,   55,   17,  ...,   22,  -64,  -90],\n         [-114,   11,  114,  ...,   42,  -39,   84],\n         [-107, -124,   48,  ...,  110,   90,   54]],\n\n        [[-116,   24,  -37,  ...,  -76,  124,    6],\n         [  57,   29,  -17,  ...,   20,  -65, -102],\n         [ -70,   35, -108,  ...,   90,  102,  121],\n         ...,\n         [ 120,  -25, -107,  ..., -125,   71,  -50],\n         [ -34,  -30,  -34,  ...,   22,  -98,  -98],\n         [ -49,   21,   71,  ...,  -43,   66,  -62]]], dtype=torch.int8)]"
+        },
+        {
+          "type": "scalar",
+          "value": "[tensor([[ 3.9032,  2.6262,  4.9572,  ...,  2.0334,  1.4334,  1.5808],\n        [ 0.1243,  0.1525,  4.0422,  ...,  0.4702,  2.0198, -0.2703]])]"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            512
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2
+          ],
+          "dtype": "torch.int64"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        },
+        {
+          "type": "scalar",
+          "value": 0
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        },
+        {
+          "type": "scalar",
+          "value": 3
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        }
+      ],
+      "error_type": "AccuracyError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card6/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 898, in run_single_case\n    compare(\n  File \"/opt/workspace_card6/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 671, in compare\n    _compare_quant_fp_to_int(fw_finite, impl_finite, ctx)\n  File \"/opt/workspace_card6/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 531, in _compare_quant_fp_to_int\n    raise AccuracyError(\nAccuracyError: 验证失败 dtype=torch.int8 (量化类 fp->int，要求|diff|<=1): 64293/196608 元素超限，max_abs_diff=127\n前 10 个量化误差超限位置:\n  位置[0]: framework=4, impl=1, |diff|=3 (允许<=1)\n  位置[2]: framework=52, impl=17, |diff|=35 (允许<=1)\n  位置[5]: framework=39, impl=13, |diff|=26 (允许<=1)\n  位置[7]: framework=-19, impl=-6, |diff|=13 (允许<=1)\n  位置[24]: framework=-6, impl=-2, |diff|=4 (允许<=1)\n  位置[26]: framework=9, impl=3, |diff|=6 (允许<=1)\n  位置[27]: framework=-4, impl=-1, |diff|=3 (允许<=1)\n  位置[29]: framework=-9, impl=-3, |diff|=6 (允许<=1)\n  位置[3\n... [truncated 168 chars] ...\n\nTraceback (most recent call last):\n  File \"/opt/workspace_card6/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card6/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 904, in run_single_case\n    raise AccuracyError(f\"[用例 {case_idx}/{total_cases}] {str(e)}\", e.metrics) from e\nAccuracyError: [用例 28/50] 验证失败 dtype=torch.int8 (量化类 fp->int，要求|diff|<=1): 64293/196608 元素超限，max_abs_diff=127\n前 10 个量化误差超限位置:\n  位置[0]: framework=4, impl=1, |diff|=3 (允许<=1)\n  位置[2]: framework=52, impl=17, |diff|=35 (允许<=1)\n  位置[5]: framework=39, impl=13, |diff|=26 (允许<=1)\n  位置[7]: framework=-19, impl=-6, |diff|=13 (允许<=1)\n  位置[24]: framework=-6, impl=-2, |diff|=4 (允许<=1)\n  位置[26]: framework=9, impl=3, |diff|=6 (允许<=1)\n  位置[27]: framework=-4, impl=-1, |diff|=3 (允许<=1)\n  位置[29]: framework=-9, impl=-3, |diff|=6 (允许<=1)\n  位置[32]: framework=-24, impl=-8, |diff|=16 (允许<=1)\n  位置[39]: framework=-10, impl=-3, |diff|=7 (允许<=1)\n\n",
+      "metrics": {
+        "category": "quant_fp_to_int",
+        "dtype": "torch.int8",
+        "input_type": "float",
+        "max_abs_diff": 127,
+        "violation_count": 64293,
+        "total_finite": 196608,
+        "tolerance": 1
+      }
+    },
+    {
+      "case_idx": 30,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            96,
+            1536
+          ],
+          "dtype": "torch.int8"
+        },
+        {
+          "type": "scalar",
+          "value": "[tensor([[[ -11,   61,   82,  ...,  -49,  102, -100],\n         [ 101,  -96,  117,  ...,  -20,   62,  -52],\n         [   4,  -97,  -93,  ...,   62,  -37,  -30],\n         ...,\n         [  45,  124,   15,  ...,  101,   27,  -49],\n         [-128,  -91,  -48,  ...,  -91,  -68, -127],\n         [-123,   29, -127,  ...,  -71,  120,   62]],\n\n        [[ -35,  -14,  -46,  ...,  -22,  -58,  102],\n         [  66,  -22,   23,  ...,  -85, -123,  -13],\n         [  18, -117,  110,  ...,  109,   98, -112],\n         ...,\n         [ -70,    6,   93,  ...,  -33,   95,    1],\n         [ -14,  102,   61,  ...,  -99,  -56,  -86],\n         [ -48,   95,   46,  ...,  -66,   52,  -65]],\n\n        [[  43,   24,  -28,  ...,   -9,   98,  -51],\n         [  22,  102,  -40,  ...,   63,  -74, -114],\n         [ 108,  -52,  -90,  ...,   40, -109,   80],\n         ...,\n         [  93,  -83,  -67,  ...,   65,   98,   33],\n         [  45,   82,   78,  ...,  -75,   31,  -33],\n         [  38, -102,  -43,  ...,   18,  -31,  -21]],\n\n        ...,\n\n        [[ 110, -109,    2,  ...,   13,  122, -105],\n         [ -21,  -57,  -63,  ..., -104,   23,  -61],\n         [ -91,   65,  -78,  ...,   49,   88,   86],\n         ...,\n         [  29,  102,   24,  ...,   71, -116,   31],\n         [  -8,   74,   76,  ...,  -28,   56,  -57],\n         [ -27,   52,  -28,  ...,   91,  -47,  -48]],\n\n        [[ 103,  -13,    6,  ...,  120,  -36,  -59],\n         [ 121,  -63,  -88,  ...,   35,  -62, -109],\n         [ -79,   23,  -84,  ...,   63,  -92,   82],\n         ...,\n         [  74,  104,  -17,  ...,   35,  -35,    1],\n         [  -1, -121,  -71,  ...,    4,  -60,    4],\n         [ -88,  -76,   23,  ...,  108,  -14, -114]],\n\n        [[   8,  -87,   44,  ...,  -66, -110,   99],\n         [ -11, -126, -107,  ...,    3,  -77, -128],\n         [ -29,   84, -120,  ...,  -91,   64,  -45],\n         ...,\n         [ 108,  -82,  -92,  ...,  -61,  -15,   79],\n         [ -89,   -7,   72,  ...,   89, -119,  -13],\n         [  57,  -60,   -9,  ...,  -71,  -72,  -90]]], dtype=torch.int8)]"
+        },
+        {
+          "type": "scalar",
+          "value": "[tensor([[-4.8438, -4.4306, -1.4938,  ...,  1.8260,  1.6247,  4.8270],\n        [-3.0648,  0.3426, -4.3475,  ..., -3.7035, -2.8191, -4.0739],\n        [-3.1710, -2.8705,  1.0981,  ...,  3.7462, -0.5763, -2.4883],\n        ...,\n        [-1.9873,  2.5249,  1.9795,  ..., -3.9473, -3.1976, -2.5254],\n        [ 4.2742, -1.3408, -4.7438,  ...,  1.0075, -1.0085,  1.4639],\n        [ 0.0449,  1.8477, -3.6298,  ...,  1.1354, -3.7171,  1.1155]])]"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            96
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            8
+          ],
+          "dtype": "torch.int64"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        },
+        {
+          "type": "scalar",
+          "value": 0
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        }
+      ],
+      "error_type": "AccuracyError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card6/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 898, in run_single_case\n    compare(\n  File \"/opt/workspace_card6/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 671, in compare\n    _compare_quant_fp_to_int(fw_finite, impl_finite, ctx)\n  File \"/opt/workspace_card6/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 531, in _compare_quant_fp_to_int\n    raise AccuracyError(\nAccuracyError: 验证失败 dtype=torch.int8 (量化类 fp->int，要求|diff|<=1): 16837/73728 元素超限，max_abs_diff=127\n前 10 个量化误差超限位置:\n  位置[772]: framework=2, impl=0, |diff|=2 (允许<=1)\n  位置[774]: framework=-8, impl=-1, |diff|=7 (允许<=1)\n  位置[777]: framework=62, impl=11, |diff|=51 (允许<=1)\n  位置[779]: framework=28, impl=5, |diff|=23 (允许<=1)\n  位置[784]: framework=-8, impl=-1, |diff|=7 (允许<=1)\n  位置[786]: framework=-3, impl=-1, |diff|=2 (允许<=1)\n  位置[788]: framework=14, impl=2, |diff|=12 (允许<=1)\n  位置[789]: framework=2, impl=0, |diff|=2 (允许<=1\n... [truncated 186 chars] ...\nk (most recent call last):\n  File \"/opt/workspace_card6/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card6/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 904, in run_single_case\n    raise AccuracyError(f\"[用例 {case_idx}/{total_cases}] {str(e)}\", e.metrics) from e\nAccuracyError: [用例 30/50] 验证失败 dtype=torch.int8 (量化类 fp->int，要求|diff|<=1): 16837/73728 元素超限，max_abs_diff=127\n前 10 个量化误差超限位置:\n  位置[772]: framework=2, impl=0, |diff|=2 (允许<=1)\n  位置[774]: framework=-8, impl=-1, |diff|=7 (允许<=1)\n  位置[777]: framework=62, impl=11, |diff|=51 (允许<=1)\n  位置[779]: framework=28, impl=5, |diff|=23 (允许<=1)\n  位置[784]: framework=-8, impl=-1, |diff|=7 (允许<=1)\n  位置[786]: framework=-3, impl=-1, |diff|=2 (允许<=1)\n  位置[788]: framework=14, impl=2, |diff|=12 (允许<=1)\n  位置[789]: framework=2, impl=0, |diff|=2 (允许<=1)\n  位置[790]: framework=29, impl=5, |diff|=24 (允许<=1)\n  位置[795]: framework=-14, impl=-2, |diff|=12 (允许<=1)\n\n",
+      "metrics": {
+        "category": "quant_fp_to_int",
+        "dtype": "torch.int8",
+        "input_type": "float",
+        "max_abs_diff": 127,
+        "violation_count": 16837,
+        "total_finite": 73728,
+        "tolerance": 1
+      }
+    },
+    {
+      "case_idx": 32,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            192,
+            2560
+          ],
+          "dtype": "torch.int8"
+        },
+        {
+          "type": "scalar",
+          "value": "[tensor([[[ -88,  -24,  -46,  ...,  -32,   28,  -23],\n         [ -85,  -30,  -11,  ...,  -85,   85,   -2],\n         [  43,  -17,   52,  ...,  -82,   14,  -85],\n         ...,\n         [-116,    8,   81,  ...,   79,   -1,  -34],\n         [  62,  104,   17,  ...,  -56,  118,  -50],\n         [-104,  -32,  104,  ...,   20,   90,  -34]],\n\n        [[ -63,   67, -127,  ...,  -66,   82, -100],\n         [  65, -111,   39,  ...,   59,  -94,    9],\n         [ -68,   88,  -56,  ...,  -66,    4,  104],\n         ...,\n         [   0,   -5,  -38,  ...,  -63,   39,  -40],\n         [ -97,   99, -103,  ...,  101, -115,   45],\n         [-104,   -4,  -39,  ...,   92,   43,  -59]],\n\n        [[ 117,  -72,   97,  ...,  -81,  -86,   89],\n         [  35,  -45, -114,  ..., -115,  -51,  -65],\n         [ 118,  -45,   44,  ...,   74,  -87,   80],\n         ...,\n         [ -66,  115, -124,  ...,   55,   34,  -99],\n         [-109,    3, -124,  ...,   24,  -38,  -36],\n         [ -40,  -68,  -99,  ...,   85,   53,    2]],\n\n        [[  39,   96,  126,  ...,  -50, -102, -103],\n         [-128,    4,  -51,  ...,   85, -120,  111],\n         [ -82,    6,  -60,  ...,  -68,  -29,  -89],\n         ...,\n         [-112,  -90,  -78,  ...,  -57,   16,  -85],\n         [  36, -122,  -28,  ...,   73, -102,  -20],\n         [ -11,  -24, -128,  ...,   59,  -74,   87]]], dtype=torch.int8)]"
+        },
+        {
+          "type": "scalar",
+          "value": "[tensor([[ 4.2833,  4.0376, -2.9273,  ...,  1.7606, -3.8341, -3.6933],\n        [ 4.1546, -4.6649, -0.9473,  ..., -1.6177, -1.2901, -4.5468],\n        [-2.3071,  1.9936, -0.9340,  ...,  1.7081,  1.7857, -1.8818],\n        [-1.2239, -0.1943, -1.2272,  ..., -3.3890, -3.5411, -3.1314]])]"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            192
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            4
+          ],
+          "dtype": "torch.int64"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        },
+        {
+          "type": "scalar",
+          "value": 0
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        },
+        {
+          "type": "scalar",
+          "value": 3
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        }
+      ],
+      "error_type": "AccuracyError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card6/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 898, in run_single_case\n    compare(\n  File \"/opt/workspace_card6/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 671, in compare\n    _compare_quant_fp_to_int(fw_finite, impl_finite, ctx)\n  File \"/opt/workspace_card6/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 531, in _compare_quant_fp_to_int\n    raise AccuracyError(\nAccuracyError: 验证失败 dtype=torch.int8 (量化类 fp->int，要求|diff|<=1): 67312/245760 元素超限，max_abs_diff=127\n前 10 个量化误差超限位置:\n  位置[3]: framework=-11, impl=-5, |diff|=6 (允许<=1)\n  位置[5]: framework=-4, impl=-2, |diff|=2 (允许<=1)\n  位置[8]: framework=12, impl=6, |diff|=6 (允许<=1)\n  位置[14]: framework=-14, impl=-7, |diff|=7 (允许<=1)\n  位置[22]: framework=-3, impl=-1, |diff|=2 (允许<=1)\n  位置[24]: framework=19, impl=9, |diff|=10 (允许<=1)\n  位置[26]: framework=-55, impl=-26, |diff|=29 (允许<=1)\n  位置[29]: framework=4, impl=2, |diff|=2 (允许<=1)\n  位\n... [truncated 172 chars] ...\nraceback (most recent call last):\n  File \"/opt/workspace_card6/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card6/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 904, in run_single_case\n    raise AccuracyError(f\"[用例 {case_idx}/{total_cases}] {str(e)}\", e.metrics) from e\nAccuracyError: [用例 32/50] 验证失败 dtype=torch.int8 (量化类 fp->int，要求|diff|<=1): 67312/245760 元素超限，max_abs_diff=127\n前 10 个量化误差超限位置:\n  位置[3]: framework=-11, impl=-5, |diff|=6 (允许<=1)\n  位置[5]: framework=-4, impl=-2, |diff|=2 (允许<=1)\n  位置[8]: framework=12, impl=6, |diff|=6 (允许<=1)\n  位置[14]: framework=-14, impl=-7, |diff|=7 (允许<=1)\n  位置[22]: framework=-3, impl=-1, |diff|=2 (允许<=1)\n  位置[24]: framework=19, impl=9, |diff|=10 (允许<=1)\n  位置[26]: framework=-55, impl=-26, |diff|=29 (允许<=1)\n  位置[29]: framework=4, impl=2, |diff|=2 (允许<=1)\n  位置[30]: framework=-127, impl=-61, |diff|=66 (允许<=1)\n  位置[33]: framework=3, impl=1, |diff|=2 (允许<=1)\n\n",
+      "metrics": {
+        "category": "quant_fp_to_int",
+        "dtype": "torch.int8",
+        "input_type": "float",
+        "max_abs_diff": 127,
+        "violation_count": 67312,
+        "total_finite": 245760,
+        "tolerance": 1
+      }
+    },
+    {
+      "case_idx": 34,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            384,
+            384
+          ],
+          "dtype": "torch.int8"
+        },
+        {
+          "type": "scalar",
+          "value": "[tensor([[[ -95,  102,  -14,  ...,   17,  118,   -9],\n         [-103, -119,  -51,  ..., -108,  -39,   37],\n         [  55,   78,   46,  ..., -118,  103,  -41],\n         ...,\n         [-100,  -18, -128,  ...,  -39,   52,   23],\n         [  26,  -71,   -2,  ...,  -22,  -84,  -52],\n         [ 121,  -47, -112,  ...,  -16,  -21,  -66]],\n\n        [[ 123,   -9, -125,  ...,  -39,  -65, -117],\n         [  82,  109,  108,  ...,   16,   41, -121],\n         [ -24,   88,   75,  ...,  -80,  108,  -90],\n         ...,\n         [ 117,   60,  -56,  ...,   62,   85,   35],\n         [   1,   57, -107,  ...,   84,   41,  -44],\n         [  74,   43,  118,  ...,   14,  -42,   18]]], dtype=torch.int8)]"
+        },
+        {
+          "type": "scalar",
+          "value": "[tensor([[ 2.7776,  0.2799,  3.7399, -0.1877, -2.0922,  2.8055, -3.0354, -4.4460,\n         -3.2983, -0.5045,  2.4461,  0.9466,  4.6221, -0.8277, -0.3478, -2.1418,\n         -2.6647,  3.5387,  3.4110,  4.4142, -3.6764,  3.4189,  1.1367,  1.3798,\n          2.5191, -0.6064,  3.9176, -3.8829, -4.7436,  4.1003, -1.5501, -1.2117,\n          4.9192,  3.2796,  0.5361,  1.0939, -3.6814,  3.1703,  3.9178,  3.3981,\n         -3.8380, -2.9836, -2.1173,  0.0220,  0.2152,  2.5426, -3.3740, -2.7403,\n          4.2044,  3.9579,  0.0250, -4.9449,  1.2421,  3.3728,  3.2485, -4.7935,\n         -0.8272, -2.4323, -4.7041,  4.8955, -3.9610, -2.8191, -4.4579, -3.5010,\n         -3.6271, -0.4684, -2.1668,  1.9724, -2.6946,  2.6436,  1.8279,  1.8942,\n         -1.7250, -4.1820, -4.5657, -0.6598,  3.5190,  1.1585, -2.8070, -1.6008,\n         -3.6634, -1.6994,  4.7095,  2.7780, -4.7153,  0.9824,  0.3350, -1.0027,\n          3.3487, -3.5861, -0.1496, -4.0601,  0.9313,  3.1567,  0.2128,  3.3680,\n          2.6428,  3.5529, -1.6213, -0.6754,  3.4490,  2.9236,  4.0561,  3.8497,\n         -0.9204,  0.0582, -2.6342,  4.1769, -2.8398,  4.8872, -0.8375, -2.7808,\n          4.2133, -1.5463, -1.6235, -1.5831,  1.8397,  3.7220,  1.6289,  1.0461,\n         -1.2884,  4.4741,  4.5445, -4.3228,  2.9105,  1.0293,  2.3577,  0.8015,\n          2.2040, -2.3595,  0.3780, -0.4070,  2.1505, -2.1928,  2.7969, -2.3996,\n          4.0879, -3.0723, -0.5023, -2.4308, -4.5903,  4.5816,  3.0735, -4.6853,\n          1.4248, -2.8696,  3.9069,  4.4816,  1.7265, -4.4560, -2.6759, -3.5315,\n          4.6299, -3.9021,  0.8293,  0.5449,  1.4631, -2.8371,  3.4158,  2.4172,\n         -1.1593,  4.1463, -3.6980,  1.2653, -1.7002,  0.9092, -2.4069, -2.7722,\n         -0.3609,  4.6508,  1.7054, -0.0364, -1.2114, -0.1821,  2.4064,  1.9204,\n         -2.4249, -0.9328,  1.6428, -4.5486,  4.2354, -2.3278,  0.5187, -0.2921,\n         -2.8296,  1.7849,  4.5097, -2.9323, -4.1605,  1.9053,  1.1102,  1.6099,\n         -4.2257, -3.3351,  2.7607,  0.9017,  2.1322,  1.5982, -4.9828,  4.0955,\n          0.1281, -2.6291, -4.5316,  2.3167, -1.0373,  2.5515,  0.5292,  4.0838,\n         -1.9459, -1.6345,  1.7337,  0.5402, -1.7639,  0.0593,  2.0701,  1.0697,\n         -2.7787,  0.6158, -3.8562,  0.8688,  4.6187, -3.0678,  0.1821, -3.7744,\n          3.3355, -3.0339,  2.0894, -1.1906,  0.7142, -2.6908, -0.1105,  3.3782,\n          1.4693, -2.4514,  3.1338, -0.7321, -3.7504,  0.5330, -3.6210, -2.1468,\n         -1.5039, -1.2908,  4.2104,  1.3294, -4.9219, -1.4955, -2.8230, -2.0495,\n         -2.3184, -0.4705,  1.3496, -3.1317, -3.7779,  3.6167,  0.0598, -0.4257,\n         -1.9720, -3.4490,  1.5960,  2.7200,  1.9240, -1.9587, -0.8376, -4.0613,\n          3.0465,  3.4129,  3.6652,  0.7335,  4.1804,  1.3445,  0.9771, -0.7607,\n         -2.5936,  1.5866,  2.2621, -4.8612,  1.9965,  4.7999, -3.1433, -0.8479,\n         -0.1479,  4.3382, -2.4878,  1.7190, -2.4944,  1.2866, -0.0295, -0.2022,\n         -2.5824, -1.0434, -3.8573,  3.6136, -4.3142, -0.9494,  1.9872, -2.5633,\n          1.4716, -3.0188,  1.7890,  2.5316, -1.3265, -3.9509,  4.9819, -1.1291,\n          4.8492,  4.9655, -0.9155,  0.9783,  0.1353, -4.6814,  2.5631, -3.8940,\n          4.0376,  0.4223,  3.1086, -2.7541,  3.3085, -0.9001,  2.1874, -1.7889,\n          0.6241, -4.7312,  4.8903,  4.6151,  3.5691, -0.0515, -3.1788, -4.3298,\n          0.0611, -1.6678, -2.0389, -2.2444, -1.3831,  2.2333,  1.9633,  4.7635,\n          2.3503,  2.5460,  3.4119, -2.5926, -0.2013,  4.7806, -1.5091,  1.2022,\n          0.9594,  4.8987, -1.7827, -4.6890,  2.1391, -0.6457,  2.4405,  3.0718,\n         -4.2077,  0.0531, -2.6613,  4.1092,  4.8482,  3.1761, -2.9794,  1.6192,\n          0.4848,  1.0866, -0.8354, -1.2194, -2.6071,  2.5282,  4.3583,  0.1622,\n          4.7950,  1.5742,  2.0608, -0.8589,  1.7335,  1.4071,  3.6325, -4.9556,\n         -3.0066,  3.8304,  2.5781, -4.1271,  1.0549, -1.5027, -0.5872, -3.5215],\n        [ 4.6781,  0.9947, -3.4649, -2.3050,  3.8061, -4.3822,  4.6375,  0.0334,\n         -1.0236, -2.9216,  4.0407, -2.9787, -0.1390,  4.5271, -1.2033,  1.5826,\n         -1.9746,  0.1418, -4.2617, -1.8322, -4.3419,  4.0113, -1.3861,  3.3720,\n          3.7551,  2.3888,  0.5870, -0.4121,  1.5973, -2.7064, -4.1347, -4.4570,\n          0.5960,  2.0805,  2.5105, -4.9945,  2.5819,  2.7865,  2.6738, -1.3506,\n          3.1279, -1.9685, -4.7808, -4.0557,  4.7735, -2.5937, -1.9123,  0.8395,\n          4.5771, -1.0004,  3.4714,  1.6889, -0.6412,  0.5653,  2.4406,  2.5723,\n          4.5460, -0.5043, -3.0986, -4.7985, -4.5826,  1.5730, -2.0490, -0.4812,\n         -4.7113,  1.4290,  4.4396, -3.8235, -1.8366,  0.8162,  0.4617, -0.8988,\n         -3.7833,  4.5992,  1.2934,  4.3970, -4.1102, -3.5069, -1.8965,  4.0993,\n         -4.7341, -3.9344, -0.0336,  2.0362, -2.5707, -0.4092,  0.1649, -4.8780,\n          4.2370, -1.6400, -2.0297,  3.3172, -2.3828, -2.4943,  4.8812,  2.9371,\n          2.7999,  1.9984,  4.4036, -4.6390,  4.8121, -0.0933, -2.8762,  3.7660,\n         -1.7789,  1.0182,  4.0459,  4.8512, -4.8267, -2.4045,  2.0263,  4.6372,\n         -1.4062, -0.0149,  0.0129, -4.6214,  0.7430, -4.2837, -0.8650,  4.3525,\n         -4.8780,  3.5863,  0.9871, -1.5510, -2.9959, -1.0650, -4.8400,  0.5321,\n         -0.5173, -3.9141,  2.4532,  3.4094, -1.0505,  0.7729, -4.0119, -0.7969,\n         -4.7238,  2.6275, -3.5032, -0.5309, -1.0834, -2.3532,  1.9193,  1.8535,\n         -0.0809, -3.7692,  3.5950,  3.4018, -1.6379,  2.8136, -1.2006,  0.2622,\n          1.0613, -1.9963, -0.3206, -0.5417, -0.2279, -4.8946, -0.8629, -3.4711,\n          4.0634, -4.5586, -0.9938,  2.3998,  4.9903,  1.4414, -0.6638,  0.7877,\n         -3.4812,  0.6125, -3.4563,  3.4979, -0.1588,  1.9600, -2.1591, -1.2642,\n         -1.6710,  2.3857,  1.0596, -0.6941, -2.8339, -0.6580,  3.4192,  1.1257,\n         -2.2393,  4.4863,  4.6625, -2.2193,  2.5421, -0.1368,  1.5629,  1.6599,\n          1.1937,  0.5807, -0.1289,  0.0107,  1.7497, -1.0683, -2.2340, -0.0948,\n         -1.5000, -4.8037,  1.7212, -0.8322,  1.3189, -4.1848,  2.2509, -2.5688,\n         -3.5118,  3.9823, -4.3521,  2.8384,  0.6697,  0.1869, -0.1282,  0.5362,\n         -1.6426,  2.3993, -0.3588, -0.8213, -1.1701,  3.2172,  0.3887,  3.1631,\n         -4.1026, -2.3990,  2.1336, -3.8253, -0.3657,  2.7256,  0.1882, -2.3512,\n         -2.2943,  0.4949, -4.5403,  2.7102, -2.6744,  3.1951,  3.5273, -4.6993,\n          2.4955, -0.4278,  3.0099,  1.3901, -3.2421, -4.9747, -0.7946,  2.8529,\n         -4.1037,  3.6248,  3.2466, -1.4898,  2.6603, -2.7051,  3.9976, -0.1872,\n          1.4547, -4.3157,  3.9605, -1.7466,  3.6726,  0.0986, -1.9048, -2.1597,\n         -1.4770, -3.9406, -0.0367, -4.7355,  4.3595, -4.2125, -0.0896,  1.1917,\n          0.5020, -1.0629, -2.2427, -4.7432,  4.9558,  4.9306,  3.8523,  3.5683,\n          1.8361, -2.9729,  4.1914, -2.3205, -1.0748, -1.7972, -0.4528, -4.1791,\n          4.7054,  3.0113, -1.1224,  0.3008, -0.4994, -2.4601, -3.9587,  2.5366,\n         -4.1968, -1.1418, -0.1859, -4.6794,  4.8050, -0.4171, -2.5477,  1.8071,\n         -3.9279, -0.7242, -3.4764,  2.5095, -2.7237, -4.9671, -1.2695, -1.5789,\n          1.2609, -0.9041,  3.4538, -1.5230,  4.8231,  4.3903,  4.7922,  4.6847,\n          0.0689,  1.2548,  1.6678, -1.1777, -2.1553, -3.1340, -1.8130, -0.2957,\n         -2.1850,  4.3074,  2.6382,  1.7504, -1.3734,  0.1193,  1.1123,  4.6142,\n          2.3935, -1.3857,  1.8602, -4.2581,  0.1797, -4.2054, -2.2708,  0.2482,\n         -3.6498,  4.8404,  1.0736,  4.6833,  1.6406, -0.7485,  0.1221,  3.7261,\n          4.9427, -0.1631, -3.1953, -0.4954, -2.3764, -2.8535,  2.4877,  2.1699,\n         -4.5659,  4.2425,  0.9605,  3.5217, -4.2897,  2.9669, -2.3644, -4.2508,\n          3.6647,  1.6069,  4.1987,  4.7988,  4.7385,  1.4068,  3.1392,  0.3303,\n         -2.4044,  0.7637,  2.0181,  1.6937, -0.6288,  4.0297, -1.6850,  2.3986]])]"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            384
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2
+          ],
+          "dtype": "torch.int64"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        },
+        {
+          "type": "scalar",
+          "value": 0
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        }
+      ],
+      "error_type": "AccuracyError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card6/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 898, in run_single_case\n    compare(\n  File \"/opt/workspace_card6/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 671, in compare\n    _compare_quant_fp_to_int(fw_finite, impl_finite, ctx)\n  File \"/opt/workspace_card6/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 531, in _compare_quant_fp_to_int\n    raise AccuracyError(\nAccuracyError: 验证失败 dtype=torch.int8 (量化类 fp->int，要求|diff|<=1): 23290/73728 元素超限，max_abs_diff=127\n前 10 个量化误差超限位置:\n  位置[0]: framework=-94, impl=-7, |diff|=87 (允许<=1)\n  位置[1]: framework=4, impl=0, |diff|=4 (允许<=1)\n  位置[2]: framework=-5, impl=0, |diff|=5 (允许<=1)\n  位置[4]: framework=-2, impl=0, |diff|=2 (允许<=1)\n  位置[6]: framework=-127, impl=-9, |diff|=118 (允许<=1)\n  位置[7]: framework=4, impl=0, |diff|=4 (允许<=1)\n  位置[9]: framework=4, impl=0, |diff|=4 (允许<=1)\n  位置[12]: framework=2, impl=0, |diff|=2 (允许<=1)\n  位置[16]: fram\n... [truncated 144 chars] ...\n exception:\n\nTraceback (most recent call last):\n  File \"/opt/workspace_card6/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card6/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 904, in run_single_case\n    raise AccuracyError(f\"[用例 {case_idx}/{total_cases}] {str(e)}\", e.metrics) from e\nAccuracyError: [用例 34/50] 验证失败 dtype=torch.int8 (量化类 fp->int，要求|diff|<=1): 23290/73728 元素超限，max_abs_diff=127\n前 10 个量化误差超限位置:\n  位置[0]: framework=-94, impl=-7, |diff|=87 (允许<=1)\n  位置[1]: framework=4, impl=0, |diff|=4 (允许<=1)\n  位置[2]: framework=-5, impl=0, |diff|=5 (允许<=1)\n  位置[4]: framework=-2, impl=0, |diff|=2 (允许<=1)\n  位置[6]: framework=-127, impl=-9, |diff|=118 (允许<=1)\n  位置[7]: framework=4, impl=0, |diff|=4 (允许<=1)\n  位置[9]: framework=4, impl=0, |diff|=4 (允许<=1)\n  位置[12]: framework=2, impl=0, |diff|=2 (允许<=1)\n  位置[16]: framework=10, impl=1, |diff|=9 (允许<=1)\n  位置[19]: framework=-9, impl=-1, |diff|=8 (允许<=1)\n\n",
+      "metrics": {
+        "category": "quant_fp_to_int",
+        "dtype": "torch.int8",
+        "input_type": "float",
+        "max_abs_diff": 127,
+        "violation_count": 23290,
+        "total_finite": 73728,
+        "tolerance": 1
+      }
+    },
+    {
+      "case_idx": 36,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            64,
+            768
+          ],
+          "dtype": "torch.int8"
+        },
+        {
+          "type": "scalar",
+          "value": "[tensor([[[ -45,   11,    3,  ...,  -41,   12,   39],\n         [ 124,   17,  122,  ...,   48,   53,  126],\n         [ -36,  -85,   70,  ...,   24,  -26,   73],\n         ...,\n         [ 111,  -99,  -40,  ...,   29,  -39,   81],\n         [-127,  -56,   73,  ...,   76,   31,  -56],\n         [-103,  -14,   67,  ...,   28,  -23,   69]],\n\n        [[-127,   27,   62,  ...,  -29,  -78,   90],\n         [  73,  -16,   30,  ...,  -96,   71, -112],\n         [-113,    5,  -92,  ...,  106,   58, -121],\n         ...,\n         [ -56,  -43,    5,  ..., -108,   41,    6],\n         [  28,   65,   17,  ...,  105, -128,   18],\n         [  92,  -11, -105,  ...,  -14,   95,   15]],\n\n        [[-116,   44,   74,  ...,   84,  -67,   -3],\n         [ 118,  -77,  119,  ...,    8, -116,  -42],\n         [  77,  -35,  -26,  ...,  -84,   33,   80],\n         ...,\n         [  82,  100,  -90,  ...,  104,  124,  -28],\n         [ -88,   83,   38,  ...,  123,   76,  -76],\n         [  89,   89,  -75,  ...,  -15,   95,   50]],\n\n        ...,\n\n        [[  19,   -3,  -80,  ...,  -47,   46,  113],\n         [  43,  -96,  -65,  ...,  -21,   -4,    8],\n         [ -37,   45, -120,  ...,  115,   23,  -79],\n         ...,\n         [ 122, -105,    2,  ...,   36,   73,  -20],\n         [  43,   40,  115,  ...,  123,   32,  -40],\n         [-100,  -68,   23,  ...,   55,  101,  -17]],\n\n        [[ -13,  119,   19,  ...,   53,   37,    4],\n         [ -99,   70,  119,  ..., -120,   63,  -95],\n         [  22,  -36,  102,  ...,  112,   48,    1],\n         ...,\n         [  54,  -27,   30,  ...,   48,   64,    3],\n         [  32,  -32,  -45,  ...,  104,  -25,   47],\n         [ -19,  116,  100,  ...,  -33,  -69, -106]],\n\n        [[  52,  107,  -14,  ...,  -97,  -78,   -7],\n         [ -37,  -95,  -60,  ...,  -18,  -28,    2],\n         [  12,  -15,  -75,  ...,   98,   99,   68],\n         ...,\n         [ -76,  -68,   58,  ...,  107,  111,  -63],\n         [   0,  -58,   82,  ...,  -89,  -39,   51],\n         [ -49,  -74,   -6,  ...,  120,   -7,  108]]], dtype=torch.int8)]"
+        },
+        {
+          "type": "scalar",
+          "value": "[tensor([[-2.6521, -4.8849, -4.8551,  ..., -4.2685, -4.3185, -4.3316],\n        [-4.0966, -3.8298, -4.1985,  ..., -5.3025, -3.5540, -3.8154],\n        [-3.6567, -5.5796, -4.2074,  ..., -5.9936, -3.4577, -4.3135],\n        ...,\n        [-3.9513, -4.5661, -4.1380,  ..., -4.8145, -3.7796, -4.0869],\n        [-4.1482, -4.7562, -3.9279,  ..., -4.2736, -3.9185, -4.2049],\n        [-5.9075, -5.1748, -4.8439,  ..., -4.9025, -4.3913, -4.8666]])]"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            64
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            8
+          ],
+          "dtype": "torch.int64"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        },
+        {
+          "type": "scalar",
+          "value": 0
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        },
+        {
+          "type": "scalar",
+          "value": 3
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        }
+      ],
+      "error_type": "AccuracyError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card6/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 898, in run_single_case\n    compare(\n  File \"/opt/workspace_card6/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 671, in compare\n    _compare_quant_fp_to_int(fw_finite, impl_finite, ctx)\n  File \"/opt/workspace_card6/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 531, in _compare_quant_fp_to_int\n    raise AccuracyError(\nAccuracyError: 验证失败 dtype=torch.int8 (量化类 fp->int，要求|diff|<=1): 7209/24576 元素超限，max_abs_diff=93\n前 10 个量化误差超限位置:\n  位置[0]: framework=4, impl=2, |diff|=2 (允许<=1)\n  位置[2]: framework=28, impl=16, |diff|=12 (允许<=1)\n  位置[5]: framework=-5, impl=-3, |diff|=2 (允许<=1)\n  位置[7]: framework=5, impl=3, |diff|=2 (允许<=1)\n  位置[10]: framework=-22, impl=-13, |diff|=9 (允许<=1)\n  位置[12]: framework=8, impl=5, |diff|=3 (允许<=1)\n  位置[20]: framework=50, impl=29, |diff|=21 (允许<=1)\n  位置[21]: framework=8, impl=4, |diff|=4 (允许<=1)\n  位置[25]: fra\n... [truncated 152 chars] ...\neption:\n\nTraceback (most recent call last):\n  File \"/opt/workspace_card6/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card6/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 904, in run_single_case\n    raise AccuracyError(f\"[用例 {case_idx}/{total_cases}] {str(e)}\", e.metrics) from e\nAccuracyError: [用例 36/50] 验证失败 dtype=torch.int8 (量化类 fp->int，要求|diff|<=1): 7209/24576 元素超限，max_abs_diff=93\n前 10 个量化误差超限位置:\n  位置[0]: framework=4, impl=2, |diff|=2 (允许<=1)\n  位置[2]: framework=28, impl=16, |diff|=12 (允许<=1)\n  位置[5]: framework=-5, impl=-3, |diff|=2 (允许<=1)\n  位置[7]: framework=5, impl=3, |diff|=2 (允许<=1)\n  位置[10]: framework=-22, impl=-13, |diff|=9 (允许<=1)\n  位置[12]: framework=8, impl=5, |diff|=3 (允许<=1)\n  位置[20]: framework=50, impl=29, |diff|=21 (允许<=1)\n  位置[21]: framework=8, impl=4, |diff|=4 (允许<=1)\n  位置[25]: framework=37, impl=21, |diff|=16 (允许<=1)\n  位置[29]: framework=25, impl=14, |diff|=11 (允许<=1)\n\n",
+      "metrics": {
+        "category": "quant_fp_to_int",
+        "dtype": "torch.int8",
+        "input_type": "float",
+        "max_abs_diff": 93,
+        "violation_count": 7209,
+        "total_finite": 24576,
+        "tolerance": 1
+      }
+    },
+    {
+      "case_idx": 38,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            128,
+            1536
+          ],
+          "dtype": "torch.int8"
+        },
+        {
+          "type": "scalar",
+          "value": "[tensor([[[ -20,  -20, -110,  ...,    0,  -83,  -83],\n         [-104,  -98,   67,  ...,   15,  -12,  107],\n         [ -53,  -38,  -31,  ...,   72, -116,  110],\n         ...,\n         [ -53,   14,   -4,  ..., -125,  -61,  105],\n         [ -93,  102,  -56,  ...,  -10, -113,   -3],\n         [ -91,  -36,   -6,  ...,   42,  123,  -98]],\n\n        [[  81,   80,  -91,  ...,  -13,   56,   -6],\n         [ -16, -107,   -1,  ...,   61,   70,   94],\n         [  46,  111,  123,  ...,  -25,  -62,  -29],\n         ...,\n         [  19,   58,  -66,  ...,  120,  -60,   92],\n         [ -11,  -63,  -61,  ...,  -83,   40,  121],\n         [ -60,  -62,  -79,  ...,   78,   88,   63]],\n\n        [[  85,  -63,  -61,  ...,   42,   -2,   89],\n         [  82,  -10,   70,  ...,  116,  -64,    0],\n         [ -68,    2,  120,  ...,  -70,  -94,   15],\n         ...,\n         [-127,  105,    0,  ..., -113,  -97,   38],\n         [  60,  -36,  -77,  ...,  -12,  -49,   10],\n         [  56,   28,  102,  ...,   -6,  107,   87]],\n\n        [[-115,  -12,  -35,  ...,  -32, -124,   31],\n         [ -23,  -23,   54,  ...,   59,   85,   -1],\n         [ -51,  -66,    1,  ...,  -43,   21,  -61],\n         ...,\n         [-116, -108,   27,  ...,   56,   16,  121],\n         [-124,   30,   25,  ...,   42,  118, -128],\n         [  86,   73,  108,  ...,   -1,  -22,   97]]], dtype=torch.int8)]"
+        },
+        {
+          "type": "scalar",
+          "value": "[tensor([[4.5220, 5.3656, 5.2981,  ..., 7.2057, 2.2920, 5.3251],\n        [4.5500, 3.6636, 2.0656,  ..., 4.2221, 1.8116, 6.3362],\n        [4.0659, 5.1329, 3.3471,  ..., 4.8219, 4.5235, 2.1896],\n        [4.7642, 5.3003, 4.6040,  ..., 2.4476, 3.4907, 4.5592]])]"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            128
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            4
+          ],
+          "dtype": "torch.int64"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        },
+        {
+          "type": "scalar",
+          "value": 0
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        }
+      ],
+      "error_type": "AccuracyError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card6/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 898, in run_single_case\n    compare(\n  File \"/opt/workspace_card6/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 671, in compare\n    _compare_quant_fp_to_int(fw_finite, impl_finite, ctx)\n  File \"/opt/workspace_card6/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 531, in _compare_quant_fp_to_int\n    raise AccuracyError(\nAccuracyError: 验证失败 dtype=torch.int8 (量化类 fp->int，要求|diff|<=1): 33920/98304 元素超限，max_abs_diff=127\n前 10 个量化误差超限位置:\n  位置[0]: framework=-7, impl=-1, |diff|=6 (允许<=1)\n  位置[1]: framework=10, impl=1, |diff|=9 (允许<=1)\n  位置[2]: framework=-7, impl=-1, |diff|=6 (允许<=1)\n  位置[3]: framework=6, impl=1, |diff|=5 (允许<=1)\n  位置[6]: framework=-5, impl=0, |diff|=5 (允许<=1)\n  位置[8]: framework=-2, impl=0, |diff|=2 (允许<=1)\n  位置[11]: framework=-40, impl=-4, |diff|=36 (允许<=1)\n  位置[12]: framework=-6, impl=-1, |diff|=5 (允许<=1)\n  位置[13]: fr\n... [truncated 142 chars] ...\ng exception:\n\nTraceback (most recent call last):\n  File \"/opt/workspace_card6/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card6/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 904, in run_single_case\n    raise AccuracyError(f\"[用例 {case_idx}/{total_cases}] {str(e)}\", e.metrics) from e\nAccuracyError: [用例 38/50] 验证失败 dtype=torch.int8 (量化类 fp->int，要求|diff|<=1): 33920/98304 元素超限，max_abs_diff=127\n前 10 个量化误差超限位置:\n  位置[0]: framework=-7, impl=-1, |diff|=6 (允许<=1)\n  位置[1]: framework=10, impl=1, |diff|=9 (允许<=1)\n  位置[2]: framework=-7, impl=-1, |diff|=6 (允许<=1)\n  位置[3]: framework=6, impl=1, |diff|=5 (允许<=1)\n  位置[6]: framework=-5, impl=0, |diff|=5 (允许<=1)\n  位置[8]: framework=-2, impl=0, |diff|=2 (允许<=1)\n  位置[11]: framework=-40, impl=-4, |diff|=36 (允许<=1)\n  位置[12]: framework=-6, impl=-1, |diff|=5 (允许<=1)\n  位置[13]: framework=3, impl=0, |diff|=3 (允许<=1)\n  位置[14]: framework=2, impl=0, |diff|=2 (允许<=1)\n\n",
+      "metrics": {
+        "category": "quant_fp_to_int",
+        "dtype": "torch.int8",
+        "input_type": "float",
+        "max_abs_diff": 127,
+        "violation_count": 33920,
+        "total_finite": 98304,
+        "tolerance": 1
+      }
+    },
+    {
+      "case_idx": 40,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            256,
+            2560
+          ],
+          "dtype": "torch.int8"
+        },
+        {
+          "type": "scalar",
+          "value": "[tensor([[[ -31,  113,   30,  ..., -112, -100,   11],\n         [-127,   22,   38,  ...,   70,  -65,  102],\n         [ -22,   43,  -83,  ...,  101,   62,   82],\n         ...,\n         [ 123,  -29,  -33,  ...,   39,  -64, -113],\n         [ -85,  -92,  -28,  ...,   91,   85,   31],\n         [  43,  -42,  -11,  ...,  -34,  -69,   26]],\n\n        [[  20, -124,  116,  ...,  116,   19,  -26],\n         [-124,  126,  105,  ..., -119,  -64,   72],\n         [   2,  -43,  107,  ...,  -13,   28, -104],\n         ...,\n         [ 126,   47,  -18,  ...,   84,  -99,  -62],\n         [ -47,  110,  107,  ..., -125,  -13,   39],\n         [ -28,  -60,  -62,  ...,   50,  -21,  108]]], dtype=torch.int8)]"
+        },
+        {
+          "type": "scalar",
+          "value": "[tensor([[ 3.4456,  0.4053,  1.4885,  ..., -0.1781,  0.4009, -1.4513],\n        [ 3.7729, -0.3929, -0.8008,  ...,  2.6177,  1.6415, -1.4010]])]"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            256
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2
+          ],
+          "dtype": "torch.int64"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        },
+        {
+          "type": "scalar",
+          "value": 0
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        },
+        {
+          "type": "scalar",
+          "value": 3
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        }
+      ],
+      "error_type": "AccuracyError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card6/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 898, in run_single_case\n    compare(\n  File \"/opt/workspace_card6/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 671, in compare\n    _compare_quant_fp_to_int(fw_finite, impl_finite, ctx)\n  File \"/opt/workspace_card6/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 531, in _compare_quant_fp_to_int\n    raise AccuracyError(\nAccuracyError: 验证失败 dtype=torch.int8 (量化类 fp->int，要求|diff|<=1): 75421/327680 元素超限，max_abs_diff=127\n前 10 个量化误差超限位置:\n  位置[7]: framework=-5, impl=-1, |diff|=4 (允许<=1)\n  位置[10]: framework=-3, impl=-1, |diff|=2 (允许<=1)\n  位置[12]: framework=4, impl=1, |diff|=3 (允许<=1)\n  位置[14]: framework=4, impl=1, |diff|=3 (允许<=1)\n  位置[24]: framework=-4, impl=-1, |diff|=3 (允许<=1)\n  位置[38]: framework=19, impl=4, |diff|=15 (允许<=1)\n  位置[39]: framework=9, impl=2, |diff|=7 (允许<=1)\n  位置[45]: framework=16, impl=4, |diff|=12 (允许<=1)\n  位置[47]:\n... [truncated 156 chars] ...\ntion:\n\nTraceback (most recent call last):\n  File \"/opt/workspace_card6/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card6/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 904, in run_single_case\n    raise AccuracyError(f\"[用例 {case_idx}/{total_cases}] {str(e)}\", e.metrics) from e\nAccuracyError: [用例 40/50] 验证失败 dtype=torch.int8 (量化类 fp->int，要求|diff|<=1): 75421/327680 元素超限，max_abs_diff=127\n前 10 个量化误差超限位置:\n  位置[7]: framework=-5, impl=-1, |diff|=4 (允许<=1)\n  位置[10]: framework=-3, impl=-1, |diff|=2 (允许<=1)\n  位置[12]: framework=4, impl=1, |diff|=3 (允许<=1)\n  位置[14]: framework=4, impl=1, |diff|=3 (允许<=1)\n  位置[24]: framework=-4, impl=-1, |diff|=3 (允许<=1)\n  位置[38]: framework=19, impl=4, |diff|=15 (允许<=1)\n  位置[39]: framework=9, impl=2, |diff|=7 (允许<=1)\n  位置[45]: framework=16, impl=4, |diff|=12 (允许<=1)\n  位置[47]: framework=-6, impl=-1, |diff|=5 (允许<=1)\n  位置[55]: framework=-5, impl=-1, |diff|=4 (允许<=1)\n\n",
+      "metrics": {
+        "category": "quant_fp_to_int",
+        "dtype": "torch.int8",
+        "input_type": "float",
+        "max_abs_diff": 127,
+        "violation_count": 75421,
+        "total_finite": 327680,
+        "tolerance": 1
+      }
+    },
+    {
+      "case_idx": 42,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            512,
+            384
+          ],
+          "dtype": "torch.int8"
+        },
+        {
+          "type": "scalar",
+          "value": "[tensor([[[  -7,  -63,  106,  ...,  114,  110,  -25],\n         [   0,   46,   -2,  ...,  -64,  -20,   45],\n         [ -63,   29,   31,  ...,  109,   68,   18],\n         ...,\n         [ -25, -120,    3,  ...,   91,   75,  -24],\n         [  52,  -75,  -20,  ...,   22,  124, -106],\n         [ -31,  -37,  121,  ...,  -41,  -75, -114]],\n\n        [[ -27,   27,  -18,  ..., -128,   11,  -40],\n         [  26,  -46,  -41,  ..., -103,  -42,   85],\n         [  38,  -51,  -69,  ...,   83,   42,   62],\n         ...,\n         [ -16,   12,   88,  ...,   50,  -11,  -43],\n         [  67,   22, -114,  ...,  -64, -127,  111],\n         [-106,  -71,    2,  ...,   13,   28,  -31]],\n\n        [[  43,    0, -107,  ...,   58,   13,  -71],\n         [ 119,   88,    6,  ...,   36,  126,   83],\n         [ -79, -110,   -6,  ...,   50,   64,   10],\n         ...,\n         [  40,  -34,   80,  ...,  -77,   99, -120],\n         [ -75, -124,  -37,  ...,  -71,  -36,   47],\n         [ -46,   39, -125,  ...,   98,  -71,  -71]],\n\n        ...,\n\n        [[ -96,  -91,  -49,  ...,  -28,   52,   -7],\n         [ -36,   86,   42,  ...,   55,   74,   36],\n         [ 125,   87,  -74,  ...,   86,  -19,  -80],\n         ...,\n         [ 117, -111,   71,  ...,   78,   55,   34],\n         [   6,   70,  -63,  ...,  -90,  -93,   39],\n         [ 100,  -42,  -81,  ...,   -3,   90,  -50]],\n\n        [[-108,  -55,   78,  ...,  -20, -128,   93],\n         [ -26,  112,   16,  ...,  -84,   30,  -91],\n         [ -26,   55,    0,  ...,  -11,  -70, -125],\n         ...,\n         [  -8,   28,   35,  ...,  -87,   50,  -89],\n         [  82,  -81,   34,  ..., -111,  -63,   92],\n         [ -42,   85,  -13,  ...,   50,  -57,    5]],\n\n        [[-120, -127,  -13,  ...,   77,  102,   25],\n         [   6,   -3,   31,  ...,   57,   42, -116],\n         [   5, -123,  -52,  ...,  121,  -85,  -29],\n         ...,\n         [  82,   55,  -81,  ...,  -89,  -13, -112],\n         [ -90,   72,  123,  ...,   23,  -19,  119],\n         [ -57,  101,   89,  ...,   59,   19,  100]]], dtype=torch.int8)]"
+        },
+        {
+          "type": "scalar",
+          "value": "[tensor([[-2.6519, -0.8062, -4.9197,  ..., -3.5350,  0.6722,  2.2765],\n        [-2.0357,  0.2666, -1.7501,  ...,  4.1776,  2.8233, -2.6028],\n        [ 2.3122, -1.4600, -1.5835,  ..., -4.9595, -0.6240, -3.6288],\n        ...,\n        [-0.2042,  4.1550,  4.7295,  ...,  4.5941, -2.9226,  3.3707],\n        [-3.5814, -2.3545,  3.6912,  ..., -2.0731,  4.1378, -1.9381],\n        [ 4.2569, -4.0072,  2.9697,  ...,  1.4636, -2.8461,  4.9002]])]"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            512
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            8
+          ],
+          "dtype": "torch.int64"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        },
+        {
+          "type": "scalar",
+          "value": 0
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        }
+      ],
+      "error_type": "AccuracyError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card6/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 898, in run_single_case\n    compare(\n  File \"/opt/workspace_card6/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 671, in compare\n    _compare_quant_fp_to_int(fw_finite, impl_finite, ctx)\n  File \"/opt/workspace_card6/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 531, in _compare_quant_fp_to_int\n    raise AccuracyError(\nAccuracyError: 验证失败 dtype=torch.int8 (量化类 fp->int，要求|diff|<=1): 30477/98304 元素超限，max_abs_diff=127\n前 10 个量化误差超限位置:\n  位置[0]: framework=-57, impl=-5, |diff|=52 (允许<=1)\n  位置[5]: framework=-37, impl=-3, |diff|=34 (允许<=1)\n  位置[6]: framework=-2, impl=0, |diff|=2 (允许<=1)\n  位置[11]: framework=-6, impl=0, |diff|=6 (允许<=1)\n  位置[15]: framework=-14, impl=-1, |diff|=13 (允许<=1)\n  位置[16]: framework=-20, impl=-2, |diff|=18 (允许<=1)\n  位置[19]: framework=8, impl=1, |diff|=7 (允许<=1)\n  位置[20]: framework=-9, impl=-1, |diff|=8 (允许<=1)\n  \n... [truncated 170 chars] ...\nTraceback (most recent call last):\n  File \"/opt/workspace_card6/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card6/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 904, in run_single_case\n    raise AccuracyError(f\"[用例 {case_idx}/{total_cases}] {str(e)}\", e.metrics) from e\nAccuracyError: [用例 42/50] 验证失败 dtype=torch.int8 (量化类 fp->int，要求|diff|<=1): 30477/98304 元素超限，max_abs_diff=127\n前 10 个量化误差超限位置:\n  位置[0]: framework=-57, impl=-5, |diff|=52 (允许<=1)\n  位置[5]: framework=-37, impl=-3, |diff|=34 (允许<=1)\n  位置[6]: framework=-2, impl=0, |diff|=2 (允许<=1)\n  位置[11]: framework=-6, impl=0, |diff|=6 (允许<=1)\n  位置[15]: framework=-14, impl=-1, |diff|=13 (允许<=1)\n  位置[16]: framework=-20, impl=-2, |diff|=18 (允许<=1)\n  位置[19]: framework=8, impl=1, |diff|=7 (允许<=1)\n  位置[20]: framework=-9, impl=-1, |diff|=8 (允许<=1)\n  位置[22]: framework=-11, impl=-1, |diff|=10 (允许<=1)\n  位置[23]: framework=3, impl=0, |diff|=3 (允许<=1)\n\n",
+      "metrics": {
+        "category": "quant_fp_to_int",
+        "dtype": "torch.int8",
+        "input_type": "float",
+        "max_abs_diff": 127,
+        "violation_count": 30477,
+        "total_finite": 98304,
+        "tolerance": 1
+      }
+    },
+    {
+      "case_idx": 44,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            96,
+            768
+          ],
+          "dtype": "torch.int8"
+        },
+        {
+          "type": "scalar",
+          "value": "[tensor([[[ -95,  105,   70,  ...,  -93,  126,   39],\n         [  -6,   20,  106,  ...,   13,   -4, -109],\n         [  99,   47,  -40,  ...,   15, -118,   83],\n         ...,\n         [  93,   83, -101,  ..., -113,   32,  -25],\n         [  10,  -19, -128,  ..., -106, -116,  -88],\n         [ -79,  -67,   89,  ...,  110,   -2,  -90]],\n\n        [[  42,    0,   59,  ...,  -40, -100,   53],\n         [ -38,  -67,  -51,  ...,   62,   92, -128],\n         [-112,  -57,  -65,  ...,   86, -127,   32],\n         ...,\n         [-119,  -32,  -80,  ..., -110,  -39,   65],\n         [ 123,   82,   37,  ...,   40,   54,  -39],\n         [  34, -100,  116,  ...,   30,  -52,  -70]],\n\n        [[ 103,   87,   31,  ...,   -4, -124,  -62],\n         [  14, -128, -112,  ...,  108,   81,  -66],\n         [ -66,  111,  -40,  ...,   54,  -72, -128],\n         ...,\n         [  75,   10,  -25,  ...,  -21, -111,  -28],\n         [  68,  123,   81,  ..., -118,  -71,  -96],\n         [ -90,  -49,   16,  ...,   49,   63,  -72]],\n\n        [[-122,   29,   54,  ...,  -37,    0,    2],\n         [ 115,   30,   28,  ...,  -74,  -30,  115],\n         [ 124,  -61, -118,  ...,   12,   22,  106],\n         ...,\n         [-115,   57,   39,  ...,   43,   28, -113],\n         [ 104, -119,  -43,  ...,  -92,   32,  -24],\n         [ -94,  -50, -110,  ...,   61,  -32,  -63]]], dtype=torch.int8)]"
+        },
+        {
+          "type": "scalar",
+          "value": "[tensor([[2.4474, 5.4714, 2.8734,  ..., 5.9843, 5.5804, 5.8778],\n        [5.9573, 2.2239, 4.1610,  ..., 4.7249, 4.3227, 5.3968],\n        [3.4877, 5.1316, 4.4996,  ..., 4.9230, 4.4059, 8.0691],\n        [1.5187, 2.5514, 2.3253,  ..., 4.6824, 5.6477, 5.9154]])]"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            96
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            4
+          ],
+          "dtype": "torch.int64"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        },
+        {
+          "type": "scalar",
+          "value": 0
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        },
+        {
+          "type": "scalar",
+          "value": 3
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        }
+      ],
+      "error_type": "AccuracyError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card6/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 898, in run_single_case\n    compare(\n  File \"/opt/workspace_card6/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 671, in compare\n    _compare_quant_fp_to_int(fw_finite, impl_finite, ctx)\n  File \"/opt/workspace_card6/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 531, in _compare_quant_fp_to_int\n    raise AccuracyError(\nAccuracyError: 验证失败 dtype=torch.int8 (量化类 fp->int，要求|diff|<=1): 12452/36864 元素超限，max_abs_diff=127\n前 10 个量化误差超限位置:\n  位置[1]: framework=-13, impl=-8, |diff|=5 (允许<=1)\n  位置[2]: framework=-5, impl=-3, |diff|=2 (允许<=1)\n  位置[3]: framework=15, impl=9, |diff|=6 (允许<=1)\n  位置[5]: framework=-42, impl=-26, |diff|=16 (允许<=1)\n  位置[6]: framework=-5, impl=-3, |diff|=2 (允许<=1)\n  位置[7]: framework=15, impl=9, |diff|=6 (允许<=1)\n  位置[11]: framework=-97, impl=-59, |diff|=38 (允许<=1)\n  位置[13]: framework=5, impl=3, |diff|=2 (允许<=1)\n  位置[2\n... [truncated 164 chars] ...\n:\n\nTraceback (most recent call last):\n  File \"/opt/workspace_card6/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card6/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 904, in run_single_case\n    raise AccuracyError(f\"[用例 {case_idx}/{total_cases}] {str(e)}\", e.metrics) from e\nAccuracyError: [用例 44/50] 验证失败 dtype=torch.int8 (量化类 fp->int，要求|diff|<=1): 12452/36864 元素超限，max_abs_diff=127\n前 10 个量化误差超限位置:\n  位置[1]: framework=-13, impl=-8, |diff|=5 (允许<=1)\n  位置[2]: framework=-5, impl=-3, |diff|=2 (允许<=1)\n  位置[3]: framework=15, impl=9, |diff|=6 (允许<=1)\n  位置[5]: framework=-42, impl=-26, |diff|=16 (允许<=1)\n  位置[6]: framework=-5, impl=-3, |diff|=2 (允许<=1)\n  位置[7]: framework=15, impl=9, |diff|=6 (允许<=1)\n  位置[11]: framework=-97, impl=-59, |diff|=38 (允许<=1)\n  位置[13]: framework=5, impl=3, |diff|=2 (允许<=1)\n  位置[20]: framework=-16, impl=-10, |diff|=6 (允许<=1)\n  位置[21]: framework=14, impl=9, |diff|=5 (允许<=1)\n\n",
+      "metrics": {
+        "category": "quant_fp_to_int",
+        "dtype": "torch.int8",
+        "input_type": "float",
+        "max_abs_diff": 127,
+        "violation_count": 12452,
+        "total_finite": 36864,
+        "tolerance": 1
+      }
+    },
+    {
+      "case_idx": 46,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            192,
+            1536
+          ],
+          "dtype": "torch.int8"
+        },
+        {
+          "type": "scalar",
+          "value": "[tensor([[[  67,   10,  -13,  ...,  -57,  -70,  -84],\n         [ -93,   16,  106,  ..., -105,  -37, -101],\n         [ -12,   23,   62,  ...,   77,  -12,  -50],\n         ...,\n         [ -74,  -75,   30,  ...,  -24,  -90,  -85],\n         [  84,   70,   75,  ...,  -23,   72,  -74],\n         [ -22,  -85,  -36,  ...,   50,    2,  -24]],\n\n        [[ 109,  -35,  -29,  ...,  -42,    2,  126],\n         [  37, -108,  -56,  ...,   85,  125,   75],\n         [ -40,  106,  -53,  ...,  110,   38,  114],\n         ...,\n         [-122,   86,  118,  ..., -104,  -26,   23],\n         [ -90,  -85,   11,  ...,   -6,  -29,  -82],\n         [ -18,   34,  115,  ...,  -44,  120,   24]]], dtype=torch.int8)]"
+        },
+        {
+          "type": "scalar",
+          "value": "[tensor([[-2.8628, -1.0892, -0.1956,  ..., -1.7807, -2.2476, -1.7662],\n        [-0.2269, -1.1046, -2.1174,  ..., -2.9949, -1.7021, -1.8727]])]"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            192
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2
+          ],
+          "dtype": "torch.int64"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        },
+        {
+          "type": "scalar",
+          "value": 0
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        }
+      ],
+      "error_type": "AccuracyError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card6/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 898, in run_single_case\n    compare(\n  File \"/opt/workspace_card6/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 671, in compare\n    _compare_quant_fp_to_int(fw_finite, impl_finite, ctx)\n  File \"/opt/workspace_card6/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 531, in _compare_quant_fp_to_int\n    raise AccuracyError(\nAccuracyError: 验证失败 dtype=torch.int8 (量化类 fp->int，要求|diff|<=1): 44935/147456 元素超限，max_abs_diff=127\n前 10 个量化误差超限位置:\n  位置[7]: framework=-4, impl=-2, |diff|=2 (允许<=1)\n  位置[14]: framework=-14, impl=-6, |diff|=8 (允许<=1)\n  位置[16]: framework=-127, impl=-53, |diff|=74 (允许<=1)\n  位置[17]: framework=-45, impl=-19, |diff|=26 (允许<=1)\n  位置[20]: framework=-15, impl=-6, |diff|=9 (允许<=1)\n  位置[23]: framework=-8, impl=-3, |diff|=5 (允许<=1)\n  位置[25]: framework=-6, impl=-3, |diff|=3 (允许<=1)\n  位置[27]: framework=3, impl=1, |diff|=2 (允许<\n... [truncated 174 chars] ...\naceback (most recent call last):\n  File \"/opt/workspace_card6/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card6/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 904, in run_single_case\n    raise AccuracyError(f\"[用例 {case_idx}/{total_cases}] {str(e)}\", e.metrics) from e\nAccuracyError: [用例 46/50] 验证失败 dtype=torch.int8 (量化类 fp->int，要求|diff|<=1): 44935/147456 元素超限，max_abs_diff=127\n前 10 个量化误差超限位置:\n  位置[7]: framework=-4, impl=-2, |diff|=2 (允许<=1)\n  位置[14]: framework=-14, impl=-6, |diff|=8 (允许<=1)\n  位置[16]: framework=-127, impl=-53, |diff|=74 (允许<=1)\n  位置[17]: framework=-45, impl=-19, |diff|=26 (允许<=1)\n  位置[20]: framework=-15, impl=-6, |diff|=9 (允许<=1)\n  位置[23]: framework=-8, impl=-3, |diff|=5 (允许<=1)\n  位置[25]: framework=-6, impl=-3, |diff|=3 (允许<=1)\n  位置[27]: framework=3, impl=1, |diff|=2 (允许<=1)\n  位置[36]: framework=6, impl=2, |diff|=4 (允许<=1)\n  位置[38]: framework=6, impl=3, |diff|=3 (允许<=1)\n\n",
+      "metrics": {
+        "category": "quant_fp_to_int",
+        "dtype": "torch.int8",
+        "input_type": "float",
+        "max_abs_diff": 127,
+        "violation_count": 44935,
+        "total_finite": 147456,
+        "tolerance": 1
+      }
+    },
+    {
+      "case_idx": 48,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            384,
+            2560
+          ],
+          "dtype": "torch.int8"
+        },
+        {
+          "type": "scalar",
+          "value": "[tensor([[[  -9,    3,  -27,  ...,    3,  -55,  -13],\n         [ 124,  -96, -125,  ...,   50,  -40,  -79],\n         [  72,  -95,  -36,  ..., -116,   54,  114],\n         ...,\n         [-121,   98,   19,  ...,  -54,   75,  -44],\n         [  18, -105,  -66,  ...,  121,   61,   17],\n         [  -8,   32, -118,  ...,   25,   19,   49]],\n\n        [[   7,  116,   43,  ...,  -45,   64,  -12],\n         [ 108,  113,  -97,  ...,  -49,  -47, -104],\n         [  26,   -7,   -4,  ...,   95,   50, -104],\n         ...,\n         [ -67,   55, -102,  ...,   29,  -38,    1],\n         [  66,   91,  -96,  ...,    8,   70,   91],\n         [  70, -115,  -89,  ..., -105,  -59,  125]],\n\n        [[  43,  -89,   46,  ...,  121,  116,  125],\n         [  22,    6,   50,  ...,   16,   23,  -21],\n         [  39, -125, -106,  ...,  -54,   26,   81],\n         ...,\n         [ -77,   54, -106,  ...,   69,  -94,   33],\n         [ -67,  -13,  -74,  ...,   74,   73,   68],\n         [ -34,  -82,  -74,  ...,   48,   64,   62]],\n\n        ...,\n\n        [[ -30,   -6,   88,  ...,   71,   38,  -73],\n         [  64,  102,   23,  ...,  -90, -128,  120],\n         [  52, -114,   37,  ...,   93,  -62,   78],\n         ...,\n         [ -50,   33,  -62,  ..., -124,   93,   84],\n         [  12,  123,   48,  ...,   99,  -26, -119],\n         [-107,   70, -103,  ...,  123,  111,  -98]],\n\n        [[ 102,   28,  112,  ...,   83, -119,    8],\n         [  -4,  -13,  -46,  ...,   93,   22,  112],\n         [ -23,   -8,   75,  ...,  -28,  -22,  -10],\n         ...,\n         [ -21,   45,   -9,  ...,  -57,  -34, -109],\n         [ -41,  -19,  -99,  ...,  100, -108,  114],\n         [ 111,   92,  102,  ...,  -95, -118,  119]],\n\n        [[ -91, -105,  102,  ...,   94,  111,   36],\n         [ -70,   88,  114,  ...,   93,   12,   30],\n         [-105,   -7,   17,  ...,  102, -106,  -31],\n         ...,\n         [  90,  103,   27,  ...,   51,  102,  -95],\n         [  30, -104, -119,  ...,   27,  -63,  -74],\n         [ -99,  -27,  -74,  ...,  -50,   84, -111]]], dtype=torch.int8)]"
+        },
+        {
+          "type": "scalar",
+          "value": "[tensor([[-1.8224, -1.3246,  1.2766,  ..., -1.5350,  2.8948,  3.2906],\n        [-1.6880,  2.5314,  2.9881,  ...,  3.9857,  3.1790, -1.5241],\n        [-3.5763,  1.4463, -3.5916,  ...,  3.1109,  4.1506,  3.2554],\n        ...,\n        [-1.2024, -3.2017,  4.6314,  ...,  0.4225,  1.5507, -0.7717],\n        [-4.6387,  4.3661, -3.7280,  ...,  1.2209, -3.5343, -4.3788],\n        [ 4.3411, -4.6274,  3.2528,  ..., -4.8005,  0.3449, -2.1348]])]"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            384
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            8
+          ],
+          "dtype": "torch.int64"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        },
+        {
+          "type": "scalar",
+          "value": 0
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        },
+        {
+          "type": "scalar",
+          "value": 3
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        }
+      ],
+      "error_type": "AccuracyError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card6/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 898, in run_single_case\n    compare(\n  File \"/opt/workspace_card6/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 671, in compare\n    _compare_quant_fp_to_int(fw_finite, impl_finite, ctx)\n  File \"/opt/workspace_card6/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 531, in _compare_quant_fp_to_int\n    raise AccuracyError(\nAccuracyError: 验证失败 dtype=torch.int8 (量化类 fp->int，要求|diff|<=1): 110903/491520 元素超限，max_abs_diff=107\n前 10 个量化误差超限位置:\n  位置[1]: framework=-15, impl=-4, |diff|=11 (允许<=1)\n  位置[3]: framework=9, impl=2, |diff|=7 (允许<=1)\n  位置[4]: framework=2, impl=0, |diff|=2 (允许<=1)\n  位置[9]: framework=-20, impl=-6, |diff|=14 (允许<=1)\n  位置[12]: framework=5, impl=1, |diff|=4 (允许<=1)\n  位置[14]: framework=4, impl=1, |diff|=3 (允许<=1)\n  位置[15]: framework=11, impl=3, |diff|=8 (允许<=1)\n  位置[17]: framework=-3, impl=-1, |diff|=2 (允许<=1)\n  位置[25]: \n... [truncated 154 chars] ...\nption:\n\nTraceback (most recent call last):\n  File \"/opt/workspace_card6/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card6/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 904, in run_single_case\n    raise AccuracyError(f\"[用例 {case_idx}/{total_cases}] {str(e)}\", e.metrics) from e\nAccuracyError: [用例 48/50] 验证失败 dtype=torch.int8 (量化类 fp->int，要求|diff|<=1): 110903/491520 元素超限，max_abs_diff=107\n前 10 个量化误差超限位置:\n  位置[1]: framework=-15, impl=-4, |diff|=11 (允许<=1)\n  位置[3]: framework=9, impl=2, |diff|=7 (允许<=1)\n  位置[4]: framework=2, impl=0, |diff|=2 (允许<=1)\n  位置[9]: framework=-20, impl=-6, |diff|=14 (允许<=1)\n  位置[12]: framework=5, impl=1, |diff|=4 (允许<=1)\n  位置[14]: framework=4, impl=1, |diff|=3 (允许<=1)\n  位置[15]: framework=11, impl=3, |diff|=8 (允许<=1)\n  位置[17]: framework=-3, impl=-1, |diff|=2 (允许<=1)\n  位置[25]: framework=3, impl=1, |diff|=2 (允许<=1)\n  位置[35]: framework=-17, impl=-5, |diff|=12 (允许<=1)\n\n",
+      "metrics": {
+        "category": "quant_fp_to_int",
+        "dtype": "torch.int8",
+        "input_type": "float",
+        "max_abs_diff": 107,
+        "violation_count": 110903,
+        "total_finite": 491520,
+        "tolerance": 1
+      }
+    },
+    {
+      "case_idx": 50,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            64,
+            384
+          ],
+          "dtype": "torch.int8"
+        },
+        {
+          "type": "scalar",
+          "value": "[tensor([[[  -6,   58,  -21,  ...,  104,  -22, -102],\n         [  46,   95,   -4,  ...,  -63,   10,  -28],\n         [ -11,  -15,   58,  ...,   13,  -92,   78],\n         ...,\n         [  51,   83,  125,  ...,  -21,  -12,   85],\n         [  41, -106,  -14,  ...,   62, -110,  -30],\n         [  75,  -40,   37,  ...,   53,   33, -105]],\n\n        [[  87,  111,  -26,  ...,  119,  -59,   90],\n         [  18,  -98,  -80,  ..., -104,    9,  -93],\n         [ -38,   89, -106,  ...,  -11,   70,   -4],\n         ...,\n         [ -85,  102,  -61,  ...,  -42,   41,  -50],\n         [  60, -103,   76,  ...,  123,  -90,  -97],\n         [  97,   82,   22,  ...,   22,  -43,  -77]],\n\n        [[ -95,  103,   78,  ...,   97,  -12,  -41],\n         [  56,   33,  110,  ...,  -17,  -25,  -62],\n         [-103,  -69,  -67,  ...,    8,   20,  124],\n         ...,\n         [-106,   73, -127,  ...,   78, -107,   75],\n         [ 107,   36,  -82,  ..., -105,  -41,  103],\n         [  83,  108,   94,  ...,  -20,  116,  -72]],\n\n        [[  78,   -3,   55,  ...,   48,   71, -104],\n         [ 125,   75,   14,  ...,  -57,  101,  -94],\n         [ -33,  -57, -108,  ...,    0,   -6,   13],\n         ...,\n         [-114,   54, -123,  ...,   -1,   61,  100],\n         [  32,  -80,   31,  ...,  -34,  107,  -47],\n         [ -10,   42,  -84,  ...,   91,  107,  106]]], dtype=torch.int8)]"
+        },
+        {
+          "type": "scalar",
+          "value": "[tensor([[-0.6697, -3.2969,  1.7280,  ...,  0.2860,  1.7724,  4.0406],\n        [-1.4363, -2.7813,  2.5610,  ...,  3.7412,  2.0924,  3.8396],\n        [-2.9464, -0.5981,  3.4347,  ..., -4.1642,  1.1031,  3.8837],\n        [ 3.9692,  2.6742,  4.4946,  ...,  3.0063,  3.7428, -4.4677]])]"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            64
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            4
+          ],
+          "dtype": "torch.int64"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        },
+        {
+          "type": "scalar",
+          "value": 0
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        }
+      ],
+      "error_type": "AccuracyError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card6/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 898, in run_single_case\n    compare(\n  File \"/opt/workspace_card6/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 671, in compare\n    _compare_quant_fp_to_int(fw_finite, impl_finite, ctx)\n  File \"/opt/workspace_card6/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 531, in _compare_quant_fp_to_int\n    raise AccuracyError(\nAccuracyError: 验证失败 dtype=torch.int8 (量化类 fp->int，要求|diff|<=1): 3617/12288 元素超限，max_abs_diff=127\n前 10 个量化误差超限位置:\n  位置[7]: framework=29, impl=11, |diff|=18 (允许<=1)\n  位置[14]: framework=20, impl=7, |diff|=13 (允许<=1)\n  位置[19]: framework=127, impl=47, |diff|=80 (允许<=1)\n  位置[20]: framework=-22, impl=-8, |diff|=14 (允许<=1)\n  位置[22]: framework=-27, impl=-10, |diff|=17 (允许<=1)\n  位置[24]: framework=-3, impl=-1, |diff|=2 (允许<=1)\n  位置[26]: framework=10, impl=4, |diff|=6 (允许<=1)\n  位置[35]: framework=55, impl=20, |diff|=35 (允许<=\n... [truncated 174 chars] ...\naceback (most recent call last):\n  File \"/opt/workspace_card6/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card6/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 904, in run_single_case\n    raise AccuracyError(f\"[用例 {case_idx}/{total_cases}] {str(e)}\", e.metrics) from e\nAccuracyError: [用例 50/50] 验证失败 dtype=torch.int8 (量化类 fp->int，要求|diff|<=1): 3617/12288 元素超限，max_abs_diff=127\n前 10 个量化误差超限位置:\n  位置[7]: framework=29, impl=11, |diff|=18 (允许<=1)\n  位置[14]: framework=20, impl=7, |diff|=13 (允许<=1)\n  位置[19]: framework=127, impl=47, |diff|=80 (允许<=1)\n  位置[20]: framework=-22, impl=-8, |diff|=14 (允许<=1)\n  位置[22]: framework=-27, impl=-10, |diff|=17 (允许<=1)\n  位置[24]: framework=-3, impl=-1, |diff|=2 (允许<=1)\n  位置[26]: framework=10, impl=4, |diff|=6 (允许<=1)\n  位置[35]: framework=55, impl=20, |diff|=35 (允许<=1)\n  位置[39]: framework=5, impl=2, |diff|=3 (允许<=1)\n  位置[42]: framework=15, impl=6, |diff|=9 (允许<=1)\n\n",
+      "metrics": {
+        "category": "quant_fp_to_int",
+        "dtype": "torch.int8",
+        "input_type": "float",
+        "max_abs_diff": 127,
+        "violation_count": 3617,
+        "total_finite": 12288,
+        "tolerance": 1
+      }
+    }
+  ]
+}

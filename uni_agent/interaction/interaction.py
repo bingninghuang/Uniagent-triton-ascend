@@ -1,3 +1,4 @@
+import asyncio
 import time
 from typing import Literal
 
@@ -117,7 +118,8 @@ class AgentInteraction:
         * **Step**: ``step_output.exit_reason`` + ``done``:
 
           - terminal (``done=True``): ``finished``, ``turn_done``,
-            ``token_limit``, ``terminal_dead``, ``timeout_budget_exhausted``.
+            ``token_limit``, ``generate_timeout``, ``terminal_dead``,
+            ``timeout_budget_exhausted``.
           - non-terminal (``done=False``): ``completed``,
             ``completed_with_tool_errors``, ``format_error``.
           - set by :meth:`run`: ``max_step_limit``, ``unknown_error``.
@@ -151,6 +153,19 @@ class AgentInteraction:
             self.logger.error(str(e))
             step_output.exit_reason = "token_limit"
             step_output.done = True
+            step_output.response = str(e)
+            step_output.thought = str(e)
+            return step_output
+        except (TimeoutError, asyncio.TimeoutError) as e:
+            msg = (
+                "[generate_timeout] Model query timed out before any completion or tool_calls "
+                f"were returned: {type(e).__name__}: {e}"
+            )
+            self.logger.error(msg)
+            step_output.exit_reason = "generate_timeout"
+            step_output.done = True
+            step_output.response = msg
+            step_output.thought = msg
             return step_output
 
         # step 3: parse model response to actions

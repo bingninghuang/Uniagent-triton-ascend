@@ -1,0 +1,4317 @@
+{
+  "op_name": "kernelbench_l4_48_GCModule",
+  "total_cases": 50,
+  "passed_cases": 9,
+  "failed_cases": 41,
+  "failures": [
+    {
+      "case_idx": 1,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            64,
+            5,
+            7
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": 64
+        },
+        {
+          "type": "scalar",
+          "value": 4
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            64,
+            1,
+            1
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            64,
+            1,
+            1
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            16,
+            64,
+            1,
+            1
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            16
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            16,
+            1,
+            1
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            16,
+            1,
+            1
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            64,
+            16,
+            1,
+            1
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            64
+          ],
+          "dtype": "torch.float32"
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card5/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card5/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card5/agent_workdir/output/verify/kernelbench_l4_48_GCModule_triton_ascend_impl.py\", line 264, in forward\n    _k2a_ctx_conv[(b * kt,)](\n  File \"/usr/local/python3.11.14/lib/python3.11\n... [truncated 467 chars] ...\n/compiler.py\", line 303, in compile\n    module = src.make_ir(options, codegen_fns, module_map, context)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 14:9:\n                  CP: tl.constexpr, NCC: tl.constexpr,\n                  BK: tl.constexpr,\n                  RET_T: tl.constexpr):\n    pid = tl.program_id(0).to(tl.int32)\n    KT = tl.cdiv(K, BK)\n    b = (pid // KT).to(tl.int32)\n    kt = (pid - b * KT).to(tl.int32)\n\n    Cf = C.to(tl.float32)\n    c_off = tl.arange(0, CP).to(tl.int32)\n    c_mask = c_off.to(tl.float32) < Cf\n    NF = NC1.to(tl.float32)\n         ^\nAttributeError(\"'constexpr' object has no attribute 'to'\")\n"
+    },
+    {
+      "case_idx": 2,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            32,
+            7,
+            11
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 32
+        },
+        {
+          "type": "scalar",
+          "value": 8
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            32,
+            1,
+            1
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            32,
+            1,
+            1
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            4
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            1,
+            1
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            1,
+            1
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            32,
+            4,
+            1,
+            1
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            32
+          ],
+          "dtype": "torch.float16"
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card5/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card5/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card5/agent_workdir/output/verify/kernelbench_l4_48_GCModule_triton_ascend_impl.py\", line 264, in forward\n    _k2a_ctx_conv[(b * kt,)](\n  File \"/usr/local/python3.11.14/lib/python3.11\n... [truncated 467 chars] ...\n/compiler.py\", line 303, in compile\n    module = src.make_ir(options, codegen_fns, module_map, context)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 14:9:\n                  CP: tl.constexpr, NCC: tl.constexpr,\n                  BK: tl.constexpr,\n                  RET_T: tl.constexpr):\n    pid = tl.program_id(0).to(tl.int32)\n    KT = tl.cdiv(K, BK)\n    b = (pid // KT).to(tl.int32)\n    kt = (pid - b * KT).to(tl.int32)\n\n    Cf = C.to(tl.float32)\n    c_off = tl.arange(0, CP).to(tl.int32)\n    c_mask = c_off.to(tl.float32) < Cf\n    NF = NC1.to(tl.float32)\n         ^\nAttributeError(\"'constexpr' object has no attribute 'to'\")\n"
+    },
+    {
+      "case_idx": 3,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            64,
+            5,
+            7
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "scalar",
+          "value": 64
+        },
+        {
+          "type": "scalar",
+          "value": 2
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            64,
+            1,
+            1
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            32,
+            64,
+            1,
+            1
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            32
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            32,
+            1,
+            1
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            32,
+            1,
+            1
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            64,
+            32,
+            1,
+            1
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            64
+          ],
+          "dtype": "torch.bfloat16"
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card5/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card5/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card5/agent_workdir/output/verify/kernelbench_l4_48_GCModule_triton_ascend_impl.py\", line 264, in forward\n    _k2a_ctx_conv[(b * kt,)](\n  File \"/usr/local/python3.11.14/lib/python3.11\n... [truncated 467 chars] ...\n/compiler.py\", line 303, in compile\n    module = src.make_ir(options, codegen_fns, module_map, context)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 14:9:\n                  CP: tl.constexpr, NCC: tl.constexpr,\n                  BK: tl.constexpr,\n                  RET_T: tl.constexpr):\n    pid = tl.program_id(0).to(tl.int32)\n    KT = tl.cdiv(K, BK)\n    b = (pid // KT).to(tl.int32)\n    kt = (pid - b * KT).to(tl.int32)\n\n    Cf = C.to(tl.float32)\n    c_off = tl.arange(0, CP).to(tl.int32)\n    c_mask = c_off.to(tl.float32) < Cf\n    NF = NC1.to(tl.float32)\n         ^\nAttributeError(\"'constexpr' object has no attribute 'to'\")\n"
+    },
+    {
+      "case_idx": 4,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            32,
+            11,
+            7
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": 32
+        },
+        {
+          "type": "scalar",
+          "value": 4
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            32,
+            1,
+            1
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            8,
+            32,
+            1,
+            1
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            8
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            8,
+            1,
+            1
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            8,
+            1,
+            1
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            32,
+            8,
+            1,
+            1
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            32
+          ],
+          "dtype": "torch.float32"
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card5/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card5/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card5/agent_workdir/output/verify/kernelbench_l4_48_GCModule_triton_ascend_impl.py\", line 264, in forward\n    _k2a_ctx_conv[(b * kt,)](\n  File \"/usr/local/python3.11.14/lib/python3.11\n... [truncated 467 chars] ...\n/compiler.py\", line 303, in compile\n    module = src.make_ir(options, codegen_fns, module_map, context)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 14:9:\n                  CP: tl.constexpr, NCC: tl.constexpr,\n                  BK: tl.constexpr,\n                  RET_T: tl.constexpr):\n    pid = tl.program_id(0).to(tl.int32)\n    KT = tl.cdiv(K, BK)\n    b = (pid // KT).to(tl.int32)\n    kt = (pid - b * KT).to(tl.int32)\n\n    Cf = C.to(tl.float32)\n    c_off = tl.arange(0, CP).to(tl.int32)\n    c_mask = c_off.to(tl.float32) < Cf\n    NF = NC1.to(tl.float32)\n         ^\nAttributeError(\"'constexpr' object has no attribute 'to'\")\n"
+    },
+    {
+      "case_idx": 5,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            64,
+            5,
+            7
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 64
+        },
+        {
+          "type": "scalar",
+          "value": 4
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            64,
+            1,
+            1
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            16,
+            64,
+            1,
+            1
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            16
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            16,
+            1,
+            1
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            16,
+            1,
+            1
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            64,
+            16,
+            1,
+            1
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            64
+          ],
+          "dtype": "torch.float16"
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card5/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card5/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card5/agent_workdir/output/verify/kernelbench_l4_48_GCModule_triton_ascend_impl.py\", line 264, in forward\n    _k2a_ctx_conv[(b * kt,)](\n  File \"/usr/local/python3.11.14/lib/python3.11\n... [truncated 467 chars] ...\n/compiler.py\", line 303, in compile\n    module = src.make_ir(options, codegen_fns, module_map, context)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 14:9:\n                  CP: tl.constexpr, NCC: tl.constexpr,\n                  BK: tl.constexpr,\n                  RET_T: tl.constexpr):\n    pid = tl.program_id(0).to(tl.int32)\n    KT = tl.cdiv(K, BK)\n    b = (pid // KT).to(tl.int32)\n    kt = (pid - b * KT).to(tl.int32)\n\n    Cf = C.to(tl.float32)\n    c_off = tl.arange(0, CP).to(tl.int32)\n    c_mask = c_off.to(tl.float32) < Cf\n    NF = NC1.to(tl.float32)\n         ^\nAttributeError(\"'constexpr' object has no attribute 'to'\")\n"
+    },
+    {
+      "case_idx": 6,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            64,
+            9,
+            17
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "scalar",
+          "value": 64
+        },
+        {
+          "type": "scalar",
+          "value": 2
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            64,
+            1,
+            1
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            64,
+            1,
+            1
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            32,
+            64,
+            1,
+            1
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            32
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            32,
+            1,
+            1
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            32,
+            1,
+            1
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            64,
+            32,
+            1,
+            1
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            64
+          ],
+          "dtype": "torch.bfloat16"
+        }
+      ],
+      "error_type": "AccuracyError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card5/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 898, in run_single_case\n    compare(\n  File \"/opt/workspace_card5/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 677, in compare\n    _compare_float_output(fw_finite, impl_finite, ctx)\n  File \"/opt/workspace_card5/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 596, in _compare_float_output\n    _check_accuracy_npu_benchmark(fw_finite, impl_finite, ctx.data_type)\n  File \"/opt/workspace_card5/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 845, in _check_accuracy_npu_benchmark\n    raise AccuracyError(\nAccuracyError: 验证失败 dtype=torch.bfloat16: max_error_cap_violations=6489/9792 (atol=1.000000e-01, rtol=7.812500e-03, max_abs_diff=8.125000e+00, ok=False), matched_ratio=0.337316 (req>=0.9, ok=False), MERE=6.626838e-01 (rel_thr=7.812500e-03, ok=False); small_count=0, normal_count=9792\n前 10 个 max_error_cap 违例位置:\n  位置[153\n... [truncated 4023 chars] ...\n0 个 matched 未通过位置:\n  位置[153] (正常域): framework=-5.437500e+00, impl=0.000000e+00, 相对误差=1.000000e+00 (允许<=7.812500e-03)\n  位置[154] (正常域): framework=-3.984375e+00, impl=0.000000e+00, 相对误差=1.000000e+00 (允许<=7.812500e-03)\n  位置[155] (正常域): framework=-4.437500e+00, impl=0.000000e+00, 相对误差=1.000000e+00 (允许<=7.812500e-03)\n  位置[156] (正常域): framework=-5.531250e+00, impl=0.000000e+00, 相对误差=1.000000e+00 (允许<=7.812500e-03)\n  位置[157] (正常域): framework=-3.984375e+00, impl=0.000000e+00, 相对误差=1.000000e+00 (允许<=7.812500e-03)\n  位置[158] (正常域): framework=-3.765625e+00, impl=0.000000e+00, 相对误差=1.000000e+00 (允许<=7.812500e-03)\n  位置[159] (正常域): framework=-4.250000e+00, impl=0.000000e+00, 相对误差=1.000000e+00 (允许<=7.812500e-03)\n  位置[160] (正常域): framework=-5.000000e+00, impl=0.000000e+00, 相对误差=1.000000e+00 (允许<=7.812500e-03)\n  位置[161] (正常域): framework=-4.531250e+00, impl=0.000000e+00, 相对误差=1.000000e+00 (允许<=7.812500e-03)\n  位置[162] (正常域): framework=-5.687500e+00, impl=0.000000e+00, 相对误差=1.000000e+00 (允许<=7.812500e-03)\n\n",
+      "metrics": {
+        "matched_ratio": 0.33731617647058826,
+        "max_abs_diff": 8.125,
+        "MERE": 0.6626838445663452,
+        "rel_threshold": 0.0078125,
+        "small_value_threshold": 0.00390625,
+        "small_value_error": 1.52587890625e-05,
+        "atol": 0.1,
+        "rtol": 0.0078125,
+        "max_error_cap_violation_count": 6489,
+        "required_matched_ratio": 0.9,
+        "total_finite": 9792,
+        "matched_count": 3303,
+        "small_count": 0,
+        "normal_count": 9792,
+        "checks": {
+          "max_error_cap": false,
+          "required_matched_ratio": false,
+          "MERE": false
+        }
+      }
+    },
+    {
+      "case_idx": 7,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            32,
+            9,
+            17
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": 32
+        },
+        {
+          "type": "scalar",
+          "value": 4
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            32,
+            1,
+            1
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            8,
+            32,
+            1,
+            1
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            8
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            8,
+            1,
+            1
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            8,
+            1,
+            1
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            32,
+            8,
+            1,
+            1
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            32
+          ],
+          "dtype": "torch.float32"
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card5/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card5/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card5/agent_workdir/output/verify/kernelbench_l4_48_GCModule_triton_ascend_impl.py\", line 264, in forward\n    _k2a_ctx_conv[(b * kt,)](\n  File \"/usr/local/python3.11.14/lib/python3.11\n... [truncated 467 chars] ...\n/compiler.py\", line 303, in compile\n    module = src.make_ir(options, codegen_fns, module_map, context)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 14:9:\n                  CP: tl.constexpr, NCC: tl.constexpr,\n                  BK: tl.constexpr,\n                  RET_T: tl.constexpr):\n    pid = tl.program_id(0).to(tl.int32)\n    KT = tl.cdiv(K, BK)\n    b = (pid // KT).to(tl.int32)\n    kt = (pid - b * KT).to(tl.int32)\n\n    Cf = C.to(tl.float32)\n    c_off = tl.arange(0, CP).to(tl.int32)\n    c_mask = c_off.to(tl.float32) < Cf\n    NF = NC1.to(tl.float32)\n         ^\nAttributeError(\"'constexpr' object has no attribute 'to'\")\n"
+    },
+    {
+      "case_idx": 8,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            128,
+            11,
+            7
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 128
+        },
+        {
+          "type": "scalar",
+          "value": 8
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            128,
+            1,
+            1
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            16,
+            128,
+            1,
+            1
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            16
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            16,
+            1,
+            1
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            16,
+            1,
+            1
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            128,
+            16,
+            1,
+            1
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            128
+          ],
+          "dtype": "torch.float16"
+        }
+      ],
+      "error_type": "AssertionError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card5/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 898, in run_single_case\n    compare(\n  File \"/opt/workspace_card5/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 649, in compare\n    _check_nan_inf(fw_flat, impl_flat, size)\n  File \"/opt/workspace_card5/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 444, in _check_nan_inf\n    raise AssertionError(\nAssertionError: 验证失败，NaN 位置不匹配: Framework=0/9856, Implementation=88/9856\n\nThe above exception was the direct cause of the following exception:\n\nTraceback (most recent call last):\n  File \"/opt/workspace_card5/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card5/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 906, in run_single_case\n    raise AssertionError(f\"[用例 {case_idx}/{total_cases}] {str(e)}\") from e\nAssertionError: [用例 8/50] 验证失败，NaN 位置不匹配: Framework=0/9856, Implementation=88/9856\n"
+    },
+    {
+      "case_idx": 10,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            32,
+            17,
+            19
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": 32
+        },
+        {
+          "type": "scalar",
+          "value": 8
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            32,
+            1,
+            1
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            32,
+            1,
+            1
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            4
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            1,
+            1
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            1,
+            1
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            32,
+            4,
+            1,
+            1
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            32
+          ],
+          "dtype": "torch.float32"
+        }
+      ],
+      "error_type": "MLIRCompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 310, in compile\n    next_module = compile_ir(module, metadata)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/ascend/compiler.py\", line 778, in <lambda>\n    lambda src, metadata: linalg_to_bin_enable_npu_compile_A2_A3(\n                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/ascend/compiler.py\", line 549, in linalg_to_bin_enable_npu_compile_A2_A3\n    ret = subprocess.run(cmd_list, capture_output=True, check=True)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/subprocess.py\", line 571, in run\n    raise CalledProcessError(retcode, process.args,\nsubprocess.CalledProcessError: Command '['/usr/local/Ascend/cann-9.0.0/tools/bishengi\n... [truncated 3268 chars] ...\nl buffer.)\nloc(\"/tmp/tmp3gifyqhz/kernel.ttadapter.mlir\":2:1): error: Failed to run BiShengHIR pipeline\n\nloc(\"/tmp/tmp3gifyqhz/kernel.ttadapter.mlir\":3:3): error: ub overflow, requires 1590528 bits while 1572864 bits available! (possible reason: tiling basic block is too large or block number is more than what user expect due to multi-buffer feature is enabled and some ops need extra local buffer.)\nloc(\"/tmp/tmp3gifyqhz/kernel.ttadapter.mlir\":2:1): error: Failed to run BiShengHIR pipeline\n\nloc(\"/tmp/tmp3gifyqhz/kernel.ttadapter.mlir\":3:3): error: ub overflow, requires 1590528 bits while 1572864 bits available! (possible reason: tiling basic block is too large or block number is more than what user expect due to multi-buffer feature is enabled and some ops need extra local buffer.)\n[ERROR] Failed to run BiShengIR pipeline\n\n\n[INFO]: The compiled kernel cache is in /root/.triton/cache/nq8G7t0zbxkRlc4jGmDGA0-wNb2uMYFpZh8QbizwJ4g\n\n///------------------[ERROR][Triton][END]------------------\n\n"
+    },
+    {
+      "case_idx": 11,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            32,
+            17,
+            19
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 32
+        },
+        {
+          "type": "scalar",
+          "value": 2
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            32,
+            1,
+            1
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            32,
+            1,
+            1
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            16,
+            32,
+            1,
+            1
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            16
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            16,
+            1,
+            1
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            16,
+            1,
+            1
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            32,
+            16,
+            1,
+            1
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            32
+          ],
+          "dtype": "torch.float16"
+        }
+      ],
+      "error_type": "AssertionError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card5/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 898, in run_single_case\n    compare(\n  File \"/opt/workspace_card5/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 649, in compare\n    _check_nan_inf(fw_flat, impl_flat, size)\n  File \"/opt/workspace_card5/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 444, in _check_nan_inf\n    raise AssertionError(\nAssertionError: 验证失败，NaN 位置不匹配: Framework=0/10336, Implementation=87/10336\n\nThe above exception was the direct cause of the following exception:\n\nTraceback (most recent call last):\n  File \"/opt/workspace_card5/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card5/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 906, in run_single_case\n    raise AssertionError(f\"[用例 {case_idx}/{total_cases}] {str(e)}\") from e\nAssertionError: [用例 11/50] 验证失败，NaN 位置不匹配: Framework=0/10336, Implementation=87/10336\n"
+    },
+    {
+      "case_idx": 12,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            64,
+            13,
+            13
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "scalar",
+          "value": 64
+        },
+        {
+          "type": "scalar",
+          "value": 4
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            64,
+            1,
+            1
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            16,
+            64,
+            1,
+            1
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            16
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            16,
+            1,
+            1
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            16,
+            1,
+            1
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            64,
+            16,
+            1,
+            1
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            64
+          ],
+          "dtype": "torch.bfloat16"
+        }
+      ],
+      "error_type": "AssertionError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card5/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 898, in run_single_case\n    compare(\n  File \"/opt/workspace_card5/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 649, in compare\n    _check_nan_inf(fw_flat, impl_flat, size)\n  File \"/opt/workspace_card5/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 444, in _check_nan_inf\n    raise AssertionError(\nAssertionError: 验证失败，NaN 位置不匹配: Framework=0/10816, Implementation=2/10816\n\nThe above exception was the direct cause of the following exception:\n\nTraceback (most recent call last):\n  File \"/opt/workspace_card5/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card5/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 906, in run_single_case\n    raise AssertionError(f\"[用例 {case_idx}/{total_cases}] {str(e)}\") from e\nAssertionError: [用例 12/50] 验证失败，NaN 位置不匹配: Framework=0/10816, Implementation=2/10816\n"
+    },
+    {
+      "case_idx": 13,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            256,
+            5,
+            7
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": 256
+        },
+        {
+          "type": "scalar",
+          "value": 2
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            256,
+            1,
+            1
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            128,
+            256,
+            1,
+            1
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            128
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            128,
+            1,
+            1
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            128,
+            1,
+            1
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            256,
+            128,
+            1,
+            1
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            256
+          ],
+          "dtype": "torch.float32"
+        }
+      ],
+      "error_type": "MLIRCompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 310, in compile\n    next_module = compile_ir(module, metadata)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/ascend/compiler.py\", line 778, in <lambda>\n    lambda src, metadata: linalg_to_bin_enable_npu_compile_A2_A3(\n                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/ascend/compiler.py\", line 549, in linalg_to_bin_enable_npu_compile_A2_A3\n    ret = subprocess.run(cmd_list, capture_output=True, check=True)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/subprocess.py\", line 571, in run\n    raise CalledProcessError(retcode, process.args,\nsubprocess.CalledProcessError: Command '['/usr/local/Ascend/cann-9.0.0/tools/bishengi\n... [truncated 3268 chars] ...\nl buffer.)\nloc(\"/tmp/tmp7y4sx4ba/kernel.ttadapter.mlir\":2:1): error: Failed to run BiShengHIR pipeline\n\nloc(\"/tmp/tmp7y4sx4ba/kernel.ttadapter.mlir\":3:3): error: ub overflow, requires 1583360 bits while 1572864 bits available! (possible reason: tiling basic block is too large or block number is more than what user expect due to multi-buffer feature is enabled and some ops need extra local buffer.)\nloc(\"/tmp/tmp7y4sx4ba/kernel.ttadapter.mlir\":2:1): error: Failed to run BiShengHIR pipeline\n\nloc(\"/tmp/tmp7y4sx4ba/kernel.ttadapter.mlir\":3:3): error: ub overflow, requires 1583360 bits while 1572864 bits available! (possible reason: tiling basic block is too large or block number is more than what user expect due to multi-buffer feature is enabled and some ops need extra local buffer.)\n[ERROR] Failed to run BiShengIR pipeline\n\n\n[INFO]: The compiled kernel cache is in /root/.triton/cache/_mR_GpE26TN5dI5TshrjwOpJHn4L0l6u83W1vRDH6YI\n\n///------------------[ERROR][Triton][END]------------------\n\n"
+    },
+    {
+      "case_idx": 15,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            128,
+            7,
+            11
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "scalar",
+          "value": 128
+        },
+        {
+          "type": "scalar",
+          "value": 8
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            128,
+            1,
+            1
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            16,
+            128,
+            1,
+            1
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            16
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            16,
+            1,
+            1
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            16,
+            1,
+            1
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            128,
+            16,
+            1,
+            1
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            128
+          ],
+          "dtype": "torch.bfloat16"
+        }
+      ],
+      "error_type": "AccuracyError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card5/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 898, in run_single_case\n    compare(\n  File \"/opt/workspace_card5/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 677, in compare\n    _compare_float_output(fw_finite, impl_finite, ctx)\n  File \"/opt/workspace_card5/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 596, in _compare_float_output\n    _check_accuracy_npu_benchmark(fw_finite, impl_finite, ctx.data_type)\n  File \"/opt/workspace_card5/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 845, in _check_accuracy_npu_benchmark\n    raise AccuracyError(\nAccuracyError: 验证失败 dtype=torch.bfloat16: max_error_cap_violations=12729/19712 (atol=1.000000e-01, rtol=7.812500e-03, max_abs_diff=6.187500e+00, ok=False), matched_ratio=0.340300 (req>=0.9, ok=False), MERE=6.596997e-01 (rel_thr=7.812500e-03, ok=False); small_count=8, normal_count=19704\n前 10 个 max_error_cap 违例位置:\n  位置[\n... [truncated 3990 chars] ...\ne-01)\n前 10 个 matched 未通过位置:\n  位置[77] (正常域): framework=1.875000e+00, impl=-7.213015e-22, 相对误差=9.999999e-01 (允许<=7.812500e-03)\n  位置[78] (正常域): framework=2.062500e+00, impl=2.456368e-15, 相对误差=1.000000e+00 (允许<=7.812500e-03)\n  位置[79] (正常域): framework=2.062500e+00, impl=-9.381385e-15, 相对误差=1.000000e+00 (允许<=7.812500e-03)\n  位置[80] (小值域): framework=-1.953125e-03, impl=5.790264e-22, |diff|=1.953125e-03 (允许<=1.525879e-05)\n  位置[81] (正常域): framework=1.210938e+00, impl=4.069729e-22, 相对误差=9.999999e-01 (允许<=7.812500e-03)\n  位置[82] (正常域): framework=-3.875000e+00, impl=6.288373e-18, 相对误差=1.000000e+00 (允许<=7.812500e-03)\n  位置[83] (正常域): framework=-2.500000e+00, impl=-1.984090e-17, 相对误差=1.000000e+00 (允许<=7.812500e-03)\n  位置[84] (正常域): framework=1.757812e+00, impl=-1.475690e-21, 相对误差=9.999999e-01 (允许<=7.812500e-03)\n  位置[85] (正常域): framework=-1.796875e+00, impl=9.575674e-16, 相对误差=9.999999e-01 (允许<=7.812500e-03)\n  位置[86] (正常域): framework=8.203125e-01, impl=-2.642743e-18, 相对误差=9.999999e-01 (允许<=7.812500e-03)\n\n",
+      "metrics": {
+        "matched_ratio": 0.3403003246753247,
+        "max_abs_diff": 6.1875,
+        "MERE": 0.6596996784210205,
+        "rel_threshold": 0.0078125,
+        "small_value_threshold": 0.00390625,
+        "small_value_error": 1.52587890625e-05,
+        "atol": 0.1,
+        "rtol": 0.0078125,
+        "max_error_cap_violation_count": 12729,
+        "required_matched_ratio": 0.9,
+        "total_finite": 19712,
+        "matched_count": 6708,
+        "small_count": 8,
+        "normal_count": 19704,
+        "checks": {
+          "max_error_cap": false,
+          "required_matched_ratio": false,
+          "MERE": false
+        }
+      }
+    },
+    {
+      "case_idx": 16,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            64,
+            7,
+            11
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": 64
+        },
+        {
+          "type": "scalar",
+          "value": 8
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            64,
+            1,
+            1
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            64,
+            1,
+            1
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            8,
+            64,
+            1,
+            1
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            8
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            8,
+            1,
+            1
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            8,
+            1,
+            1
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            64,
+            8,
+            1,
+            1
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            64
+          ],
+          "dtype": "torch.float32"
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card5/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card5/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card5/agent_workdir/output/verify/kernelbench_l4_48_GCModule_triton_ascend_impl.py\", line 264, in forward\n    _k2a_ctx_conv[(b * kt,)](\n  File \"/usr/local/python3.11.14/lib/python3.11\n... [truncated 467 chars] ...\n/compiler.py\", line 303, in compile\n    module = src.make_ir(options, codegen_fns, module_map, context)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 14:9:\n                  CP: tl.constexpr, NCC: tl.constexpr,\n                  BK: tl.constexpr,\n                  RET_T: tl.constexpr):\n    pid = tl.program_id(0).to(tl.int32)\n    KT = tl.cdiv(K, BK)\n    b = (pid // KT).to(tl.int32)\n    kt = (pid - b * KT).to(tl.int32)\n\n    Cf = C.to(tl.float32)\n    c_off = tl.arange(0, CP).to(tl.int32)\n    c_mask = c_off.to(tl.float32) < Cf\n    NF = NC1.to(tl.float32)\n         ^\nAttributeError(\"'constexpr' object has no attribute 'to'\")\n"
+    },
+    {
+      "case_idx": 17,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            64,
+            7,
+            11
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 64
+        },
+        {
+          "type": "scalar",
+          "value": 4
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            64,
+            1,
+            1
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            16,
+            64,
+            1,
+            1
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            16
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            16,
+            1,
+            1
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            16,
+            1,
+            1
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            64,
+            16,
+            1,
+            1
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            64
+          ],
+          "dtype": "torch.float16"
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card5/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card5/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card5/agent_workdir/output/verify/kernelbench_l4_48_GCModule_triton_ascend_impl.py\", line 264, in forward\n    _k2a_ctx_conv[(b * kt,)](\n  File \"/usr/local/python3.11.14/lib/python3.11\n... [truncated 467 chars] ...\n/compiler.py\", line 303, in compile\n    module = src.make_ir(options, codegen_fns, module_map, context)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 14:9:\n                  CP: tl.constexpr, NCC: tl.constexpr,\n                  BK: tl.constexpr,\n                  RET_T: tl.constexpr):\n    pid = tl.program_id(0).to(tl.int32)\n    KT = tl.cdiv(K, BK)\n    b = (pid // KT).to(tl.int32)\n    kt = (pid - b * KT).to(tl.int32)\n\n    Cf = C.to(tl.float32)\n    c_off = tl.arange(0, CP).to(tl.int32)\n    c_mask = c_off.to(tl.float32) < Cf\n    NF = NC1.to(tl.float32)\n         ^\nAttributeError(\"'constexpr' object has no attribute 'to'\")\n"
+    },
+    {
+      "case_idx": 18,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            256,
+            11,
+            7
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "scalar",
+          "value": 256
+        },
+        {
+          "type": "scalar",
+          "value": 4
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            256,
+            1,
+            1
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            64,
+            256,
+            1,
+            1
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            64
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            64,
+            1,
+            1
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            64,
+            1,
+            1
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            256,
+            64,
+            1,
+            1
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            256
+          ],
+          "dtype": "torch.bfloat16"
+        }
+      ],
+      "error_type": "AccuracyError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card5/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 898, in run_single_case\n    compare(\n  File \"/opt/workspace_card5/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 677, in compare\n    _compare_float_output(fw_finite, impl_finite, ctx)\n  File \"/opt/workspace_card5/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 596, in _compare_float_output\n    _check_accuracy_npu_benchmark(fw_finite, impl_finite, ctx.data_type)\n  File \"/opt/workspace_card5/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 845, in _check_accuracy_npu_benchmark\n    raise AccuracyError(\nAccuracyError: 验证失败 dtype=torch.bfloat16: max_error_cap_violations=545/19712 (atol=1.000000e-01, rtol=7.812500e-03, max_abs_diff=5.718750e+00, ok=False), matched_ratio=0.972098 (req>=0.9, ok=True), MERE=2.790179e-02 (rel_thr=7.812500e-03, ok=False); small_count=14, normal_count=19698\n前 10 个 max_error_cap 违例位置:\n  位置[77\n... [truncated 1998 chars] ...\n: framework=-3.531250e+00, impl=-6.694948e-18, |diff|=3.531250e+00 (允许<=atol+rtol*|golden|=1.275879e-01)\n  位置[79]: framework=-4.765625e-01, impl=-3.574479e-19, |diff|=4.765625e-01 (允许<=atol+rtol*|golden|=1.037231e-01)\n  位置[80]: framework=4.531250e+00, impl=1.021405e-14, |diff|=4.531250e+00 (允许<=atol+rtol*|golden|=1.354004e-01)\n  位置[81]: framework=-2.031250e-01, impl=-9.936496e-15, |diff|=2.031250e-01 (允许<=atol+rtol*|golden|=1.015869e-01)\n  位置[82]: framework=4.406250e+00, impl=1.249001e-14, |diff|=4.406250e+00 (允许<=atol+rtol*|golden|=1.344238e-01)\n  位置[83]: framework=3.078125e+00, impl=1.325329e-15, |diff|=3.078125e+00 (允许<=atol+rtol*|golden|=1.240479e-01)\n  位置[84]: framework=1.593750e+00, impl=2.125036e-17, |diff|=1.593750e+00 (允许<=atol+rtol*|golden|=1.124512e-01)\n  位置[85]: framework=-1.250000e-01, impl=-8.493206e-15, |diff|=1.250000e-01 (允许<=atol+rtol*|golden|=1.009766e-01)\n  位置[86]: framework=1.484375e-01, impl=1.307979e-23, |diff|=1.484375e-01 (允许<=atol+rtol*|golden|=1.011597e-01)\n\n",
+      "metrics": {
+        "matched_ratio": 0.9720982142857143,
+        "max_abs_diff": 5.71875,
+        "MERE": 0.02790178544819355,
+        "rel_threshold": 0.0078125,
+        "small_value_threshold": 0.00390625,
+        "small_value_error": 1.52587890625e-05,
+        "atol": 0.1,
+        "rtol": 0.0078125,
+        "max_error_cap_violation_count": 545,
+        "required_matched_ratio": 0.9,
+        "total_finite": 19712,
+        "matched_count": 19162,
+        "small_count": 14,
+        "normal_count": 19698,
+        "checks": {
+          "max_error_cap": false,
+          "required_matched_ratio": true,
+          "MERE": false
+        }
+      }
+    },
+    {
+      "case_idx": 19,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            128,
+            7,
+            11
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": 128
+        },
+        {
+          "type": "scalar",
+          "value": 4
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            128,
+            1,
+            1
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            32,
+            128,
+            1,
+            1
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            32
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            32,
+            1,
+            1
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            32,
+            1,
+            1
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            128,
+            32,
+            1,
+            1
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            128
+          ],
+          "dtype": "torch.float32"
+        }
+      ],
+      "error_type": "MLIRCompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 310, in compile\n    next_module = compile_ir(module, metadata)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/ascend/compiler.py\", line 778, in <lambda>\n    lambda src, metadata: linalg_to_bin_enable_npu_compile_A2_A3(\n                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/ascend/compiler.py\", line 549, in linalg_to_bin_enable_npu_compile_A2_A3\n    ret = subprocess.run(cmd_list, capture_output=True, check=True)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/subprocess.py\", line 571, in run\n    raise CalledProcessError(retcode, process.args,\nsubprocess.CalledProcessError: Command '['/usr/local/Ascend/cann-9.0.0/tools/bishengi\n... [truncated 3268 chars] ...\nl buffer.)\nloc(\"/tmp/tmpx0ropov8/kernel.ttadapter.mlir\":2:1): error: Failed to run BiShengHIR pipeline\n\nloc(\"/tmp/tmpx0ropov8/kernel.ttadapter.mlir\":3:3): error: ub overflow, requires 1581312 bits while 1572864 bits available! (possible reason: tiling basic block is too large or block number is more than what user expect due to multi-buffer feature is enabled and some ops need extra local buffer.)\nloc(\"/tmp/tmpx0ropov8/kernel.ttadapter.mlir\":2:1): error: Failed to run BiShengHIR pipeline\n\nloc(\"/tmp/tmpx0ropov8/kernel.ttadapter.mlir\":3:3): error: ub overflow, requires 1581312 bits while 1572864 bits available! (possible reason: tiling basic block is too large or block number is more than what user expect due to multi-buffer feature is enabled and some ops need extra local buffer.)\n[ERROR] Failed to run BiShengIR pipeline\n\n\n[INFO]: The compiled kernel cache is in /root/.triton/cache/mYF341NoGzPksKfo-GDv6-1fRfyQ01GrC-eBSaKrOJs\n\n///------------------[ERROR][Triton][END]------------------\n\n"
+    },
+    {
+      "case_idx": 21,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            32,
+            25,
+            15
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "scalar",
+          "value": 32
+        },
+        {
+          "type": "scalar",
+          "value": 2
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            32,
+            1,
+            1
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            32,
+            1,
+            1
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            16,
+            32,
+            1,
+            1
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            16
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            16,
+            1,
+            1
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            16,
+            1,
+            1
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            32,
+            16,
+            1,
+            1
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            32
+          ],
+          "dtype": "torch.bfloat16"
+        }
+      ],
+      "error_type": "AccuracyError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card5/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 898, in run_single_case\n    compare(\n  File \"/opt/workspace_card5/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 677, in compare\n    _compare_float_output(fw_finite, impl_finite, ctx)\n  File \"/opt/workspace_card5/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 596, in _compare_float_output\n    _check_accuracy_npu_benchmark(fw_finite, impl_finite, ctx.data_type)\n  File \"/opt/workspace_card5/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 845, in _check_accuracy_npu_benchmark\n    raise AccuracyError(\nAccuracyError: 验证失败 dtype=torch.bfloat16: max_error_cap_violations=4221/24000 (atol=1.000000e-01, rtol=7.812500e-03, max_abs_diff=1.586955e+04, ok=False), matched_ratio=0.823250 (req>=0.9, ok=False), MERE=2.491741e+02 (rel_thr=7.812500e-03, ok=False); small_count=13, normal_count=23987\n前 10 个 max_error_cap 违例位置:\n  位置[\n... [truncated 4014 chars] ...\n\n前 10 个 matched 未通过位置:\n  位置[375] (正常域): framework=-4.937500e+00, impl=7.578125e-01, 相对误差=1.153481e+00 (允许<=7.812500e-03)\n  位置[376] (正常域): framework=1.281250e+00, impl=7.600000e+02, 相对误差=5.921707e+02 (允许<=7.812500e-03)\n  位置[377] (正常域): framework=-2.070312e-01, impl=1.456250e+01, 相对误差=7.133958e+01 (允许<=7.812500e-03)\n  位置[378] (正常域): framework=1.671875e+00, impl=2.062500e+00, 相对误差=2.336448e-01 (允许<=7.812500e-03)\n  位置[379] (正常域): framework=-3.250000e+00, impl=7.156250e+00, 相对误差=3.201923e+00 (允许<=7.812500e-03)\n  位置[380] (正常域): framework=-5.195312e-01, impl=1.350000e+02, 相对误差=2.608496e+02 (允许<=7.812500e-03)\n  位置[381] (正常域): framework=1.796875e+00, impl=3.575000e+01, 相对误差=1.889565e+01 (允许<=7.812500e-03)\n  位置[382] (正常域): framework=-8.710938e-01, impl=2.255859e-01, 相对误差=1.258968e+00 (允许<=7.812500e-03)\n  位置[383] (正常域): framework=-2.851562e-01, impl=8.800000e+01, 相对误差=3.096026e+02 (允许<=7.812500e-03)\n  位置[384] (正常域): framework=2.140625e+00, impl=3.340000e+02, 相对误差=1.550292e+02 (允许<=7.812500e-03)\n\n",
+      "metrics": {
+        "matched_ratio": 0.82325,
+        "max_abs_diff": 15869.546875,
+        "MERE": 249.17405700683594,
+        "rel_threshold": 0.0078125,
+        "small_value_threshold": 0.00390625,
+        "small_value_error": 1.52587890625e-05,
+        "atol": 0.1,
+        "rtol": 0.0078125,
+        "max_error_cap_violation_count": 4221,
+        "required_matched_ratio": 0.9,
+        "total_finite": 24000,
+        "matched_count": 19758,
+        "small_count": 13,
+        "normal_count": 23987,
+        "checks": {
+          "max_error_cap": false,
+          "required_matched_ratio": false,
+          "MERE": false
+        }
+      }
+    },
+    {
+      "case_idx": 22,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            32,
+            21,
+            23
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": 32
+        },
+        {
+          "type": "scalar",
+          "value": 8
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            32,
+            1,
+            1
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            32,
+            1,
+            1
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            4
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            1,
+            1
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            1,
+            1
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            32,
+            4,
+            1,
+            1
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            32
+          ],
+          "dtype": "torch.float32"
+        }
+      ],
+      "error_type": "MLIRCompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 310, in compile\n    next_module = compile_ir(module, metadata)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/ascend/compiler.py\", line 778, in <lambda>\n    lambda src, metadata: linalg_to_bin_enable_npu_compile_A2_A3(\n                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/ascend/compiler.py\", line 549, in linalg_to_bin_enable_npu_compile_A2_A3\n    ret = subprocess.run(cmd_list, capture_output=True, check=True)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/subprocess.py\", line 571, in run\n    raise CalledProcessError(retcode, process.args,\nsubprocess.CalledProcessError: Command '['/usr/local/Ascend/cann-9.0.0/tools/bishengi\n... [truncated 3268 chars] ...\nl buffer.)\nloc(\"/tmp/tmpp6qto0oi/kernel.ttadapter.mlir\":2:1): error: Failed to run BiShengHIR pipeline\n\nloc(\"/tmp/tmpp6qto0oi/kernel.ttadapter.mlir\":3:3): error: ub overflow, requires 1590528 bits while 1572864 bits available! (possible reason: tiling basic block is too large or block number is more than what user expect due to multi-buffer feature is enabled and some ops need extra local buffer.)\nloc(\"/tmp/tmpp6qto0oi/kernel.ttadapter.mlir\":2:1): error: Failed to run BiShengHIR pipeline\n\nloc(\"/tmp/tmpp6qto0oi/kernel.ttadapter.mlir\":3:3): error: ub overflow, requires 1590528 bits while 1572864 bits available! (possible reason: tiling basic block is too large or block number is more than what user expect due to multi-buffer feature is enabled and some ops need extra local buffer.)\n[ERROR] Failed to run BiShengIR pipeline\n\n\n[INFO]: The compiled kernel cache is in /root/.triton/cache/nq8G7t0zbxkRlc4jGmDGA0-wNb2uMYFpZh8QbizwJ4g\n\n///------------------[ERROR][Triton][END]------------------\n\n"
+    },
+    {
+      "case_idx": 23,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            512,
+            5,
+            7
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 512
+        },
+        {
+          "type": "scalar",
+          "value": 4
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            512,
+            1,
+            1
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            128,
+            512,
+            1,
+            1
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            128,
+            1,
+            1
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            128,
+            1,
+            1
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            512,
+            128,
+            1,
+            1
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            512
+          ],
+          "dtype": "torch.float16"
+        }
+      ],
+      "error_type": "AccuracyError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card5/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 898, in run_single_case\n    compare(\n  File \"/opt/workspace_card5/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 677, in compare\n    _compare_float_output(fw_finite, impl_finite, ctx)\n  File \"/opt/workspace_card5/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 596, in _compare_float_output\n    _check_accuracy_npu_benchmark(fw_finite, impl_finite, ctx.data_type)\n  File \"/opt/workspace_card5/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 845, in _check_accuracy_npu_benchmark\n    raise AccuracyError(\nAccuracyError: 验证失败 dtype=torch.float16: max_error_cap_violations=3427/35840 (atol=9.000000e-02, rtol=9.765625e-04, max_abs_diff=3.015152e+00, ok=False), matched_ratio=0.900893 (req>=0.9, ok=True), MERE=9.974833e-02 (rel_thr=9.765625e-04, ok=False); small_count=5, normal_count=35835\n前 10 个 max_error_cap 违例位置:\n  位置[35]\n... [truncated 1988 chars] ...\n[36]: framework=1.381836e+00, impl=3.866577e-02, |diff|=1.343170e+00 (允许<=atol+rtol*|golden|=9.134945e-02)\n  位置[37]: framework=2.035156e+00, impl=2.940369e-02, |diff|=2.005753e+00 (允许<=atol+rtol*|golden|=9.198746e-02)\n  位置[38]: framework=1.792969e+00, impl=-3.176880e-02, |diff|=1.824738e+00 (允许<=atol+rtol*|golden|=9.175095e-02)\n  位置[39]: framework=1.375000e+00, impl=-2.832031e-02, |diff|=1.403320e+00 (允许<=atol+rtol*|golden|=9.134278e-02)\n  位置[40]: framework=1.521484e+00, impl=1.039886e-02, |diff|=1.511086e+00 (允许<=atol+rtol*|golden|=9.148583e-02)\n  位置[41]: framework=2.117188e+00, impl=-8.529663e-03, |diff|=2.125717e+00 (允许<=atol+rtol*|golden|=9.206757e-02)\n  位置[42]: framework=2.398438e+00, impl=5.889893e-03, |diff|=2.392548e+00 (允许<=atol+rtol*|golden|=9.234223e-02)\n  位置[43]: framework=1.628906e+00, impl=2.587891e-02, |diff|=1.603027e+00 (允许<=atol+rtol*|golden|=9.159073e-02)\n  位置[44]: framework=1.864258e+00, impl=-3.578186e-03, |diff|=1.867836e+00 (允许<=atol+rtol*|golden|=9.182057e-02)\n\n",
+      "metrics": {
+        "matched_ratio": 0.9008928571428572,
+        "max_abs_diff": 3.0151519775390625,
+        "MERE": 0.09974832832813263,
+        "rel_threshold": 0.0009765625,
+        "small_value_threshold": 0.00048828125,
+        "small_value_error": 1.52587890625e-05,
+        "atol": 0.09,
+        "rtol": 0.0009765625,
+        "max_error_cap_violation_count": 3427,
+        "required_matched_ratio": 0.9,
+        "total_finite": 35840,
+        "matched_count": 32288,
+        "small_count": 5,
+        "normal_count": 35835,
+        "checks": {
+          "max_error_cap": false,
+          "required_matched_ratio": true,
+          "MERE": false
+        }
+      }
+    },
+    {
+      "case_idx": 25,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            512,
+            7,
+            11
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": 512
+        },
+        {
+          "type": "scalar",
+          "value": 4
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            512,
+            1,
+            1
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            128,
+            512,
+            1,
+            1
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            128
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            128,
+            1,
+            1
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            128,
+            1,
+            1
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            512,
+            128,
+            1,
+            1
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            512
+          ],
+          "dtype": "torch.float32"
+        }
+      ],
+      "error_type": "MLIRCompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 310, in compile\n    next_module = compile_ir(module, metadata)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/ascend/compiler.py\", line 778, in <lambda>\n    lambda src, metadata: linalg_to_bin_enable_npu_compile_A2_A3(\n                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/ascend/compiler.py\", line 549, in linalg_to_bin_enable_npu_compile_A2_A3\n    ret = subprocess.run(cmd_list, capture_output=True, check=True)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/subprocess.py\", line 571, in run\n    raise CalledProcessError(retcode, process.args,\nsubprocess.CalledProcessError: Command '['/usr/local/Ascend/cann-9.0.0/tools/bishengi\n... [truncated 3268 chars] ...\nl buffer.)\nloc(\"/tmp/tmpktworyqq/kernel.ttadapter.mlir\":2:1): error: Failed to run BiShengHIR pipeline\n\nloc(\"/tmp/tmpktworyqq/kernel.ttadapter.mlir\":3:3): error: ub overflow, requires 1590528 bits while 1572864 bits available! (possible reason: tiling basic block is too large or block number is more than what user expect due to multi-buffer feature is enabled and some ops need extra local buffer.)\nloc(\"/tmp/tmpktworyqq/kernel.ttadapter.mlir\":2:1): error: Failed to run BiShengHIR pipeline\n\nloc(\"/tmp/tmpktworyqq/kernel.ttadapter.mlir\":3:3): error: ub overflow, requires 1590528 bits while 1572864 bits available! (possible reason: tiling basic block is too large or block number is more than what user expect due to multi-buffer feature is enabled and some ops need extra local buffer.)\n[ERROR] Failed to run BiShengIR pipeline\n\n\n[INFO]: The compiled kernel cache is in /root/.triton/cache/ZSegmopZ8_CNdFF2gcqi3O9XM9-7BAfoImk8FNuDQPg\n\n///------------------[ERROR][Triton][END]------------------\n\n"
+    },
+    {
+      "case_idx": 26,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            128,
+            7,
+            11
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 128
+        },
+        {
+          "type": "scalar",
+          "value": 2
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            128,
+            1,
+            1
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            128,
+            1,
+            1
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            64,
+            128,
+            1,
+            1
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            64
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            64,
+            1,
+            1
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            64,
+            1,
+            1
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            128,
+            64,
+            1,
+            1
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            128
+          ],
+          "dtype": "torch.float16"
+        }
+      ],
+      "error_type": "AssertionError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card5/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 898, in run_single_case\n    compare(\n  File \"/opt/workspace_card5/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 649, in compare\n    _check_nan_inf(fw_flat, impl_flat, size)\n  File \"/opt/workspace_card5/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 444, in _check_nan_inf\n    raise AssertionError(\nAssertionError: 验证失败，NaN 位置不匹配: Framework=0/39424, Implementation=379/39424\n\nThe above exception was the direct cause of the following exception:\n\nTraceback (most recent call last):\n  File \"/opt/workspace_card5/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card5/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 906, in run_single_case\n    raise AssertionError(f\"[用例 {case_idx}/{total_cases}] {str(e)}\") from e\nAssertionError: [用例 26/50] 验证失败，NaN 位置不匹配: Framework=0/39424, Implementation=379/39424\n"
+    },
+    {
+      "case_idx": 27,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            256,
+            11,
+            7
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "scalar",
+          "value": 256
+        },
+        {
+          "type": "scalar",
+          "value": 4
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            256,
+            1,
+            1
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            64,
+            256,
+            1,
+            1
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            64
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            64,
+            1,
+            1
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            64,
+            1,
+            1
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            256,
+            64,
+            1,
+            1
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            256
+          ],
+          "dtype": "torch.bfloat16"
+        }
+      ],
+      "error_type": "AccuracyError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card5/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 898, in run_single_case\n    compare(\n  File \"/opt/workspace_card5/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 677, in compare\n    _compare_float_output(fw_finite, impl_finite, ctx)\n  File \"/opt/workspace_card5/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 596, in _compare_float_output\n    _check_accuracy_npu_benchmark(fw_finite, impl_finite, ctx.data_type)\n  File \"/opt/workspace_card5/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 845, in _check_accuracy_npu_benchmark\n    raise AccuracyError(\nAccuracyError: 验证失败 dtype=torch.bfloat16: max_error_cap_violations=108/39424 (atol=1.000000e-01, rtol=7.812500e-03, max_abs_diff=3.505885e+26, ok=False), matched_ratio=0.997134 (req>=0.9, ok=True), MERE=1.133620e+22 (rel_thr=7.812500e-03, ok=False); small_count=94, normal_count=39330\n前 10 个 max_error_cap 违例位置:\n  位置[77\n... [truncated 1990 chars] ...\n置[78]: framework=1.738281e-01, impl=5.760000e+03, |diff|=5.759826e+03 (允许<=atol+rtol*|golden|=1.013580e-01)\n  位置[79]: framework=5.390625e-01, impl=2.260000e+02, |diff|=2.254609e+02 (允许<=atol+rtol*|golden|=1.042114e-01)\n  位置[80]: framework=4.824219e-01, impl=-2.098083e-04, |diff|=4.826317e-01 (允许<=atol+rtol*|golden|=1.037689e-01)\n  位置[81]: framework=1.265625e+00, impl=4.560000e+02, |diff|=4.547344e+02 (允许<=atol+rtol*|golden|=1.098877e-01)\n  位置[82]: framework=7.226562e-01, impl=-1.468750e+00, |diff|=2.191406e+00 (允许<=atol+rtol*|golden|=1.056458e-01)\n  位置[83]: framework=4.277344e-01, impl=2.944000e+03, |diff|=2.943572e+03 (允许<=atol+rtol*|golden|=1.033417e-01)\n  位置[84]: framework=1.375000e+00, impl=9.375000e+00, |diff|=8.000000e+00 (允许<=atol+rtol*|golden|=1.107422e-01)\n  位置[85]: framework=9.023438e-01, impl=1.513672e-02, |diff|=8.872070e-01 (允许<=atol+rtol*|golden|=1.070496e-01)\n  位置[86]: framework=2.109375e-01, impl=-1.742967e-32, |diff|=2.109375e-01 (允许<=atol+rtol*|golden|=1.016480e-01)\n\n",
+      "metrics": {
+        "matched_ratio": 0.9971337256493507,
+        "max_abs_diff": 3.5058848768824246e+26,
+        "MERE": 1.1336195269638998e+22,
+        "rel_threshold": 0.0078125,
+        "small_value_threshold": 0.00390625,
+        "small_value_error": 1.52587890625e-05,
+        "atol": 0.1,
+        "rtol": 0.0078125,
+        "max_error_cap_violation_count": 108,
+        "required_matched_ratio": 0.9,
+        "total_finite": 39424,
+        "matched_count": 39311,
+        "small_count": 94,
+        "normal_count": 39330,
+        "checks": {
+          "max_error_cap": false,
+          "required_matched_ratio": true,
+          "MERE": false
+        }
+      }
+    },
+    {
+      "case_idx": 28,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            256,
+            7,
+            11
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": 256
+        },
+        {
+          "type": "scalar",
+          "value": 4
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            256,
+            1,
+            1
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            64,
+            256,
+            1,
+            1
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            64
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            64,
+            1,
+            1
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            64,
+            1,
+            1
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            256,
+            64,
+            1,
+            1
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            256
+          ],
+          "dtype": "torch.float32"
+        }
+      ],
+      "error_type": "MLIRCompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 310, in compile\n    next_module = compile_ir(module, metadata)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/ascend/compiler.py\", line 778, in <lambda>\n    lambda src, metadata: linalg_to_bin_enable_npu_compile_A2_A3(\n                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/ascend/compiler.py\", line 549, in linalg_to_bin_enable_npu_compile_A2_A3\n    ret = subprocess.run(cmd_list, capture_output=True, check=True)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/subprocess.py\", line 571, in run\n    raise CalledProcessError(retcode, process.args,\nsubprocess.CalledProcessError: Command '['/usr/local/Ascend/cann-9.0.0/tools/bishengi\n... [truncated 3268 chars] ...\nl buffer.)\nloc(\"/tmp/tmpee2t804u/kernel.ttadapter.mlir\":2:1): error: Failed to run BiShengHIR pipeline\n\nloc(\"/tmp/tmpee2t804u/kernel.ttadapter.mlir\":3:3): error: ub overflow, requires 1583360 bits while 1572864 bits available! (possible reason: tiling basic block is too large or block number is more than what user expect due to multi-buffer feature is enabled and some ops need extra local buffer.)\nloc(\"/tmp/tmpee2t804u/kernel.ttadapter.mlir\":2:1): error: Failed to run BiShengHIR pipeline\n\nloc(\"/tmp/tmpee2t804u/kernel.ttadapter.mlir\":3:3): error: ub overflow, requires 1583360 bits while 1572864 bits available! (possible reason: tiling basic block is too large or block number is more than what user expect due to multi-buffer feature is enabled and some ops need extra local buffer.)\n[ERROR] Failed to run BiShengIR pipeline\n\n\n[INFO]: The compiled kernel cache is in /root/.triton/cache/_mR_GpE26TN5dI5TshrjwOpJHn4L0l6u83W1vRDH6YI\n\n///------------------[ERROR][Triton][END]------------------\n\n"
+    },
+    {
+      "case_idx": 30,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            256,
+            13,
+            13
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "scalar",
+          "value": 256
+        },
+        {
+          "type": "scalar",
+          "value": 4
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            256,
+            1,
+            1
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            64,
+            256,
+            1,
+            1
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            64
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            64,
+            1,
+            1
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            64,
+            1,
+            1
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            256,
+            64,
+            1,
+            1
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            256
+          ],
+          "dtype": "torch.bfloat16"
+        }
+      ],
+      "error_type": "AssertionError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card5/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 898, in run_single_case\n    compare(\n  File \"/opt/workspace_card5/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 649, in compare\n    _check_nan_inf(fw_flat, impl_flat, size)\n  File \"/opt/workspace_card5/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 444, in _check_nan_inf\n    raise AssertionError(\nAssertionError: 验证失败，NaN 位置不匹配: Framework=0/43264, Implementation=3/43264\n\nThe above exception was the direct cause of the following exception:\n\nTraceback (most recent call last):\n  File \"/opt/workspace_card5/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card5/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 906, in run_single_case\n    raise AssertionError(f\"[用例 {case_idx}/{total_cases}] {str(e)}\") from e\nAssertionError: [用例 30/50] 验证失败，NaN 位置不匹配: Framework=0/43264, Implementation=3/43264\n"
+    },
+    {
+      "case_idx": 31,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            32,
+            31,
+            11
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": 32
+        },
+        {
+          "type": "scalar",
+          "value": 8
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            32,
+            1,
+            1
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            32,
+            1,
+            1
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            32,
+            1,
+            1
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            4
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            1,
+            1
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            1,
+            1
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            32,
+            4,
+            1,
+            1
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            32
+          ],
+          "dtype": "torch.float32"
+        }
+      ],
+      "error_type": "MLIRCompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 310, in compile\n    next_module = compile_ir(module, metadata)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/ascend/compiler.py\", line 778, in <lambda>\n    lambda src, metadata: linalg_to_bin_enable_npu_compile_A2_A3(\n                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/ascend/compiler.py\", line 549, in linalg_to_bin_enable_npu_compile_A2_A3\n    ret = subprocess.run(cmd_list, capture_output=True, check=True)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/subprocess.py\", line 571, in run\n    raise CalledProcessError(retcode, process.args,\nsubprocess.CalledProcessError: Command '['/usr/local/Ascend/cann-9.0.0/tools/bishengi\n... [truncated 3268 chars] ...\nl buffer.)\nloc(\"/tmp/tmpp1nbdyc3/kernel.ttadapter.mlir\":2:1): error: Failed to run BiShengHIR pipeline\n\nloc(\"/tmp/tmpp1nbdyc3/kernel.ttadapter.mlir\":3:3): error: ub overflow, requires 1590528 bits while 1572864 bits available! (possible reason: tiling basic block is too large or block number is more than what user expect due to multi-buffer feature is enabled and some ops need extra local buffer.)\nloc(\"/tmp/tmpp1nbdyc3/kernel.ttadapter.mlir\":2:1): error: Failed to run BiShengHIR pipeline\n\nloc(\"/tmp/tmpp1nbdyc3/kernel.ttadapter.mlir\":3:3): error: ub overflow, requires 1590528 bits while 1572864 bits available! (possible reason: tiling basic block is too large or block number is more than what user expect due to multi-buffer feature is enabled and some ops need extra local buffer.)\n[ERROR] Failed to run BiShengIR pipeline\n\n\n[INFO]: The compiled kernel cache is in /root/.triton/cache/nq8G7t0zbxkRlc4jGmDGA0-wNb2uMYFpZh8QbizwJ4g\n\n///------------------[ERROR][Triton][END]------------------\n\n"
+    },
+    {
+      "case_idx": 32,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            128,
+            25,
+            15
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 128
+        },
+        {
+          "type": "scalar",
+          "value": 8
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            128,
+            1,
+            1
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            16,
+            128,
+            1,
+            1
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            16
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            16,
+            1,
+            1
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            16,
+            1,
+            1
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            128,
+            16,
+            1,
+            1
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            128
+          ],
+          "dtype": "torch.float16"
+        }
+      ],
+      "error_type": "AssertionError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card5/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 898, in run_single_case\n    compare(\n  File \"/opt/workspace_card5/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 649, in compare\n    _check_nan_inf(fw_flat, impl_flat, size)\n  File \"/opt/workspace_card5/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 444, in _check_nan_inf\n    raise AssertionError(\nAssertionError: 验证失败，NaN 位置不匹配: Framework=0/48000, Implementation=18/48000\n\nThe above exception was the direct cause of the following exception:\n\nTraceback (most recent call last):\n  File \"/opt/workspace_card5/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card5/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 906, in run_single_case\n    raise AssertionError(f\"[用例 {case_idx}/{total_cases}] {str(e)}\") from e\nAssertionError: [用例 32/50] 验证失败，NaN 位置不匹配: Framework=0/48000, Implementation=18/48000\n"
+    },
+    {
+      "case_idx": 33,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            128,
+            25,
+            15
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "scalar",
+          "value": 128
+        },
+        {
+          "type": "scalar",
+          "value": 2
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            128,
+            1,
+            1
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            64,
+            128,
+            1,
+            1
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            64
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            64,
+            1,
+            1
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            64,
+            1,
+            1
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            128,
+            64,
+            1,
+            1
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            128
+          ],
+          "dtype": "torch.bfloat16"
+        }
+      ],
+      "error_type": "AccuracyError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card5/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 898, in run_single_case\n    compare(\n  File \"/opt/workspace_card5/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 677, in compare\n    _compare_float_output(fw_finite, impl_finite, ctx)\n  File \"/opt/workspace_card5/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 596, in _compare_float_output\n    _check_accuracy_npu_benchmark(fw_finite, impl_finite, ctx.data_type)\n  File \"/opt/workspace_card5/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 845, in _check_accuracy_npu_benchmark\n    raise AccuracyError(\nAccuracyError: 验证失败 dtype=torch.bfloat16: max_error_cap_violations=1128/48000 (atol=1.000000e-01, rtol=7.812500e-03, max_abs_diff=1.926726e+25, ok=False), matched_ratio=0.976208 (req>=0.9, ok=True), MERE=6.629591e+20 (rel_thr=7.812500e-03, ok=False); small_count=29, normal_count=47971\n前 10 个 max_error_cap 违例位置:\n  位置[3\n... [truncated 2026 chars] ...\nk=-2.531250e+00, impl=-2.144000e+03, |diff|=2.141469e+03 (允许<=atol+rtol*|golden|=1.197754e-01)\n  位置[377]: framework=1.414062e+00, impl=-1.380000e+02, |diff|=1.394141e+02 (允许<=atol+rtol*|golden|=1.110474e-01)\n  位置[378]: framework=1.140625e+00, impl=7.720000e+02, |diff|=7.708594e+02 (允许<=atol+rtol*|golden|=1.089111e-01)\n  位置[379]: framework=-1.789062e+00, impl=1.173019e-04, |diff|=1.789180e+00 (允许<=atol+rtol*|golden|=1.139771e-01)\n  位置[380]: framework=3.453125e+00, impl=1.092529e-02, |diff|=3.442200e+00 (允许<=atol+rtol*|golden|=1.269775e-01)\n  位置[381]: framework=-5.343750e+00, impl=2.750000e+01, |diff|=3.284375e+01 (允许<=atol+rtol*|golden|=1.417480e-01)\n  位置[382]: framework=-1.945312e+00, impl=-9.900000e+01, |diff|=9.705469e+01 (允许<=atol+rtol*|golden|=1.151978e-01)\n  位置[383]: framework=-5.375000e+00, impl=-2.944469e-05, |diff|=5.374970e+00 (允许<=atol+rtol*|golden|=1.419922e-01)\n  位置[750]: framework=3.187500e+00, impl=-5.240000e+02, |diff|=5.271875e+02 (允许<=atol+rtol*|golden|=1.249023e-01)\n\n",
+      "metrics": {
+        "matched_ratio": 0.9762083333333333,
+        "max_abs_diff": 1.9267255250108152e+25,
+        "MERE": 6.629591385465149e+20,
+        "rel_threshold": 0.0078125,
+        "small_value_threshold": 0.00390625,
+        "small_value_error": 1.52587890625e-05,
+        "atol": 0.1,
+        "rtol": 0.0078125,
+        "max_error_cap_violation_count": 1128,
+        "required_matched_ratio": 0.9,
+        "total_finite": 48000,
+        "matched_count": 46858,
+        "small_count": 29,
+        "normal_count": 47971,
+        "checks": {
+          "max_error_cap": false,
+          "required_matched_ratio": true,
+          "MERE": false
+        }
+      }
+    },
+    {
+      "case_idx": 34,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            32,
+            21,
+            23
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": 32
+        },
+        {
+          "type": "scalar",
+          "value": 4
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            32,
+            1,
+            1
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            8,
+            32,
+            1,
+            1
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            8
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            8,
+            1,
+            1
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            8,
+            1,
+            1
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            32,
+            8,
+            1,
+            1
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            32
+          ],
+          "dtype": "torch.float32"
+        }
+      ],
+      "error_type": "MLIRCompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 310, in compile\n    next_module = compile_ir(module, metadata)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/ascend/compiler.py\", line 778, in <lambda>\n    lambda src, metadata: linalg_to_bin_enable_npu_compile_A2_A3(\n                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/ascend/compiler.py\", line 549, in linalg_to_bin_enable_npu_compile_A2_A3\n    ret = subprocess.run(cmd_list, capture_output=True, check=True)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/subprocess.py\", line 571, in run\n    raise CalledProcessError(retcode, process.args,\nsubprocess.CalledProcessError: Command '['/usr/local/Ascend/cann-9.0.0/tools/bishengi\n... [truncated 3268 chars] ...\nl buffer.)\nloc(\"/tmp/tmpttfos98i/kernel.ttadapter.mlir\":2:1): error: Failed to run BiShengHIR pipeline\n\nloc(\"/tmp/tmpttfos98i/kernel.ttadapter.mlir\":3:3): error: ub overflow, requires 1590528 bits while 1572864 bits available! (possible reason: tiling basic block is too large or block number is more than what user expect due to multi-buffer feature is enabled and some ops need extra local buffer.)\nloc(\"/tmp/tmpttfos98i/kernel.ttadapter.mlir\":2:1): error: Failed to run BiShengHIR pipeline\n\nloc(\"/tmp/tmpttfos98i/kernel.ttadapter.mlir\":3:3): error: ub overflow, requires 1590528 bits while 1572864 bits available! (possible reason: tiling basic block is too large or block number is more than what user expect due to multi-buffer feature is enabled and some ops need extra local buffer.)\n[ERROR] Failed to run BiShengIR pipeline\n\n\n[INFO]: The compiled kernel cache is in /root/.triton/cache/nq8G7t0zbxkRlc4jGmDGA0-wNb2uMYFpZh8QbizwJ4g\n\n///------------------[ERROR][Triton][END]------------------\n\n"
+    },
+    {
+      "case_idx": 35,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            512,
+            7,
+            11
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 512
+        },
+        {
+          "type": "scalar",
+          "value": 2
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            512,
+            1,
+            1
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            256,
+            512,
+            1,
+            1
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            256
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            256,
+            1,
+            1
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            256,
+            1,
+            1
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            512,
+            256,
+            1,
+            1
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            512
+          ],
+          "dtype": "torch.float16"
+        }
+      ],
+      "error_type": "AccuracyError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card5/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 898, in run_single_case\n    compare(\n  File \"/opt/workspace_card5/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 677, in compare\n    _compare_float_output(fw_finite, impl_finite, ctx)\n  File \"/opt/workspace_card5/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 596, in _compare_float_output\n    _check_accuracy_npu_benchmark(fw_finite, impl_finite, ctx.data_type)\n  File \"/opt/workspace_card5/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 845, in _check_accuracy_npu_benchmark\n    raise AccuracyError(\nAccuracyError: 验证失败 dtype=torch.float16: max_error_cap_violations=1500/78848 (atol=9.000000e-02, rtol=9.765625e-04, max_abs_diff=5.777344e+00, ok=False), matched_ratio=0.980558 (req>=0.9, ok=True), MERE=1.944247e-02 (rel_thr=9.765625e-04, ok=False); small_count=6, normal_count=78842\n前 10 个 max_error_cap 违例位置:\n  位置[77]\n... [truncated 2002 chars] ...\nframework=-4.351562e+00, impl=0.000000e+00, |diff|=4.351562e+00 (允许<=atol+rtol*|golden|=9.424958e-02)\n  位置[79]: framework=2.173828e+00, impl=0.000000e+00, |diff|=2.173828e+00 (允许<=atol+rtol*|golden|=9.212288e-02)\n  位置[154]: framework=3.769531e-01, impl=0.000000e+00, |diff|=3.769531e-01 (允许<=atol+rtol*|golden|=9.036812e-02)\n  位置[155]: framework=2.222656e+00, impl=0.000000e+00, |diff|=2.222656e+00 (允许<=atol+rtol*|golden|=9.217057e-02)\n  位置[156]: framework=2.320312e+00, impl=0.000000e+00, |diff|=2.320312e+00 (允许<=atol+rtol*|golden|=9.226593e-02)\n  位置[231]: framework=-3.962891e+00, impl=0.000000e+00, |diff|=3.962891e+00 (允许<=atol+rtol*|golden|=9.387001e-02)\n  位置[232]: framework=-2.060547e+00, impl=0.000000e+00, |diff|=2.060547e+00 (允许<=atol+rtol*|golden|=9.201226e-02)\n  位置[233]: framework=1.635742e+00, impl=0.000000e+00, |diff|=1.635742e+00 (允许<=atol+rtol*|golden|=9.159741e-02)\n  位置[308]: framework=9.858398e-01, impl=0.000000e+00, |diff|=9.858398e-01 (允许<=atol+rtol*|golden|=9.096274e-02)\n\n",
+      "metrics": {
+        "matched_ratio": 0.9805575284090909,
+        "max_abs_diff": 5.77734375,
+        "MERE": 0.019442468881607056,
+        "rel_threshold": 0.0009765625,
+        "small_value_threshold": 0.00048828125,
+        "small_value_error": 1.52587890625e-05,
+        "atol": 0.09,
+        "rtol": 0.0009765625,
+        "max_error_cap_violation_count": 1500,
+        "required_matched_ratio": 0.9,
+        "total_finite": 78848,
+        "matched_count": 77315,
+        "small_count": 6,
+        "normal_count": 78842,
+        "checks": {
+          "max_error_cap": false,
+          "required_matched_ratio": true,
+          "MERE": false
+        }
+      }
+    },
+    {
+      "case_idx": 36,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            256,
+            11,
+            7
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "scalar",
+          "value": 256
+        },
+        {
+          "type": "scalar",
+          "value": 8
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            256,
+            1,
+            1
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            256,
+            1,
+            1
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            32,
+            256,
+            1,
+            1
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            32
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            32,
+            1,
+            1
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            32,
+            1,
+            1
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            256,
+            32,
+            1,
+            1
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            256
+          ],
+          "dtype": "torch.bfloat16"
+        }
+      ],
+      "error_type": "AccuracyError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card5/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 898, in run_single_case\n    compare(\n  File \"/opt/workspace_card5/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 677, in compare\n    _compare_float_output(fw_finite, impl_finite, ctx)\n  File \"/opt/workspace_card5/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 596, in _compare_float_output\n    _check_accuracy_npu_benchmark(fw_finite, impl_finite, ctx.data_type)\n  File \"/opt/workspace_card5/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 845, in _check_accuracy_npu_benchmark\n    raise AccuracyError(\nAccuracyError: 验证失败 dtype=torch.bfloat16: max_error_cap_violations=9686/78848 (atol=1.000000e-01, rtol=7.812500e-03, max_abs_diff=5.812500e+00, ok=False), matched_ratio=0.876585 (req>=0.9, ok=False), MERE=1.234147e-01 (rel_thr=7.812500e-03, ok=False); small_count=17, normal_count=78831\n前 10 个 max_error_cap 违例位置:\n  位置[\n... [truncated 4138 chars] ...\n12] (正常域): framework=-2.421875e+00, impl=-1.776357e-13, 相对误差=1.000000e+00 (允许<=7.812500e-03)\n  位置[19713] (正常域): framework=-1.250000e+00, impl=7.702172e-16, 相对误差=9.999999e-01 (允许<=7.812500e-03)\n  位置[19714] (正常域): framework=-1.367188e+00, impl=-1.456897e-19, 相对误差=9.999999e-01 (允许<=7.812500e-03)\n  位置[19715] (正常域): framework=-2.203125e+00, impl=-5.826450e-13, 相对误差=1.000000e+00 (允许<=7.812500e-03)\n  位置[19716] (正常域): framework=-1.289062e+00, impl=-2.064321e-16, 相对误差=9.999999e-01 (允许<=7.812500e-03)\n  位置[19717] (正常域): framework=-2.359375e+00, impl=2.145500e-24, 相对误差=1.000000e+00 (允许<=7.812500e-03)\n  位置[19718] (正常域): framework=-1.195312e+00, impl=-6.972201e-14, 相对误差=9.999999e-01 (允许<=7.812500e-03)\n  位置[19719] (正常域): framework=-1.859375e+00, impl=3.863576e-14, 相对误差=9.999999e-01 (允许<=7.812500e-03)\n  位置[19720] (正常域): framework=-2.062500e+00, impl=-3.428369e-13, 相对误差=1.000000e+00 (允许<=7.812500e-03)\n  位置[19721] (正常域): framework=-2.218750e+00, impl=-1.970646e-15, 相对误差=1.000000e+00 (允许<=7.812500e-03)\n\n",
+      "metrics": {
+        "matched_ratio": 0.8765853287337663,
+        "max_abs_diff": 5.8125,
+        "MERE": 0.12341467291116714,
+        "rel_threshold": 0.0078125,
+        "small_value_threshold": 0.00390625,
+        "small_value_error": 1.52587890625e-05,
+        "atol": 0.1,
+        "rtol": 0.0078125,
+        "max_error_cap_violation_count": 9686,
+        "required_matched_ratio": 0.9,
+        "total_finite": 78848,
+        "matched_count": 69117,
+        "small_count": 17,
+        "normal_count": 78831,
+        "checks": {
+          "max_error_cap": false,
+          "required_matched_ratio": false,
+          "MERE": false
+        }
+      }
+    },
+    {
+      "case_idx": 37,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            256,
+            7,
+            11
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": 256
+        },
+        {
+          "type": "scalar",
+          "value": 4
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            256,
+            1,
+            1
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            64,
+            256,
+            1,
+            1
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            64
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            64,
+            1,
+            1
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            64,
+            1,
+            1
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            256,
+            64,
+            1,
+            1
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            256
+          ],
+          "dtype": "torch.float32"
+        }
+      ],
+      "error_type": "MLIRCompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 310, in compile\n    next_module = compile_ir(module, metadata)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/ascend/compiler.py\", line 778, in <lambda>\n    lambda src, metadata: linalg_to_bin_enable_npu_compile_A2_A3(\n                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/ascend/compiler.py\", line 549, in linalg_to_bin_enable_npu_compile_A2_A3\n    ret = subprocess.run(cmd_list, capture_output=True, check=True)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/subprocess.py\", line 571, in run\n    raise CalledProcessError(retcode, process.args,\nsubprocess.CalledProcessError: Command '['/usr/local/Ascend/cann-9.0.0/tools/bishengi\n... [truncated 3268 chars] ...\nl buffer.)\nloc(\"/tmp/tmpp944wdsa/kernel.ttadapter.mlir\":2:1): error: Failed to run BiShengHIR pipeline\n\nloc(\"/tmp/tmpp944wdsa/kernel.ttadapter.mlir\":3:3): error: ub overflow, requires 1583360 bits while 1572864 bits available! (possible reason: tiling basic block is too large or block number is more than what user expect due to multi-buffer feature is enabled and some ops need extra local buffer.)\nloc(\"/tmp/tmpp944wdsa/kernel.ttadapter.mlir\":2:1): error: Failed to run BiShengHIR pipeline\n\nloc(\"/tmp/tmpp944wdsa/kernel.ttadapter.mlir\":3:3): error: ub overflow, requires 1583360 bits while 1572864 bits available! (possible reason: tiling basic block is too large or block number is more than what user expect due to multi-buffer feature is enabled and some ops need extra local buffer.)\n[ERROR] Failed to run BiShengIR pipeline\n\n\n[INFO]: The compiled kernel cache is in /root/.triton/cache/_mR_GpE26TN5dI5TshrjwOpJHn4L0l6u83W1vRDH6YI\n\n///------------------[ERROR][Triton][END]------------------\n\n"
+    },
+    {
+      "case_idx": 38,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            64,
+            17,
+            19
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 64
+        },
+        {
+          "type": "scalar",
+          "value": 2
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            64,
+            1,
+            1
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            32,
+            64,
+            1,
+            1
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            32
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            32,
+            1,
+            1
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            32,
+            1,
+            1
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            64,
+            32,
+            1,
+            1
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            64
+          ],
+          "dtype": "torch.float16"
+        }
+      ],
+      "error_type": "AssertionError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card5/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 898, in run_single_case\n    compare(\n  File \"/opt/workspace_card5/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 649, in compare\n    _check_nan_inf(fw_flat, impl_flat, size)\n  File \"/opt/workspace_card5/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 444, in _check_nan_inf\n    raise AssertionError(\nAssertionError: 验证失败，NaN 位置不匹配: Framework=0/82688, Implementation=186/82688\n\nThe above exception was the direct cause of the following exception:\n\nTraceback (most recent call last):\n  File \"/opt/workspace_card5/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card5/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 906, in run_single_case\n    raise AssertionError(f\"[用例 {case_idx}/{total_cases}] {str(e)}\") from e\nAssertionError: [用例 38/50] 验证失败，NaN 位置不匹配: Framework=0/82688, Implementation=186/82688\n"
+    },
+    {
+      "case_idx": 40,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            64,
+            25,
+            15
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": 64
+        },
+        {
+          "type": "scalar",
+          "value": 8
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            64,
+            1,
+            1
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            8,
+            64,
+            1,
+            1
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            8
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            8,
+            1,
+            1
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            8,
+            1,
+            1
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            64,
+            8,
+            1,
+            1
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            64
+          ],
+          "dtype": "torch.float32"
+        }
+      ],
+      "error_type": "MLIRCompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 310, in compile\n    next_module = compile_ir(module, metadata)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/ascend/compiler.py\", line 778, in <lambda>\n    lambda src, metadata: linalg_to_bin_enable_npu_compile_A2_A3(\n                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/ascend/compiler.py\", line 549, in linalg_to_bin_enable_npu_compile_A2_A3\n    ret = subprocess.run(cmd_list, capture_output=True, check=True)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/subprocess.py\", line 571, in run\n    raise CalledProcessError(retcode, process.args,\nsubprocess.CalledProcessError: Command '['/usr/local/Ascend/cann-9.0.0/tools/bishengi\n... [truncated 3268 chars] ...\nl buffer.)\nloc(\"/tmp/tmp4it4831w/kernel.ttadapter.mlir\":2:1): error: Failed to run BiShengHIR pipeline\n\nloc(\"/tmp/tmp4it4831w/kernel.ttadapter.mlir\":3:3): error: ub overflow, requires 1583360 bits while 1572864 bits available! (possible reason: tiling basic block is too large or block number is more than what user expect due to multi-buffer feature is enabled and some ops need extra local buffer.)\nloc(\"/tmp/tmp4it4831w/kernel.ttadapter.mlir\":2:1): error: Failed to run BiShengHIR pipeline\n\nloc(\"/tmp/tmp4it4831w/kernel.ttadapter.mlir\":3:3): error: ub overflow, requires 1583360 bits while 1572864 bits available! (possible reason: tiling basic block is too large or block number is more than what user expect due to multi-buffer feature is enabled and some ops need extra local buffer.)\n[ERROR] Failed to run BiShengIR pipeline\n\n\n[INFO]: The compiled kernel cache is in /root/.triton/cache/3pH--sXfNgEFEuT1DpiuaU_psf4Whpk_8EDD27E_LMI\n\n///------------------[ERROR][Triton][END]------------------\n\n"
+    },
+    {
+      "case_idx": 41,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            64,
+            25,
+            15
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 64
+        },
+        {
+          "type": "scalar",
+          "value": 4
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            64,
+            1,
+            1
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            64,
+            1,
+            1
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            16,
+            64,
+            1,
+            1
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            16
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            16,
+            1,
+            1
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            16,
+            1,
+            1
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            64,
+            16,
+            1,
+            1
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            64
+          ],
+          "dtype": "torch.float16"
+        }
+      ],
+      "error_type": "AssertionError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card5/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 898, in run_single_case\n    compare(\n  File \"/opt/workspace_card5/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 649, in compare\n    _check_nan_inf(fw_flat, impl_flat, size)\n  File \"/opt/workspace_card5/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 444, in _check_nan_inf\n    raise AssertionError(\nAssertionError: 验证失败，NaN 位置不匹配: Framework=0/96000, Implementation=29/96000\n\nThe above exception was the direct cause of the following exception:\n\nTraceback (most recent call last):\n  File \"/opt/workspace_card5/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card5/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 906, in run_single_case\n    raise AssertionError(f\"[用例 {case_idx}/{total_cases}] {str(e)}\") from e\nAssertionError: [用例 41/50] 验证失败，NaN 位置不匹配: Framework=0/96000, Implementation=29/96000\n"
+    },
+    {
+      "case_idx": 43,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            512,
+            31,
+            11
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": 512
+        },
+        {
+          "type": "scalar",
+          "value": 4
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            512,
+            1,
+            1
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            128,
+            512,
+            1,
+            1
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            128
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            128,
+            1,
+            1
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            128,
+            1,
+            1
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            512,
+            128,
+            1,
+            1
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            512
+          ],
+          "dtype": "torch.float32"
+        }
+      ],
+      "error_type": "MLIRCompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 310, in compile\n    next_module = compile_ir(module, metadata)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/ascend/compiler.py\", line 778, in <lambda>\n    lambda src, metadata: linalg_to_bin_enable_npu_compile_A2_A3(\n                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/ascend/compiler.py\", line 549, in linalg_to_bin_enable_npu_compile_A2_A3\n    ret = subprocess.run(cmd_list, capture_output=True, check=True)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/subprocess.py\", line 571, in run\n    raise CalledProcessError(retcode, process.args,\nsubprocess.CalledProcessError: Command '['/usr/local/Ascend/cann-9.0.0/tools/bishengi\n... [truncated 3268 chars] ...\nl buffer.)\nloc(\"/tmp/tmpusudn6ng/kernel.ttadapter.mlir\":2:1): error: Failed to run BiShengHIR pipeline\n\nloc(\"/tmp/tmpusudn6ng/kernel.ttadapter.mlir\":3:3): error: ub overflow, requires 1590528 bits while 1572864 bits available! (possible reason: tiling basic block is too large or block number is more than what user expect due to multi-buffer feature is enabled and some ops need extra local buffer.)\nloc(\"/tmp/tmpusudn6ng/kernel.ttadapter.mlir\":2:1): error: Failed to run BiShengHIR pipeline\n\nloc(\"/tmp/tmpusudn6ng/kernel.ttadapter.mlir\":3:3): error: ub overflow, requires 1590528 bits while 1572864 bits available! (possible reason: tiling basic block is too large or block number is more than what user expect due to multi-buffer feature is enabled and some ops need extra local buffer.)\n[ERROR] Failed to run BiShengIR pipeline\n\n\n[INFO]: The compiled kernel cache is in /root/.triton/cache/ZSegmopZ8_CNdFF2gcqi3O9XM9-7BAfoImk8FNuDQPg\n\n///------------------[ERROR][Triton][END]------------------\n\n"
+    },
+    {
+      "case_idx": 45,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            512,
+            25,
+            15
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "scalar",
+          "value": 512
+        },
+        {
+          "type": "scalar",
+          "value": 2
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            512,
+            1,
+            1
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            256,
+            512,
+            1,
+            1
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            256
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            256,
+            1,
+            1
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            256,
+            1,
+            1
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            512,
+            256,
+            1,
+            1
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            512
+          ],
+          "dtype": "torch.bfloat16"
+        }
+      ],
+      "error_type": "AssertionError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card5/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 898, in run_single_case\n    compare(\n  File \"/opt/workspace_card5/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 649, in compare\n    _check_nan_inf(fw_flat, impl_flat, size)\n  File \"/opt/workspace_card5/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 444, in _check_nan_inf\n    raise AssertionError(\nAssertionError: 验证失败，NaN 位置不匹配: Framework=0/192000, Implementation=6/192000\n\nThe above exception was the direct cause of the following exception:\n\nTraceback (most recent call last):\n  File \"/opt/workspace_card5/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card5/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 906, in run_single_case\n    raise AssertionError(f\"[用例 {case_idx}/{total_cases}] {str(e)}\") from e\nAssertionError: [用例 45/50] 验证失败，NaN 位置不匹配: Framework=0/192000, Implementation=6/192000\n"
+    },
+    {
+      "case_idx": 46,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            128,
+            21,
+            23
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": 128
+        },
+        {
+          "type": "scalar",
+          "value": 4
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            128,
+            1,
+            1
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            128,
+            1,
+            1
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            32,
+            128,
+            1,
+            1
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            32
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            32,
+            1,
+            1
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            32,
+            1,
+            1
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            128,
+            32,
+            1,
+            1
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            128
+          ],
+          "dtype": "torch.float32"
+        }
+      ],
+      "error_type": "MLIRCompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 310, in compile\n    next_module = compile_ir(module, metadata)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/ascend/compiler.py\", line 778, in <lambda>\n    lambda src, metadata: linalg_to_bin_enable_npu_compile_A2_A3(\n                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/ascend/compiler.py\", line 549, in linalg_to_bin_enable_npu_compile_A2_A3\n    ret = subprocess.run(cmd_list, capture_output=True, check=True)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/subprocess.py\", line 571, in run\n    raise CalledProcessError(retcode, process.args,\nsubprocess.CalledProcessError: Command '['/usr/local/Ascend/cann-9.0.0/tools/bishengi\n... [truncated 3268 chars] ...\nl buffer.)\nloc(\"/tmp/tmpkfk4ovv1/kernel.ttadapter.mlir\":2:1): error: Failed to run BiShengHIR pipeline\n\nloc(\"/tmp/tmpkfk4ovv1/kernel.ttadapter.mlir\":3:3): error: ub overflow, requires 1581312 bits while 1572864 bits available! (possible reason: tiling basic block is too large or block number is more than what user expect due to multi-buffer feature is enabled and some ops need extra local buffer.)\nloc(\"/tmp/tmpkfk4ovv1/kernel.ttadapter.mlir\":2:1): error: Failed to run BiShengHIR pipeline\n\nloc(\"/tmp/tmpkfk4ovv1/kernel.ttadapter.mlir\":3:3): error: ub overflow, requires 1581312 bits while 1572864 bits available! (possible reason: tiling basic block is too large or block number is more than what user expect due to multi-buffer feature is enabled and some ops need extra local buffer.)\n[ERROR] Failed to run BiShengIR pipeline\n\n\n[INFO]: The compiled kernel cache is in /root/.triton/cache/l_6aIra35lnxFdYvZqNsCz-_MDIVsyF5Ayxijt5m678\n\n///------------------[ERROR][Triton][END]------------------\n\n"
+    },
+    {
+      "case_idx": 47,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            256,
+            17,
+            19
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 256
+        },
+        {
+          "type": "scalar",
+          "value": 2
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            256,
+            1,
+            1
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            128,
+            256,
+            1,
+            1
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            128,
+            1,
+            1
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            128,
+            1,
+            1
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            256,
+            128,
+            1,
+            1
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            256
+          ],
+          "dtype": "torch.float16"
+        }
+      ],
+      "error_type": "AccuracyError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card5/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 898, in run_single_case\n    compare(\n  File \"/opt/workspace_card5/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 677, in compare\n    _compare_float_output(fw_finite, impl_finite, ctx)\n  File \"/opt/workspace_card5/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 596, in _compare_float_output\n    _check_accuracy_npu_benchmark(fw_finite, impl_finite, ctx.data_type)\n  File \"/opt/workspace_card5/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 845, in _check_accuracy_npu_benchmark\n    raise AccuracyError(\nAccuracyError: 验证失败 dtype=torch.float16: max_error_cap_violations=6715/330752 (atol=9.000000e-02, rtol=9.765625e-04, max_abs_diff=8.031250e+00, ok=False), matched_ratio=0.979311 (req>=0.9, ok=True), MERE=9.008206e-02 (rel_thr=9.765625e-04, ok=False); small_count=24, normal_count=330728\n前 10 个 max_error_cap 违例位置:\n  位置[\n... [truncated 2092 chars] ...\n87500e+00, |diff|=8.125000e-01 (允许<=atol+rtol*|golden|=9.085450e-02)\n  位置[248389]: framework=-1.817383e+00, impl=-1.179688e+00, |diff|=6.376953e-01 (允许<=atol+rtol*|golden|=9.177479e-02)\n  位置[248390]: framework=4.738281e+00, impl=1.765625e+00, |diff|=2.972656e+00 (允许<=atol+rtol*|golden|=9.462723e-02)\n  位置[248391]: framework=-2.480469e+00, impl=-1.904297e+00, |diff|=5.761719e-01 (允许<=atol+rtol*|golden|=9.242234e-02)\n  位置[248392]: framework=2.650391e+00, impl=-1.796875e+00, |diff|=4.447266e+00 (允许<=atol+rtol*|golden|=9.258828e-02)\n  位置[248393]: framework=-4.987793e-01, impl=2.041016e+00, |diff|=2.539795e+00 (允许<=atol+rtol*|golden|=9.048709e-02)\n  位置[248394]: framework=-4.539062e+00, impl=-2.058594e+00, |diff|=2.480469e+00 (允许<=atol+rtol*|golden|=9.443268e-02)\n  位置[248395]: framework=2.031250e+00, impl=2.281250e+00, |diff|=2.500000e-01 (允许<=atol+rtol*|golden|=9.198365e-02)\n  位置[248396]: framework=-5.234375e-01, impl=-1.787109e+00, |diff|=1.263672e+00 (允许<=atol+rtol*|golden|=9.051117e-02)\n\n",
+      "metrics": {
+        "matched_ratio": 0.9793107827012384,
+        "max_abs_diff": 8.03125,
+        "MERE": 0.0900820642709732,
+        "rel_threshold": 0.0009765625,
+        "small_value_threshold": 0.00048828125,
+        "small_value_error": 1.52587890625e-05,
+        "atol": 0.09,
+        "rtol": 0.0009765625,
+        "max_error_cap_violation_count": 6715,
+        "required_matched_ratio": 0.9,
+        "total_finite": 330752,
+        "matched_count": 323909,
+        "small_count": 24,
+        "normal_count": 330728,
+        "checks": {
+          "max_error_cap": false,
+          "required_matched_ratio": true,
+          "MERE": false
+        }
+      }
+    },
+    {
+      "case_idx": 48,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            256,
+            31,
+            11
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "scalar",
+          "value": 256
+        },
+        {
+          "type": "scalar",
+          "value": 4
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            256,
+            1,
+            1
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            64,
+            256,
+            1,
+            1
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            64
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            64,
+            1,
+            1
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            64,
+            1,
+            1
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            256,
+            64,
+            1,
+            1
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            256
+          ],
+          "dtype": "torch.bfloat16"
+        }
+      ],
+      "error_type": "AccuracyError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card5/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 898, in run_single_case\n    compare(\n  File \"/opt/workspace_card5/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 677, in compare\n    _compare_float_output(fw_finite, impl_finite, ctx)\n  File \"/opt/workspace_card5/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 596, in _compare_float_output\n    _check_accuracy_npu_benchmark(fw_finite, impl_finite, ctx.data_type)\n  File \"/opt/workspace_card5/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 845, in _check_accuracy_npu_benchmark\n    raise AccuracyError(\nAccuracyError: 验证失败 dtype=torch.bfloat16: max_error_cap_violations=2790/349184 (atol=1.000000e-01, rtol=7.812500e-03, max_abs_diff=6.626031e+03, ok=False), matched_ratio=0.991935 (req>=0.9, ok=True), MERE=9.039611e+00 (rel_thr=7.812500e-03, ok=False); small_count=200, normal_count=348984\n前 10 个 max_error_cap 违例位置:\n  位\n... [truncated 2032 chars] ...\nrk=-2.546875e+00, impl=1.890000e+02, |diff|=1.915469e+02 (允许<=atol+rtol*|golden|=1.198975e-01)\n  位置[343]: framework=-2.640625e+00, impl=-5.056791e-10, |diff|=2.640625e+00 (允许<=atol+rtol*|golden|=1.206299e-01)\n  位置[344]: framework=-4.093750e+00, impl=6.920000e+02, |diff|=6.960938e+02 (允许<=atol+rtol*|golden|=1.319824e-01)\n  位置[345]: framework=-2.515625e+00, impl=1.037598e-02, |diff|=2.526001e+00 (允许<=atol+rtol*|golden|=1.196533e-01)\n  位置[346]: framework=-4.750000e+00, impl=9.680000e+02, |diff|=9.727500e+02 (允许<=atol+rtol*|golden|=1.371094e-01)\n  位置[347]: framework=2.203125e+00, impl=-7.286072e-04, |diff|=2.203854e+00 (允许<=atol+rtol*|golden|=1.172119e-01)\n  位置[348]: framework=-1.625000e+00, impl=8.888245e-04, |diff|=1.625889e+00 (允许<=atol+rtol*|golden|=1.126953e-01)\n  位置[349]: framework=4.593750e+00, impl=6.320000e+02, |diff|=6.274062e+02 (允许<=atol+rtol*|golden|=1.358887e-01)\n  位置[350]: framework=1.656250e+00, impl=-8.251953e-02, |diff|=1.738770e+00 (允许<=atol+rtol*|golden|=1.129395e-01)\n\n",
+      "metrics": {
+        "matched_ratio": 0.9919354838709677,
+        "max_abs_diff": 6626.03125,
+        "MERE": 9.039610862731934,
+        "rel_threshold": 0.0078125,
+        "small_value_threshold": 0.00390625,
+        "small_value_error": 1.52587890625e-05,
+        "atol": 0.1,
+        "rtol": 0.0078125,
+        "max_error_cap_violation_count": 2790,
+        "required_matched_ratio": 0.9,
+        "total_finite": 349184,
+        "matched_count": 346368,
+        "small_count": 200,
+        "normal_count": 348984,
+        "checks": {
+          "max_error_cap": false,
+          "required_matched_ratio": true,
+          "MERE": false
+        }
+      }
+    },
+    {
+      "case_idx": 49,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            512,
+            31,
+            11
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": 512
+        },
+        {
+          "type": "scalar",
+          "value": 2
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            512,
+            1,
+            1
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            256,
+            512,
+            1,
+            1
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            256
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            256,
+            1,
+            1
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            256,
+            1,
+            1
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            512,
+            256,
+            1,
+            1
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            512
+          ],
+          "dtype": "torch.float32"
+        }
+      ],
+      "error_type": "MLIRCompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 310, in compile\n    next_module = compile_ir(module, metadata)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/ascend/compiler.py\", line 778, in <lambda>\n    lambda src, metadata: linalg_to_bin_enable_npu_compile_A2_A3(\n                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/triton/backends/ascend/compiler.py\", line 549, in linalg_to_bin_enable_npu_compile_A2_A3\n    ret = subprocess.run(cmd_list, capture_output=True, check=True)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/subprocess.py\", line 571, in run\n    raise CalledProcessError(retcode, process.args,\nsubprocess.CalledProcessError: Command '['/usr/local/Ascend/cann-9.0.0/tools/bishengi\n... [truncated 3268 chars] ...\nl buffer.)\nloc(\"/tmp/tmpztacdtnd/kernel.ttadapter.mlir\":2:1): error: Failed to run BiShengHIR pipeline\n\nloc(\"/tmp/tmpztacdtnd/kernel.ttadapter.mlir\":3:3): error: ub overflow, requires 1590528 bits while 1572864 bits available! (possible reason: tiling basic block is too large or block number is more than what user expect due to multi-buffer feature is enabled and some ops need extra local buffer.)\nloc(\"/tmp/tmpztacdtnd/kernel.ttadapter.mlir\":2:1): error: Failed to run BiShengHIR pipeline\n\nloc(\"/tmp/tmpztacdtnd/kernel.ttadapter.mlir\":3:3): error: ub overflow, requires 1590528 bits while 1572864 bits available! (possible reason: tiling basic block is too large or block number is more than what user expect due to multi-buffer feature is enabled and some ops need extra local buffer.)\n[ERROR] Failed to run BiShengIR pipeline\n\n\n[INFO]: The compiled kernel cache is in /root/.triton/cache/uOow8L966-ZvHKcz8mXwb08ZwMvhNcyWT1bJ5Mkjl3k\n\n///------------------[ERROR][Triton][END]------------------\n\n"
+    }
+  ]
+}

@@ -1,0 +1,147 @@
+import torch
+import torch.nn as nn
+import triton
+import triton.language as tl
+
+
+@triton.jit
+def _flex_attn_fwd_kernel(
+    q_ptr, k_ptr, v_ptr, o_ptr,
+    B, H, S_q, S_k,
+    stride_qb, stride_qh, stride_qm,
+    stride_kb, stride_kh, stride_kn,
+    stride_vb, stride_vh, stride_vn,
+    stride_ob, stride_oh, stride_om,
+    num_m_blocks,
+    num_cores,
+    num_m_blocks_f, H_f, S_q_f, S_k_f, G_inv,
+    BLOCK_M: tl.constexpr,
+    BLOCK_N: tl.constexpr,
+    BLOCK_D: tl.constexpr,
+    IS_CAUSAL: tl.constexpr,
+):
+    pid = tl.program_id(0)
+    total_blocks = B * H * num_m_blocks
+
+    # sm_scale = 1 / sqrt(D), computed in-kernel in fp32 (D is constexpr)
+    sm_scale = 1.0 / tl.sqrt(tl.full((1,), BLOCK_D, dtype=tl.float32))
+    # explicit vector constants (avoid Python scalar broadcast lowering)
+    ninf_c = tl.full((1, 1), float('-inf'), dtype=tl.float32)
+    zero_c = tl.full((1, 1), 0.0, dtype=tl.float32)
+
+    # checklist #6: contiguous chunk per program (no interleaved strided partition)
+    chunk = (total_blocks + num_cores - 1) // num_cores
+    blk_start = pid * chunk
+    blk_end = blk_start + chunk
+    if blk_end > total_blocks:
+        blk_end = total_blocks
+
+    for block_idx in range(blk_start, blk_end):
+        # decode block_idx -> (b, h, m_block); block ordering: ((b*H + h) * num_m_blocks + m_block)
+        # use float args + float true-division (values < 2^24 -> exact; fp32 // unsupported)
+        idx_f = block_idx.to(tl.float32)
+        b = (idx_f / (num_m_blocks_f * H_f)).to(tl.int32)
+        bh = (idx_f / num_m_blocks_f).to(tl.int32)
+        m_block = (idx_f - bh.to(tl.float32) * num_m_blocks_f).to(tl.int32)
+        h = bh - b * H
+        h_kv = (h.to(tl.float32) * G_inv).to(tl.int32)
+
+        m_start = m_block * BLOCK_M
+        offs_m = m_start + tl.arange(0, BLOCK_M)
+        offs_d = tl.arange(0, BLOCK_D)
+        # checklist #2: comparisons in fp32 (values < 2^24 -> exact)
+        mask_m = offs_m.to(tl.float32) < S_q_f
+
+        q_ptrs = q_ptr + b * stride_qb + h * stride_qh + offs_m[:, None] * stride_qm + offs_d[None, :]
+        q = tl.load(q_ptrs, mask=mask_m[:, None], other=0.0)
+
+        m_i = tl.full((BLOCK_M,), float('-inf'), dtype=tl.float32)
+        l_i = tl.zeros((BLOCK_M,), dtype=tl.float32)
+        acc = tl.zeros((BLOCK_M, BLOCK_D), dtype=tl.float32)
+
+        hi = S_k
+        if IS_CAUSAL:
+            # key j is valid for row i iff j <= i + (S_k - S_q);
+            # rows in this block are [m_start, m_start+BLOCK_M)
+            hi = tl.minimum(S_k, m_start + BLOCK_M + (S_k - S_q))
+
+        for n_start in range(0, hi, BLOCK_N):
+            offs_n = n_start + tl.arange(0, BLOCK_N)
+            mask_n = offs_n.to(tl.float32) < S_k_f
+
+            k_ptrs = k_ptr + b * stride_kb + h_kv * stride_kh + offs_d[:, None] + offs_n[None, :] * stride_kn
+            k = tl.load(k_ptrs, mask=mask_n[None, :], other=0.0)  # [BLOCK_D, BLOCK_N]
+
+            qk = tl.dot(q, k)  # [BLOCK_M, BLOCK_N], fp32 acc
+            qk = qk * sm_scale
+
+            if IS_CAUSAL:
+                causal_ok = (offs_m[:, None].to(tl.float32) + (S_k_f - S_q_f)) >= offs_n[None, :].to(tl.float32)
+                ok = causal_ok & mask_n[None, :]
+            else:
+                ok = mask_n[None, :]
+
+            s = tl.where(ok, qk, ninf_c)
+            m_new = tl.maximum(m_i, tl.max(s, axis=1))
+            alpha = tl.exp(m_i - m_new)
+            p = tl.exp(s - m_new[:, None])
+            p = tl.where(ok, p, zero_c)
+            l_i = l_i * alpha + tl.sum(p, axis=1)
+
+            v_ptrs = v_ptr + b * stride_vb + h_kv * stride_vh + offs_n[:, None] * stride_vn + offs_d[None, :]
+            v = tl.load(v_ptrs, mask=mask_n[:, None], other=0.0)  # [BLOCK_N, BLOCK_D]
+
+            acc = acc * alpha[:, None]
+            acc = tl.dot(p, v.to(tl.float32), acc)
+            m_i = m_new
+
+        acc = acc / l_i[:, None]
+        o_ptrs = o_ptr + b * stride_ob + h * stride_oh + offs_m[:, None] * stride_om + offs_d[None, :]
+        tl.store(o_ptrs, acc.to(o_ptr.dtype.element_ty), mask=mask_m[:, None])
+
+
+class ModelNew(nn.Module):
+    def __init__(self):
+        super(ModelNew, self).__init__()
+        self._cache = {}
+        try:
+            import torch_npu
+            limit = torch_npu.npu.npu_config.get_device_limit(0)
+            self.CUBE_CORE_NUM = int(limit.get('cube_core_num', 24))
+        except Exception:
+            self.CUBE_CORE_NUM = 24
+
+    def forward(self, query, key, value, is_causal=False, enable_gqa=False):
+        B, H, S_q, D = query.shape
+        H_kv = key.shape[1]
+        S_k = key.shape[2]
+
+        q = query.contiguous()
+        k = key.contiguous()
+        v = value.contiguous()
+        o = torch.empty_like(query)
+
+        G = (H // H_kv) if (enable_gqa and H != H_kv) else 1
+
+        BLOCK_M = 64
+        BLOCK_N = 64
+        num_m_blocks = triton.cdiv(S_q, BLOCK_M)
+        total_blocks = B * H * num_m_blocks
+        grid_size = total_blocks if total_blocks < self.CUBE_CORE_NUM else self.CUBE_CORE_NUM
+
+        _flex_attn_fwd_kernel[(grid_size,)](
+            q, k, v, o,
+            B, H, S_q, S_k,
+            q.stride(0), q.stride(1), q.stride(2),
+            k.stride(0), k.stride(1), k.stride(2),
+            v.stride(0), v.stride(1), v.stride(2),
+            o.stride(0), o.stride(1), o.stride(2),
+            num_m_blocks,
+            grid_size,
+            float(num_m_blocks), float(H), float(S_q), float(S_k), 1.0 / G,
+            BLOCK_M=BLOCK_M,
+            BLOCK_N=BLOCK_N,
+            BLOCK_D=D,
+            IS_CAUSAL=bool(is_causal),
+        )
+        return o

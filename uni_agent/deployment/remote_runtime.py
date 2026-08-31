@@ -236,8 +236,16 @@ class RemoteRuntime(AbstractRuntime):
         timeout = self._get_timeout()
 
         command_timeout = getattr(payload, "timeout", None)
-        if command_timeout and command_timeout > timeout:
-            self.logger.warning(f"Command timeout {command_timeout} is larger than runtime timeout {timeout}")
+        if command_timeout:
+            # aiohttp ClientTimeout must cover the in-sandbox command, otherwise
+            # a 60s runtime default raises asyncio.TimeoutError while bash is
+            # still running (seen as empty unknown_error in the trajectory).
+            timeout = max(float(timeout), float(command_timeout) + 60.0)
+            if float(command_timeout) > self._get_timeout():
+                self.logger.warning(
+                    f"Command timeout {command_timeout} is larger than runtime timeout "
+                    f"{self._get_timeout()}; raising HTTP client timeout to {timeout}s"
+                )
 
         while num_retries >= 0 and client_error_retries >= 0:
             try:

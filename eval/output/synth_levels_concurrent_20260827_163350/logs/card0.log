@@ -1,0 +1,2000 @@
+[worker idx=0 card=0] online port=18000 ws=/opt/workspace_card0/agent_workdir tools=/opt/uni-agent-tools/card0
+[worker idx=0 card=0] START op=kernelbench_l3_10_ConvTranspose2d remaining_after=115
+[vllm] Server ready at http://192.169.0.176:7777/v1/models
+[synth] Loaded 116 tasks (levels=level3,level4, filter=all)
+[synth] Tasks sorted by numeric problem_id
+[synth] Op filter: 116 -> 1 tasks
+
+[synth] === Task 1/1: kernelbench_l3_10_ConvTranspose2d ===
+[synth] kernelbench_l3_10_ConvTranspose2d: starting model-driven verify flow (max_turns=150)
+  [1] exit=completed tools=2 | list_skills(ok): list_skills | str_replace_editor(ok): str_replace_editor view --path /opt/workspace_card0/agent_workdir
+  [2] exit=completed tools=2 | str_replace_editor(ok): str_replace_editor view --path /opt/workspace_card0/agent_workdir/src/kernelbench_l3_10_ConvTranspos | str_replace_editor(ok): str_replace_editor view --path /opt/workspace_card0/agent_workdir/src/10_ConvTranspose2d.json
+  [3] exit=completed tools=2 | str_replace_editor(ok): str_replace_editor view --path /opt/workspace_card0/agent_workdir/src/10_ConvTranspose2d.json --view | read_skill(ok): read_skill --skill op-design-guide
+  [4] exit=completed tools=2 | read_skill(ok): read_skill --skill op-design-guide --file references/general-constraints.md | read_skill(ok): read_skill --skill op-design-guide --section '算子类别识别表'
+  [5] exit=completed tools=1 | read_skill(ok): read_skill --file references/math-compute.md --skill op-design-guide
+  [6] exit=format_error tools=0
+  [7] exit=completed tools=2 | read_skill(ok): read_skill --skill api-reference | read_skill(ok): read_skill --skill hardware-specs
+  [8] exit=completed tools=2 | read_skill(ok): read_skill --file references/linear-algebra-ops.md --skill api-reference | read_skill(ok): read_skill --file references/hw-ascend910b1.md --skill hardware-specs
+  [9] exit=format_error tools=0
+  [10] exit=format_error tools=0
+  [11] exit=format_error tools=0
+  [12] exit=completed tools=1 | read_skill(ok): read_skill --skill examples
+  [13] exit=completed tools=1 | read_skill(ok): read_skill --file references/triton-ascend-matmul.md --skill examples
+  [14] exit=completed tools=1 | read_skill(ok): read_skill --file references/triton-ascend-fundamentals.md --skill examples
+  [15] exit=format_error tools=0
+  [16] exit=completed tools=1 | run_verify(ok): run_verify --max_error_chars 500
+  [17] exit=format_error tools=0
+  [18] exit=completed tools=1 | run_verify(ok): run_verify --max_error_chars 100
+  [19] exit=format_error tools=0
+  [20] exit=completed tools=1 | str_replace_editor(ok): str_replace_editor view --path /opt/workspace_card0/agent_workdir/INSTRUCTIONS.md
+  [21] exit=format_error tools=0
+  [22] exit=format_error tools=0
+  [23] exit=completed tools=1 | str_replace_editor(ok): str_replace_editor create --path /opt/workspace_card0/agent_workdir/src/kernelbench_l3_10_ConvTransp
+  [24] exit=completed tools=1 | str_replace_editor(ok): str_replace_editor create --file_text 'import torch
+import torch.nn as nn
+import torch.nn.functional
+  [25] exit=format_error tools=0
+  [26] exit=completed tools=1 | run_verify(ok): run_verify --max_error_chars 500
+  [27] exit=format_error tools=0
+  [28] exit=completed tools=1 | str_replace_editor(ok): str_replace_editor str_replace --path /opt/workspace_card0/agent_workdir/src/kernelbench_l3_10_ConvT
+  [29] exit=completed tools=1 | str_replace_editor(ok): str_replace_editor view --path /opt/workspace_card0/agent_workdir/src/kernelbench_l3_10_ConvTranspos
+  [30] exit=completed tools=1 | str_replace_editor(ok): str_replace_editor view --path /opt/workspace_card0/agent_workdir/src/kernelbench_l3_10_ConvTranspos
+  [31] exit=completed tools=1 | str_replace_editor(ok): str_replace_editor str_replace --path /opt/workspace_card0/agent_workdir/src/kernelbench_l3_10_ConvT
+  [32] exit=completed tools=1 | str_replace_editor(ok): str_replace_editor view --path /opt/workspace_card0/agent_workdir/src/kernelbench_l3_10_ConvTranspos
+  [33] exit=completed tools=1 | str_replace_editor(ok): str_replace_editor str_replace --new_str '        _conv_t2d_dot_kernel[
+            grid
+        ](
+
+  [34] exit=completed tools=1 | str_replace_editor(ok): str_replace_editor view --path /opt/workspace_card0/agent_workdir/src/kernelbench_l3_10_ConvTranspos
+  [35] exit=completed tools=1 | str_replace_editor(ok): str_replace_editor str_replace --new_str 'def _get_core_num():
+    # 910b1: 24 AI cores (each = 1 CU
+  [36] exit=completed tools=1 | str_replace_editor(ok): str_replace_editor str_replace --new_str '    def __init__(self):
+        super(ModelNew, self).__in
+  [37] exit=completed tools=1 | str_replace_editor(ok): str_replace_editor str_replace --new_str '        num_sp_tiles = triton.cdiv(Mw, 32)
+        num_oc_
+  [38] exit=completed tools=1 | str_replace_editor(ok): str_replace_editor str_replace --new_str '        num_cores = self._core_num
+        grid = (max(1, 
+  [39] exit=completed tools=1 | run_verify(ok): run_verify --max_error_chars 3000
+  [40] exit=completed tools=1 | str_replace_editor(ok): str_replace_editor view --path /opt/workspace_card0/agent_workdir/src/kernelbench_l3_10_ConvTranspos
+  [41] exit=completed tools=1 | str_replace_editor(ok): str_replace_editor view --path /opt/workspace_card0/agent_workdir/src/kernelbench_l3_10_ConvTranspos
+  [42] exit=completed tools=1 | str_replace_editor(ok): str_replace_editor str_replace --new_str 'def _create_conv(key, device):
+    in_channels, out_channe
+  [43] exit=completed tools=1 | str_replace_editor(ok): str_replace_editor str_replace --new_str '        # ---- block size heuristics ----
+        p2c = tr
+  [44] exit=completed tools=1 | run_verify(ok): run_verify --max_error_chars 3000
+  [45] exit=completed tools=1 | str_replace_editor(ok): str_replace_editor view --path /opt/workspace_card0/agent_workdir/output
+  [46] exit=completed tools=1 | str_replace_editor(ok): str_replace_editor view --path /opt/workspace_card0/agent_workdir/output/verify/verify_result.raw.lo
+  [47] exit=completed tools=1 | str_replace_editor(ok): str_replace_editor view --path /opt/workspace_card0/agent_workdir/output/verify/verify_result.raw.lo
+  [48] exit=completed tools=1 | str_replace_editor(ok): str_replace_editor view --path /opt/workspace_card0/agent_workdir/output/verify/kernelbench_l3_10_Co
+  [49] exit=completed tools=1 | str_replace_editor(ok): str_replace_editor view --path /opt/workspace_card0/agent_workdir/output/verify/verify_result_summar
+  [50] exit=completed tools=1 | run_verify(ok): run_verify --max_error_chars 800
+  [51] exit=completed tools=1 | read_skill(ok): read_skill --skill examples --section '参考文件索引'
+  [52] exit=completed tools=1 | read_skill(ok): read_skill --skill hardware-specs --section '架构系列说明'
+  [53] exit=completed tools=1 | str_replace_editor(ok): str_replace_editor view --path /opt/workspace_card0/agent_workdir/output/verify/verify_result.raw.lo
+  [54] exit=completed tools=1 | str_replace_editor(ok): str_replace_editor view --path /opt/workspace_card0/agent_workdir/output/verify/verify_result.raw.lo
+  [55] exit=completed tools=1 | str_replace_editor(ok): str_replace_editor str_replace --new_str 'import os
+import sys
+import traceback
+
+import torch
+import
+  [56] exit=completed tools=1 | str_replace_editor(ok): str_replace_editor str_replace --new_str '    def forward(self, inputs) -> torch.Tensor:
+        x, 
+  [57] exit=completed tools=1 | run_verify(ok): run_verify --max_error_chars 300
+  [58] exit=completed tools=1 | str_replace_editor(ok): str_replace_editor view --path /opt/workspace_card0/agent_workdir/output/diag.txt
+  [59] exit=format_error tools=0
+  [60] exit=format_error tools=0
+  [61] exit=format_error tools=0
+  [step 62] unknown_error:
+Traceback (most recent call last):
+  File "/home/Uniagent-triton-ascend-compact/examples/triton_agent/synth_common.py", line 541, in _run_turns
+    step_output = await interaction.step(step_idx)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/interaction.py", line 136, in step
+    model_output, tool_calls, rollout_cache, generation_info = await self.model.query(
+                                                               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/model.py", line 311, in query
+    chat_completion = await self.client.chat.completions.create(
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/resources/chat/completions/completions.py", line 2714, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1913, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1698, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.BadRequestError: Error code: 400 - {'error': {'message': "This model's maximum context length is 204800 tokens. However, you requested 4096 output tokens and your prompt contains at least 200705 input tokens, for a total of at least 204801 tokens. Please reduce the length of the input prompt or the number of requested output tokens. (parameter=input_tokens, value=200705)", 'type': 'BadRequestError', 'param': 'input_tokens', 'code': 400}}
+  [62] exit=unknown_error tools=0
+  [step 63] unknown_error:
+Traceback (most recent call last):
+  File "/home/Uniagent-triton-ascend-compact/examples/triton_agent/synth_common.py", line 541, in _run_turns
+    step_output = await interaction.step(step_idx)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/interaction.py", line 136, in step
+    model_output, tool_calls, rollout_cache, generation_info = await self.model.query(
+                                                               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/model.py", line 311, in query
+    chat_completion = await self.client.chat.completions.create(
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/resources/chat/completions/completions.py", line 2714, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1913, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1698, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.BadRequestError: Error code: 400 - {'error': {'message': "This model's maximum context length is 204800 tokens. However, you requested 4096 output tokens and your prompt contains at least 200705 input tokens, for a total of at least 204801 tokens. Please reduce the length of the input prompt or the number of requested output tokens. (parameter=input_tokens, value=200705)", 'type': 'BadRequestError', 'param': 'input_tokens', 'code': 400}}
+  [63] exit=unknown_error tools=0
+  [step 64] unknown_error:
+Traceback (most recent call last):
+  File "/home/Uniagent-triton-ascend-compact/examples/triton_agent/synth_common.py", line 541, in _run_turns
+    step_output = await interaction.step(step_idx)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/interaction.py", line 136, in step
+    model_output, tool_calls, rollout_cache, generation_info = await self.model.query(
+                                                               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/model.py", line 311, in query
+    chat_completion = await self.client.chat.completions.create(
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/resources/chat/completions/completions.py", line 2714, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1913, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1698, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.BadRequestError: Error code: 400 - {'error': {'message': "This model's maximum context length is 204800 tokens. However, you requested 4096 output tokens and your prompt contains at least 200705 input tokens, for a total of at least 204801 tokens. Please reduce the length of the input prompt or the number of requested output tokens. (parameter=input_tokens, value=200705)", 'type': 'BadRequestError', 'param': 'input_tokens', 'code': 400}}
+  [64] exit=unknown_error tools=0
+  [step 65] unknown_error:
+Traceback (most recent call last):
+  File "/home/Uniagent-triton-ascend-compact/examples/triton_agent/synth_common.py", line 541, in _run_turns
+    step_output = await interaction.step(step_idx)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/interaction.py", line 136, in step
+    model_output, tool_calls, rollout_cache, generation_info = await self.model.query(
+                                                               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/model.py", line 311, in query
+    chat_completion = await self.client.chat.completions.create(
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/resources/chat/completions/completions.py", line 2714, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1913, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1698, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.BadRequestError: Error code: 400 - {'error': {'message': "This model's maximum context length is 204800 tokens. However, you requested 4096 output tokens and your prompt contains at least 200705 input tokens, for a total of at least 204801 tokens. Please reduce the length of the input prompt or the number of requested output tokens. (parameter=input_tokens, value=200705)", 'type': 'BadRequestError', 'param': 'input_tokens', 'code': 400}}
+  [65] exit=unknown_error tools=0
+  [step 66] unknown_error:
+Traceback (most recent call last):
+  File "/home/Uniagent-triton-ascend-compact/examples/triton_agent/synth_common.py", line 541, in _run_turns
+    step_output = await interaction.step(step_idx)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/interaction.py", line 136, in step
+    model_output, tool_calls, rollout_cache, generation_info = await self.model.query(
+                                                               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/model.py", line 311, in query
+    chat_completion = await self.client.chat.completions.create(
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/resources/chat/completions/completions.py", line 2714, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1913, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1698, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.BadRequestError: Error code: 400 - {'error': {'message': "This model's maximum context length is 204800 tokens. However, you requested 4096 output tokens and your prompt contains at least 200705 input tokens, for a total of at least 204801 tokens. Please reduce the length of the input prompt or the number of requested output tokens. (parameter=input_tokens, value=200705)", 'type': 'BadRequestError', 'param': 'input_tokens', 'code': 400}}
+  [66] exit=unknown_error tools=0
+  [step 67] unknown_error:
+Traceback (most recent call last):
+  File "/home/Uniagent-triton-ascend-compact/examples/triton_agent/synth_common.py", line 541, in _run_turns
+    step_output = await interaction.step(step_idx)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/interaction.py", line 136, in step
+    model_output, tool_calls, rollout_cache, generation_info = await self.model.query(
+                                                               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/model.py", line 311, in query
+    chat_completion = await self.client.chat.completions.create(
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/resources/chat/completions/completions.py", line 2714, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1913, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1698, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.BadRequestError: Error code: 400 - {'error': {'message': "This model's maximum context length is 204800 tokens. However, you requested 4096 output tokens and your prompt contains at least 200705 input tokens, for a total of at least 204801 tokens. Please reduce the length of the input prompt or the number of requested output tokens. (parameter=input_tokens, value=200705)", 'type': 'BadRequestError', 'param': 'input_tokens', 'code': 400}}
+  [67] exit=unknown_error tools=0
+  [step 68] unknown_error:
+Traceback (most recent call last):
+  File "/home/Uniagent-triton-ascend-compact/examples/triton_agent/synth_common.py", line 541, in _run_turns
+    step_output = await interaction.step(step_idx)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/interaction.py", line 136, in step
+    model_output, tool_calls, rollout_cache, generation_info = await self.model.query(
+                                                               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/model.py", line 311, in query
+    chat_completion = await self.client.chat.completions.create(
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/resources/chat/completions/completions.py", line 2714, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1913, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1698, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.BadRequestError: Error code: 400 - {'error': {'message': "This model's maximum context length is 204800 tokens. However, you requested 4096 output tokens and your prompt contains at least 200705 input tokens, for a total of at least 204801 tokens. Please reduce the length of the input prompt or the number of requested output tokens. (parameter=input_tokens, value=200705)", 'type': 'BadRequestError', 'param': 'input_tokens', 'code': 400}}
+  [68] exit=unknown_error tools=0
+  [step 69] unknown_error:
+Traceback (most recent call last):
+  File "/home/Uniagent-triton-ascend-compact/examples/triton_agent/synth_common.py", line 541, in _run_turns
+    step_output = await interaction.step(step_idx)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/interaction.py", line 136, in step
+    model_output, tool_calls, rollout_cache, generation_info = await self.model.query(
+                                                               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/model.py", line 311, in query
+    chat_completion = await self.client.chat.completions.create(
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/resources/chat/completions/completions.py", line 2714, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1913, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1698, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.BadRequestError: Error code: 400 - {'error': {'message': "This model's maximum context length is 204800 tokens. However, you requested 4096 output tokens and your prompt contains at least 200705 input tokens, for a total of at least 204801 tokens. Please reduce the length of the input prompt or the number of requested output tokens. (parameter=input_tokens, value=200705)", 'type': 'BadRequestError', 'param': 'input_tokens', 'code': 400}}
+  [69] exit=unknown_error tools=0
+  [step 70] unknown_error:
+Traceback (most recent call last):
+  File "/home/Uniagent-triton-ascend-compact/examples/triton_agent/synth_common.py", line 541, in _run_turns
+    step_output = await interaction.step(step_idx)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/interaction.py", line 136, in step
+    model_output, tool_calls, rollout_cache, generation_info = await self.model.query(
+                                                               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/model.py", line 311, in query
+    chat_completion = await self.client.chat.completions.create(
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/resources/chat/completions/completions.py", line 2714, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1913, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1698, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.BadRequestError: Error code: 400 - {'error': {'message': "This model's maximum context length is 204800 tokens. However, you requested 4096 output tokens and your prompt contains at least 200705 input tokens, for a total of at least 204801 tokens. Please reduce the length of the input prompt or the number of requested output tokens. (parameter=input_tokens, value=200705)", 'type': 'BadRequestError', 'param': 'input_tokens', 'code': 400}}
+  [70] exit=unknown_error tools=0
+  [step 71] unknown_error:
+Traceback (most recent call last):
+  File "/home/Uniagent-triton-ascend-compact/examples/triton_agent/synth_common.py", line 541, in _run_turns
+    step_output = await interaction.step(step_idx)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/interaction.py", line 136, in step
+    model_output, tool_calls, rollout_cache, generation_info = await self.model.query(
+                                                               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/model.py", line 311, in query
+    chat_completion = await self.client.chat.completions.create(
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/resources/chat/completions/completions.py", line 2714, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1913, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1698, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.BadRequestError: Error code: 400 - {'error': {'message': "This model's maximum context length is 204800 tokens. However, you requested 4096 output tokens and your prompt contains at least 200705 input tokens, for a total of at least 204801 tokens. Please reduce the length of the input prompt or the number of requested output tokens. (parameter=input_tokens, value=200705)", 'type': 'BadRequestError', 'param': 'input_tokens', 'code': 400}}
+  [71] exit=unknown_error tools=0
+  [step 72] unknown_error:
+Traceback (most recent call last):
+  File "/home/Uniagent-triton-ascend-compact/examples/triton_agent/synth_common.py", line 541, in _run_turns
+    step_output = await interaction.step(step_idx)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/interaction.py", line 136, in step
+    model_output, tool_calls, rollout_cache, generation_info = await self.model.query(
+                                                               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/model.py", line 311, in query
+    chat_completion = await self.client.chat.completions.create(
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/resources/chat/completions/completions.py", line 2714, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1913, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1698, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.BadRequestError: Error code: 400 - {'error': {'message': "This model's maximum context length is 204800 tokens. However, you requested 4096 output tokens and your prompt contains at least 200705 input tokens, for a total of at least 204801 tokens. Please reduce the length of the input prompt or the number of requested output tokens. (parameter=input_tokens, value=200705)", 'type': 'BadRequestError', 'param': 'input_tokens', 'code': 400}}
+  [72] exit=unknown_error tools=0
+  [step 73] unknown_error:
+Traceback (most recent call last):
+  File "/home/Uniagent-triton-ascend-compact/examples/triton_agent/synth_common.py", line 541, in _run_turns
+    step_output = await interaction.step(step_idx)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/interaction.py", line 136, in step
+    model_output, tool_calls, rollout_cache, generation_info = await self.model.query(
+                                                               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/model.py", line 311, in query
+    chat_completion = await self.client.chat.completions.create(
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/resources/chat/completions/completions.py", line 2714, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1913, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1698, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.BadRequestError: Error code: 400 - {'error': {'message': "This model's maximum context length is 204800 tokens. However, you requested 4096 output tokens and your prompt contains at least 200705 input tokens, for a total of at least 204801 tokens. Please reduce the length of the input prompt or the number of requested output tokens. (parameter=input_tokens, value=200705)", 'type': 'BadRequestError', 'param': 'input_tokens', 'code': 400}}
+  [73] exit=unknown_error tools=0
+  [step 74] unknown_error:
+Traceback (most recent call last):
+  File "/home/Uniagent-triton-ascend-compact/examples/triton_agent/synth_common.py", line 541, in _run_turns
+    step_output = await interaction.step(step_idx)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/interaction.py", line 136, in step
+    model_output, tool_calls, rollout_cache, generation_info = await self.model.query(
+                                                               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/model.py", line 311, in query
+    chat_completion = await self.client.chat.completions.create(
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/resources/chat/completions/completions.py", line 2714, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1913, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1698, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.BadRequestError: Error code: 400 - {'error': {'message': "This model's maximum context length is 204800 tokens. However, you requested 4096 output tokens and your prompt contains at least 200705 input tokens, for a total of at least 204801 tokens. Please reduce the length of the input prompt or the number of requested output tokens. (parameter=input_tokens, value=200705)", 'type': 'BadRequestError', 'param': 'input_tokens', 'code': 400}}
+  [74] exit=unknown_error tools=0
+  [step 75] unknown_error:
+Traceback (most recent call last):
+  File "/home/Uniagent-triton-ascend-compact/examples/triton_agent/synth_common.py", line 541, in _run_turns
+    step_output = await interaction.step(step_idx)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/interaction.py", line 136, in step
+    model_output, tool_calls, rollout_cache, generation_info = await self.model.query(
+                                                               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/model.py", line 311, in query
+    chat_completion = await self.client.chat.completions.create(
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/resources/chat/completions/completions.py", line 2714, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1913, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1698, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.BadRequestError: Error code: 400 - {'error': {'message': "This model's maximum context length is 204800 tokens. However, you requested 4096 output tokens and your prompt contains at least 200705 input tokens, for a total of at least 204801 tokens. Please reduce the length of the input prompt or the number of requested output tokens. (parameter=input_tokens, value=200705)", 'type': 'BadRequestError', 'param': 'input_tokens', 'code': 400}}
+  [75] exit=unknown_error tools=0
+  [step 76] unknown_error:
+Traceback (most recent call last):
+  File "/home/Uniagent-triton-ascend-compact/examples/triton_agent/synth_common.py", line 541, in _run_turns
+    step_output = await interaction.step(step_idx)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/interaction.py", line 136, in step
+    model_output, tool_calls, rollout_cache, generation_info = await self.model.query(
+                                                               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/model.py", line 311, in query
+    chat_completion = await self.client.chat.completions.create(
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/resources/chat/completions/completions.py", line 2714, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1913, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1698, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.BadRequestError: Error code: 400 - {'error': {'message': "This model's maximum context length is 204800 tokens. However, you requested 4096 output tokens and your prompt contains at least 200705 input tokens, for a total of at least 204801 tokens. Please reduce the length of the input prompt or the number of requested output tokens. (parameter=input_tokens, value=200705)", 'type': 'BadRequestError', 'param': 'input_tokens', 'code': 400}}
+  [76] exit=unknown_error tools=0
+  [step 77] unknown_error:
+Traceback (most recent call last):
+  File "/home/Uniagent-triton-ascend-compact/examples/triton_agent/synth_common.py", line 541, in _run_turns
+    step_output = await interaction.step(step_idx)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/interaction.py", line 136, in step
+    model_output, tool_calls, rollout_cache, generation_info = await self.model.query(
+                                                               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/model.py", line 311, in query
+    chat_completion = await self.client.chat.completions.create(
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/resources/chat/completions/completions.py", line 2714, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1913, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1698, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.BadRequestError: Error code: 400 - {'error': {'message': "This model's maximum context length is 204800 tokens. However, you requested 4096 output tokens and your prompt contains at least 200705 input tokens, for a total of at least 204801 tokens. Please reduce the length of the input prompt or the number of requested output tokens. (parameter=input_tokens, value=200705)", 'type': 'BadRequestError', 'param': 'input_tokens', 'code': 400}}
+  [77] exit=unknown_error tools=0
+  [step 78] unknown_error:
+Traceback (most recent call last):
+  File "/home/Uniagent-triton-ascend-compact/examples/triton_agent/synth_common.py", line 541, in _run_turns
+    step_output = await interaction.step(step_idx)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/interaction.py", line 136, in step
+    model_output, tool_calls, rollout_cache, generation_info = await self.model.query(
+                                                               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/model.py", line 311, in query
+    chat_completion = await self.client.chat.completions.create(
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/resources/chat/completions/completions.py", line 2714, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1913, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1698, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.BadRequestError: Error code: 400 - {'error': {'message': "This model's maximum context length is 204800 tokens. However, you requested 4096 output tokens and your prompt contains at least 200705 input tokens, for a total of at least 204801 tokens. Please reduce the length of the input prompt or the number of requested output tokens. (parameter=input_tokens, value=200705)", 'type': 'BadRequestError', 'param': 'input_tokens', 'code': 400}}
+  [78] exit=unknown_error tools=0
+  [step 79] unknown_error:
+Traceback (most recent call last):
+  File "/home/Uniagent-triton-ascend-compact/examples/triton_agent/synth_common.py", line 541, in _run_turns
+    step_output = await interaction.step(step_idx)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/interaction.py", line 136, in step
+    model_output, tool_calls, rollout_cache, generation_info = await self.model.query(
+                                                               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/model.py", line 311, in query
+    chat_completion = await self.client.chat.completions.create(
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/resources/chat/completions/completions.py", line 2714, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1913, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1698, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.BadRequestError: Error code: 400 - {'error': {'message': "This model's maximum context length is 204800 tokens. However, you requested 4096 output tokens and your prompt contains at least 200705 input tokens, for a total of at least 204801 tokens. Please reduce the length of the input prompt or the number of requested output tokens. (parameter=input_tokens, value=200705)", 'type': 'BadRequestError', 'param': 'input_tokens', 'code': 400}}
+  [79] exit=unknown_error tools=0
+  [step 80] unknown_error:
+Traceback (most recent call last):
+  File "/home/Uniagent-triton-ascend-compact/examples/triton_agent/synth_common.py", line 541, in _run_turns
+    step_output = await interaction.step(step_idx)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/interaction.py", line 136, in step
+    model_output, tool_calls, rollout_cache, generation_info = await self.model.query(
+                                                               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/model.py", line 311, in query
+    chat_completion = await self.client.chat.completions.create(
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/resources/chat/completions/completions.py", line 2714, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1913, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1698, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.BadRequestError: Error code: 400 - {'error': {'message': "This model's maximum context length is 204800 tokens. However, you requested 4096 output tokens and your prompt contains at least 200705 input tokens, for a total of at least 204801 tokens. Please reduce the length of the input prompt or the number of requested output tokens. (parameter=input_tokens, value=200705)", 'type': 'BadRequestError', 'param': 'input_tokens', 'code': 400}}
+  [80] exit=unknown_error tools=0
+  [step 81] unknown_error:
+Traceback (most recent call last):
+  File "/home/Uniagent-triton-ascend-compact/examples/triton_agent/synth_common.py", line 541, in _run_turns
+    step_output = await interaction.step(step_idx)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/interaction.py", line 136, in step
+    model_output, tool_calls, rollout_cache, generation_info = await self.model.query(
+                                                               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/model.py", line 311, in query
+    chat_completion = await self.client.chat.completions.create(
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/resources/chat/completions/completions.py", line 2714, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1913, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1698, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.BadRequestError: Error code: 400 - {'error': {'message': "This model's maximum context length is 204800 tokens. However, you requested 4096 output tokens and your prompt contains at least 200705 input tokens, for a total of at least 204801 tokens. Please reduce the length of the input prompt or the number of requested output tokens. (parameter=input_tokens, value=200705)", 'type': 'BadRequestError', 'param': 'input_tokens', 'code': 400}}
+  [81] exit=unknown_error tools=0
+  [step 82] unknown_error:
+Traceback (most recent call last):
+  File "/home/Uniagent-triton-ascend-compact/examples/triton_agent/synth_common.py", line 541, in _run_turns
+    step_output = await interaction.step(step_idx)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/interaction.py", line 136, in step
+    model_output, tool_calls, rollout_cache, generation_info = await self.model.query(
+                                                               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/model.py", line 311, in query
+    chat_completion = await self.client.chat.completions.create(
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/resources/chat/completions/completions.py", line 2714, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1913, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1698, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.BadRequestError: Error code: 400 - {'error': {'message': "This model's maximum context length is 204800 tokens. However, you requested 4096 output tokens and your prompt contains at least 200705 input tokens, for a total of at least 204801 tokens. Please reduce the length of the input prompt or the number of requested output tokens. (parameter=input_tokens, value=200705)", 'type': 'BadRequestError', 'param': 'input_tokens', 'code': 400}}
+  [82] exit=unknown_error tools=0
+  [step 83] unknown_error:
+Traceback (most recent call last):
+  File "/home/Uniagent-triton-ascend-compact/examples/triton_agent/synth_common.py", line 541, in _run_turns
+    step_output = await interaction.step(step_idx)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/interaction.py", line 136, in step
+    model_output, tool_calls, rollout_cache, generation_info = await self.model.query(
+                                                               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/model.py", line 311, in query
+    chat_completion = await self.client.chat.completions.create(
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/resources/chat/completions/completions.py", line 2714, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1913, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1698, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.BadRequestError: Error code: 400 - {'error': {'message': "This model's maximum context length is 204800 tokens. However, you requested 4096 output tokens and your prompt contains at least 200705 input tokens, for a total of at least 204801 tokens. Please reduce the length of the input prompt or the number of requested output tokens. (parameter=input_tokens, value=200705)", 'type': 'BadRequestError', 'param': 'input_tokens', 'code': 400}}
+  [83] exit=unknown_error tools=0
+  [step 84] unknown_error:
+Traceback (most recent call last):
+  File "/home/Uniagent-triton-ascend-compact/examples/triton_agent/synth_common.py", line 541, in _run_turns
+    step_output = await interaction.step(step_idx)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/interaction.py", line 136, in step
+    model_output, tool_calls, rollout_cache, generation_info = await self.model.query(
+                                                               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/model.py", line 311, in query
+    chat_completion = await self.client.chat.completions.create(
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/resources/chat/completions/completions.py", line 2714, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1913, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1698, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.BadRequestError: Error code: 400 - {'error': {'message': "This model's maximum context length is 204800 tokens. However, you requested 4096 output tokens and your prompt contains at least 200705 input tokens, for a total of at least 204801 tokens. Please reduce the length of the input prompt or the number of requested output tokens. (parameter=input_tokens, value=200705)", 'type': 'BadRequestError', 'param': 'input_tokens', 'code': 400}}
+  [84] exit=unknown_error tools=0
+  [step 85] unknown_error:
+Traceback (most recent call last):
+  File "/home/Uniagent-triton-ascend-compact/examples/triton_agent/synth_common.py", line 541, in _run_turns
+    step_output = await interaction.step(step_idx)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/interaction.py", line 136, in step
+    model_output, tool_calls, rollout_cache, generation_info = await self.model.query(
+                                                               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/model.py", line 311, in query
+    chat_completion = await self.client.chat.completions.create(
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/resources/chat/completions/completions.py", line 2714, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1913, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1698, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.BadRequestError: Error code: 400 - {'error': {'message': "This model's maximum context length is 204800 tokens. However, you requested 4096 output tokens and your prompt contains at least 200705 input tokens, for a total of at least 204801 tokens. Please reduce the length of the input prompt or the number of requested output tokens. (parameter=input_tokens, value=200705)", 'type': 'BadRequestError', 'param': 'input_tokens', 'code': 400}}
+  [85] exit=unknown_error tools=0
+  [step 86] unknown_error:
+Traceback (most recent call last):
+  File "/home/Uniagent-triton-ascend-compact/examples/triton_agent/synth_common.py", line 541, in _run_turns
+    step_output = await interaction.step(step_idx)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/interaction.py", line 136, in step
+    model_output, tool_calls, rollout_cache, generation_info = await self.model.query(
+                                                               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/model.py", line 311, in query
+    chat_completion = await self.client.chat.completions.create(
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/resources/chat/completions/completions.py", line 2714, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1913, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1698, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.BadRequestError: Error code: 400 - {'error': {'message': "This model's maximum context length is 204800 tokens. However, you requested 4096 output tokens and your prompt contains at least 200705 input tokens, for a total of at least 204801 tokens. Please reduce the length of the input prompt or the number of requested output tokens. (parameter=input_tokens, value=200705)", 'type': 'BadRequestError', 'param': 'input_tokens', 'code': 400}}
+  [86] exit=unknown_error tools=0
+  [step 87] unknown_error:
+Traceback (most recent call last):
+  File "/home/Uniagent-triton-ascend-compact/examples/triton_agent/synth_common.py", line 541, in _run_turns
+    step_output = await interaction.step(step_idx)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/interaction.py", line 136, in step
+    model_output, tool_calls, rollout_cache, generation_info = await self.model.query(
+                                                               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/model.py", line 311, in query
+    chat_completion = await self.client.chat.completions.create(
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/resources/chat/completions/completions.py", line 2714, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1913, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1698, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.BadRequestError: Error code: 400 - {'error': {'message': "This model's maximum context length is 204800 tokens. However, you requested 4096 output tokens and your prompt contains at least 200705 input tokens, for a total of at least 204801 tokens. Please reduce the length of the input prompt or the number of requested output tokens. (parameter=input_tokens, value=200705)", 'type': 'BadRequestError', 'param': 'input_tokens', 'code': 400}}
+  [87] exit=unknown_error tools=0
+  [step 88] unknown_error:
+Traceback (most recent call last):
+  File "/home/Uniagent-triton-ascend-compact/examples/triton_agent/synth_common.py", line 541, in _run_turns
+    step_output = await interaction.step(step_idx)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/interaction.py", line 136, in step
+    model_output, tool_calls, rollout_cache, generation_info = await self.model.query(
+                                                               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/model.py", line 311, in query
+    chat_completion = await self.client.chat.completions.create(
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/resources/chat/completions/completions.py", line 2714, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1913, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1698, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.BadRequestError: Error code: 400 - {'error': {'message': "This model's maximum context length is 204800 tokens. However, you requested 4096 output tokens and your prompt contains at least 200705 input tokens, for a total of at least 204801 tokens. Please reduce the length of the input prompt or the number of requested output tokens. (parameter=input_tokens, value=200705)", 'type': 'BadRequestError', 'param': 'input_tokens', 'code': 400}}
+  [88] exit=unknown_error tools=0
+  [step 89] unknown_error:
+Traceback (most recent call last):
+  File "/home/Uniagent-triton-ascend-compact/examples/triton_agent/synth_common.py", line 541, in _run_turns
+    step_output = await interaction.step(step_idx)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/interaction.py", line 136, in step
+    model_output, tool_calls, rollout_cache, generation_info = await self.model.query(
+                                                               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/model.py", line 311, in query
+    chat_completion = await self.client.chat.completions.create(
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/resources/chat/completions/completions.py", line 2714, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1913, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1698, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.BadRequestError: Error code: 400 - {'error': {'message': "This model's maximum context length is 204800 tokens. However, you requested 4096 output tokens and your prompt contains at least 200705 input tokens, for a total of at least 204801 tokens. Please reduce the length of the input prompt or the number of requested output tokens. (parameter=input_tokens, value=200705)", 'type': 'BadRequestError', 'param': 'input_tokens', 'code': 400}}
+  [89] exit=unknown_error tools=0
+  [step 90] unknown_error:
+Traceback (most recent call last):
+  File "/home/Uniagent-triton-ascend-compact/examples/triton_agent/synth_common.py", line 541, in _run_turns
+    step_output = await interaction.step(step_idx)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/interaction.py", line 136, in step
+    model_output, tool_calls, rollout_cache, generation_info = await self.model.query(
+                                                               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/model.py", line 311, in query
+    chat_completion = await self.client.chat.completions.create(
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/resources/chat/completions/completions.py", line 2714, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1913, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1698, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.BadRequestError: Error code: 400 - {'error': {'message': "This model's maximum context length is 204800 tokens. However, you requested 4096 output tokens and your prompt contains at least 200705 input tokens, for a total of at least 204801 tokens. Please reduce the length of the input prompt or the number of requested output tokens. (parameter=input_tokens, value=200705)", 'type': 'BadRequestError', 'param': 'input_tokens', 'code': 400}}
+  [90] exit=unknown_error tools=0
+  [step 91] unknown_error:
+Traceback (most recent call last):
+  File "/home/Uniagent-triton-ascend-compact/examples/triton_agent/synth_common.py", line 541, in _run_turns
+    step_output = await interaction.step(step_idx)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/interaction.py", line 136, in step
+    model_output, tool_calls, rollout_cache, generation_info = await self.model.query(
+                                                               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/model.py", line 311, in query
+    chat_completion = await self.client.chat.completions.create(
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/resources/chat/completions/completions.py", line 2714, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1913, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1698, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.BadRequestError: Error code: 400 - {'error': {'message': "This model's maximum context length is 204800 tokens. However, you requested 4096 output tokens and your prompt contains at least 200705 input tokens, for a total of at least 204801 tokens. Please reduce the length of the input prompt or the number of requested output tokens. (parameter=input_tokens, value=200705)", 'type': 'BadRequestError', 'param': 'input_tokens', 'code': 400}}
+  [91] exit=unknown_error tools=0
+  [step 92] unknown_error:
+Traceback (most recent call last):
+  File "/home/Uniagent-triton-ascend-compact/examples/triton_agent/synth_common.py", line 541, in _run_turns
+    step_output = await interaction.step(step_idx)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/interaction.py", line 136, in step
+    model_output, tool_calls, rollout_cache, generation_info = await self.model.query(
+                                                               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/model.py", line 311, in query
+    chat_completion = await self.client.chat.completions.create(
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/resources/chat/completions/completions.py", line 2714, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1913, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1698, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.BadRequestError: Error code: 400 - {'error': {'message': "This model's maximum context length is 204800 tokens. However, you requested 4096 output tokens and your prompt contains at least 200705 input tokens, for a total of at least 204801 tokens. Please reduce the length of the input prompt or the number of requested output tokens. (parameter=input_tokens, value=200705)", 'type': 'BadRequestError', 'param': 'input_tokens', 'code': 400}}
+  [92] exit=unknown_error tools=0
+  [step 93] unknown_error:
+Traceback (most recent call last):
+  File "/home/Uniagent-triton-ascend-compact/examples/triton_agent/synth_common.py", line 541, in _run_turns
+    step_output = await interaction.step(step_idx)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/interaction.py", line 136, in step
+    model_output, tool_calls, rollout_cache, generation_info = await self.model.query(
+                                                               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/model.py", line 311, in query
+    chat_completion = await self.client.chat.completions.create(
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/resources/chat/completions/completions.py", line 2714, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1913, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1698, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.BadRequestError: Error code: 400 - {'error': {'message': "This model's maximum context length is 204800 tokens. However, you requested 4096 output tokens and your prompt contains at least 200705 input tokens, for a total of at least 204801 tokens. Please reduce the length of the input prompt or the number of requested output tokens. (parameter=input_tokens, value=200705)", 'type': 'BadRequestError', 'param': 'input_tokens', 'code': 400}}
+  [93] exit=unknown_error tools=0
+  [step 94] unknown_error:
+Traceback (most recent call last):
+  File "/home/Uniagent-triton-ascend-compact/examples/triton_agent/synth_common.py", line 541, in _run_turns
+    step_output = await interaction.step(step_idx)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/interaction.py", line 136, in step
+    model_output, tool_calls, rollout_cache, generation_info = await self.model.query(
+                                                               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/model.py", line 311, in query
+    chat_completion = await self.client.chat.completions.create(
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/resources/chat/completions/completions.py", line 2714, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1913, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1698, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.BadRequestError: Error code: 400 - {'error': {'message': "This model's maximum context length is 204800 tokens. However, you requested 4096 output tokens and your prompt contains at least 200705 input tokens, for a total of at least 204801 tokens. Please reduce the length of the input prompt or the number of requested output tokens. (parameter=input_tokens, value=200705)", 'type': 'BadRequestError', 'param': 'input_tokens', 'code': 400}}
+  [94] exit=unknown_error tools=0
+  [step 95] unknown_error:
+Traceback (most recent call last):
+  File "/home/Uniagent-triton-ascend-compact/examples/triton_agent/synth_common.py", line 541, in _run_turns
+    step_output = await interaction.step(step_idx)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/interaction.py", line 136, in step
+    model_output, tool_calls, rollout_cache, generation_info = await self.model.query(
+                                                               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/model.py", line 311, in query
+    chat_completion = await self.client.chat.completions.create(
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/resources/chat/completions/completions.py", line 2714, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1913, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1698, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.BadRequestError: Error code: 400 - {'error': {'message': "This model's maximum context length is 204800 tokens. However, you requested 4096 output tokens and your prompt contains at least 200705 input tokens, for a total of at least 204801 tokens. Please reduce the length of the input prompt or the number of requested output tokens. (parameter=input_tokens, value=200705)", 'type': 'BadRequestError', 'param': 'input_tokens', 'code': 400}}
+  [95] exit=unknown_error tools=0
+  [step 96] unknown_error:
+Traceback (most recent call last):
+  File "/home/Uniagent-triton-ascend-compact/examples/triton_agent/synth_common.py", line 541, in _run_turns
+    step_output = await interaction.step(step_idx)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/interaction.py", line 136, in step
+    model_output, tool_calls, rollout_cache, generation_info = await self.model.query(
+                                                               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/model.py", line 311, in query
+    chat_completion = await self.client.chat.completions.create(
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/resources/chat/completions/completions.py", line 2714, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1913, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1698, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.BadRequestError: Error code: 400 - {'error': {'message': "This model's maximum context length is 204800 tokens. However, you requested 4096 output tokens and your prompt contains at least 200705 input tokens, for a total of at least 204801 tokens. Please reduce the length of the input prompt or the number of requested output tokens. (parameter=input_tokens, value=200705)", 'type': 'BadRequestError', 'param': 'input_tokens', 'code': 400}}
+  [96] exit=unknown_error tools=0
+  [step 97] unknown_error:
+Traceback (most recent call last):
+  File "/home/Uniagent-triton-ascend-compact/examples/triton_agent/synth_common.py", line 541, in _run_turns
+    step_output = await interaction.step(step_idx)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/interaction.py", line 136, in step
+    model_output, tool_calls, rollout_cache, generation_info = await self.model.query(
+                                                               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/model.py", line 311, in query
+    chat_completion = await self.client.chat.completions.create(
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/resources/chat/completions/completions.py", line 2714, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1913, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1698, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.BadRequestError: Error code: 400 - {'error': {'message': "This model's maximum context length is 204800 tokens. However, you requested 4096 output tokens and your prompt contains at least 200705 input tokens, for a total of at least 204801 tokens. Please reduce the length of the input prompt or the number of requested output tokens. (parameter=input_tokens, value=200705)", 'type': 'BadRequestError', 'param': 'input_tokens', 'code': 400}}
+  [97] exit=unknown_error tools=0
+  [step 98] unknown_error:
+Traceback (most recent call last):
+  File "/home/Uniagent-triton-ascend-compact/examples/triton_agent/synth_common.py", line 541, in _run_turns
+    step_output = await interaction.step(step_idx)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/interaction.py", line 136, in step
+    model_output, tool_calls, rollout_cache, generation_info = await self.model.query(
+                                                               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/model.py", line 311, in query
+    chat_completion = await self.client.chat.completions.create(
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/resources/chat/completions/completions.py", line 2714, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1913, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1698, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.BadRequestError: Error code: 400 - {'error': {'message': "This model's maximum context length is 204800 tokens. However, you requested 4096 output tokens and your prompt contains at least 200705 input tokens, for a total of at least 204801 tokens. Please reduce the length of the input prompt or the number of requested output tokens. (parameter=input_tokens, value=200705)", 'type': 'BadRequestError', 'param': 'input_tokens', 'code': 400}}
+  [98] exit=unknown_error tools=0
+  [step 99] unknown_error:
+Traceback (most recent call last):
+  File "/home/Uniagent-triton-ascend-compact/examples/triton_agent/synth_common.py", line 541, in _run_turns
+    step_output = await interaction.step(step_idx)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/interaction.py", line 136, in step
+    model_output, tool_calls, rollout_cache, generation_info = await self.model.query(
+                                                               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/model.py", line 311, in query
+    chat_completion = await self.client.chat.completions.create(
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/resources/chat/completions/completions.py", line 2714, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1913, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1698, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.BadRequestError: Error code: 400 - {'error': {'message': "This model's maximum context length is 204800 tokens. However, you requested 4096 output tokens and your prompt contains at least 200705 input tokens, for a total of at least 204801 tokens. Please reduce the length of the input prompt or the number of requested output tokens. (parameter=input_tokens, value=200705)", 'type': 'BadRequestError', 'param': 'input_tokens', 'code': 400}}
+  [99] exit=unknown_error tools=0
+  [step 100] unknown_error:
+Traceback (most recent call last):
+  File "/home/Uniagent-triton-ascend-compact/examples/triton_agent/synth_common.py", line 541, in _run_turns
+    step_output = await interaction.step(step_idx)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/interaction.py", line 136, in step
+    model_output, tool_calls, rollout_cache, generation_info = await self.model.query(
+                                                               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/model.py", line 311, in query
+    chat_completion = await self.client.chat.completions.create(
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/resources/chat/completions/completions.py", line 2714, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1913, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1698, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.BadRequestError: Error code: 400 - {'error': {'message': "This model's maximum context length is 204800 tokens. However, you requested 4096 output tokens and your prompt contains at least 200705 input tokens, for a total of at least 204801 tokens. Please reduce the length of the input prompt or the number of requested output tokens. (parameter=input_tokens, value=200705)", 'type': 'BadRequestError', 'param': 'input_tokens', 'code': 400}}
+  [100] exit=unknown_error tools=0
+  [step 101] unknown_error:
+Traceback (most recent call last):
+  File "/home/Uniagent-triton-ascend-compact/examples/triton_agent/synth_common.py", line 541, in _run_turns
+    step_output = await interaction.step(step_idx)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/interaction.py", line 136, in step
+    model_output, tool_calls, rollout_cache, generation_info = await self.model.query(
+                                                               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/model.py", line 311, in query
+    chat_completion = await self.client.chat.completions.create(
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/resources/chat/completions/completions.py", line 2714, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1913, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1698, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.BadRequestError: Error code: 400 - {'error': {'message': "This model's maximum context length is 204800 tokens. However, you requested 4096 output tokens and your prompt contains at least 200705 input tokens, for a total of at least 204801 tokens. Please reduce the length of the input prompt or the number of requested output tokens. (parameter=input_tokens, value=200705)", 'type': 'BadRequestError', 'param': 'input_tokens', 'code': 400}}
+  [101] exit=unknown_error tools=0
+  [step 102] unknown_error:
+Traceback (most recent call last):
+  File "/home/Uniagent-triton-ascend-compact/examples/triton_agent/synth_common.py", line 541, in _run_turns
+    step_output = await interaction.step(step_idx)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/interaction.py", line 136, in step
+    model_output, tool_calls, rollout_cache, generation_info = await self.model.query(
+                                                               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/model.py", line 311, in query
+    chat_completion = await self.client.chat.completions.create(
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/resources/chat/completions/completions.py", line 2714, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1913, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1698, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.BadRequestError: Error code: 400 - {'error': {'message': "This model's maximum context length is 204800 tokens. However, you requested 4096 output tokens and your prompt contains at least 200705 input tokens, for a total of at least 204801 tokens. Please reduce the length of the input prompt or the number of requested output tokens. (parameter=input_tokens, value=200705)", 'type': 'BadRequestError', 'param': 'input_tokens', 'code': 400}}
+  [102] exit=unknown_error tools=0
+  [step 103] unknown_error:
+Traceback (most recent call last):
+  File "/home/Uniagent-triton-ascend-compact/examples/triton_agent/synth_common.py", line 541, in _run_turns
+    step_output = await interaction.step(step_idx)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/interaction.py", line 136, in step
+    model_output, tool_calls, rollout_cache, generation_info = await self.model.query(
+                                                               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/model.py", line 311, in query
+    chat_completion = await self.client.chat.completions.create(
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/resources/chat/completions/completions.py", line 2714, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1913, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1698, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.BadRequestError: Error code: 400 - {'error': {'message': "This model's maximum context length is 204800 tokens. However, you requested 4096 output tokens and your prompt contains at least 200705 input tokens, for a total of at least 204801 tokens. Please reduce the length of the input prompt or the number of requested output tokens. (parameter=input_tokens, value=200705)", 'type': 'BadRequestError', 'param': 'input_tokens', 'code': 400}}
+  [103] exit=unknown_error tools=0
+  [step 104] unknown_error:
+Traceback (most recent call last):
+  File "/home/Uniagent-triton-ascend-compact/examples/triton_agent/synth_common.py", line 541, in _run_turns
+    step_output = await interaction.step(step_idx)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/interaction.py", line 136, in step
+    model_output, tool_calls, rollout_cache, generation_info = await self.model.query(
+                                                               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/model.py", line 311, in query
+    chat_completion = await self.client.chat.completions.create(
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/resources/chat/completions/completions.py", line 2714, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1913, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1698, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.BadRequestError: Error code: 400 - {'error': {'message': "This model's maximum context length is 204800 tokens. However, you requested 4096 output tokens and your prompt contains at least 200705 input tokens, for a total of at least 204801 tokens. Please reduce the length of the input prompt or the number of requested output tokens. (parameter=input_tokens, value=200705)", 'type': 'BadRequestError', 'param': 'input_tokens', 'code': 400}}
+  [104] exit=unknown_error tools=0
+  [step 105] unknown_error:
+Traceback (most recent call last):
+  File "/home/Uniagent-triton-ascend-compact/examples/triton_agent/synth_common.py", line 541, in _run_turns
+    step_output = await interaction.step(step_idx)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/interaction.py", line 136, in step
+    model_output, tool_calls, rollout_cache, generation_info = await self.model.query(
+                                                               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/model.py", line 311, in query
+    chat_completion = await self.client.chat.completions.create(
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/resources/chat/completions/completions.py", line 2714, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1913, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1698, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.BadRequestError: Error code: 400 - {'error': {'message': "This model's maximum context length is 204800 tokens. However, you requested 4096 output tokens and your prompt contains at least 200705 input tokens, for a total of at least 204801 tokens. Please reduce the length of the input prompt or the number of requested output tokens. (parameter=input_tokens, value=200705)", 'type': 'BadRequestError', 'param': 'input_tokens', 'code': 400}}
+  [105] exit=unknown_error tools=0
+  [step 106] unknown_error:
+Traceback (most recent call last):
+  File "/home/Uniagent-triton-ascend-compact/examples/triton_agent/synth_common.py", line 541, in _run_turns
+    step_output = await interaction.step(step_idx)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/interaction.py", line 136, in step
+    model_output, tool_calls, rollout_cache, generation_info = await self.model.query(
+                                                               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/model.py", line 311, in query
+    chat_completion = await self.client.chat.completions.create(
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/resources/chat/completions/completions.py", line 2714, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1913, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1698, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.BadRequestError: Error code: 400 - {'error': {'message': "This model's maximum context length is 204800 tokens. However, you requested 4096 output tokens and your prompt contains at least 200705 input tokens, for a total of at least 204801 tokens. Please reduce the length of the input prompt or the number of requested output tokens. (parameter=input_tokens, value=200705)", 'type': 'BadRequestError', 'param': 'input_tokens', 'code': 400}}
+  [106] exit=unknown_error tools=0
+  [step 107] unknown_error:
+Traceback (most recent call last):
+  File "/home/Uniagent-triton-ascend-compact/examples/triton_agent/synth_common.py", line 541, in _run_turns
+    step_output = await interaction.step(step_idx)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/interaction.py", line 136, in step
+    model_output, tool_calls, rollout_cache, generation_info = await self.model.query(
+                                                               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/model.py", line 311, in query
+    chat_completion = await self.client.chat.completions.create(
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/resources/chat/completions/completions.py", line 2714, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1913, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1698, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.BadRequestError: Error code: 400 - {'error': {'message': "This model's maximum context length is 204800 tokens. However, you requested 4096 output tokens and your prompt contains at least 200705 input tokens, for a total of at least 204801 tokens. Please reduce the length of the input prompt or the number of requested output tokens. (parameter=input_tokens, value=200705)", 'type': 'BadRequestError', 'param': 'input_tokens', 'code': 400}}
+  [107] exit=unknown_error tools=0
+  [step 108] unknown_error:
+Traceback (most recent call last):
+  File "/home/Uniagent-triton-ascend-compact/examples/triton_agent/synth_common.py", line 541, in _run_turns
+    step_output = await interaction.step(step_idx)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/interaction.py", line 136, in step
+    model_output, tool_calls, rollout_cache, generation_info = await self.model.query(
+                                                               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/model.py", line 311, in query
+    chat_completion = await self.client.chat.completions.create(
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/resources/chat/completions/completions.py", line 2714, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1913, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1698, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.BadRequestError: Error code: 400 - {'error': {'message': "This model's maximum context length is 204800 tokens. However, you requested 4096 output tokens and your prompt contains at least 200705 input tokens, for a total of at least 204801 tokens. Please reduce the length of the input prompt or the number of requested output tokens. (parameter=input_tokens, value=200705)", 'type': 'BadRequestError', 'param': 'input_tokens', 'code': 400}}
+  [108] exit=unknown_error tools=0
+  [step 109] unknown_error:
+Traceback (most recent call last):
+  File "/home/Uniagent-triton-ascend-compact/examples/triton_agent/synth_common.py", line 541, in _run_turns
+    step_output = await interaction.step(step_idx)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/interaction.py", line 136, in step
+    model_output, tool_calls, rollout_cache, generation_info = await self.model.query(
+                                                               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/model.py", line 311, in query
+    chat_completion = await self.client.chat.completions.create(
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/resources/chat/completions/completions.py", line 2714, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1913, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1698, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.BadRequestError: Error code: 400 - {'error': {'message': "This model's maximum context length is 204800 tokens. However, you requested 4096 output tokens and your prompt contains at least 200705 input tokens, for a total of at least 204801 tokens. Please reduce the length of the input prompt or the number of requested output tokens. (parameter=input_tokens, value=200705)", 'type': 'BadRequestError', 'param': 'input_tokens', 'code': 400}}
+  [109] exit=unknown_error tools=0
+  [step 110] unknown_error:
+Traceback (most recent call last):
+  File "/home/Uniagent-triton-ascend-compact/examples/triton_agent/synth_common.py", line 541, in _run_turns
+    step_output = await interaction.step(step_idx)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/interaction.py", line 136, in step
+    model_output, tool_calls, rollout_cache, generation_info = await self.model.query(
+                                                               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/model.py", line 311, in query
+    chat_completion = await self.client.chat.completions.create(
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/resources/chat/completions/completions.py", line 2714, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1913, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1698, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.BadRequestError: Error code: 400 - {'error': {'message': "This model's maximum context length is 204800 tokens. However, you requested 4096 output tokens and your prompt contains at least 200705 input tokens, for a total of at least 204801 tokens. Please reduce the length of the input prompt or the number of requested output tokens. (parameter=input_tokens, value=200705)", 'type': 'BadRequestError', 'param': 'input_tokens', 'code': 400}}
+  [110] exit=unknown_error tools=0
+  [step 111] unknown_error:
+Traceback (most recent call last):
+  File "/home/Uniagent-triton-ascend-compact/examples/triton_agent/synth_common.py", line 541, in _run_turns
+    step_output = await interaction.step(step_idx)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/interaction.py", line 136, in step
+    model_output, tool_calls, rollout_cache, generation_info = await self.model.query(
+                                                               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/model.py", line 311, in query
+    chat_completion = await self.client.chat.completions.create(
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/resources/chat/completions/completions.py", line 2714, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1913, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1698, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.BadRequestError: Error code: 400 - {'error': {'message': "This model's maximum context length is 204800 tokens. However, you requested 4096 output tokens and your prompt contains at least 200705 input tokens, for a total of at least 204801 tokens. Please reduce the length of the input prompt or the number of requested output tokens. (parameter=input_tokens, value=200705)", 'type': 'BadRequestError', 'param': 'input_tokens', 'code': 400}}
+  [111] exit=unknown_error tools=0
+  [step 112] unknown_error:
+Traceback (most recent call last):
+  File "/home/Uniagent-triton-ascend-compact/examples/triton_agent/synth_common.py", line 541, in _run_turns
+    step_output = await interaction.step(step_idx)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/interaction.py", line 136, in step
+    model_output, tool_calls, rollout_cache, generation_info = await self.model.query(
+                                                               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/model.py", line 311, in query
+    chat_completion = await self.client.chat.completions.create(
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/resources/chat/completions/completions.py", line 2714, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1913, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1698, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.BadRequestError: Error code: 400 - {'error': {'message': "This model's maximum context length is 204800 tokens. However, you requested 4096 output tokens and your prompt contains at least 200705 input tokens, for a total of at least 204801 tokens. Please reduce the length of the input prompt or the number of requested output tokens. (parameter=input_tokens, value=200705)", 'type': 'BadRequestError', 'param': 'input_tokens', 'code': 400}}
+  [112] exit=unknown_error tools=0
+  [step 113] unknown_error:
+Traceback (most recent call last):
+  File "/home/Uniagent-triton-ascend-compact/examples/triton_agent/synth_common.py", line 541, in _run_turns
+    step_output = await interaction.step(step_idx)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/interaction.py", line 136, in step
+    model_output, tool_calls, rollout_cache, generation_info = await self.model.query(
+                                                               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/model.py", line 311, in query
+    chat_completion = await self.client.chat.completions.create(
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/resources/chat/completions/completions.py", line 2714, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1913, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1698, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.BadRequestError: Error code: 400 - {'error': {'message': "This model's maximum context length is 204800 tokens. However, you requested 4096 output tokens and your prompt contains at least 200705 input tokens, for a total of at least 204801 tokens. Please reduce the length of the input prompt or the number of requested output tokens. (parameter=input_tokens, value=200705)", 'type': 'BadRequestError', 'param': 'input_tokens', 'code': 400}}
+  [113] exit=unknown_error tools=0
+  [step 114] unknown_error:
+Traceback (most recent call last):
+  File "/home/Uniagent-triton-ascend-compact/examples/triton_agent/synth_common.py", line 541, in _run_turns
+    step_output = await interaction.step(step_idx)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/interaction.py", line 136, in step
+    model_output, tool_calls, rollout_cache, generation_info = await self.model.query(
+                                                               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/model.py", line 311, in query
+    chat_completion = await self.client.chat.completions.create(
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/resources/chat/completions/completions.py", line 2714, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1913, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1698, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.BadRequestError: Error code: 400 - {'error': {'message': "This model's maximum context length is 204800 tokens. However, you requested 4096 output tokens and your prompt contains at least 200705 input tokens, for a total of at least 204801 tokens. Please reduce the length of the input prompt or the number of requested output tokens. (parameter=input_tokens, value=200705)", 'type': 'BadRequestError', 'param': 'input_tokens', 'code': 400}}
+  [114] exit=unknown_error tools=0
+  [step 115] unknown_error:
+Traceback (most recent call last):
+  File "/home/Uniagent-triton-ascend-compact/examples/triton_agent/synth_common.py", line 541, in _run_turns
+    step_output = await interaction.step(step_idx)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/interaction.py", line 136, in step
+    model_output, tool_calls, rollout_cache, generation_info = await self.model.query(
+                                                               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/model.py", line 311, in query
+    chat_completion = await self.client.chat.completions.create(
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/resources/chat/completions/completions.py", line 2714, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1913, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1698, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.BadRequestError: Error code: 400 - {'error': {'message': "This model's maximum context length is 204800 tokens. However, you requested 4096 output tokens and your prompt contains at least 200705 input tokens, for a total of at least 204801 tokens. Please reduce the length of the input prompt or the number of requested output tokens. (parameter=input_tokens, value=200705)", 'type': 'BadRequestError', 'param': 'input_tokens', 'code': 400}}
+  [115] exit=unknown_error tools=0
+  [step 116] unknown_error:
+Traceback (most recent call last):
+  File "/home/Uniagent-triton-ascend-compact/examples/triton_agent/synth_common.py", line 541, in _run_turns
+    step_output = await interaction.step(step_idx)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/interaction.py", line 136, in step
+    model_output, tool_calls, rollout_cache, generation_info = await self.model.query(
+                                                               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/model.py", line 311, in query
+    chat_completion = await self.client.chat.completions.create(
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/resources/chat/completions/completions.py", line 2714, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1913, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1698, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.BadRequestError: Error code: 400 - {'error': {'message': "This model's maximum context length is 204800 tokens. However, you requested 4096 output tokens and your prompt contains at least 200705 input tokens, for a total of at least 204801 tokens. Please reduce the length of the input prompt or the number of requested output tokens. (parameter=input_tokens, value=200705)", 'type': 'BadRequestError', 'param': 'input_tokens', 'code': 400}}
+  [116] exit=unknown_error tools=0
+  [step 117] unknown_error:
+Traceback (most recent call last):
+  File "/home/Uniagent-triton-ascend-compact/examples/triton_agent/synth_common.py", line 541, in _run_turns
+    step_output = await interaction.step(step_idx)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/interaction.py", line 136, in step
+    model_output, tool_calls, rollout_cache, generation_info = await self.model.query(
+                                                               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/model.py", line 311, in query
+    chat_completion = await self.client.chat.completions.create(
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/resources/chat/completions/completions.py", line 2714, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1913, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1698, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.BadRequestError: Error code: 400 - {'error': {'message': "This model's maximum context length is 204800 tokens. However, you requested 4096 output tokens and your prompt contains at least 200705 input tokens, for a total of at least 204801 tokens. Please reduce the length of the input prompt or the number of requested output tokens. (parameter=input_tokens, value=200705)", 'type': 'BadRequestError', 'param': 'input_tokens', 'code': 400}}
+  [117] exit=unknown_error tools=0
+  [step 118] unknown_error:
+Traceback (most recent call last):
+  File "/home/Uniagent-triton-ascend-compact/examples/triton_agent/synth_common.py", line 541, in _run_turns
+    step_output = await interaction.step(step_idx)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/interaction.py", line 136, in step
+    model_output, tool_calls, rollout_cache, generation_info = await self.model.query(
+                                                               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/model.py", line 311, in query
+    chat_completion = await self.client.chat.completions.create(
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/resources/chat/completions/completions.py", line 2714, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1913, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1698, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.BadRequestError: Error code: 400 - {'error': {'message': "This model's maximum context length is 204800 tokens. However, you requested 4096 output tokens and your prompt contains at least 200705 input tokens, for a total of at least 204801 tokens. Please reduce the length of the input prompt or the number of requested output tokens. (parameter=input_tokens, value=200705)", 'type': 'BadRequestError', 'param': 'input_tokens', 'code': 400}}
+  [118] exit=unknown_error tools=0
+  [step 119] unknown_error:
+Traceback (most recent call last):
+  File "/home/Uniagent-triton-ascend-compact/examples/triton_agent/synth_common.py", line 541, in _run_turns
+    step_output = await interaction.step(step_idx)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/interaction.py", line 136, in step
+    model_output, tool_calls, rollout_cache, generation_info = await self.model.query(
+                                                               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/model.py", line 311, in query
+    chat_completion = await self.client.chat.completions.create(
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/resources/chat/completions/completions.py", line 2714, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1913, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1698, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.BadRequestError: Error code: 400 - {'error': {'message': "This model's maximum context length is 204800 tokens. However, you requested 4096 output tokens and your prompt contains at least 200705 input tokens, for a total of at least 204801 tokens. Please reduce the length of the input prompt or the number of requested output tokens. (parameter=input_tokens, value=200705)", 'type': 'BadRequestError', 'param': 'input_tokens', 'code': 400}}
+  [119] exit=unknown_error tools=0
+  [step 120] unknown_error:
+Traceback (most recent call last):
+  File "/home/Uniagent-triton-ascend-compact/examples/triton_agent/synth_common.py", line 541, in _run_turns
+    step_output = await interaction.step(step_idx)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/interaction.py", line 136, in step
+    model_output, tool_calls, rollout_cache, generation_info = await self.model.query(
+                                                               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/model.py", line 311, in query
+    chat_completion = await self.client.chat.completions.create(
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/resources/chat/completions/completions.py", line 2714, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1913, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1698, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.BadRequestError: Error code: 400 - {'error': {'message': "This model's maximum context length is 204800 tokens. However, you requested 4096 output tokens and your prompt contains at least 200705 input tokens, for a total of at least 204801 tokens. Please reduce the length of the input prompt or the number of requested output tokens. (parameter=input_tokens, value=200705)", 'type': 'BadRequestError', 'param': 'input_tokens', 'code': 400}}
+  [120] exit=unknown_error tools=0
+  [step 121] unknown_error:
+Traceback (most recent call last):
+  File "/home/Uniagent-triton-ascend-compact/examples/triton_agent/synth_common.py", line 541, in _run_turns
+    step_output = await interaction.step(step_idx)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/interaction.py", line 136, in step
+    model_output, tool_calls, rollout_cache, generation_info = await self.model.query(
+                                                               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/model.py", line 311, in query
+    chat_completion = await self.client.chat.completions.create(
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/resources/chat/completions/completions.py", line 2714, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1913, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1698, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.BadRequestError: Error code: 400 - {'error': {'message': "This model's maximum context length is 204800 tokens. However, you requested 4096 output tokens and your prompt contains at least 200705 input tokens, for a total of at least 204801 tokens. Please reduce the length of the input prompt or the number of requested output tokens. (parameter=input_tokens, value=200705)", 'type': 'BadRequestError', 'param': 'input_tokens', 'code': 400}}
+  [121] exit=unknown_error tools=0
+  [step 122] unknown_error:
+Traceback (most recent call last):
+  File "/home/Uniagent-triton-ascend-compact/examples/triton_agent/synth_common.py", line 541, in _run_turns
+    step_output = await interaction.step(step_idx)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/interaction.py", line 136, in step
+    model_output, tool_calls, rollout_cache, generation_info = await self.model.query(
+                                                               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/model.py", line 311, in query
+    chat_completion = await self.client.chat.completions.create(
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/resources/chat/completions/completions.py", line 2714, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1913, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1698, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.BadRequestError: Error code: 400 - {'error': {'message': "This model's maximum context length is 204800 tokens. However, you requested 4096 output tokens and your prompt contains at least 200705 input tokens, for a total of at least 204801 tokens. Please reduce the length of the input prompt or the number of requested output tokens. (parameter=input_tokens, value=200705)", 'type': 'BadRequestError', 'param': 'input_tokens', 'code': 400}}
+  [122] exit=unknown_error tools=0
+  [step 123] unknown_error:
+Traceback (most recent call last):
+  File "/home/Uniagent-triton-ascend-compact/examples/triton_agent/synth_common.py", line 541, in _run_turns
+    step_output = await interaction.step(step_idx)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/interaction.py", line 136, in step
+    model_output, tool_calls, rollout_cache, generation_info = await self.model.query(
+                                                               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/model.py", line 311, in query
+    chat_completion = await self.client.chat.completions.create(
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/resources/chat/completions/completions.py", line 2714, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1913, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1698, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.BadRequestError: Error code: 400 - {'error': {'message': "This model's maximum context length is 204800 tokens. However, you requested 4096 output tokens and your prompt contains at least 200705 input tokens, for a total of at least 204801 tokens. Please reduce the length of the input prompt or the number of requested output tokens. (parameter=input_tokens, value=200705)", 'type': 'BadRequestError', 'param': 'input_tokens', 'code': 400}}
+  [123] exit=unknown_error tools=0
+  [step 124] unknown_error:
+Traceback (most recent call last):
+  File "/home/Uniagent-triton-ascend-compact/examples/triton_agent/synth_common.py", line 541, in _run_turns
+    step_output = await interaction.step(step_idx)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/interaction.py", line 136, in step
+    model_output, tool_calls, rollout_cache, generation_info = await self.model.query(
+                                                               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/model.py", line 311, in query
+    chat_completion = await self.client.chat.completions.create(
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/resources/chat/completions/completions.py", line 2714, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1913, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1698, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.BadRequestError: Error code: 400 - {'error': {'message': "This model's maximum context length is 204800 tokens. However, you requested 4096 output tokens and your prompt contains at least 200705 input tokens, for a total of at least 204801 tokens. Please reduce the length of the input prompt or the number of requested output tokens. (parameter=input_tokens, value=200705)", 'type': 'BadRequestError', 'param': 'input_tokens', 'code': 400}}
+  [124] exit=unknown_error tools=0
+  [step 125] unknown_error:
+Traceback (most recent call last):
+  File "/home/Uniagent-triton-ascend-compact/examples/triton_agent/synth_common.py", line 541, in _run_turns
+    step_output = await interaction.step(step_idx)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/interaction.py", line 136, in step
+    model_output, tool_calls, rollout_cache, generation_info = await self.model.query(
+                                                               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/model.py", line 311, in query
+    chat_completion = await self.client.chat.completions.create(
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/resources/chat/completions/completions.py", line 2714, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1913, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1698, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.BadRequestError: Error code: 400 - {'error': {'message': "This model's maximum context length is 204800 tokens. However, you requested 4096 output tokens and your prompt contains at least 200705 input tokens, for a total of at least 204801 tokens. Please reduce the length of the input prompt or the number of requested output tokens. (parameter=input_tokens, value=200705)", 'type': 'BadRequestError', 'param': 'input_tokens', 'code': 400}}
+  [125] exit=unknown_error tools=0
+  [step 126] unknown_error:
+Traceback (most recent call last):
+  File "/home/Uniagent-triton-ascend-compact/examples/triton_agent/synth_common.py", line 541, in _run_turns
+    step_output = await interaction.step(step_idx)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/interaction.py", line 136, in step
+    model_output, tool_calls, rollout_cache, generation_info = await self.model.query(
+                                                               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/model.py", line 311, in query
+    chat_completion = await self.client.chat.completions.create(
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/resources/chat/completions/completions.py", line 2714, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1913, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1698, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.BadRequestError: Error code: 400 - {'error': {'message': "This model's maximum context length is 204800 tokens. However, you requested 4096 output tokens and your prompt contains at least 200705 input tokens, for a total of at least 204801 tokens. Please reduce the length of the input prompt or the number of requested output tokens. (parameter=input_tokens, value=200705)", 'type': 'BadRequestError', 'param': 'input_tokens', 'code': 400}}
+  [126] exit=unknown_error tools=0
+  [step 127] unknown_error:
+Traceback (most recent call last):
+  File "/home/Uniagent-triton-ascend-compact/examples/triton_agent/synth_common.py", line 541, in _run_turns
+    step_output = await interaction.step(step_idx)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/interaction.py", line 136, in step
+    model_output, tool_calls, rollout_cache, generation_info = await self.model.query(
+                                                               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/model.py", line 311, in query
+    chat_completion = await self.client.chat.completions.create(
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/resources/chat/completions/completions.py", line 2714, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1913, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1698, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.BadRequestError: Error code: 400 - {'error': {'message': "This model's maximum context length is 204800 tokens. However, you requested 4096 output tokens and your prompt contains at least 200705 input tokens, for a total of at least 204801 tokens. Please reduce the length of the input prompt or the number of requested output tokens. (parameter=input_tokens, value=200705)", 'type': 'BadRequestError', 'param': 'input_tokens', 'code': 400}}
+  [127] exit=unknown_error tools=0
+  [step 128] unknown_error:
+Traceback (most recent call last):
+  File "/home/Uniagent-triton-ascend-compact/examples/triton_agent/synth_common.py", line 541, in _run_turns
+    step_output = await interaction.step(step_idx)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/interaction.py", line 136, in step
+    model_output, tool_calls, rollout_cache, generation_info = await self.model.query(
+                                                               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/model.py", line 311, in query
+    chat_completion = await self.client.chat.completions.create(
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/resources/chat/completions/completions.py", line 2714, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1913, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1698, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.BadRequestError: Error code: 400 - {'error': {'message': "This model's maximum context length is 204800 tokens. However, you requested 4096 output tokens and your prompt contains at least 200705 input tokens, for a total of at least 204801 tokens. Please reduce the length of the input prompt or the number of requested output tokens. (parameter=input_tokens, value=200705)", 'type': 'BadRequestError', 'param': 'input_tokens', 'code': 400}}
+  [128] exit=unknown_error tools=0
+  [step 129] unknown_error:
+Traceback (most recent call last):
+  File "/home/Uniagent-triton-ascend-compact/examples/triton_agent/synth_common.py", line 541, in _run_turns
+    step_output = await interaction.step(step_idx)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/interaction.py", line 136, in step
+    model_output, tool_calls, rollout_cache, generation_info = await self.model.query(
+                                                               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/model.py", line 311, in query
+    chat_completion = await self.client.chat.completions.create(
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/resources/chat/completions/completions.py", line 2714, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1913, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1698, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.BadRequestError: Error code: 400 - {'error': {'message': "This model's maximum context length is 204800 tokens. However, you requested 4096 output tokens and your prompt contains at least 200705 input tokens, for a total of at least 204801 tokens. Please reduce the length of the input prompt or the number of requested output tokens. (parameter=input_tokens, value=200705)", 'type': 'BadRequestError', 'param': 'input_tokens', 'code': 400}}
+  [129] exit=unknown_error tools=0
+  [step 130] unknown_error:
+Traceback (most recent call last):
+  File "/home/Uniagent-triton-ascend-compact/examples/triton_agent/synth_common.py", line 541, in _run_turns
+    step_output = await interaction.step(step_idx)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/interaction.py", line 136, in step
+    model_output, tool_calls, rollout_cache, generation_info = await self.model.query(
+                                                               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/model.py", line 311, in query
+    chat_completion = await self.client.chat.completions.create(
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/resources/chat/completions/completions.py", line 2714, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1913, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1698, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.BadRequestError: Error code: 400 - {'error': {'message': "This model's maximum context length is 204800 tokens. However, you requested 4096 output tokens and your prompt contains at least 200705 input tokens, for a total of at least 204801 tokens. Please reduce the length of the input prompt or the number of requested output tokens. (parameter=input_tokens, value=200705)", 'type': 'BadRequestError', 'param': 'input_tokens', 'code': 400}}
+  [130] exit=unknown_error tools=0
+  [step 131] unknown_error:
+Traceback (most recent call last):
+  File "/home/Uniagent-triton-ascend-compact/examples/triton_agent/synth_common.py", line 541, in _run_turns
+    step_output = await interaction.step(step_idx)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/interaction.py", line 136, in step
+    model_output, tool_calls, rollout_cache, generation_info = await self.model.query(
+                                                               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/model.py", line 311, in query
+    chat_completion = await self.client.chat.completions.create(
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/resources/chat/completions/completions.py", line 2714, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1913, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1698, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.BadRequestError: Error code: 400 - {'error': {'message': "This model's maximum context length is 204800 tokens. However, you requested 4096 output tokens and your prompt contains at least 200705 input tokens, for a total of at least 204801 tokens. Please reduce the length of the input prompt or the number of requested output tokens. (parameter=input_tokens, value=200705)", 'type': 'BadRequestError', 'param': 'input_tokens', 'code': 400}}
+  [131] exit=unknown_error tools=0
+  [step 132] unknown_error:
+Traceback (most recent call last):
+  File "/home/Uniagent-triton-ascend-compact/examples/triton_agent/synth_common.py", line 541, in _run_turns
+    step_output = await interaction.step(step_idx)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/interaction.py", line 136, in step
+    model_output, tool_calls, rollout_cache, generation_info = await self.model.query(
+                                                               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/model.py", line 311, in query
+    chat_completion = await self.client.chat.completions.create(
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/resources/chat/completions/completions.py", line 2714, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1913, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1698, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.BadRequestError: Error code: 400 - {'error': {'message': "This model's maximum context length is 204800 tokens. However, you requested 4096 output tokens and your prompt contains at least 200705 input tokens, for a total of at least 204801 tokens. Please reduce the length of the input prompt or the number of requested output tokens. (parameter=input_tokens, value=200705)", 'type': 'BadRequestError', 'param': 'input_tokens', 'code': 400}}
+  [132] exit=unknown_error tools=0
+  [step 133] unknown_error:
+Traceback (most recent call last):
+  File "/home/Uniagent-triton-ascend-compact/examples/triton_agent/synth_common.py", line 541, in _run_turns
+    step_output = await interaction.step(step_idx)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/interaction.py", line 136, in step
+    model_output, tool_calls, rollout_cache, generation_info = await self.model.query(
+                                                               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/model.py", line 311, in query
+    chat_completion = await self.client.chat.completions.create(
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/resources/chat/completions/completions.py", line 2714, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1913, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1698, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.BadRequestError: Error code: 400 - {'error': {'message': "This model's maximum context length is 204800 tokens. However, you requested 4096 output tokens and your prompt contains at least 200705 input tokens, for a total of at least 204801 tokens. Please reduce the length of the input prompt or the number of requested output tokens. (parameter=input_tokens, value=200705)", 'type': 'BadRequestError', 'param': 'input_tokens', 'code': 400}}
+  [133] exit=unknown_error tools=0
+  [step 134] unknown_error:
+Traceback (most recent call last):
+  File "/home/Uniagent-triton-ascend-compact/examples/triton_agent/synth_common.py", line 541, in _run_turns
+    step_output = await interaction.step(step_idx)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/interaction.py", line 136, in step
+    model_output, tool_calls, rollout_cache, generation_info = await self.model.query(
+                                                               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/model.py", line 311, in query
+    chat_completion = await self.client.chat.completions.create(
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/resources/chat/completions/completions.py", line 2714, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1913, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1698, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.BadRequestError: Error code: 400 - {'error': {'message': "This model's maximum context length is 204800 tokens. However, you requested 4096 output tokens and your prompt contains at least 200705 input tokens, for a total of at least 204801 tokens. Please reduce the length of the input prompt or the number of requested output tokens. (parameter=input_tokens, value=200705)", 'type': 'BadRequestError', 'param': 'input_tokens', 'code': 400}}
+  [134] exit=unknown_error tools=0
+  [step 135] unknown_error:
+Traceback (most recent call last):
+  File "/home/Uniagent-triton-ascend-compact/examples/triton_agent/synth_common.py", line 541, in _run_turns
+    step_output = await interaction.step(step_idx)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/interaction.py", line 136, in step
+    model_output, tool_calls, rollout_cache, generation_info = await self.model.query(
+                                                               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/model.py", line 311, in query
+    chat_completion = await self.client.chat.completions.create(
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/resources/chat/completions/completions.py", line 2714, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1913, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1698, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.BadRequestError: Error code: 400 - {'error': {'message': "This model's maximum context length is 204800 tokens. However, you requested 4096 output tokens and your prompt contains at least 200705 input tokens, for a total of at least 204801 tokens. Please reduce the length of the input prompt or the number of requested output tokens. (parameter=input_tokens, value=200705)", 'type': 'BadRequestError', 'param': 'input_tokens', 'code': 400}}
+  [135] exit=unknown_error tools=0
+  [step 136] unknown_error:
+Traceback (most recent call last):
+  File "/home/Uniagent-triton-ascend-compact/examples/triton_agent/synth_common.py", line 541, in _run_turns
+    step_output = await interaction.step(step_idx)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/interaction.py", line 136, in step
+    model_output, tool_calls, rollout_cache, generation_info = await self.model.query(
+                                                               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/model.py", line 311, in query
+    chat_completion = await self.client.chat.completions.create(
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/resources/chat/completions/completions.py", line 2714, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1913, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1698, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.BadRequestError: Error code: 400 - {'error': {'message': "This model's maximum context length is 204800 tokens. However, you requested 4096 output tokens and your prompt contains at least 200705 input tokens, for a total of at least 204801 tokens. Please reduce the length of the input prompt or the number of requested output tokens. (parameter=input_tokens, value=200705)", 'type': 'BadRequestError', 'param': 'input_tokens', 'code': 400}}
+  [136] exit=unknown_error tools=0
+  [step 137] unknown_error:
+Traceback (most recent call last):
+  File "/home/Uniagent-triton-ascend-compact/examples/triton_agent/synth_common.py", line 541, in _run_turns
+    step_output = await interaction.step(step_idx)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/interaction.py", line 136, in step
+    model_output, tool_calls, rollout_cache, generation_info = await self.model.query(
+                                                               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/model.py", line 311, in query
+    chat_completion = await self.client.chat.completions.create(
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/resources/chat/completions/completions.py", line 2714, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1913, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1698, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.BadRequestError: Error code: 400 - {'error': {'message': "This model's maximum context length is 204800 tokens. However, you requested 4096 output tokens and your prompt contains at least 200705 input tokens, for a total of at least 204801 tokens. Please reduce the length of the input prompt or the number of requested output tokens. (parameter=input_tokens, value=200705)", 'type': 'BadRequestError', 'param': 'input_tokens', 'code': 400}}
+  [137] exit=unknown_error tools=0
+  [step 138] unknown_error:
+Traceback (most recent call last):
+  File "/home/Uniagent-triton-ascend-compact/examples/triton_agent/synth_common.py", line 541, in _run_turns
+    step_output = await interaction.step(step_idx)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/interaction.py", line 136, in step
+    model_output, tool_calls, rollout_cache, generation_info = await self.model.query(
+                                                               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/model.py", line 311, in query
+    chat_completion = await self.client.chat.completions.create(
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/resources/chat/completions/completions.py", line 2714, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1913, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1698, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.BadRequestError: Error code: 400 - {'error': {'message': "This model's maximum context length is 204800 tokens. However, you requested 4096 output tokens and your prompt contains at least 200705 input tokens, for a total of at least 204801 tokens. Please reduce the length of the input prompt or the number of requested output tokens. (parameter=input_tokens, value=200705)", 'type': 'BadRequestError', 'param': 'input_tokens', 'code': 400}}
+  [138] exit=unknown_error tools=0
+  [step 139] unknown_error:
+Traceback (most recent call last):
+  File "/home/Uniagent-triton-ascend-compact/examples/triton_agent/synth_common.py", line 541, in _run_turns
+    step_output = await interaction.step(step_idx)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/interaction.py", line 136, in step
+    model_output, tool_calls, rollout_cache, generation_info = await self.model.query(
+                                                               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/model.py", line 311, in query
+    chat_completion = await self.client.chat.completions.create(
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/resources/chat/completions/completions.py", line 2714, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1913, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1698, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.BadRequestError: Error code: 400 - {'error': {'message': "This model's maximum context length is 204800 tokens. However, you requested 4096 output tokens and your prompt contains at least 200705 input tokens, for a total of at least 204801 tokens. Please reduce the length of the input prompt or the number of requested output tokens. (parameter=input_tokens, value=200705)", 'type': 'BadRequestError', 'param': 'input_tokens', 'code': 400}}
+  [139] exit=unknown_error tools=0
+  [step 140] unknown_error:
+Traceback (most recent call last):
+  File "/home/Uniagent-triton-ascend-compact/examples/triton_agent/synth_common.py", line 541, in _run_turns
+    step_output = await interaction.step(step_idx)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/interaction.py", line 136, in step
+    model_output, tool_calls, rollout_cache, generation_info = await self.model.query(
+                                                               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/model.py", line 311, in query
+    chat_completion = await self.client.chat.completions.create(
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/resources/chat/completions/completions.py", line 2714, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1913, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1698, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.BadRequestError: Error code: 400 - {'error': {'message': "This model's maximum context length is 204800 tokens. However, you requested 4096 output tokens and your prompt contains at least 200705 input tokens, for a total of at least 204801 tokens. Please reduce the length of the input prompt or the number of requested output tokens. (parameter=input_tokens, value=200705)", 'type': 'BadRequestError', 'param': 'input_tokens', 'code': 400}}
+  [140] exit=unknown_error tools=0
+  [step 141] unknown_error:
+Traceback (most recent call last):
+  File "/home/Uniagent-triton-ascend-compact/examples/triton_agent/synth_common.py", line 541, in _run_turns
+    step_output = await interaction.step(step_idx)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/interaction.py", line 136, in step
+    model_output, tool_calls, rollout_cache, generation_info = await self.model.query(
+                                                               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/model.py", line 311, in query
+    chat_completion = await self.client.chat.completions.create(
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/resources/chat/completions/completions.py", line 2714, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1913, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1698, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.BadRequestError: Error code: 400 - {'error': {'message': "This model's maximum context length is 204800 tokens. However, you requested 4096 output tokens and your prompt contains at least 200705 input tokens, for a total of at least 204801 tokens. Please reduce the length of the input prompt or the number of requested output tokens. (parameter=input_tokens, value=200705)", 'type': 'BadRequestError', 'param': 'input_tokens', 'code': 400}}
+  [141] exit=unknown_error tools=0
+  [step 142] unknown_error:
+Traceback (most recent call last):
+  File "/home/Uniagent-triton-ascend-compact/examples/triton_agent/synth_common.py", line 541, in _run_turns
+    step_output = await interaction.step(step_idx)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/interaction.py", line 136, in step
+    model_output, tool_calls, rollout_cache, generation_info = await self.model.query(
+                                                               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/model.py", line 311, in query
+    chat_completion = await self.client.chat.completions.create(
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/resources/chat/completions/completions.py", line 2714, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1913, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1698, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.BadRequestError: Error code: 400 - {'error': {'message': "This model's maximum context length is 204800 tokens. However, you requested 4096 output tokens and your prompt contains at least 200705 input tokens, for a total of at least 204801 tokens. Please reduce the length of the input prompt or the number of requested output tokens. (parameter=input_tokens, value=200705)", 'type': 'BadRequestError', 'param': 'input_tokens', 'code': 400}}
+  [142] exit=unknown_error tools=0
+  [step 143] unknown_error:
+Traceback (most recent call last):
+  File "/home/Uniagent-triton-ascend-compact/examples/triton_agent/synth_common.py", line 541, in _run_turns
+    step_output = await interaction.step(step_idx)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/interaction.py", line 136, in step
+    model_output, tool_calls, rollout_cache, generation_info = await self.model.query(
+                                                               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/model.py", line 311, in query
+    chat_completion = await self.client.chat.completions.create(
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/resources/chat/completions/completions.py", line 2714, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1913, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1698, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.BadRequestError: Error code: 400 - {'error': {'message': "This model's maximum context length is 204800 tokens. However, you requested 4096 output tokens and your prompt contains at least 200705 input tokens, for a total of at least 204801 tokens. Please reduce the length of the input prompt or the number of requested output tokens. (parameter=input_tokens, value=200705)", 'type': 'BadRequestError', 'param': 'input_tokens', 'code': 400}}
+  [143] exit=unknown_error tools=0
+  [step 144] unknown_error:
+Traceback (most recent call last):
+  File "/home/Uniagent-triton-ascend-compact/examples/triton_agent/synth_common.py", line 541, in _run_turns
+    step_output = await interaction.step(step_idx)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/interaction.py", line 136, in step
+    model_output, tool_calls, rollout_cache, generation_info = await self.model.query(
+                                                               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/model.py", line 311, in query
+    chat_completion = await self.client.chat.completions.create(
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/resources/chat/completions/completions.py", line 2714, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1913, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1698, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.BadRequestError: Error code: 400 - {'error': {'message': "This model's maximum context length is 204800 tokens. However, you requested 4096 output tokens and your prompt contains at least 200705 input tokens, for a total of at least 204801 tokens. Please reduce the length of the input prompt or the number of requested output tokens. (parameter=input_tokens, value=200705)", 'type': 'BadRequestError', 'param': 'input_tokens', 'code': 400}}
+  [144] exit=unknown_error tools=0
+  [step 145] unknown_error:
+Traceback (most recent call last):
+  File "/home/Uniagent-triton-ascend-compact/examples/triton_agent/synth_common.py", line 541, in _run_turns
+    step_output = await interaction.step(step_idx)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/interaction.py", line 136, in step
+    model_output, tool_calls, rollout_cache, generation_info = await self.model.query(
+                                                               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/model.py", line 311, in query
+    chat_completion = await self.client.chat.completions.create(
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/resources/chat/completions/completions.py", line 2714, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1913, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1698, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.BadRequestError: Error code: 400 - {'error': {'message': "This model's maximum context length is 204800 tokens. However, you requested 4096 output tokens and your prompt contains at least 200705 input tokens, for a total of at least 204801 tokens. Please reduce the length of the input prompt or the number of requested output tokens. (parameter=input_tokens, value=200705)", 'type': 'BadRequestError', 'param': 'input_tokens', 'code': 400}}
+  [145] exit=unknown_error tools=0
+  [step 146] unknown_error:
+Traceback (most recent call last):
+  File "/home/Uniagent-triton-ascend-compact/examples/triton_agent/synth_common.py", line 541, in _run_turns
+    step_output = await interaction.step(step_idx)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/interaction.py", line 136, in step
+    model_output, tool_calls, rollout_cache, generation_info = await self.model.query(
+                                                               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/model.py", line 311, in query
+    chat_completion = await self.client.chat.completions.create(
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/resources/chat/completions/completions.py", line 2714, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1913, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1698, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.BadRequestError: Error code: 400 - {'error': {'message': "This model's maximum context length is 204800 tokens. However, you requested 4096 output tokens and your prompt contains at least 200705 input tokens, for a total of at least 204801 tokens. Please reduce the length of the input prompt or the number of requested output tokens. (parameter=input_tokens, value=200705)", 'type': 'BadRequestError', 'param': 'input_tokens', 'code': 400}}
+  [146] exit=unknown_error tools=0
+  [step 147] unknown_error:
+Traceback (most recent call last):
+  File "/home/Uniagent-triton-ascend-compact/examples/triton_agent/synth_common.py", line 541, in _run_turns
+    step_output = await interaction.step(step_idx)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/interaction.py", line 136, in step
+    model_output, tool_calls, rollout_cache, generation_info = await self.model.query(
+                                                               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/model.py", line 311, in query
+    chat_completion = await self.client.chat.completions.create(
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/resources/chat/completions/completions.py", line 2714, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1913, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1698, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.BadRequestError: Error code: 400 - {'error': {'message': "This model's maximum context length is 204800 tokens. However, you requested 4096 output tokens and your prompt contains at least 200705 input tokens, for a total of at least 204801 tokens. Please reduce the length of the input prompt or the number of requested output tokens. (parameter=input_tokens, value=200705)", 'type': 'BadRequestError', 'param': 'input_tokens', 'code': 400}}
+  [147] exit=unknown_error tools=0
+  [step 148] unknown_error:
+Traceback (most recent call last):
+  File "/home/Uniagent-triton-ascend-compact/examples/triton_agent/synth_common.py", line 541, in _run_turns
+    step_output = await interaction.step(step_idx)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/interaction.py", line 136, in step
+    model_output, tool_calls, rollout_cache, generation_info = await self.model.query(
+                                                               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/model.py", line 311, in query
+    chat_completion = await self.client.chat.completions.create(
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/resources/chat/completions/completions.py", line 2714, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1913, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1698, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.BadRequestError: Error code: 400 - {'error': {'message': "This model's maximum context length is 204800 tokens. However, you requested 4096 output tokens and your prompt contains at least 200705 input tokens, for a total of at least 204801 tokens. Please reduce the length of the input prompt or the number of requested output tokens. (parameter=input_tokens, value=200705)", 'type': 'BadRequestError', 'param': 'input_tokens', 'code': 400}}
+  [148] exit=unknown_error tools=0
+  [step 149] unknown_error:
+Traceback (most recent call last):
+  File "/home/Uniagent-triton-ascend-compact/examples/triton_agent/synth_common.py", line 541, in _run_turns
+    step_output = await interaction.step(step_idx)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/interaction.py", line 136, in step
+    model_output, tool_calls, rollout_cache, generation_info = await self.model.query(
+                                                               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/model.py", line 311, in query
+    chat_completion = await self.client.chat.completions.create(
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/resources/chat/completions/completions.py", line 2714, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1913, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1698, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.BadRequestError: Error code: 400 - {'error': {'message': "This model's maximum context length is 204800 tokens. However, you requested 4096 output tokens and your prompt contains at least 200705 input tokens, for a total of at least 204801 tokens. Please reduce the length of the input prompt or the number of requested output tokens. (parameter=input_tokens, value=200705)", 'type': 'BadRequestError', 'param': 'input_tokens', 'code': 400}}
+  [149] exit=unknown_error tools=0
+  [step 150] unknown_error:
+Traceback (most recent call last):
+  File "/home/Uniagent-triton-ascend-compact/examples/triton_agent/synth_common.py", line 541, in _run_turns
+    step_output = await interaction.step(step_idx)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/interaction.py", line 136, in step
+    model_output, tool_calls, rollout_cache, generation_info = await self.model.query(
+                                                               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/Uniagent-triton-ascend-compact/uni_agent/interaction/model.py", line 311, in query
+    chat_completion = await self.client.chat.completions.create(
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/resources/chat/completions/completions.py", line 2714, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1913, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/openai/_base_client.py", line 1698, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.BadRequestError: Error code: 400 - {'error': {'message': "This model's maximum context length is 204800 tokens. However, you requested 4096 output tokens and your prompt contains at least 200705 input tokens, for a total of at least 204801 tokens. Please reduce the length of the input prompt or the number of requested output tokens. (parameter=input_tokens, value=200705)", 'type': 'BadRequestError', 'param': 'input_tokens', 'code': 400}}
+  [150] exit=unknown_error tools=0
+[synth] kernelbench_l3_10_ConvTranspose2d: running final verify on latest code (has_verified=True, edited_after_verify=True)
+[synth] kernelbench_l3_10_ConvTranspose2d: final verify output (tail):
+            {
+              "type": "scalar",
+              "value": "(tensor([[[[ 3.1978,  4.9707,  1.9844,  ..., -2.9440,  0.9317, -3.8765],\n          [-3.4654, -2.5829,  2.2624,  ...,  1.5105,  2.7449, -0.6311],\n          [ 0.1909,  1.1585,  3.1019,  ..., -1.8323,  1.9650,  4.1427],\n          ...,\n          [ 1.8330,  2.5285,  3.5794,  ..., -3.2435,  2.4966,  1.0465],\n          [-3.9004, -2.8791,  4.7037,  ..., -1.2584, -4.7630, -0.0899],\n          [-3.7653, -3.8568, -0.2755,  ...,  2.9669, -3.0427,  4.5369]],\n\n         [[ 3.4265, -4.2164, -1.2444,  ...,  1.1859,  1.9621,  0.2995],\n          [-2.4396,  2.3659, -4.7962,  ..., -2.4356, -1.7492, -4.0981],\n          [-1.0636,  1.0688, -3.2573,  ..., -0.5140,  0.1390, -0.4313],\n          ...,\n          [ 2.7032, -4.8222,  3.1189,  ..., -2.0274, -0.9631, -0.9817],\n          [-4.4867, -4.3172, -0.7824,  ...,  1.8835, -4.5003, -0.3374],\n          [ 4.3971, -2.0395,  4.5150,  ...,  3.1635, -0.5770, -2.2320]],\n\n         [[ 3.9983, -4.0405,  0.5365,  ...,  1.3957,  2.4025,  1.7658],\n          [-1.2024, -1.0515, -4.1204,  ...,  3.4211, -3.5269,  0.2230],\n          [-3.5247, -2.7524, -2.9135,  ..., -0.1091,  0.2103,  3.2231],\n          ...,\n          [ 4.0375, -4.0577, -0.3590,  ...,  0.1416, -4.3330,  2.4769],\n          [-3.5614, -1.4193, -1.6776,  ...,  4.1240,  0.6242,  4.4785],\n          [ 3.0586, -3.1611,  2.2425,  ...,  1.4706,  1.6510,  3.7511]],\n\n         ...,\n\n         [[-3.6383,  4.6928,  2.9153,  ..., -3.9724,  0.5251,  4.6536],\n          [-2.7904,  4.4480,  1.3142,  ...,  2.3051, -4.4324, -0.3175],\n          [ 1.6678,  1.4995,  4.1840,  ...,  3.3570,  3.5153, -0.6451],\n          ...,\n          [-4.6143,  3.0661,  3.1982,  ..., -3.9042,  3.7865,  1.5690],\n          [ 4.9439, -4.9300, -4.8134,  ...,  3.0634,  3.3241, -4.2114],\n          [ 3.6191, -4.7207,  1.1170,  ...,  0.8853, -1.9659, -0.7911]],\n\n         [[-4.7391, -4.7144,  1.9368,  ..., -1.9729, -4.0878, -3.9970],\n          [ 2.9919,  2.5412,  0.6660,  ...,  0.2246, -3.5734,  1.0759],\n          [ 4.5527, -4.9180, -4.9720,  ..., -3.0424,  1.1007,  3.5149],\n          ...,\n          [-3.7626, -0.4243, -1.6796,  ...,  3.9028,  0.9370, -1.6078],\n          [ 3.3867,  0.2732,  0.9385,  ..., -0.9614, -0.4251, -3.8994],\n          [-0.0307, -4.1502, -1.0757,  ..., -3.3703, -1.2209, -1.3707]],\n\n         [[ 0.8464,  0.8301,  2.5355,  ...,  2.7965,  4.3249, -0.3647],\n          [-2.8931,  1.4373,  2.8474,  ...,  2.2100, -0.3503, -4.7225],\n          [-2.8829,  2.0277, -1.6959,  ...,  0.7273, -0.3954, -1.5871],\n          ...,\n          [-0.9416, -2.2099,  3.1753,  ..., -0.4521,  4.1060,  1.9364],\n          [ 4.2123, -1.7135, -2.7582,  ...,  4.7999, -2.0885, -3.2103],\n          [-0.5861, -4.7079,  1.9599,  ..., -0.4940,  2.4790, -3.1738]]]]), 16, 32, 3, 2, 1, True)"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "error_preview": "[Case 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50: RuntimeError (x50)]\nTraceback (most recent call last):\n  File \"/opt/workspace_card0/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card0/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card0/agent_workdir/output/verify/kernelbench_l3_10_ConvTranspose2d_triton_ascend_impl.py\", line 234, in forward\n    _conv_t2d_dot_kernel[grid](\n  File \"/usr/local/python3.11.14/lib/p\n... [truncated 3927 chars] ...\n][LINE:3175]\n        Check param failed, ctx can not be NULL![FUNC:PrimaryContextRetain][FILE:runtime.cc][LINE:3206]\n        Check param failed, context can not be null.[FUNC:SetDevice][FILE:api_impl.cc][LINE:3319]\n        Check param failed, curCtx can not be null.[FUNC:MemGetInfoEx][FILE:api_impl.cc][LINE:3162]\n        The argument is invalid.Reason: rtMemGetInfoEx execution failed, the context is a null pointer.\n        rtSetDevice execution failed, reason=device retain error[FUNC:FuncErrorReason][FILE:error_message_manage.cc][LINE:65]\n        open device 0 failed, runtime result = 507033.[FUNC:ReportCallError][FILE:log_inner.cpp][LINE:148]\n        ctx is NULL![FUNC:GetDevErrMsg][FILE:api_impl.cc][LINE:6108]\n        The argument is invalid.Reason: rtGetDevMsg execution failed, the conte"
+}
+[run_verify] 50/50 cases failed - fix the errors above, then call run_verify again.
+[synth] kernelbench_l3_10_ConvTranspose2d: evaluating results (verified=True, submitted=False, turns=150)
+[reward] op=kernelbench_l3_10_ConvTranspose2d best_first=1 source=verify_result speedup=0.0000 correctness_ok=False reward=0.1700
+  [synth_kernelbench_l3_10_ConvTranspose2d_8c0e12] total: 150 steps
+[synth] op=kernelbench_l3_10_ConvTranspose2d reward=0.1700 pass_rate=0.00 speedup=None turns=150 exit=max_step_limit verified=True submitted=False time=9977.5s
+
+[synth] Done. total=1 success=0 avg_reward=0.1700
+[synth] Results saved to /home/Uniagent-triton-ascend-compact/eval/output/synth_levels_concurrent_20260827_163350/results/results.card0.jsonl
+[worker idx=0 card=0] DONE op=kernelbench_l3_10_ConvTranspose2d
+[worker idx=0 card=0] START op=kernelbench_l4_14_WindowAttention remaining_after=94
+[vllm] Server ready at http://192.169.0.176:7777/v1/models
+[synth] Loaded 116 tasks (levels=level3,level4, filter=all)
+[synth] Tasks sorted by numeric problem_id
+[synth] Op filter: 116 -> 1 tasks
+
+[synth] === Task 1/1: kernelbench_l4_14_WindowAttention ===
+[synth] kernelbench_l4_14_WindowAttention: starting model-driven verify flow (max_turns=150)
+  [1] exit=completed tools=2 | list_skills(ok): list_skills | str_replace_editor(ok): str_replace_editor view --path /opt/workspace_card0/agent_workdir
+  [2] exit=completed tools=2 | str_replace_editor(ok): str_replace_editor view --path /opt/workspace_card0/agent_workdir/src/14_WindowAttention.json | str_replace_editor(ok): str_replace_editor view --path /opt/workspace_card0/agent_workdir/INSTRUCTIONS.md
+  [3] exit=completed tools=2 | read_skill(ok): read_skill --skill op-design-guide | read_skill(ok): read_skill --skill hardware-specs
+  [4] exit=completed tools=2 | read_skill(ok): read_skill --file references/general-constraints.md --skill op-design-guide | read_skill(ok): read_skill --file references/hw-910b1.md --skill hardware-specs
+  [5] exit=completed tools=2 | read_skill(ok): read_skill --section '硬件规格索引（按 arch 读取）' --skill hardware-specs | read_skill(ok): read_skill --file references/transformer-inference.md --skill op-design-guide
+  [6] exit=completed tools=2 | read_skill(ok): read_skill --skill api-reference | read_skill(ok): read_skill --skill examples
+  [7] exit=completed tools=2 | read_skill(ok): read_skill --file references/linear-algebra-ops.md --skill api-reference | read_skill(ok): read_skill --file references/triton-ascend-attention.md --skill examples
+  [8] exit=completed tools=1 | read_skill(ok): read_skill --file references/triton-ascend-fundamentals.md --skill examples
+  [9] exit=completed tools=2 | read_skill(ok): read_skill --file references/hw-ascend910b1.md --skill hardware-specs | read_skill(ok): read_skill --file references/triton-ascend-matmul.md --skill examples
+context canceled
+[worker idx=0 card=0] FAIL op=kernelbench_l4_14_WindowAttention (non-zero exit)
+[worker idx=0 card=0] DONE op=kernelbench_l4_14_WindowAttention
+[worker idx=0 card=0] START op=kernelbench_l4_17_MultiHeadAttention remaining_after=91
+context canceled

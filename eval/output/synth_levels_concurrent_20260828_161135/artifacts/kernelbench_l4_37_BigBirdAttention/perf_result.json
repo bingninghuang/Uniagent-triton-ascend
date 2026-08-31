@@ -1,0 +1,3968 @@
+{
+  "op_name": "kernelbench_l4_37_BigBirdAttention",
+  "warmup": 5,
+  "repeats": 20,
+  "max_retries": 3,
+  "total_cases": 50,
+  "passed_cases": 50,
+  "failed_cases": 0,
+  "skipped_cases": 0,
+  "skip_indices": [],
+  "nan_indices": [],
+  "inf_indices": [],
+  "zero_indices": [],
+  "negative_indices": [],
+  "none_indices": [],
+  "framework": {
+    "avg_latency_ms": 0.0983,
+    "peak_memory_mb": 3.2,
+    "operators": {
+      "aclnnCast_CastAiCore_Cast": 4.627,
+      "aclnnEqScalar_EqualAiCore_Equal": 2.9236,
+      "aclnnIndexPutImpl_BroadcastToAiCore_BroadcastTo": 1.1374,
+      "aclnnIndexPutImpl_IndexPutV2_IndexPutV2": 5.9267,
+      "aclnnInplaceCopy_BroadcastToAiCore_BroadcastTo": 1.2851,
+      "aclnnInplaceCopy_ViewCopyAiCore_ViewCopy": 8.1274,
+      "aclnnInplaceFillScalar_FillAiCore_Fill": 1.1885,
+      "aclnnInplaceMaskedFillScalar_MaskedFillAiCore_MaskedFill": 14.5331,
+      "aclnnInplaceZero_ZerosLikeAiCore_ZerosLike": 2.5984,
+      "aclnnMatmul_BatchMatMulNd_BatchMatMulV2": 5.8572,
+      "aclnnMuls_MulAiCore_Mul": 4.4486,
+      "aclnnRandperm_StatelessRandpermAiCpu_StatelessRandperm": 28.0035,
+      "aclnnSoftmax_SoftmaxAiCore_SoftmaxV2": 15.3987,
+      "aclnnAdd_AddAiCore_Add": 0.5282,
+      "aclnnInplaceCopy_TensorMoveAiCore_TensorMove": 1.7412
+    },
+    "kernel_metrics": {}
+  },
+  "implementation": {
+    "avg_latency_ms": 0.076,
+    "peak_memory_mb": 3.38,
+    "operators": {
+      "_bigbird_attn_fwd_kernel": 76.0303
+    },
+    "kernel_metrics": {
+      "_bigbird_attn_fwd_kernel": {
+        "aiv_vec_ratio": 0.1018,
+        "aiv_mte2_ratio": 0.1276,
+        "aiv_mte3_ratio": 0.096,
+        "aiv_scalar_ratio": 0.5593,
+        "aic_mac_ratio": 0.0235,
+        "aic_mte1_ratio": 0.0466,
+        "cube_utilization(%)": 72.0889
+      }
+    }
+  },
+  "speedup_vs_torch": 2.1142,
+  "per_shape_results": [
+    {
+      "case_idx": 1,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            8,
+            13,
+            64
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            8,
+            13,
+            64
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            8,
+            13,
+            64
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 8
+        },
+        {
+          "type": "scalar",
+          "value": 2
+        },
+        {
+          "type": "scalar",
+          "value": 0.125
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        }
+      ],
+      "status": "pass",
+      "framework": {
+        "avg_latency_ms": 0.0842,
+        "peak_memory_mb": 0.21
+      },
+      "implementation": {
+        "avg_latency_ms": 0.011,
+        "peak_memory_mb": 0.46,
+        "kernel_metrics": {
+          "_bigbird_attn_fwd_kernel": {
+            "aiv_vec_ratio": 0.0948,
+            "aiv_mte2_ratio": 0.2412,
+            "aiv_mte3_ratio": 0.1258,
+            "aiv_scalar_ratio": 0.4803,
+            "aic_mac_ratio": 0.0143,
+            "aic_mte1_ratio": 0.0304,
+            "cube_utilization(%)": 33.1073
+          }
+        }
+      },
+      "speedup_vs_torch": 7.6545,
+      "error_type": null,
+      "error_msg": null
+    },
+    {
+      "case_idx": 2,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            4,
+            17,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            4,
+            23,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            4,
+            23,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 12
+        },
+        {
+          "type": "scalar",
+          "value": 3
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        }
+      ],
+      "status": "pass",
+      "framework": {
+        "avg_latency_ms": 0.0817,
+        "peak_memory_mb": 0.32
+      },
+      "implementation": {
+        "avg_latency_ms": 0.0086,
+        "peak_memory_mb": 0.49,
+        "kernel_metrics": {
+          "_bigbird_attn_fwd_kernel": {
+            "aiv_vec_ratio": 0.1202,
+            "aiv_mte2_ratio": 0.1403,
+            "aiv_mte3_ratio": 0.1019,
+            "aiv_scalar_ratio": 0.5783,
+            "aic_mac_ratio": 0.018,
+            "aic_mte1_ratio": 0.038,
+            "cube_utilization(%)": 33.4977
+          }
+        }
+      },
+      "speedup_vs_torch": 9.5,
+      "error_type": null,
+      "error_msg": null
+    },
+    {
+      "case_idx": 3,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            2,
+            19,
+            256
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            2,
+            31,
+            256
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            2,
+            31,
+            256
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 11
+        },
+        {
+          "type": "scalar",
+          "value": 2
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        }
+      ],
+      "status": "pass",
+      "framework": {
+        "avg_latency_ms": 0.0853,
+        "peak_memory_mb": 0.39
+      },
+      "implementation": {
+        "avg_latency_ms": 0.0077,
+        "peak_memory_mb": 0.5,
+        "kernel_metrics": {
+          "_bigbird_attn_fwd_kernel": {
+            "aiv_vec_ratio": 0.1547,
+            "aiv_mte2_ratio": 0.1368,
+            "aiv_mte3_ratio": 0.1153,
+            "aiv_scalar_ratio": 0.521,
+            "aic_mac_ratio": 0.0343,
+            "aic_mte1_ratio": 0.0668,
+            "cube_utilization(%)": 17.5419
+          }
+        }
+      },
+      "speedup_vs_torch": 11.0779,
+      "error_type": null,
+      "error_msg": null
+    },
+    {
+      "case_idx": 4,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            16,
+            11,
+            32
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            16,
+            11,
+            32
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            16,
+            11,
+            32
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 6
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        }
+      ],
+      "status": "pass",
+      "framework": {
+        "avg_latency_ms": 0.0776,
+        "peak_memory_mb": 0.19
+      },
+      "implementation": {
+        "avg_latency_ms": 0.0177,
+        "peak_memory_mb": 0.86,
+        "kernel_metrics": {
+          "_bigbird_attn_fwd_kernel": {
+            "aiv_vec_ratio": 0.0573,
+            "aiv_mte2_ratio": 0.2135,
+            "aiv_mte3_ratio": 0.1238,
+            "aiv_scalar_ratio": 0.5339,
+            "aic_mac_ratio": 0.0087,
+            "aic_mte1_ratio": 0.0183,
+            "cube_utilization(%)": 68.5072
+          }
+        }
+      },
+      "speedup_vs_torch": 4.3842,
+      "error_type": null,
+      "error_msg": null
+    },
+    {
+      "case_idx": 5,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            8,
+            13,
+            64
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            8,
+            19,
+            64
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            8,
+            19,
+            64
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 8
+        },
+        {
+          "type": "scalar",
+          "value": 3
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        }
+      ],
+      "status": "pass",
+      "framework": {
+        "avg_latency_ms": 0.0835,
+        "peak_memory_mb": 0.52
+      },
+      "implementation": {
+        "avg_latency_ms": 0.0156,
+        "peak_memory_mb": 0.95,
+        "kernel_metrics": {
+          "_bigbird_attn_fwd_kernel": {
+            "aiv_vec_ratio": 0.0648,
+            "aiv_mte2_ratio": 0.208,
+            "aiv_mte3_ratio": 0.1111,
+            "aiv_scalar_ratio": 0.566,
+            "aic_mac_ratio": 0.0097,
+            "aic_mte1_ratio": 0.0207,
+            "cube_utilization(%)": 68.3273
+          }
+        }
+      },
+      "speedup_vs_torch": 5.3526,
+      "error_type": null,
+      "error_msg": null
+    },
+    {
+      "case_idx": 6,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            8,
+            29,
+            64
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            8,
+            29,
+            64
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            8,
+            29,
+            64
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 16
+        },
+        {
+          "type": "scalar",
+          "value": 4
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            8,
+            1,
+            29
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        }
+      ],
+      "status": "pass",
+      "framework": {
+        "avg_latency_ms": 0.1016,
+        "peak_memory_mb": 0.49
+      },
+      "implementation": {
+        "avg_latency_ms": 0.0218,
+        "peak_memory_mb": 0.94,
+        "kernel_metrics": {
+          "_bigbird_attn_fwd_kernel": {
+            "aiv_vec_ratio": 0.0482,
+            "aiv_mte2_ratio": 0.3494,
+            "aiv_mte3_ratio": 0.0902,
+            "aiv_scalar_ratio": 0.4596,
+            "aic_mac_ratio": 0.0071,
+            "aic_mte1_ratio": 0.0147,
+            "cube_utilization(%)": 69.2392
+          }
+        }
+      },
+      "speedup_vs_torch": 4.6606,
+      "error_type": null,
+      "error_msg": null
+    },
+    {
+      "case_idx": 7,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            4,
+            23,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            4,
+            23,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            4,
+            23,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 12
+        },
+        {
+          "type": "scalar",
+          "value": 3
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        }
+      ],
+      "status": "pass",
+      "framework": {
+        "avg_latency_ms": 0.0863,
+        "peak_memory_mb": 0.73
+      },
+      "implementation": {
+        "avg_latency_ms": 0.0132,
+        "peak_memory_mb": 1.01,
+        "kernel_metrics": {
+          "_bigbird_attn_fwd_kernel": {
+            "aiv_vec_ratio": 0.0776,
+            "aiv_mte2_ratio": 0.1302,
+            "aiv_mte3_ratio": 0.0795,
+            "aiv_scalar_ratio": 0.6478,
+            "aic_mac_ratio": 0.0117,
+            "aic_mte1_ratio": 0.0246,
+            "cube_utilization(%)": 67.8572
+          }
+        }
+      },
+      "speedup_vs_torch": 6.5379,
+      "error_type": null,
+      "error_msg": null
+    },
+    {
+      "case_idx": 8,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            1,
+            37,
+            512
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            1,
+            43,
+            512
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            1,
+            43,
+            512
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 20
+        },
+        {
+          "type": "scalar",
+          "value": 5
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        }
+      ],
+      "status": "pass",
+      "framework": {
+        "avg_latency_ms": 0.0728,
+        "peak_memory_mb": 0.63
+      },
+      "implementation": {
+        "avg_latency_ms": 0.0148,
+        "peak_memory_mb": 0.75,
+        "kernel_metrics": {
+          "_bigbird_attn_fwd_kernel": {
+            "aiv_vec_ratio": 0.1794,
+            "aiv_mte2_ratio": 0.1162,
+            "aiv_mte3_ratio": 0.1421,
+            "aiv_scalar_ratio": 0.4564,
+            "aic_mac_ratio": 0.0672,
+            "aic_mte1_ratio": 0.1199,
+            "cube_utilization(%)": 13.8848
+          }
+        }
+      },
+      "speedup_vs_torch": 4.9189,
+      "error_type": null,
+      "error_msg": null
+    },
+    {
+      "case_idx": 9,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            16,
+            19,
+            32
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            16,
+            31,
+            32
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            16,
+            31,
+            32
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 10
+        },
+        {
+          "type": "scalar",
+          "value": 3
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        }
+      ],
+      "status": "pass",
+      "framework": {
+        "avg_latency_ms": 0.0848,
+        "peak_memory_mb": 0.47
+      },
+      "implementation": {
+        "avg_latency_ms": 0.0232,
+        "peak_memory_mb": 1.75,
+        "kernel_metrics": {
+          "_bigbird_attn_fwd_kernel": {
+            "aiv_vec_ratio": 0.075,
+            "aiv_mte2_ratio": 0.1476,
+            "aiv_mte3_ratio": 0.0819,
+            "aiv_scalar_ratio": 0.6469,
+            "aic_mac_ratio": 0.011,
+            "aic_mte1_ratio": 0.0236,
+            "cube_utilization(%)": 80.6664
+          }
+        }
+      },
+      "speedup_vs_torch": 3.6552,
+      "error_type": null,
+      "error_msg": null
+    },
+    {
+      "case_idx": 10,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            4,
+            31,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            4,
+            37,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            4,
+            37,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 14
+        },
+        {
+          "type": "scalar",
+          "value": 4
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        }
+      ],
+      "status": "pass",
+      "framework": {
+        "avg_latency_ms": 0.0873,
+        "peak_memory_mb": 0.57
+      },
+      "implementation": {
+        "avg_latency_ms": 0.0128,
+        "peak_memory_mb": 0.57,
+        "kernel_metrics": {
+          "_bigbird_attn_fwd_kernel": {
+            "aiv_vec_ratio": 0.1313,
+            "aiv_mte2_ratio": 0.1578,
+            "aiv_mte3_ratio": 0.1104,
+            "aiv_scalar_ratio": 0.5232,
+            "aic_mac_ratio": 0.0228,
+            "aic_mte1_ratio": 0.0478,
+            "cube_utilization(%)": 35.7169
+          }
+        }
+      },
+      "speedup_vs_torch": 6.8203,
+      "error_type": null,
+      "error_msg": null
+    },
+    {
+      "case_idx": 11,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            8,
+            23,
+            64
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            8,
+            29,
+            64
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            8,
+            29,
+            64
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 14
+        },
+        {
+          "type": "scalar",
+          "value": 4
+        },
+        {
+          "type": "scalar",
+          "value": 0.125
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        }
+      ],
+      "status": "pass",
+      "framework": {
+        "avg_latency_ms": 0.0831,
+        "peak_memory_mb": 0.88
+      },
+      "implementation": {
+        "avg_latency_ms": 0.0252,
+        "peak_memory_mb": 1.86,
+        "kernel_metrics": {
+          "_bigbird_attn_fwd_kernel": {
+            "aiv_vec_ratio": 0.0706,
+            "aiv_mte2_ratio": 0.1714,
+            "aiv_mte3_ratio": 0.0993,
+            "aiv_scalar_ratio": 0.6278,
+            "aic_mac_ratio": 0.0105,
+            "aic_mte1_ratio": 0.0225,
+            "cube_utilization(%)": 77.7698
+          }
+        }
+      },
+      "speedup_vs_torch": 3.2976,
+      "error_type": null,
+      "error_msg": null
+    },
+    {
+      "case_idx": 12,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            2,
+            37,
+            256
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            2,
+            47,
+            256
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            2,
+            47,
+            256
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 18
+        },
+        {
+          "type": "scalar",
+          "value": 3
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        }
+      ],
+      "status": "pass",
+      "framework": {
+        "avg_latency_ms": 0.09,
+        "peak_memory_mb": 0.69
+      },
+      "implementation": {
+        "avg_latency_ms": 0.0131,
+        "peak_memory_mb": 0.79,
+        "kernel_metrics": {
+          "_bigbird_attn_fwd_kernel": {
+            "aiv_vec_ratio": 0.15,
+            "aiv_mte2_ratio": 0.1232,
+            "aiv_mte3_ratio": 0.1194,
+            "aiv_scalar_ratio": 0.4823,
+            "aic_mac_ratio": 0.0386,
+            "aic_mte1_ratio": 0.0762,
+            "cube_utilization(%)": 27.1075
+          }
+        }
+      },
+      "speedup_vs_torch": 6.8702,
+      "error_type": null,
+      "error_msg": null
+    },
+    {
+      "case_idx": 13,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            8,
+            43,
+            64
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            8,
+            37,
+            64
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            8,
+            37,
+            64
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 16
+        },
+        {
+          "type": "scalar",
+          "value": 5
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        }
+      ],
+      "status": "pass",
+      "framework": {
+        "avg_latency_ms": 0.0934,
+        "peak_memory_mb": 0.73
+      },
+      "implementation": {
+        "avg_latency_ms": 0.0308,
+        "peak_memory_mb": 1.42,
+        "kernel_metrics": {
+          "_bigbird_attn_fwd_kernel": {
+            "aiv_vec_ratio": 0.0838,
+            "aiv_mte2_ratio": 0.1314,
+            "aiv_mte3_ratio": 0.0834,
+            "aiv_scalar_ratio": 0.6281,
+            "aic_mac_ratio": 0.014,
+            "aic_mte1_ratio": 0.0298,
+            "cube_utilization(%)": 71.6088
+          }
+        }
+      },
+      "speedup_vs_torch": 3.0325,
+      "error_type": null,
+      "error_msg": null
+    },
+    {
+      "case_idx": 14,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            3,
+            4,
+            23,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            3,
+            4,
+            19,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            3,
+            4,
+            19,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 8
+        },
+        {
+          "type": "scalar",
+          "value": 2
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        }
+      ],
+      "status": "pass",
+      "framework": {
+        "avg_latency_ms": 0.0842,
+        "peak_memory_mb": 1.01
+      },
+      "implementation": {
+        "avg_latency_ms": 0.0196,
+        "peak_memory_mb": 1.51,
+        "kernel_metrics": {
+          "_bigbird_attn_fwd_kernel": {
+            "aiv_vec_ratio": 0.0704,
+            "aiv_mte2_ratio": 0.1254,
+            "aiv_mte3_ratio": 0.0775,
+            "aiv_scalar_ratio": 0.6765,
+            "aic_mac_ratio": 0.0105,
+            "aic_mte1_ratio": 0.0222,
+            "cube_utilization(%)": 75.8252
+          }
+        }
+      },
+      "speedup_vs_torch": 4.2959,
+      "error_type": null,
+      "error_msg": null
+    },
+    {
+      "case_idx": 15,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            2,
+            31,
+            256
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            2,
+            43,
+            256
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            2,
+            43,
+            256
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 14
+        },
+        {
+          "type": "scalar",
+          "value": 4
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        }
+      ],
+      "status": "pass",
+      "framework": {
+        "avg_latency_ms": 0.091,
+        "peak_memory_mb": 1.19
+      },
+      "implementation": {
+        "avg_latency_ms": 0.0138,
+        "peak_memory_mb": 1.12,
+        "kernel_metrics": {
+          "_bigbird_attn_fwd_kernel": {
+            "aiv_vec_ratio": 0.1428,
+            "aiv_mte2_ratio": 0.1362,
+            "aiv_mte3_ratio": 0.1142,
+            "aiv_scalar_ratio": 0.493,
+            "aic_mac_ratio": 0.0369,
+            "aic_mte1_ratio": 0.0725,
+            "cube_utilization(%)": 36.1423
+          }
+        }
+      },
+      "speedup_vs_torch": 6.5942,
+      "error_type": null,
+      "error_msg": null
+    },
+    {
+      "case_idx": 16,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            16,
+            37,
+            32
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            16,
+            47,
+            32
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            16,
+            47,
+            32
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 20
+        },
+        {
+          "type": "scalar",
+          "value": 4
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        }
+      ],
+      "status": "pass",
+      "framework": {
+        "avg_latency_ms": 0.0945,
+        "peak_memory_mb": 0.9
+      },
+      "implementation": {
+        "avg_latency_ms": 0.0492,
+        "peak_memory_mb": 2.66,
+        "kernel_metrics": {
+          "_bigbird_attn_fwd_kernel": {
+            "aiv_vec_ratio": 0.0886,
+            "aiv_mte2_ratio": 0.1137,
+            "aiv_mte3_ratio": 0.0829,
+            "aiv_scalar_ratio": 0.5953,
+            "aic_mac_ratio": 0.015,
+            "aic_mte1_ratio": 0.0314,
+            "cube_utilization(%)": 85.1503
+          }
+        }
+      },
+      "speedup_vs_torch": 1.9207,
+      "error_type": null,
+      "error_msg": null
+    },
+    {
+      "case_idx": 17,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            4,
+            53,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            4,
+            61,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            4,
+            61,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 22
+        },
+        {
+          "type": "scalar",
+          "value": 5
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        }
+      ],
+      "status": "pass",
+      "framework": {
+        "avg_latency_ms": 0.0947,
+        "peak_memory_mb": 1.01
+      },
+      "implementation": {
+        "avg_latency_ms": 0.0178,
+        "peak_memory_mb": 1.11,
+        "kernel_metrics": {
+          "_bigbird_attn_fwd_kernel": {
+            "aiv_vec_ratio": 0.0957,
+            "aiv_mte2_ratio": 0.1148,
+            "aiv_mte3_ratio": 0.0852,
+            "aiv_scalar_ratio": 0.6285,
+            "aic_mac_ratio": 0.0166,
+            "aic_mte1_ratio": 0.0349,
+            "cube_utilization(%)": 70.664
+          }
+        }
+      },
+      "speedup_vs_torch": 5.3202,
+      "error_type": null,
+      "error_msg": null
+    },
+    {
+      "case_idx": 18,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            8,
+            43,
+            64
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            8,
+            53,
+            64
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            8,
+            53,
+            64
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 22
+        },
+        {
+          "type": "scalar",
+          "value": 6
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        }
+      ],
+      "status": "pass",
+      "framework": {
+        "avg_latency_ms": 0.0946,
+        "peak_memory_mb": 1.78
+      },
+      "implementation": {
+        "avg_latency_ms": 0.0494,
+        "peak_memory_mb": 2.89,
+        "kernel_metrics": {
+          "_bigbird_attn_fwd_kernel": {
+            "aiv_vec_ratio": 0.0893,
+            "aiv_mte2_ratio": 0.1396,
+            "aiv_mte3_ratio": 0.0908,
+            "aiv_scalar_ratio": 0.6061,
+            "aic_mac_ratio": 0.015,
+            "aic_mte1_ratio": 0.0319,
+            "cube_utilization(%)": 83.8247
+          }
+        }
+      },
+      "speedup_vs_torch": 1.915,
+      "error_type": null,
+      "error_msg": null
+    },
+    {
+      "case_idx": 19,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            2,
+            37,
+            256
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            2,
+            37,
+            256
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            2,
+            37,
+            256
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 18
+        },
+        {
+          "type": "scalar",
+          "value": 4
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        }
+      ],
+      "status": "pass",
+      "framework": {
+        "avg_latency_ms": 0.0949,
+        "peak_memory_mb": 2.34
+      },
+      "implementation": {
+        "avg_latency_ms": 0.0313,
+        "peak_memory_mb": 3.01,
+        "kernel_metrics": {
+          "_bigbird_attn_fwd_kernel": {
+            "aiv_vec_ratio": 0.0953,
+            "aiv_mte2_ratio": 0.1072,
+            "aiv_mte3_ratio": 0.0858,
+            "aiv_scalar_ratio": 0.6078,
+            "aic_mac_ratio": 0.0242,
+            "aic_mte1_ratio": 0.048,
+            "cube_utilization(%)": 72.2636
+          }
+        }
+      },
+      "speedup_vs_torch": 3.0319,
+      "error_type": null,
+      "error_msg": null
+    },
+    {
+      "case_idx": 20,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            1,
+            67,
+            512
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            1,
+            73,
+            512
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            1,
+            73,
+            512
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 36
+        },
+        {
+          "type": "scalar",
+          "value": 8
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        }
+      ],
+      "status": "pass",
+      "framework": {
+        "avg_latency_ms": 0.0806,
+        "peak_memory_mb": 1.17
+      },
+      "implementation": {
+        "avg_latency_ms": 0.0213,
+        "peak_memory_mb": 1.34,
+        "kernel_metrics": {
+          "_bigbird_attn_fwd_kernel": {
+            "aiv_vec_ratio": 0.1732,
+            "aiv_mte2_ratio": 0.1137,
+            "aiv_mte3_ratio": 0.1402,
+            "aiv_scalar_ratio": 0.4524,
+            "aic_mac_ratio": 0.0693,
+            "aic_mte1_ratio": 0.1242,
+            "cube_utilization(%)": 23.3198
+          }
+        }
+      },
+      "speedup_vs_torch": 3.784,
+      "error_type": null,
+      "error_msg": null
+    },
+    {
+      "case_idx": 21,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            4,
+            53,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            4,
+            67,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            4,
+            67,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 28
+        },
+        {
+          "type": "scalar",
+          "value": 5
+        },
+        {
+          "type": "scalar",
+          "value": 0.088388
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        }
+      ],
+      "status": "pass",
+      "framework": {
+        "avg_latency_ms": 0.0999,
+        "peak_memory_mb": 2.11
+      },
+      "implementation": {
+        "avg_latency_ms": 0.0449,
+        "peak_memory_mb": 2.21,
+        "kernel_metrics": {
+          "_bigbird_attn_fwd_kernel": {
+            "aiv_vec_ratio": 0.0925,
+            "aiv_mte2_ratio": 0.0955,
+            "aiv_mte3_ratio": 0.0803,
+            "aiv_scalar_ratio": 0.5918,
+            "aic_mac_ratio": 0.017,
+            "aic_mte1_ratio": 0.0353,
+            "cube_utilization(%)": 82.9061
+          }
+        }
+      },
+      "speedup_vs_torch": 2.2249,
+      "error_type": null,
+      "error_msg": null
+    },
+    {
+      "case_idx": 22,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            8,
+            61,
+            64
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            8,
+            73,
+            64
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            8,
+            73,
+            64
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 32
+        },
+        {
+          "type": "scalar",
+          "value": 7
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        }
+      ],
+      "status": "pass",
+      "framework": {
+        "avg_latency_ms": 0.1001,
+        "peak_memory_mb": 1.4
+      },
+      "implementation": {
+        "avg_latency_ms": 0.0457,
+        "peak_memory_mb": 2.02,
+        "kernel_metrics": {
+          "_bigbird_attn_fwd_kernel": {
+            "aiv_vec_ratio": 0.094,
+            "aiv_mte2_ratio": 0.1393,
+            "aiv_mte3_ratio": 0.0899,
+            "aiv_scalar_ratio": 0.6002,
+            "aic_mac_ratio": 0.0168,
+            "aic_mte1_ratio": 0.0351,
+            "cube_utilization(%)": 82.0852
+          }
+        }
+      },
+      "speedup_vs_torch": 2.1904,
+      "error_type": null,
+      "error_msg": null
+    },
+    {
+      "case_idx": 23,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            4,
+            73,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            4,
+            89,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            4,
+            89,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 30
+        },
+        {
+          "type": "scalar",
+          "value": 6
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        }
+      ],
+      "status": "pass",
+      "framework": {
+        "avg_latency_ms": 0.0927,
+        "peak_memory_mb": 1.56
+      },
+      "implementation": {
+        "avg_latency_ms": 0.0301,
+        "peak_memory_mb": 1.49,
+        "kernel_metrics": {
+          "_bigbird_attn_fwd_kernel": {
+            "aiv_vec_ratio": 0.082,
+            "aiv_mte2_ratio": 0.0955,
+            "aiv_mte3_ratio": 0.0731,
+            "aiv_scalar_ratio": 0.6127,
+            "aic_mac_ratio": 0.015,
+            "aic_mte1_ratio": 0.0313,
+            "cube_utilization(%)": 86.9003
+          }
+        }
+      },
+      "speedup_vs_torch": 3.0797,
+      "error_type": null,
+      "error_msg": null
+    },
+    {
+      "case_idx": 24,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            2,
+            47,
+            256
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            2,
+            61,
+            256
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            2,
+            61,
+            256
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 24
+        },
+        {
+          "type": "scalar",
+          "value": 5
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        }
+      ],
+      "status": "pass",
+      "framework": {
+        "avg_latency_ms": 0.0954,
+        "peak_memory_mb": 3.54
+      },
+      "implementation": {
+        "avg_latency_ms": 0.0313,
+        "peak_memory_mb": 3.36,
+        "kernel_metrics": {
+          "_bigbird_attn_fwd_kernel": {
+            "aiv_vec_ratio": 0.0968,
+            "aiv_mte2_ratio": 0.1054,
+            "aiv_mte3_ratio": 0.0878,
+            "aiv_scalar_ratio": 0.6218,
+            "aic_mac_ratio": 0.0248,
+            "aic_mte1_ratio": 0.0485,
+            "cube_utilization(%)": 71.1419
+          }
+        }
+      },
+      "speedup_vs_torch": 3.0479,
+      "error_type": null,
+      "error_msg": null
+    },
+    {
+      "case_idx": 25,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            16,
+            43,
+            32
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            16,
+            59,
+            32
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            16,
+            59,
+            32
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 24
+        },
+        {
+          "type": "scalar",
+          "value": 5
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        }
+      ],
+      "status": "pass",
+      "framework": {
+        "avg_latency_ms": 0.0951,
+        "peak_memory_mb": 1.25
+      },
+      "implementation": {
+        "avg_latency_ms": 0.0491,
+        "peak_memory_mb": 2.82,
+        "kernel_metrics": {
+          "_bigbird_attn_fwd_kernel": {
+            "aiv_vec_ratio": 0.0895,
+            "aiv_mte2_ratio": 0.1227,
+            "aiv_mte3_ratio": 0.0864,
+            "aiv_scalar_ratio": 0.6039,
+            "aic_mac_ratio": 0.015,
+            "aic_mte1_ratio": 0.0317,
+            "cube_utilization(%)": 84.6208
+          }
+        }
+      },
+      "speedup_vs_torch": 1.9369,
+      "error_type": null,
+      "error_msg": null
+    },
+    {
+      "case_idx": 26,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            2,
+            61,
+            256
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            2,
+            73,
+            256
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            2,
+            73,
+            256
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 30
+        },
+        {
+          "type": "scalar",
+          "value": 5
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2
+          ],
+          "dtype": "torch.float32"
+        }
+      ],
+      "status": "pass",
+      "framework": {
+        "avg_latency_ms": 0.1095,
+        "peak_memory_mb": 2.31
+      },
+      "implementation": {
+        "avg_latency_ms": 0.0239,
+        "peak_memory_mb": 2.29,
+        "kernel_metrics": {
+          "_bigbird_attn_fwd_kernel": {
+            "aiv_vec_ratio": 0.1176,
+            "aiv_mte2_ratio": 0.1093,
+            "aiv_mte3_ratio": 0.1039,
+            "aiv_scalar_ratio": 0.56,
+            "aic_mac_ratio": 0.0319,
+            "aic_mte1_ratio": 0.0628,
+            "cube_utilization(%)": 72.3265
+          }
+        }
+      },
+      "speedup_vs_torch": 4.5816,
+      "error_type": null,
+      "error_msg": null
+    },
+    {
+      "case_idx": 27,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            8,
+            83,
+            64
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            8,
+            97,
+            64
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            8,
+            97,
+            64
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 40
+        },
+        {
+          "type": "scalar",
+          "value": 8
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        }
+      ],
+      "status": "pass",
+      "framework": {
+        "avg_latency_ms": 0.1002,
+        "peak_memory_mb": 2.05
+      },
+      "implementation": {
+        "avg_latency_ms": 0.0854,
+        "peak_memory_mb": 3.02,
+        "kernel_metrics": {
+          "_bigbird_attn_fwd_kernel": {
+            "aiv_vec_ratio": 0.0943,
+            "aiv_mte2_ratio": 0.1294,
+            "aiv_mte3_ratio": 0.0873,
+            "aiv_scalar_ratio": 0.5765,
+            "aic_mac_ratio": 0.017,
+            "aic_mte1_ratio": 0.036,
+            "cube_utilization(%)": 85.6986
+          }
+        }
+      },
+      "speedup_vs_torch": 1.1733,
+      "error_type": null,
+      "error_msg": null
+    },
+    {
+      "case_idx": 28,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            3,
+            4,
+            53,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            3,
+            4,
+            73,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            3,
+            4,
+            73,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 28
+        },
+        {
+          "type": "scalar",
+          "value": 6
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        }
+      ],
+      "status": "pass",
+      "framework": {
+        "avg_latency_ms": 0.0971,
+        "peak_memory_mb": 3.4
+      },
+      "implementation": {
+        "avg_latency_ms": 0.0669,
+        "peak_memory_mb": 3.42,
+        "kernel_metrics": {
+          "_bigbird_attn_fwd_kernel": {
+            "aiv_vec_ratio": 0.0898,
+            "aiv_mte2_ratio": 0.0929,
+            "aiv_mte3_ratio": 0.0767,
+            "aiv_scalar_ratio": 0.5755,
+            "aic_mac_ratio": 0.016,
+            "aic_mte1_ratio": 0.0342,
+            "cube_utilization(%)": 86.0007
+          }
+        }
+      },
+      "speedup_vs_torch": 1.4514,
+      "error_type": null,
+      "error_msg": null
+    },
+    {
+      "case_idx": 29,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            8,
+            67,
+            64
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            8,
+            83,
+            64
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            8,
+            83,
+            64
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 36
+        },
+        {
+          "type": "scalar",
+          "value": 7
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        }
+      ],
+      "status": "pass",
+      "framework": {
+        "avg_latency_ms": 0.1093,
+        "peak_memory_mb": 3.16
+      },
+      "implementation": {
+        "avg_latency_ms": 0.1055,
+        "peak_memory_mb": 4.92,
+        "kernel_metrics": {
+          "_bigbird_attn_fwd_kernel": {
+            "aiv_vec_ratio": 0.0917,
+            "aiv_mte2_ratio": 0.1348,
+            "aiv_mte3_ratio": 0.0872,
+            "aiv_scalar_ratio": 0.5769,
+            "aic_mac_ratio": 0.016,
+            "aic_mte1_ratio": 0.034,
+            "cube_utilization(%)": 91.3584
+          }
+        }
+      },
+      "speedup_vs_torch": 1.036,
+      "error_type": null,
+      "error_msg": null
+    },
+    {
+      "case_idx": 30,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            4,
+            89,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            4,
+            107,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            4,
+            107,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 44
+        },
+        {
+          "type": "scalar",
+          "value": 8
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        }
+      ],
+      "status": "pass",
+      "framework": {
+        "avg_latency_ms": 0.0962,
+        "peak_memory_mb": 2.04
+      },
+      "implementation": {
+        "avg_latency_ms": 0.0518,
+        "peak_memory_mb": 1.9,
+        "kernel_metrics": {
+          "_bigbird_attn_fwd_kernel": {
+            "aiv_vec_ratio": 0.0885,
+            "aiv_mte2_ratio": 0.0943,
+            "aiv_mte3_ratio": 0.0771,
+            "aiv_scalar_ratio": 0.5923,
+            "aic_mac_ratio": 0.0165,
+            "aic_mte1_ratio": 0.0349,
+            "cube_utilization(%)": 73.0383
+          }
+        }
+      },
+      "speedup_vs_torch": 1.8571,
+      "error_type": null,
+      "error_msg": null
+    },
+    {
+      "case_idx": 31,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            4,
+            53,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            4,
+            67,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            4,
+            67,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 28
+        },
+        {
+          "type": "scalar",
+          "value": 5
+        },
+        {
+          "type": "scalar",
+          "value": 0.088388
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        }
+      ],
+      "status": "pass",
+      "framework": {
+        "avg_latency_ms": 0.0984,
+        "peak_memory_mb": 4.3
+      },
+      "implementation": {
+        "avg_latency_ms": 0.0876,
+        "peak_memory_mb": 4.49,
+        "kernel_metrics": {
+          "_bigbird_attn_fwd_kernel": {
+            "aiv_vec_ratio": 0.0895,
+            "aiv_mte2_ratio": 0.0931,
+            "aiv_mte3_ratio": 0.0763,
+            "aiv_scalar_ratio": 0.5672,
+            "aic_mac_ratio": 0.016,
+            "aic_mte1_ratio": 0.034,
+            "cube_utilization(%)": 87.9301
+          }
+        }
+      },
+      "speedup_vs_torch": 1.1233,
+      "error_type": null,
+      "error_msg": null
+    },
+    {
+      "case_idx": 32,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            1,
+            97,
+            512
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            1,
+            113,
+            512
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            1,
+            113,
+            512
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 48
+        },
+        {
+          "type": "scalar",
+          "value": 10
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        }
+      ],
+      "status": "pass",
+      "framework": {
+        "avg_latency_ms": 0.0793,
+        "peak_memory_mb": 1.98
+      },
+      "implementation": {
+        "avg_latency_ms": 0.029,
+        "peak_memory_mb": 2.1,
+        "kernel_metrics": {
+          "_bigbird_attn_fwd_kernel": {
+            "aiv_vec_ratio": 0.1622,
+            "aiv_mte2_ratio": 0.1284,
+            "aiv_mte3_ratio": 0.1661,
+            "aiv_scalar_ratio": 0.4734,
+            "aic_mac_ratio": 0.0671,
+            "aic_mte1_ratio": 0.1197,
+            "cube_utilization(%)": 33.0586
+          }
+        }
+      },
+      "speedup_vs_torch": 2.7345,
+      "error_type": null,
+      "error_msg": null
+    },
+    {
+      "case_idx": 33,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            4,
+            73,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            4,
+            97,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            4,
+            97,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 40
+        },
+        {
+          "type": "scalar",
+          "value": 8
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        }
+      ],
+      "status": "pass",
+      "framework": {
+        "avg_latency_ms": 0.0956,
+        "peak_memory_mb": 3.32
+      },
+      "implementation": {
+        "avg_latency_ms": 0.0704,
+        "peak_memory_mb": 3.07,
+        "kernel_metrics": {
+          "_bigbird_attn_fwd_kernel": {
+            "aiv_vec_ratio": 0.0884,
+            "aiv_mte2_ratio": 0.0912,
+            "aiv_mte3_ratio": 0.0772,
+            "aiv_scalar_ratio": 0.5742,
+            "aic_mac_ratio": 0.0164,
+            "aic_mte1_ratio": 0.0347,
+            "cube_utilization(%)": 89.7769
+          }
+        }
+      },
+      "speedup_vs_torch": 1.358,
+      "error_type": null,
+      "error_msg": null
+    },
+    {
+      "case_idx": 34,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            16,
+            59,
+            32
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            16,
+            79,
+            32
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            16,
+            79,
+            32
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 30
+        },
+        {
+          "type": "scalar",
+          "value": 6
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        }
+      ],
+      "status": "pass",
+      "framework": {
+        "avg_latency_ms": 0.1065,
+        "peak_memory_mb": 1.98
+      },
+      "implementation": {
+        "avg_latency_ms": 0.0888,
+        "peak_memory_mb": 3.91,
+        "kernel_metrics": {
+          "_bigbird_attn_fwd_kernel": {
+            "aiv_vec_ratio": 0.0917,
+            "aiv_mte2_ratio": 0.1129,
+            "aiv_mte3_ratio": 0.0829,
+            "aiv_scalar_ratio": 0.5726,
+            "aic_mac_ratio": 0.016,
+            "aic_mte1_ratio": 0.034,
+            "cube_utilization(%)": 87.0685
+          }
+        }
+      },
+      "speedup_vs_torch": 1.1993,
+      "error_type": null,
+      "error_msg": null
+    },
+    {
+      "case_idx": 35,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            2,
+            67,
+            256
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            2,
+            89,
+            256
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            2,
+            89,
+            256
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 36
+        },
+        {
+          "type": "scalar",
+          "value": 7
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        }
+      ],
+      "status": "pass",
+      "framework": {
+        "avg_latency_ms": 0.0984,
+        "peak_memory_mb": 5.39
+      },
+      "implementation": {
+        "avg_latency_ms": 0.0554,
+        "peak_memory_mb": 5.54,
+        "kernel_metrics": {
+          "_bigbird_attn_fwd_kernel": {
+            "aiv_vec_ratio": 0.1016,
+            "aiv_mte2_ratio": 0.0922,
+            "aiv_mte3_ratio": 0.0888,
+            "aiv_scalar_ratio": 0.5592,
+            "aic_mac_ratio": 0.0276,
+            "aic_mte1_ratio": 0.0543,
+            "cube_utilization(%)": 90.0886
+          }
+        }
+      },
+      "speedup_vs_torch": 1.7762,
+      "error_type": null,
+      "error_msg": null
+    },
+    {
+      "case_idx": 36,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            4,
+            97,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            4,
+            107,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            4,
+            107,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 52
+        },
+        {
+          "type": "scalar",
+          "value": 10
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        }
+      ],
+      "status": "pass",
+      "framework": {
+        "avg_latency_ms": 0.1007,
+        "peak_memory_mb": 4.09
+      },
+      "implementation": {
+        "avg_latency_ms": 0.0942,
+        "peak_memory_mb": 4.09,
+        "kernel_metrics": {
+          "_bigbird_attn_fwd_kernel": {
+            "aiv_vec_ratio": 0.0916,
+            "aiv_mte2_ratio": 0.0919,
+            "aiv_mte3_ratio": 0.0788,
+            "aiv_scalar_ratio": 0.5616,
+            "aic_mac_ratio": 0.017,
+            "aic_mte1_ratio": 0.0361,
+            "cube_utilization(%)": 90.4529
+          }
+        }
+      },
+      "speedup_vs_torch": 1.069,
+      "error_type": null,
+      "error_msg": null
+    },
+    {
+      "case_idx": 37,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            8,
+            101,
+            64
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            8,
+            127,
+            64
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            8,
+            127,
+            64
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 60
+        },
+        {
+          "type": "scalar",
+          "value": 12
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        }
+      ],
+      "status": "pass",
+      "framework": {
+        "avg_latency_ms": 0.1096,
+        "peak_memory_mb": 2.97
+      },
+      "implementation": {
+        "avg_latency_ms": 0.0935,
+        "peak_memory_mb": 3.79,
+        "kernel_metrics": {
+          "_bigbird_attn_fwd_kernel": {
+            "aiv_vec_ratio": 0.095,
+            "aiv_mte2_ratio": 0.1405,
+            "aiv_mte3_ratio": 0.0901,
+            "aiv_scalar_ratio": 0.5766,
+            "aic_mac_ratio": 0.017,
+            "aic_mte1_ratio": 0.036,
+            "cube_utilization(%)": 90.7018
+          }
+        }
+      },
+      "speedup_vs_torch": 1.1722,
+      "error_type": null,
+      "error_msg": null
+    },
+    {
+      "case_idx": 38,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            4,
+            73,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            4,
+            101,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            4,
+            101,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 44
+        },
+        {
+          "type": "scalar",
+          "value": 8
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        }
+      ],
+      "status": "pass",
+      "framework": {
+        "avg_latency_ms": 0.1049,
+        "peak_memory_mb": 6.59
+      },
+      "implementation": {
+        "avg_latency_ms": 0.1349,
+        "peak_memory_mb": 5.95,
+        "kernel_metrics": {
+          "_bigbird_attn_fwd_kernel": {
+            "aiv_vec_ratio": 0.09,
+            "aiv_mte2_ratio": 0.0946,
+            "aiv_mte3_ratio": 0.0767,
+            "aiv_scalar_ratio": 0.5559,
+            "aic_mac_ratio": 0.017,
+            "aic_mte1_ratio": 0.0351,
+            "cube_utilization(%)": 92.0246
+          }
+        }
+      },
+      "speedup_vs_torch": 0.7776,
+      "error_type": null,
+      "error_msg": null
+    },
+    {
+      "case_idx": 39,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            4,
+            113,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            4,
+            139,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            4,
+            139,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 60
+        },
+        {
+          "type": "scalar",
+          "value": 12
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        }
+      ],
+      "status": "pass",
+      "framework": {
+        "avg_latency_ms": 0.0984,
+        "peak_memory_mb": 2.93
+      },
+      "implementation": {
+        "avg_latency_ms": 0.0678,
+        "peak_memory_mb": 2.71,
+        "kernel_metrics": {
+          "_bigbird_attn_fwd_kernel": {
+            "aiv_vec_ratio": 0.0968,
+            "aiv_mte2_ratio": 0.0981,
+            "aiv_mte3_ratio": 0.0828,
+            "aiv_scalar_ratio": 0.5664,
+            "aic_mac_ratio": 0.018,
+            "aic_mte1_ratio": 0.0386,
+            "cube_utilization(%)": 83.7285
+          }
+        }
+      },
+      "speedup_vs_torch": 1.4513,
+      "error_type": null,
+      "error_msg": null
+    },
+    {
+      "case_idx": 40,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            8,
+            97,
+            64
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            8,
+            127,
+            64
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            8,
+            127,
+            64
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 64
+        },
+        {
+          "type": "scalar",
+          "value": 12
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        }
+      ],
+      "status": "pass",
+      "framework": {
+        "avg_latency_ms": 0.1129,
+        "peak_memory_mb": 5.46
+      },
+      "implementation": {
+        "avg_latency_ms": 0.183,
+        "peak_memory_mb": 7.2,
+        "kernel_metrics": {
+          "_bigbird_attn_fwd_kernel": {
+            "aiv_vec_ratio": 0.0945,
+            "aiv_mte2_ratio": 0.1369,
+            "aiv_mte3_ratio": 0.0883,
+            "aiv_scalar_ratio": 0.563,
+            "aic_mac_ratio": 0.017,
+            "aic_mte1_ratio": 0.036,
+            "cube_utilization(%)": 93.3492
+          }
+        }
+      },
+      "speedup_vs_torch": 0.6169,
+      "error_type": null,
+      "error_msg": null
+    },
+    {
+      "case_idx": 41,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            2,
+            97,
+            256
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            2,
+            131,
+            256
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            2,
+            131,
+            256
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 60
+        },
+        {
+          "type": "scalar",
+          "value": 10
+        },
+        {
+          "type": "scalar",
+          "value": 0.0625
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        }
+      ],
+      "status": "pass",
+      "framework": {
+        "avg_latency_ms": 0.1136,
+        "peak_memory_mb": 8.21
+      },
+      "implementation": {
+        "avg_latency_ms": 0.1139,
+        "peak_memory_mb": 7.94,
+        "kernel_metrics": {
+          "_bigbird_attn_fwd_kernel": {
+            "aiv_vec_ratio": 0.1081,
+            "aiv_mte2_ratio": 0.0866,
+            "aiv_mte3_ratio": 0.0941,
+            "aiv_scalar_ratio": 0.5268,
+            "aic_mac_ratio": 0.031,
+            "aic_mte1_ratio": 0.0609,
+            "cube_utilization(%)": 91.1927
+          }
+        }
+      },
+      "speedup_vs_torch": 0.9974,
+      "error_type": null,
+      "error_msg": null
+    },
+    {
+      "case_idx": 42,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            1,
+            151,
+            512
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            1,
+            181,
+            512
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            1,
+            181,
+            512
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 80
+        },
+        {
+          "type": "scalar",
+          "value": 16
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        }
+      ],
+      "status": "pass",
+      "framework": {
+        "avg_latency_ms": 0.0949,
+        "peak_memory_mb": 3.45
+      },
+      "implementation": {
+        "avg_latency_ms": 0.0433,
+        "peak_memory_mb": 3.35,
+        "kernel_metrics": {
+          "_bigbird_attn_fwd_kernel": {
+            "aiv_vec_ratio": 0.1577,
+            "aiv_mte2_ratio": 0.1276,
+            "aiv_mte3_ratio": 0.1691,
+            "aiv_scalar_ratio": 0.479,
+            "aic_mac_ratio": 0.0677,
+            "aic_mte1_ratio": 0.1206,
+            "cube_utilization(%)": 46.9642
+          }
+        }
+      },
+      "speedup_vs_torch": 2.1917,
+      "error_type": null,
+      "error_msg": null
+    },
+    {
+      "case_idx": 43,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            8,
+            128,
+            64
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            8,
+            173,
+            64
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            8,
+            173,
+            64
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 64
+        },
+        {
+          "type": "scalar",
+          "value": 14
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        }
+      ],
+      "status": "pass",
+      "framework": {
+        "avg_latency_ms": 0.1166,
+        "peak_memory_mb": 4.46
+      },
+      "implementation": {
+        "avg_latency_ms": 0.1643,
+        "peak_memory_mb": 4.71,
+        "kernel_metrics": {
+          "_bigbird_attn_fwd_kernel": {
+            "aiv_vec_ratio": 0.0941,
+            "aiv_mte2_ratio": 0.1382,
+            "aiv_mte3_ratio": 0.0871,
+            "aiv_scalar_ratio": 0.5612,
+            "aic_mac_ratio": 0.0171,
+            "aic_mte1_ratio": 0.037,
+            "cube_utilization(%)": 87.06
+          }
+        }
+      },
+      "speedup_vs_torch": 0.7097,
+      "error_type": null,
+      "error_msg": null
+    },
+    {
+      "case_idx": 44,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            4,
+            101,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            4,
+            151,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            4,
+            151,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 64
+        },
+        {
+          "type": "scalar",
+          "value": 12
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        }
+      ],
+      "status": "pass",
+      "framework": {
+        "avg_latency_ms": 0.1158,
+        "peak_memory_mb": 10.28
+      },
+      "implementation": {
+        "avg_latency_ms": 0.2237,
+        "peak_memory_mb": 8.59,
+        "kernel_metrics": {
+          "_bigbird_attn_fwd_kernel": {
+            "aiv_vec_ratio": 0.0915,
+            "aiv_mte2_ratio": 0.094,
+            "aiv_mte3_ratio": 0.0786,
+            "aiv_scalar_ratio": 0.5447,
+            "aic_mac_ratio": 0.017,
+            "aic_mte1_ratio": 0.0364,
+            "cube_utilization(%)": 93.8695
+          }
+        }
+      },
+      "speedup_vs_torch": 0.5177,
+      "error_type": null,
+      "error_msg": null
+    },
+    {
+      "case_idx": 45,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            4,
+            131,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            4,
+            163,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            4,
+            163,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 70
+        },
+        {
+          "type": "scalar",
+          "value": 14
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        }
+      ],
+      "status": "pass",
+      "framework": {
+        "avg_latency_ms": 0.1185,
+        "peak_memory_mb": 6.66
+      },
+      "implementation": {
+        "avg_latency_ms": 0.1715,
+        "peak_memory_mb": 5.82,
+        "kernel_metrics": {
+          "_bigbird_attn_fwd_kernel": {
+            "aiv_vec_ratio": 0.0932,
+            "aiv_mte2_ratio": 0.0899,
+            "aiv_mte3_ratio": 0.0788,
+            "aiv_scalar_ratio": 0.5456,
+            "aic_mac_ratio": 0.018,
+            "aic_mte1_ratio": 0.0377,
+            "cube_utilization(%)": 91.6568
+          }
+        }
+      },
+      "speedup_vs_torch": 0.691,
+      "error_type": null,
+      "error_msg": null
+    },
+    {
+      "case_idx": 46,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            2,
+            127,
+            256
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            2,
+            181,
+            256
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            2,
+            181,
+            256
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 80
+        },
+        {
+          "type": "scalar",
+          "value": 15
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        }
+      ],
+      "status": "pass",
+      "framework": {
+        "avg_latency_ms": 0.1179,
+        "peak_memory_mb": 11.64
+      },
+      "implementation": {
+        "avg_latency_ms": 0.1655,
+        "peak_memory_mb": 9.76,
+        "kernel_metrics": {
+          "_bigbird_attn_fwd_kernel": {
+            "aiv_vec_ratio": 0.1059,
+            "aiv_mte2_ratio": 0.0915,
+            "aiv_mte3_ratio": 0.0943,
+            "aiv_scalar_ratio": 0.5226,
+            "aic_mac_ratio": 0.031,
+            "aic_mte1_ratio": 0.0606,
+            "cube_utilization(%)": 86.6899
+          }
+        }
+      },
+      "speedup_vs_torch": 0.7124,
+      "error_type": null,
+      "error_msg": null
+    },
+    {
+      "case_idx": 47,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            4,
+            163,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            4,
+            197,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            4,
+            197,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 96
+        },
+        {
+          "type": "scalar",
+          "value": 16
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        }
+      ],
+      "status": "pass",
+      "framework": {
+        "avg_latency_ms": 0.1194,
+        "peak_memory_mb": 4.86
+      },
+      "implementation": {
+        "avg_latency_ms": 0.1357,
+        "peak_memory_mb": 4.17,
+        "kernel_metrics": {
+          "_bigbird_attn_fwd_kernel": {
+            "aiv_vec_ratio": 0.0919,
+            "aiv_mte2_ratio": 0.0895,
+            "aiv_mte3_ratio": 0.0776,
+            "aiv_scalar_ratio": 0.5485,
+            "aic_mac_ratio": 0.018,
+            "aic_mte1_ratio": 0.0371,
+            "cube_utilization(%)": 83.2431
+          }
+        }
+      },
+      "speedup_vs_torch": 0.8799,
+      "error_type": null,
+      "error_msg": null
+    },
+    {
+      "case_idx": 48,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            8,
+            151,
+            64
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            8,
+            211,
+            64
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            8,
+            211,
+            64
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 90
+        },
+        {
+          "type": "scalar",
+          "value": 16
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        }
+      ],
+      "status": "pass",
+      "framework": {
+        "avg_latency_ms": 0.1333,
+        "peak_memory_mb": 10.6
+      },
+      "implementation": {
+        "avg_latency_ms": 0.4331,
+        "peak_memory_mb": 10.89,
+        "kernel_metrics": {
+          "_bigbird_attn_fwd_kernel": {
+            "aiv_vec_ratio": 0.0948,
+            "aiv_mte2_ratio": 0.1416,
+            "aiv_mte3_ratio": 0.0872,
+            "aiv_scalar_ratio": 0.5504,
+            "aic_mac_ratio": 0.018,
+            "aic_mte1_ratio": 0.037,
+            "cube_utilization(%)": 95.1476
+          }
+        }
+      },
+      "speedup_vs_torch": 0.3078,
+      "error_type": null,
+      "error_msg": null
+    },
+    {
+      "case_idx": 49,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            4,
+            151,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            4,
+            211,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            4,
+            211,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 90
+        },
+        {
+          "type": "scalar",
+          "value": 16
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        }
+      ],
+      "status": "pass",
+      "framework": {
+        "avg_latency_ms": 0.1339,
+        "peak_memory_mb": 16.09
+      },
+      "implementation": {
+        "avg_latency_ms": 0.4313,
+        "peak_memory_mb": 12.3,
+        "kernel_metrics": {
+          "_bigbird_attn_fwd_kernel": {
+            "aiv_vec_ratio": 0.0912,
+            "aiv_mte2_ratio": 0.0927,
+            "aiv_mte3_ratio": 0.0775,
+            "aiv_scalar_ratio": 0.537,
+            "aic_mac_ratio": 0.018,
+            "aic_mte1_ratio": 0.037,
+            "cube_utilization(%)": 95.6097
+          }
+        }
+      },
+      "speedup_vs_torch": 0.3105,
+      "error_type": null,
+      "error_msg": null
+    },
+    {
+      "case_idx": 50,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            1,
+            211,
+            512
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            1,
+            263,
+            512
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            1,
+            263,
+            512
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 120
+        },
+        {
+          "type": "scalar",
+          "value": 20
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        }
+      ],
+      "status": "pass",
+      "framework": {
+        "avg_latency_ms": 0.1061,
+        "peak_memory_mb": 5.48
+      },
+      "implementation": {
+        "avg_latency_ms": 0.062,
+        "peak_memory_mb": 5.17,
+        "kernel_metrics": {
+          "_bigbird_attn_fwd_kernel": {
+            "aiv_vec_ratio": 0.1588,
+            "aiv_mte2_ratio": 0.1127,
+            "aiv_mte3_ratio": 0.1353,
+            "aiv_scalar_ratio": 0.4578,
+            "aic_mac_ratio": 0.07,
+            "aic_mte1_ratio": 0.1258,
+            "cube_utilization(%)": 66.7335
+          }
+        }
+      },
+      "speedup_vs_torch": 1.7113,
+      "error_type": null,
+      "error_msg": null
+    }
+  ]
+}

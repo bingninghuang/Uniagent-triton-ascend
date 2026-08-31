@@ -166,7 +166,7 @@ async def async_main(args: argparse.Namespace) -> int:
             "top_p": 1.0,
             "max_tokens": 4096,
         },
-        timeout=600,
+        timeout=3600,
     )
 
     # 4. Load tasks

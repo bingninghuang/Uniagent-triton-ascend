@@ -1,0 +1,895 @@
+{
+  "op_name": "kernelbench_l4_10_FluxTimestepGuidanceProjectionEmbedding",
+  "total_cases": 60,
+  "passed_cases": 50,
+  "failed_cases": 10,
+  "failures": [
+    {
+      "case_idx": 3,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            5
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            5,
+            3072
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            384
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            3072,
+            768
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            3072
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            768,
+            3072
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            768
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            768,
+            3072
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            768
+          ],
+          "dtype": "torch.float32"
+        }
+      ],
+      "error_type": "AccuracyError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card4/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 898, in run_single_case\n    compare(\n  File \"/opt/workspace_card4/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 677, in compare\n    _compare_float_output(fw_finite, impl_finite, ctx)\n  File \"/opt/workspace_card4/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 596, in _compare_float_output\n    _check_accuracy_npu_benchmark(fw_finite, impl_finite, ctx.data_type)\n  File \"/opt/workspace_card4/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 845, in _check_accuracy_npu_benchmark\n    raise AccuracyError(\nAccuracyError: 验证失败 dtype=torch.float32: max_error_cap_violations=320/3840 (atol=1.000000e-03, rtol=1.220703e-04, max_abs_diff=9.431119e+05, ok=False), matched_ratio=0.914583 (req>=0.9, ok=True), MERE=1.993103e+01 (rel_thr=1.220703e-04, ok=False); small_count=0, normal_count=3840\n前 10 个 max_error_cap 违例位置:\n  位置[128]: \n... [truncated 2011 chars] ...\nork=4.382957e+01, impl=1.226187e+02, |diff|=7.878912e+01 (允许<=atol+rtol*|golden|=6.350290e-03)\n  位置[130]: framework=1.291403e+02, impl=1.745643e+01, |diff|=1.116838e+02 (允许<=atol+rtol*|golden|=1.676419e-02)\n  位置[131]: framework=2.381462e+01, impl=-6.155306e+01, |diff|=8.536768e+01 (允许<=atol+rtol*|golden|=3.907058e-03)\n  位置[132]: framework=-1.642346e+02, impl=-2.273681e+02, |diff|=6.313351e+01 (允许<=atol+rtol*|golden|=2.104817e-02)\n  位置[133]: framework=1.110051e+01, impl=-3.675663e+01, |diff|=4.785714e+01 (允许<=atol+rtol*|golden|=2.355043e-03)\n  位置[134]: framework=3.111443e+01, impl=1.585094e+02, |diff|=1.273950e+02 (允许<=atol+rtol*|golden|=4.798148e-03)\n  位置[135]: framework=2.039929e+01, impl=1.047704e+01, |diff|=9.922245e+00 (允许<=atol+rtol*|golden|=3.490148e-03)\n  位置[136]: framework=-2.549029e+01, impl=-3.862936e+00, |diff|=2.162735e+01 (允许<=atol+rtol*|golden|=4.111608e-03)\n  位置[137]: framework=-2.393133e+01, impl=-1.853174e+01, |diff|=5.399595e+00 (允许<=atol+rtol*|golden|=3.921305e-03)\n\n",
+      "metrics": {
+        "matched_ratio": 0.9145833333333333,
+        "max_abs_diff": 943111.875,
+        "MERE": 19.9310302734375,
+        "rel_threshold": 0.0001220703125,
+        "small_value_threshold": 6.103515625e-05,
+        "small_value_error": 9.313225746154785e-10,
+        "atol": 0.001,
+        "rtol": 0.0001220703125,
+        "max_error_cap_violation_count": 320,
+        "required_matched_ratio": 0.9,
+        "total_finite": 3840,
+        "matched_count": 3512,
+        "small_count": 0,
+        "normal_count": 3840,
+        "checks": {
+          "max_error_cap": false,
+          "required_matched_ratio": true,
+          "MERE": false
+        }
+      }
+    },
+    {
+      "case_idx": 6,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            3
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            3,
+            3072
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            384
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            3072,
+            768
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            3072
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            768,
+            3072
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            768
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            768,
+            3072
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            768
+          ],
+          "dtype": "torch.float16"
+        }
+      ],
+      "error_type": "AssertionError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card4/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 898, in run_single_case\n    compare(\n  File \"/opt/workspace_card4/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 649, in compare\n    _check_nan_inf(fw_flat, impl_flat, size)\n  File \"/opt/workspace_card4/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 444, in _check_nan_inf\n    raise AssertionError(\nAssertionError: 验证失败，NaN 位置不匹配: Framework=0/2304, Implementation=3/2304\n\nThe above exception was the direct cause of the following exception:\n\nTraceback (most recent call last):\n  File \"/opt/workspace_card4/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card4/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 906, in run_single_case\n    raise AssertionError(f\"[用例 {case_idx}/{total_cases}] {str(e)}\") from e\nAssertionError: [用例 6/60] 验证失败，NaN 位置不匹配: Framework=0/2304, Implementation=3/2304\n"
+    },
+    {
+      "case_idx": 8,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            6
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            6,
+            3072
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            384
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            3072,
+            768
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            3072
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            768,
+            3072
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            768
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            768,
+            3072
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            768
+          ],
+          "dtype": "torch.bfloat16"
+        }
+      ],
+      "error_type": "AccuracyError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card4/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 898, in run_single_case\n    compare(\n  File \"/opt/workspace_card4/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 677, in compare\n    _compare_float_output(fw_finite, impl_finite, ctx)\n  File \"/opt/workspace_card4/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 596, in _compare_float_output\n    _check_accuracy_npu_benchmark(fw_finite, impl_finite, ctx.data_type)\n  File \"/opt/workspace_card4/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 845, in _check_accuracy_npu_benchmark\n    raise AccuracyError(\nAccuracyError: 验证失败 dtype=torch.bfloat16: max_error_cap_violations=711/4608 (atol=1.000000e-01, rtol=7.812500e-03, max_abs_diff=8.081273e+30, ok=False), matched_ratio=0.844618 (req>=0.9, ok=False), MERE=2.033106e+25 (rel_thr=7.812500e-03, ok=False); small_count=0, normal_count=4608\n前 10 个 max_error_cap 违例位置:\n  位置[64]:\n... [truncated 3973 chars] ...\n875e-01)\n前 10 个 matched 未通过位置:\n  位置[64] (正常域): framework=1.125000e+01, impl=1.187500e+01, 相对误差=5.555556e-02 (允许<=7.812500e-03)\n  位置[65] (正常域): framework=2.725000e+01, impl=2.337500e+01, 相对误差=1.422018e-01 (允许<=7.812500e-03)\n  位置[66] (正常域): framework=-1.437500e+00, impl=-1.012500e+01, 相对误差=6.043478e+00 (允许<=7.812500e-03)\n  位置[67] (正常域): framework=4.250000e+01, impl=4.425000e+01, 相对误差=4.117647e-02 (允许<=7.812500e-03)\n  位置[68] (正常域): framework=2.812500e-01, impl=4.187500e+00, 相对误差=1.388888e+01 (允许<=7.812500e-03)\n  位置[69] (正常域): framework=-3.950000e+01, impl=-4.875000e+01, 相对误差=2.341772e-01 (允许<=7.812500e-03)\n  位置[70] (正常域): framework=3.875000e+01, impl=4.400000e+01, 相对误差=1.354839e-01 (允许<=7.812500e-03)\n  位置[71] (正常域): framework=-5.125000e+01, impl=-5.650000e+01, 相对误差=1.024390e-01 (允许<=7.812500e-03)\n  位置[72] (正常域): framework=1.600000e+01, impl=1.900000e+01, 相对误差=1.875000e-01 (允许<=7.812500e-03)\n  位置[73] (正常域): framework=-7.100000e+01, impl=-6.375000e+01, 相对误差=1.021127e-01 (允许<=7.812500e-03)\n\n",
+      "metrics": {
+        "matched_ratio": 0.8446180555555556,
+        "max_abs_diff": 8.081272576454962e+30,
+        "MERE": 2.03310582282519e+25,
+        "rel_threshold": 0.0078125,
+        "small_value_threshold": 0.00390625,
+        "small_value_error": 1.52587890625e-05,
+        "atol": 0.1,
+        "rtol": 0.0078125,
+        "max_error_cap_violation_count": 711,
+        "required_matched_ratio": 0.9,
+        "total_finite": 4608,
+        "matched_count": 3892,
+        "small_count": 0,
+        "normal_count": 4608,
+        "checks": {
+          "max_error_cap": false,
+          "required_matched_ratio": false,
+          "MERE": false
+        }
+      }
+    },
+    {
+      "case_idx": 15,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            12
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            12,
+            3072
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            384
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            3072,
+            768
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            3072
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            768,
+            3072
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            768
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            768,
+            3072
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            768
+          ],
+          "dtype": "torch.float32"
+        }
+      ],
+      "error_type": "AccuracyError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card4/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 898, in run_single_case\n    compare(\n  File \"/opt/workspace_card4/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 677, in compare\n    _compare_float_output(fw_finite, impl_finite, ctx)\n  File \"/opt/workspace_card4/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 596, in _compare_float_output\n    _check_accuracy_npu_benchmark(fw_finite, impl_finite, ctx.data_type)\n  File \"/opt/workspace_card4/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 845, in _check_accuracy_npu_benchmark\n    raise AccuracyError(\nAccuracyError: 验证失败 dtype=torch.float32: max_error_cap_violations=768/9216 (atol=1.000000e-03, rtol=1.220703e-04, max_abs_diff=2.511597e+01, ok=False), matched_ratio=0.914388 (req>=0.9, ok=True), MERE=3.605612e-02 (rel_thr=1.220703e-04, ok=False); small_count=0, normal_count=9216\n前 10 个 max_error_cap 违例位置:\n  位置[448]: \n... [truncated 2020 chars] ...\n=1.371859e+01, impl=1.737406e+01, |diff|=3.655475e+00 (允许<=atol+rtol*|golden|=2.674632e-03)\n  位置[450]: framework=6.656595e+00, impl=4.512602e+00, |diff|=2.143993e+00 (允许<=atol+rtol*|golden|=1.812573e-03)\n  位置[451]: framework=-5.180225e+01, impl=-5.059620e+01, |diff|=1.206051e+00 (允许<=atol+rtol*|golden|=7.323517e-03)\n  位置[452]: framework=2.485468e+00, impl=7.333845e+00, |diff|=4.848377e+00 (允许<=atol+rtol*|golden|=1.303402e-03)\n  位置[453]: framework=-5.292191e+01, impl=-6.273780e+01, |diff|=9.815891e+00 (允许<=atol+rtol*|golden|=7.460194e-03)\n  位置[454]: framework=7.515875e+00, impl=-4.279708e+00, |diff|=1.179558e+01 (允许<=atol+rtol*|golden|=1.917465e-03)\n  位置[455]: framework=-6.389295e+01, impl=-6.160395e+01, |diff|=2.289001e+00 (允许<=atol+rtol*|golden|=8.799432e-03)\n  位置[456]: framework=-5.941750e+01, impl=-5.641162e+01, |diff|=3.005886e+00 (允许<=atol+rtol*|golden|=8.253113e-03)\n  位置[457]: framework=-4.163802e+01, impl=-3.020766e+01, |diff|=1.143036e+01 (允许<=atol+rtol*|golden|=6.082767e-03)\n\n",
+      "metrics": {
+        "matched_ratio": 0.9143880208333334,
+        "max_abs_diff": 25.115970611572266,
+        "MERE": 0.036056119948625565,
+        "rel_threshold": 0.0001220703125,
+        "small_value_threshold": 6.103515625e-05,
+        "small_value_error": 9.313225746154785e-10,
+        "atol": 0.001,
+        "rtol": 0.0001220703125,
+        "max_error_cap_violation_count": 768,
+        "required_matched_ratio": 0.9,
+        "total_finite": 9216,
+        "matched_count": 8427,
+        "small_count": 0,
+        "normal_count": 9216,
+        "checks": {
+          "max_error_cap": false,
+          "required_matched_ratio": true,
+          "MERE": false
+        }
+      }
+    },
+    {
+      "case_idx": 16,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            6
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            6,
+            3072
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            384
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            3072,
+            768
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            3072
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            768,
+            3072
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            768
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            768,
+            3072
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            768
+          ],
+          "dtype": "torch.float16"
+        }
+      ],
+      "error_type": "AssertionError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card4/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 898, in run_single_case\n    compare(\n  File \"/opt/workspace_card4/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 649, in compare\n    _check_nan_inf(fw_flat, impl_flat, size)\n  File \"/opt/workspace_card4/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 444, in _check_nan_inf\n    raise AssertionError(\nAssertionError: 验证失败，NaN 位置不匹配: Framework=0/4608, Implementation=4/4608\n\nThe above exception was the direct cause of the following exception:\n\nTraceback (most recent call last):\n  File \"/opt/workspace_card4/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card4/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 906, in run_single_case\n    raise AssertionError(f\"[用例 {case_idx}/{total_cases}] {str(e)}\") from e\nAssertionError: [用例 16/60] 验证失败，NaN 位置不匹配: Framework=0/4608, Implementation=4/4608\n"
+    },
+    {
+      "case_idx": 18,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            3072
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            384
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            3072,
+            768
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            3072
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            768,
+            3072
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            768
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            768,
+            3072
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            768
+          ],
+          "dtype": "torch.bfloat16"
+        }
+      ],
+      "error_type": "AccuracyError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card4/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 898, in run_single_case\n    compare(\n  File \"/opt/workspace_card4/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 677, in compare\n    _compare_float_output(fw_finite, impl_finite, ctx)\n  File \"/opt/workspace_card4/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 596, in _compare_float_output\n    _check_accuracy_npu_benchmark(fw_finite, impl_finite, ctx.data_type)\n  File \"/opt/workspace_card4/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 845, in _check_accuracy_npu_benchmark\n    raise AccuracyError(\nAccuracyError: 验证失败 dtype=torch.bfloat16: max_error_cap_violations=127/1536 (atol=1.000000e-01, rtol=7.812500e-03, max_abs_diff=2.070935e+07, ok=False), matched_ratio=0.917318 (req>=0.9, ok=True), MERE=1.139760e+03 (rel_thr=7.812500e-03, ok=False); small_count=0, normal_count=1536\n前 10 个 max_error_cap 违例位置:\n  位置[64]: \n... [truncated 2004 chars] ...\namework=-6.800000e+01, impl=-1.867776e+06, |diff|=1.867708e+06 (允许<=atol+rtol*|golden|=6.312500e-01)\n  位置[66]: framework=-5.000000e+01, impl=-3.168000e+03, |diff|=3.118000e+03 (允许<=atol+rtol*|golden|=4.906250e-01)\n  位置[67]: framework=-1.443750e+01, impl=1.070000e+02, |diff|=1.214375e+02 (允许<=atol+rtol*|golden|=2.127930e-01)\n  位置[68]: framework=1.306250e+01, impl=1.700000e+01, |diff|=3.937500e+00 (允许<=atol+rtol*|golden|=2.020508e-01)\n  位置[69]: framework=-1.480000e+02, impl=1.370000e+02, |diff|=2.850000e+02 (允许<=atol+rtol*|golden|=1.256250e+00)\n  位置[70]: framework=2.500000e-01, impl=-8.203125e-01, |diff|=1.070312e+00 (允许<=atol+rtol*|golden|=1.019531e-01)\n  位置[71]: framework=-5.850000e+01, impl=-6.430720e+05, |diff|=6.430135e+05 (允许<=atol+rtol*|golden|=5.570313e-01)\n  位置[72]: framework=1.087500e+01, impl=-4.608000e+03, |diff|=4.618875e+03 (允许<=atol+rtol*|golden|=1.849609e-01)\n  位置[73]: framework=-3.425000e+01, impl=-3.300000e+01, |diff|=1.250000e+00 (允许<=atol+rtol*|golden|=3.675781e-01)\n\n",
+      "metrics": {
+        "matched_ratio": 0.9173177083333334,
+        "max_abs_diff": 20709352.0,
+        "MERE": 1139.7603759765625,
+        "rel_threshold": 0.0078125,
+        "small_value_threshold": 0.00390625,
+        "small_value_error": 1.52587890625e-05,
+        "atol": 0.1,
+        "rtol": 0.0078125,
+        "max_error_cap_violation_count": 127,
+        "required_matched_ratio": 0.9,
+        "total_finite": 1536,
+        "matched_count": 1409,
+        "small_count": 0,
+        "normal_count": 1536,
+        "checks": {
+          "max_error_cap": false,
+          "required_matched_ratio": true,
+          "MERE": false
+        }
+      }
+    },
+    {
+      "case_idx": 22,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            3072
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            384
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            3072,
+            768
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            3072
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            768,
+            3072
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            768
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            768,
+            3072
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            768
+          ],
+          "dtype": "torch.float16"
+        }
+      ],
+      "error_type": "AccuracyError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card4/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 898, in run_single_case\n    compare(\n  File \"/opt/workspace_card4/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 677, in compare\n    _compare_float_output(fw_finite, impl_finite, ctx)\n  File \"/opt/workspace_card4/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 596, in _compare_float_output\n    _check_accuracy_npu_benchmark(fw_finite, impl_finite, ctx.data_type)\n  File \"/opt/workspace_card4/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 845, in _check_accuracy_npu_benchmark\n    raise AccuracyError(\nAccuracyError: 验证失败 dtype=torch.float16: max_error_cap_violations=126/1536 (atol=9.000000e-02, rtol=9.765625e-04, max_abs_diff=1.415625e+01, ok=False), matched_ratio=0.916667 (req>=0.9, ok=True), MERE=4.781678e-02 (rel_thr=9.765625e-04, ok=False); small_count=0, normal_count=1536\n前 10 个 max_error_cap 违例位置:\n  位置[128]: \n... [truncated 2016 chars] ...\nk=-8.506250e+01, impl=-9.581250e+01, |diff|=1.075000e+01 (允许<=atol+rtol*|golden|=1.730689e-01)\n  位置[130]: framework=-9.312500e+00, impl=-1.561719e+01, |diff|=6.304688e+00 (允许<=atol+rtol*|golden|=9.909424e-02)\n  位置[131]: framework=1.206875e+02, impl=1.300000e+02, |diff|=9.312500e+00 (允许<=atol+rtol*|golden|=2.078589e-01)\n  位置[132]: framework=1.662500e+01, impl=1.629688e+01, |diff|=3.281250e-01 (允许<=atol+rtol*|golden|=1.062354e-01)\n  位置[133]: framework=-5.710938e+00, impl=-8.101562e+00, |diff|=2.390625e+00 (允许<=atol+rtol*|golden|=9.557709e-02)\n  位置[134]: framework=-8.256250e+01, impl=-7.981250e+01, |diff|=2.750000e+00 (允许<=atol+rtol*|golden|=1.706274e-01)\n  位置[135]: framework=-6.831250e+01, impl=-6.975000e+01, |diff|=1.437500e+00 (允许<=atol+rtol*|golden|=1.567114e-01)\n  位置[136]: framework=3.453125e+01, impl=3.634375e+01, |diff|=1.812500e+00 (允许<=atol+rtol*|golden|=1.237219e-01)\n  位置[137]: framework=7.714844e+00, impl=4.859375e+00, |diff|=2.855469e+00 (允许<=atol+rtol*|golden|=9.753403e-02)\n\n",
+      "metrics": {
+        "matched_ratio": 0.9166666666666666,
+        "max_abs_diff": 14.15625,
+        "MERE": 0.04781677946448326,
+        "rel_threshold": 0.0009765625,
+        "small_value_threshold": 0.00048828125,
+        "small_value_error": 1.52587890625e-05,
+        "atol": 0.09,
+        "rtol": 0.0009765625,
+        "max_error_cap_violation_count": 126,
+        "required_matched_ratio": 0.9,
+        "total_finite": 1536,
+        "matched_count": 1408,
+        "small_count": 0,
+        "normal_count": 1536,
+        "checks": {
+          "max_error_cap": false,
+          "required_matched_ratio": true,
+          "MERE": false
+        }
+      }
+    },
+    {
+      "case_idx": 24,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            3
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            3,
+            3072
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            384
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            3072,
+            768
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            3072
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            768,
+            3072
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            768
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            768,
+            3072
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            768
+          ],
+          "dtype": "torch.bfloat16"
+        }
+      ],
+      "error_type": "AssertionError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card4/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 898, in run_single_case\n    compare(\n  File \"/opt/workspace_card4/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 649, in compare\n    _check_nan_inf(fw_flat, impl_flat, size)\n  File \"/opt/workspace_card4/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 454, in _check_nan_inf\n    raise AssertionError(\nAssertionError: 验证失败，Inf 位置不匹配: Framework=0/2304, Implementation=1/2304\n\nThe above exception was the direct cause of the following exception:\n\nTraceback (most recent call last):\n  File \"/opt/workspace_card4/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card4/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 906, in run_single_case\n    raise AssertionError(f\"[用例 {case_idx}/{total_cases}] {str(e)}\") from e\nAssertionError: [用例 24/60] 验证失败，Inf 位置不匹配: Framework=0/2304, Implementation=1/2304\n"
+    },
+    {
+      "case_idx": 33,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            16
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            16,
+            3072
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            384
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            3072,
+            768
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            3072
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            768,
+            3072
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            768
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            768,
+            3072
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            768
+          ],
+          "dtype": "torch.float32"
+        }
+      ],
+      "error_type": "AccuracyError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card4/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 898, in run_single_case\n    compare(\n  File \"/opt/workspace_card4/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 677, in compare\n    _compare_float_output(fw_finite, impl_finite, ctx)\n  File \"/opt/workspace_card4/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 596, in _compare_float_output\n    _check_accuracy_npu_benchmark(fw_finite, impl_finite, ctx.data_type)\n  File \"/opt/workspace_card4/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 845, in _check_accuracy_npu_benchmark\n    raise AccuracyError(\nAccuracyError: 验证失败 dtype=torch.float32: max_error_cap_violations=1024/12288 (atol=1.000000e-03, rtol=1.220703e-04, max_abs_diff=1.934434e+02, ok=False), matched_ratio=0.915609 (req>=0.9, ok=True), MERE=4.845042e-01 (rel_thr=1.220703e-04, ok=False); small_count=0, normal_count=12288\n前 10 个 max_error_cap 违例位置:\n  位置[320\n... [truncated 2014 chars] ...\nmework=-4.103051e+00, impl=2.209573e+01, |diff|=2.619878e+01 (允许<=atol+rtol*|golden|=1.500861e-03)\n  位置[322]: framework=3.019540e+01, impl=6.639231e+01, |diff|=3.619691e+01 (允许<=atol+rtol*|golden|=4.685962e-03)\n  位置[323]: framework=4.236793e+01, impl=4.245583e+01, |diff|=8.789825e-02 (允许<=atol+rtol*|golden|=6.171867e-03)\n  位置[324]: framework=-4.005761e+00, impl=8.868359e+00, |diff|=1.287412e+01 (允许<=atol+rtol*|golden|=1.488985e-03)\n  位置[325]: framework=-5.397882e+01, impl=-1.886335e+01, |diff|=3.511547e+01 (允许<=atol+rtol*|golden|=7.589211e-03)\n  位置[326]: framework=1.887350e+01, impl=2.395259e+01, |diff|=5.079092e+00 (允许<=atol+rtol*|golden|=3.303893e-03)\n  位置[327]: framework=1.099623e+01, impl=6.105245e+01, |diff|=5.005622e+01 (允许<=atol+rtol*|golden|=2.342314e-03)\n  位置[328]: framework=-4.638215e+01, impl=2.077525e+01, |diff|=6.715740e+01 (允许<=atol+rtol*|golden|=6.661884e-03)\n  位置[329]: framework=5.947153e+01, impl=4.316151e+01, |diff|=1.631003e+01 (允许<=atol+rtol*|golden|=8.259709e-03)\n\n",
+      "metrics": {
+        "matched_ratio": 0.9156087239583334,
+        "max_abs_diff": 193.44338989257812,
+        "MERE": 0.48450422286987305,
+        "rel_threshold": 0.0001220703125,
+        "small_value_threshold": 6.103515625e-05,
+        "small_value_error": 9.313225746154785e-10,
+        "atol": 0.001,
+        "rtol": 0.0001220703125,
+        "max_error_cap_violation_count": 1024,
+        "required_matched_ratio": 0.9,
+        "total_finite": 12288,
+        "matched_count": 11251,
+        "small_count": 0,
+        "normal_count": 12288,
+        "checks": {
+          "max_error_cap": false,
+          "required_matched_ratio": true,
+          "MERE": false
+        }
+      }
+    },
+    {
+      "case_idx": 51,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            20
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            20,
+            3072
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            384
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            3072,
+            768
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            3072
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            768,
+            3072
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            768
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            768,
+            3072
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            768
+          ],
+          "dtype": "torch.float32"
+        }
+      ],
+      "error_type": "AccuracyError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card4/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 898, in run_single_case\n    compare(\n  File \"/opt/workspace_card4/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 677, in compare\n    _compare_float_output(fw_finite, impl_finite, ctx)\n  File \"/opt/workspace_card4/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 596, in _compare_float_output\n    _check_accuracy_npu_benchmark(fw_finite, impl_finite, ctx.data_type)\n  File \"/opt/workspace_card4/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 845, in _check_accuracy_npu_benchmark\n    raise AccuracyError(\nAccuracyError: 验证失败 dtype=torch.float32: max_error_cap_violations=1280/15360 (atol=1.000000e-03, rtol=1.220703e-04, max_abs_diff=1.905906e+02, ok=False), matched_ratio=0.914518 (req>=0.9, ok=True), MERE=1.927741e-01 (rel_thr=1.220703e-04, ok=False); small_count=0, normal_count=15360\n前 10 个 max_error_cap 违例位置:\n  位置[256\n... [truncated 2016 chars] ...\nework=1.765222e+01, impl=1.818288e+01, |diff|=5.306606e-01 (允许<=atol+rtol*|golden|=3.154812e-03)\n  位置[258]: framework=1.039097e+01, impl=8.077261e+00, |diff|=2.313713e+00 (允许<=atol+rtol*|golden|=2.268429e-03)\n  位置[259]: framework=-1.090297e+02, impl=-1.838248e+02, |diff|=7.479514e+01 (允许<=atol+rtol*|golden|=1.430929e-02)\n  位置[260]: framework=-3.083794e+01, impl=1.205104e+01, |diff|=4.288899e+01 (允许<=atol+rtol*|golden|=4.764398e-03)\n  位置[261]: framework=-1.200291e+01, impl=5.229029e+01, |diff|=6.429321e+01 (允许<=atol+rtol*|golden|=2.465199e-03)\n  位置[262]: framework=1.203881e+02, impl=6.158389e+01, |diff|=5.880419e+01 (允许<=atol+rtol*|golden|=1.569581e-02)\n  位置[263]: framework=-4.991135e+01, impl=1.120626e+01, |diff|=6.111761e+01 (允许<=atol+rtol*|golden|=7.092694e-03)\n  位置[264]: framework=7.072351e+00, impl=4.291830e+01, |diff|=3.584595e+01 (允许<=atol+rtol*|golden|=1.863324e-03)\n  位置[265]: framework=9.958799e+00, impl=-1.348986e+00, |diff|=1.130779e+01 (允许<=atol+rtol*|golden|=2.215674e-03)\n\n",
+      "metrics": {
+        "matched_ratio": 0.9145182291666667,
+        "max_abs_diff": 190.5906219482422,
+        "MERE": 0.19277407228946686,
+        "rel_threshold": 0.0001220703125,
+        "small_value_threshold": 6.103515625e-05,
+        "small_value_error": 9.313225746154785e-10,
+        "atol": 0.001,
+        "rtol": 0.0001220703125,
+        "max_error_cap_violation_count": 1280,
+        "required_matched_ratio": 0.9,
+        "total_finite": 15360,
+        "matched_count": 14047,
+        "small_count": 0,
+        "normal_count": 15360,
+        "checks": {
+          "max_error_cap": false,
+          "required_matched_ratio": true,
+          "MERE": false
+        }
+      }
+    }
+  ]
+}

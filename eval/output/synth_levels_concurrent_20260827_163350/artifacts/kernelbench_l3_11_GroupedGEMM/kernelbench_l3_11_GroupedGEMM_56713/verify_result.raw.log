@@ -1,0 +1,62 @@
+LazySetDevice:build/CMakeFiles/torch_npu.dir/compiler_depend.ts:327 NPU function error: err, error code is 507033
+[ERROR] 2026-08-27-10:47:41 (PID:130621, Device:0, RankID:-1) ERR00100 PTA call acl api failed
+[Error]: Failed to start the device. 
+        Rectify the fault based on the error information in the ascend log.
+[PID: 130621] 2026-08-27-10:47:42.881.104 Invalid_Argument(EE1001): The argument is invalid.Reason: rtGetDevMsg execution failed, the context is a null pointer.
+        Solution: 1.Check the input parameter range of the function. 2.Check the function invocation relationship.
+        TraceBack (most recent call last):
+        [drv api] halDeviceOpen failed. device_id=4, drvRetCode=17.[FUNC:DeviceOpen][FILE:npu_driver.cc][LINE:438]
+        Failed to open device, retCode=0x7020022, deviceId=4.[FUNC:InitRawDriver][FILE:raw_device.cc][LINE:213]
+        Failed to init RawDriver, device_id=4, retCode=0x7020022[FUNC:Init][FILE:raw_device.cc][LINE:518]
+        Check param failed, dev can not be NULL![FUNC:DeviceRetain][FILE:runtime.cc][LINE:3558]
+        Check param failed, dev can not be NULL![FUNC:PrimaryContextRetain][FILE:runtime.cc][LINE:3175]
+        Check param failed, ctx can not be NULL![FUNC:PrimaryContextRetain][FILE:runtime.cc][LINE:3206]
+        Check param failed, context can not be null.[FUNC:SetDevice][FILE:api_impl.cc][LINE:3319]
+        rtSetDevice execution failed, reason=device retain error[FUNC:FuncErrorReason][FILE:error_message_manage.cc][LINE:65]
+        open device 0 failed, runtime result = 507033.[FUNC:ReportCallError][FILE:log_inner.cpp][LINE:148]
+        ctx is NULL![FUNC:GetDevErrMsg][FILE:api_impl.cc][LINE:6108]
+        The argument is invalid.Reason: rtGetDevMsg execution failed, the context is a null pointer.
+        ctx is NULL![FUNC:CheckCurCtxValid][FILE:api_impl.cc][LINE:236]
+        The argument is invalid.Reason: rtGetFaultEvent execution failed, the context is a null pointer.
+
+Traceback (most recent call last):
+  File "/opt/workspace_card4/agent_workdir/tools/triton-op-verifier/scripts/verify.py", line 1082, in <module>
+    passed, total = verify_implementations(
+                    ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/workspace_card4/agent_workdir/tools/triton-op-verifier/scripts/verify.py", line 1005, in verify_implementations
+    input_groups, total_cases = resolve_input_provider(modules["torch_module"])
+                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/workspace_card4/agent_workdir/tools/triton-op-verifier/scripts/verify.py", line 312, in resolve_input_provider
+    groups = torch_module.get_input_groups()
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/workspace_card4/agent_workdir/output/verify/kernelbench_l3_11_GroupedGEMM_torch.py", line 77, in get_input_groups
+    lhs = _random_tensor(specs["lhs"], 42 + case_index * 2)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/workspace_card4/agent_workdir/output/verify/kernelbench_l3_11_GroupedGEMM_torch.py", line 54, in _random_tensor
+    return tensor.to(dtype=dtype).npu()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/python3.11.14/lib/python3.11/site-packages/torch/utils/backend_registration.py", line 165, in wrap_tensor_to
+    return self.to(
+           ^^^^^^^^
+RuntimeError: LazySetDevice:build/CMakeFiles/torch_npu.dir/compiler_depend.ts:327 NPU function error: err, error code is 507033
+[ERROR] 2026-08-27-10:47:41 (PID:130621, Device:0, RankID:-1) ERR00100 PTA call acl api failed
+[Error]: Failed to start the device. 
+        Rectify the fault based on the error information in the ascend log.
+[PID: 130621] 2026-08-27-10:47:42.881.104 Invalid_Argument(EE1001): The argument is invalid.Reason: rtGetDevMsg execution failed, the context is a null pointer.
+        Solution: 1.Check the input parameter range of the function. 2.Check the function invocation relationship.
+        TraceBack (most recent call last):
+        [drv api] halDeviceOpen failed. device_id=4, drvRetCode=17.[FUNC:DeviceOpen][FILE:npu_driver.cc][LINE:438]
+        Failed to open device, retCode=0x7020022, deviceId=4.[FUNC:InitRawDriver][FILE:raw_device.cc][LINE:213]
+        Failed to init RawDriver, device_id=4, retCode=0x7020022[FUNC:Init][FILE:raw_device.cc][LINE:518]
+        Check param failed, dev can not be NULL![FUNC:DeviceRetain][FILE:runtime.cc][LINE:3558]
+        Check param failed, dev can not be NULL![FUNC:PrimaryContextRetain][FILE:runtime.cc][LINE:3175]
+        Check param failed, ctx can not be NULL![FUNC:PrimaryContextRetain][FILE:runtime.cc][LINE:3206]
+        Check param failed, context can not be null.[FUNC:SetDevice][FILE:api_impl.cc][LINE:3319]
+        rtSetDevice execution failed, reason=device retain error[FUNC:FuncErrorReason][FILE:error_message_manage.cc][LINE:65]
+        open device 0 failed, runtime result = 507033.[FUNC:ReportCallError][FILE:log_inner.cpp][LINE:148]
+        ctx is NULL![FUNC:GetDevErrMsg][FILE:api_impl.cc][LINE:6108]
+        The argument is invalid.Reason: rtGetDevMsg execution failed, the context is a null pointer.
+        ctx is NULL![FUNC:CheckCurCtxValid][FILE:api_impl.cc][LINE:236]
+        The argument is invalid.Reason: rtGetFaultEvent execution failed, the context is a null pointer.
+
+

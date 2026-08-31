@@ -1,0 +1,2058 @@
+{
+  "op_name": "kernelbench_l4_13_ScaledDotProductAttention",
+  "total_cases": 50,
+  "passed_cases": 0,
+  "failed_cases": 50,
+  "failures": [
+    {
+      "case_idx": 1,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            3,
+            7,
+            16
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            3,
+            9,
+            16
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            3,
+            9,
+            16
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "scalar",
+          "value": 0.25
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card1/agent_workdir/output/verify/kernelbench_l4_13_ScaledDotProductAttention_triton_ascend_impl.py\", line 186, in forward\n    sdpa_fwd_kernel[grid](\n  File \"/usr/local/python3.11.14/\n... [truncated 670 chars] ...\nl/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 51:14:\n\n    # checklist: contiguous (non-interleaved) task partition; each program\n    # handles a contiguous block range -> K/V L2 reuse across m-tiles of head\n    CHUNK: tl.constexpr = num_blocks_total // num_cores\n    EXTRA: tl.constexpr = num_blocks_total - CHUNK * num_cores\n    extra = (pid.to(tl.float32) < float(EXTRA)).to(tl.int32)\n    start_off = pid * CHUNK + extra\n    for i in range(CHUNK + extra):\n        block_idx = start_off + i\n        # scalar int div -> float32 div (exact for small ints)\n        f_idx = block_idx.to(tl.float32)\n        f_m = num_m_tiles.to(tl.float32)\n              ^\nAttributeError(\"'constexpr' object has no attribute 'to'\")\n"
+    },
+    {
+      "case_idx": 2,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            4,
+            11,
+            24
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            4,
+            15,
+            24
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            4,
+            15,
+            16
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": 0.20412414523193154
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card1/agent_workdir/output/verify/kernelbench_l4_13_ScaledDotProductAttention_triton_ascend_impl.py\", line 186, in forward\n    sdpa_fwd_kernel[grid](\n  File \"/usr/local/python3.11.14/\n... [truncated 670 chars] ...\nl/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 51:14:\n\n    # checklist: contiguous (non-interleaved) task partition; each program\n    # handles a contiguous block range -> K/V L2 reuse across m-tiles of head\n    CHUNK: tl.constexpr = num_blocks_total // num_cores\n    EXTRA: tl.constexpr = num_blocks_total - CHUNK * num_cores\n    extra = (pid.to(tl.float32) < float(EXTRA)).to(tl.int32)\n    start_off = pid * CHUNK + extra\n    for i in range(CHUNK + extra):\n        block_idx = start_off + i\n        # scalar int div -> float32 div (exact for small ints)\n        f_idx = block_idx.to(tl.float32)\n        f_m = num_m_tiles.to(tl.float32)\n              ^\nAttributeError(\"'constexpr' object has no attribute 'to'\")\n"
+    },
+    {
+      "case_idx": 3,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            5,
+            13,
+            24
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            5,
+            19,
+            24
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            5,
+            19,
+            32
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 0.20412414523193154
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card1/agent_workdir/output/verify/kernelbench_l4_13_ScaledDotProductAttention_triton_ascend_impl.py\", line 186, in forward\n    sdpa_fwd_kernel[grid](\n  File \"/usr/local/python3.11.14/\n... [truncated 670 chars] ...\nl/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 51:14:\n\n    # checklist: contiguous (non-interleaved) task partition; each program\n    # handles a contiguous block range -> K/V L2 reuse across m-tiles of head\n    CHUNK: tl.constexpr = num_blocks_total // num_cores\n    EXTRA: tl.constexpr = num_blocks_total - CHUNK * num_cores\n    extra = (pid.to(tl.float32) < float(EXTRA)).to(tl.int32)\n    start_off = pid * CHUNK + extra\n    for i in range(CHUNK + extra):\n        block_idx = start_off + i\n        # scalar int div -> float32 div (exact for small ints)\n        f_idx = block_idx.to(tl.float32)\n        f_m = num_m_tiles.to(tl.float32)\n              ^\nAttributeError(\"'constexpr' object has no attribute 'to'\")\n"
+    },
+    {
+      "case_idx": 4,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            2,
+            3,
+            24
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            2,
+            13,
+            24
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            2,
+            13,
+            24
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "scalar",
+          "value": 0.20412414523193154
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card1/agent_workdir/output/verify/kernelbench_l4_13_ScaledDotProductAttention_triton_ascend_impl.py\", line 186, in forward\n    sdpa_fwd_kernel[grid](\n  File \"/usr/local/python3.11.14/\n... [truncated 670 chars] ...\nl/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 51:14:\n\n    # checklist: contiguous (non-interleaved) task partition; each program\n    # handles a contiguous block range -> K/V L2 reuse across m-tiles of head\n    CHUNK: tl.constexpr = num_blocks_total // num_cores\n    EXTRA: tl.constexpr = num_blocks_total - CHUNK * num_cores\n    extra = (pid.to(tl.float32) < float(EXTRA)).to(tl.int32)\n    start_off = pid * CHUNK + extra\n    for i in range(CHUNK + extra):\n        block_idx = start_off + i\n        # scalar int div -> float32 div (exact for small ints)\n        f_idx = block_idx.to(tl.float32)\n        f_m = num_m_tiles.to(tl.float32)\n              ^\nAttributeError(\"'constexpr' object has no attribute 'to'\")\n"
+    },
+    {
+      "case_idx": 5,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            3,
+            3,
+            5,
+            32
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            3,
+            3,
+            17,
+            32
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            3,
+            3,
+            17,
+            24
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": 0.17677669529663687
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card1/agent_workdir/output/verify/kernelbench_l4_13_ScaledDotProductAttention_triton_ascend_impl.py\", line 186, in forward\n    sdpa_fwd_kernel[grid](\n  File \"/usr/local/python3.11.14/\n... [truncated 670 chars] ...\nl/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 51:14:\n\n    # checklist: contiguous (non-interleaved) task partition; each program\n    # handles a contiguous block range -> K/V L2 reuse across m-tiles of head\n    CHUNK: tl.constexpr = num_blocks_total // num_cores\n    EXTRA: tl.constexpr = num_blocks_total - CHUNK * num_cores\n    extra = (pid.to(tl.float32) < float(EXTRA)).to(tl.int32)\n    start_off = pid * CHUNK + extra\n    for i in range(CHUNK + extra):\n        block_idx = start_off + i\n        # scalar int div -> float32 div (exact for small ints)\n        f_idx = block_idx.to(tl.float32)\n        f_m = num_m_tiles.to(tl.float32)\n              ^\nAttributeError(\"'constexpr' object has no attribute 'to'\")\n"
+    },
+    {
+      "case_idx": 6,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            5,
+            23,
+            32
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            5,
+            39,
+            32
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            5,
+            39,
+            40
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 0.17677669529663687
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card1/agent_workdir/output/verify/kernelbench_l4_13_ScaledDotProductAttention_triton_ascend_impl.py\", line 186, in forward\n    sdpa_fwd_kernel[grid](\n  File \"/usr/local/python3.11.14/\n... [truncated 670 chars] ...\nl/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 51:14:\n\n    # checklist: contiguous (non-interleaved) task partition; each program\n    # handles a contiguous block range -> K/V L2 reuse across m-tiles of head\n    CHUNK: tl.constexpr = num_blocks_total // num_cores\n    EXTRA: tl.constexpr = num_blocks_total - CHUNK * num_cores\n    extra = (pid.to(tl.float32) < float(EXTRA)).to(tl.int32)\n    start_off = pid * CHUNK + extra\n    for i in range(CHUNK + extra):\n        block_idx = start_off + i\n        # scalar int div -> float32 div (exact for small ints)\n        f_idx = block_idx.to(tl.float32)\n        f_m = num_m_tiles.to(tl.float32)\n              ^\nAttributeError(\"'constexpr' object has no attribute 'to'\")\n"
+    },
+    {
+      "case_idx": 7,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            3,
+            29,
+            40
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            3,
+            49,
+            40
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            3,
+            49,
+            40
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "scalar",
+          "value": 0.15811388300841897
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card1/agent_workdir/output/verify/kernelbench_l4_13_ScaledDotProductAttention_triton_ascend_impl.py\", line 186, in forward\n    sdpa_fwd_kernel[grid](\n  File \"/usr/local/python3.11.14/\n... [truncated 670 chars] ...\nl/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 51:14:\n\n    # checklist: contiguous (non-interleaved) task partition; each program\n    # handles a contiguous block range -> K/V L2 reuse across m-tiles of head\n    CHUNK: tl.constexpr = num_blocks_total // num_cores\n    EXTRA: tl.constexpr = num_blocks_total - CHUNK * num_cores\n    extra = (pid.to(tl.float32) < float(EXTRA)).to(tl.int32)\n    start_off = pid * CHUNK + extra\n    for i in range(CHUNK + extra):\n        block_idx = start_off + i\n        # scalar int div -> float32 div (exact for small ints)\n        f_idx = block_idx.to(tl.float32)\n        f_m = num_m_tiles.to(tl.float32)\n              ^\nAttributeError(\"'constexpr' object has no attribute 'to'\")\n"
+    },
+    {
+      "case_idx": 8,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            3,
+            4,
+            31,
+            32
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            3,
+            4,
+            55,
+            32
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            3,
+            4,
+            55,
+            24
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": 0.17677669529663687
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card1/agent_workdir/output/verify/kernelbench_l4_13_ScaledDotProductAttention_triton_ascend_impl.py\", line 186, in forward\n    sdpa_fwd_kernel[grid](\n  File \"/usr/local/python3.11.14/\n... [truncated 670 chars] ...\nl/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 51:14:\n\n    # checklist: contiguous (non-interleaved) task partition; each program\n    # handles a contiguous block range -> K/V L2 reuse across m-tiles of head\n    CHUNK: tl.constexpr = num_blocks_total // num_cores\n    EXTRA: tl.constexpr = num_blocks_total - CHUNK * num_cores\n    extra = (pid.to(tl.float32) < float(EXTRA)).to(tl.int32)\n    start_off = pid * CHUNK + extra\n    for i in range(CHUNK + extra):\n        block_idx = start_off + i\n        # scalar int div -> float32 div (exact for small ints)\n        f_idx = block_idx.to(tl.float32)\n        f_m = num_m_tiles.to(tl.float32)\n              ^\nAttributeError(\"'constexpr' object has no attribute 'to'\")\n"
+    },
+    {
+      "case_idx": 9,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            5,
+            37,
+            48
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            5,
+            67,
+            48
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            5,
+            67,
+            56
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 0.14433756729740646
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card1/agent_workdir/output/verify/kernelbench_l4_13_ScaledDotProductAttention_triton_ascend_impl.py\", line 186, in forward\n    sdpa_fwd_kernel[grid](\n  File \"/usr/local/python3.11.14/\n... [truncated 670 chars] ...\nl/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 51:14:\n\n    # checklist: contiguous (non-interleaved) task partition; each program\n    # handles a contiguous block range -> K/V L2 reuse across m-tiles of head\n    CHUNK: tl.constexpr = num_blocks_total // num_cores\n    EXTRA: tl.constexpr = num_blocks_total - CHUNK * num_cores\n    extra = (pid.to(tl.float32) < float(EXTRA)).to(tl.int32)\n    start_off = pid * CHUNK + extra\n    for i in range(CHUNK + extra):\n        block_idx = start_off + i\n        # scalar int div -> float32 div (exact for small ints)\n        f_idx = block_idx.to(tl.float32)\n        f_m = num_m_tiles.to(tl.float32)\n              ^\nAttributeError(\"'constexpr' object has no attribute 'to'\")\n"
+    },
+    {
+      "case_idx": 10,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            4,
+            43,
+            40
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            4,
+            79,
+            40
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            4,
+            79,
+            40
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "scalar",
+          "value": 0.15811388300841897
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card1/agent_workdir/output/verify/kernelbench_l4_13_ScaledDotProductAttention_triton_ascend_impl.py\", line 186, in forward\n    sdpa_fwd_kernel[grid](\n  File \"/usr/local/python3.11.14/\n... [truncated 670 chars] ...\nl/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 51:14:\n\n    # checklist: contiguous (non-interleaved) task partition; each program\n    # handles a contiguous block range -> K/V L2 reuse across m-tiles of head\n    CHUNK: tl.constexpr = num_blocks_total // num_cores\n    EXTRA: tl.constexpr = num_blocks_total - CHUNK * num_cores\n    extra = (pid.to(tl.float32) < float(EXTRA)).to(tl.int32)\n    start_off = pid * CHUNK + extra\n    for i in range(CHUNK + extra):\n        block_idx = start_off + i\n        # scalar int div -> float32 div (exact for small ints)\n        f_idx = block_idx.to(tl.float32)\n        f_m = num_m_tiles.to(tl.float32)\n              ^\nAttributeError(\"'constexpr' object has no attribute 'to'\")\n"
+    },
+    {
+      "case_idx": 11,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            6,
+            47,
+            32
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            6,
+            49,
+            32
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            6,
+            49,
+            24
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": 0.17677669529663687
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card1/agent_workdir/output/verify/kernelbench_l4_13_ScaledDotProductAttention_triton_ascend_impl.py\", line 186, in forward\n    sdpa_fwd_kernel[grid](\n  File \"/usr/local/python3.11.14/\n... [truncated 670 chars] ...\nl/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 51:14:\n\n    # checklist: contiguous (non-interleaved) task partition; each program\n    # handles a contiguous block range -> K/V L2 reuse across m-tiles of head\n    CHUNK: tl.constexpr = num_blocks_total // num_cores\n    EXTRA: tl.constexpr = num_blocks_total - CHUNK * num_cores\n    extra = (pid.to(tl.float32) < float(EXTRA)).to(tl.int32)\n    start_off = pid * CHUNK + extra\n    for i in range(CHUNK + extra):\n        block_idx = start_off + i\n        # scalar int div -> float32 div (exact for small ints)\n        f_idx = block_idx.to(tl.float32)\n        f_m = num_m_tiles.to(tl.float32)\n              ^\nAttributeError(\"'constexpr' object has no attribute 'to'\")\n"
+    },
+    {
+      "case_idx": 12,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            5,
+            53,
+            48
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            5,
+            57,
+            48
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            5,
+            57,
+            56
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 0.14433756729740646
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card1/agent_workdir/output/verify/kernelbench_l4_13_ScaledDotProductAttention_triton_ascend_impl.py\", line 186, in forward\n    sdpa_fwd_kernel[grid](\n  File \"/usr/local/python3.11.14/\n... [truncated 670 chars] ...\nl/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 51:14:\n\n    # checklist: contiguous (non-interleaved) task partition; each program\n    # handles a contiguous block range -> K/V L2 reuse across m-tiles of head\n    CHUNK: tl.constexpr = num_blocks_total // num_cores\n    EXTRA: tl.constexpr = num_blocks_total - CHUNK * num_cores\n    extra = (pid.to(tl.float32) < float(EXTRA)).to(tl.int32)\n    start_off = pid * CHUNK + extra\n    for i in range(CHUNK + extra):\n        block_idx = start_off + i\n        # scalar int div -> float32 div (exact for small ints)\n        f_idx = block_idx.to(tl.float32)\n        f_m = num_m_tiles.to(tl.float32)\n              ^\nAttributeError(\"'constexpr' object has no attribute 'to'\")\n"
+    },
+    {
+      "case_idx": 13,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            3,
+            6,
+            59,
+            64
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            3,
+            6,
+            65,
+            64
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            3,
+            6,
+            65,
+            64
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "scalar",
+          "value": 0.125
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card1/agent_workdir/output/verify/kernelbench_l4_13_ScaledDotProductAttention_triton_ascend_impl.py\", line 186, in forward\n    sdpa_fwd_kernel[grid](\n  File \"/usr/local/python3.11.14/\n... [truncated 670 chars] ...\nl/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 51:14:\n\n    # checklist: contiguous (non-interleaved) task partition; each program\n    # handles a contiguous block range -> K/V L2 reuse across m-tiles of head\n    CHUNK: tl.constexpr = num_blocks_total // num_cores\n    EXTRA: tl.constexpr = num_blocks_total - CHUNK * num_cores\n    extra = (pid.to(tl.float32) < float(EXTRA)).to(tl.int32)\n    start_off = pid * CHUNK + extra\n    for i in range(CHUNK + extra):\n        block_idx = start_off + i\n        # scalar int div -> float32 div (exact for small ints)\n        f_idx = block_idx.to(tl.float32)\n        f_m = num_m_tiles.to(tl.float32)\n              ^\nAttributeError(\"'constexpr' object has no attribute 'to'\")\n"
+    },
+    {
+      "case_idx": 14,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            4,
+            17,
+            32
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            4,
+            27,
+            32
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            4,
+            27,
+            24
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": 0.17677669529663687
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card1/agent_workdir/output/verify/kernelbench_l4_13_ScaledDotProductAttention_triton_ascend_impl.py\", line 186, in forward\n    sdpa_fwd_kernel[grid](\n  File \"/usr/local/python3.11.14/\n... [truncated 670 chars] ...\nl/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 51:14:\n\n    # checklist: contiguous (non-interleaved) task partition; each program\n    # handles a contiguous block range -> K/V L2 reuse across m-tiles of head\n    CHUNK: tl.constexpr = num_blocks_total // num_cores\n    EXTRA: tl.constexpr = num_blocks_total - CHUNK * num_cores\n    extra = (pid.to(tl.float32) < float(EXTRA)).to(tl.int32)\n    start_off = pid * CHUNK + extra\n    for i in range(CHUNK + extra):\n        block_idx = start_off + i\n        # scalar int div -> float32 div (exact for small ints)\n        f_idx = block_idx.to(tl.float32)\n        f_m = num_m_tiles.to(tl.float32)\n              ^\nAttributeError(\"'constexpr' object has no attribute 'to'\")\n"
+    },
+    {
+      "case_idx": 15,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            3,
+            19,
+            64
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            3,
+            31,
+            64
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            3,
+            31,
+            72
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 0.125
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card1/agent_workdir/output/verify/kernelbench_l4_13_ScaledDotProductAttention_triton_ascend_impl.py\", line 186, in forward\n    sdpa_fwd_kernel[grid](\n  File \"/usr/local/python3.11.14/\n... [truncated 670 chars] ...\nl/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 51:14:\n\n    # checklist: contiguous (non-interleaved) task partition; each program\n    # handles a contiguous block range -> K/V L2 reuse across m-tiles of head\n    CHUNK: tl.constexpr = num_blocks_total // num_cores\n    EXTRA: tl.constexpr = num_blocks_total - CHUNK * num_cores\n    extra = (pid.to(tl.float32) < float(EXTRA)).to(tl.int32)\n    start_off = pid * CHUNK + extra\n    for i in range(CHUNK + extra):\n        block_idx = start_off + i\n        # scalar int div -> float32 div (exact for small ints)\n        f_idx = block_idx.to(tl.float32)\n        f_m = num_m_tiles.to(tl.float32)\n              ^\nAttributeError(\"'constexpr' object has no attribute 'to'\")\n"
+    },
+    {
+      "case_idx": 16,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            3,
+            7,
+            71,
+            64
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            3,
+            7,
+            87,
+            64
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            3,
+            7,
+            87,
+            64
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "scalar",
+          "value": 0.125
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card1/agent_workdir/output/verify/kernelbench_l4_13_ScaledDotProductAttention_triton_ascend_impl.py\", line 186, in forward\n    sdpa_fwd_kernel[grid](\n  File \"/usr/local/python3.11.14/\n... [truncated 670 chars] ...\nl/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 51:14:\n\n    # checklist: contiguous (non-interleaved) task partition; each program\n    # handles a contiguous block range -> K/V L2 reuse across m-tiles of head\n    CHUNK: tl.constexpr = num_blocks_total // num_cores\n    EXTRA: tl.constexpr = num_blocks_total - CHUNK * num_cores\n    extra = (pid.to(tl.float32) < float(EXTRA)).to(tl.int32)\n    start_off = pid * CHUNK + extra\n    for i in range(CHUNK + extra):\n        block_idx = start_off + i\n        # scalar int div -> float32 div (exact for small ints)\n        f_idx = block_idx.to(tl.float32)\n        f_m = num_m_tiles.to(tl.float32)\n              ^\nAttributeError(\"'constexpr' object has no attribute 'to'\")\n"
+    },
+    {
+      "case_idx": 17,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            8,
+            73,
+            64
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            8,
+            93,
+            64
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            8,
+            93,
+            56
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": 0.125
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card1/agent_workdir/output/verify/kernelbench_l4_13_ScaledDotProductAttention_triton_ascend_impl.py\", line 186, in forward\n    sdpa_fwd_kernel[grid](\n  File \"/usr/local/python3.11.14/\n... [truncated 670 chars] ...\nl/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 51:14:\n\n    # checklist: contiguous (non-interleaved) task partition; each program\n    # handles a contiguous block range -> K/V L2 reuse across m-tiles of head\n    CHUNK: tl.constexpr = num_blocks_total // num_cores\n    EXTRA: tl.constexpr = num_blocks_total - CHUNK * num_cores\n    extra = (pid.to(tl.float32) < float(EXTRA)).to(tl.int32)\n    start_off = pid * CHUNK + extra\n    for i in range(CHUNK + extra):\n        block_idx = start_off + i\n        # scalar int div -> float32 div (exact for small ints)\n        f_idx = block_idx.to(tl.float32)\n        f_m = num_m_tiles.to(tl.float32)\n              ^\nAttributeError(\"'constexpr' object has no attribute 'to'\")\n"
+    },
+    {
+      "case_idx": 18,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            8,
+            79,
+            64
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            8,
+            103,
+            64
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            8,
+            103,
+            72
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 0.125
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card1/agent_workdir/output/verify/kernelbench_l4_13_ScaledDotProductAttention_triton_ascend_impl.py\", line 186, in forward\n    sdpa_fwd_kernel[grid](\n  File \"/usr/local/python3.11.14/\n... [truncated 670 chars] ...\nl/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 51:14:\n\n    # checklist: contiguous (non-interleaved) task partition; each program\n    # handles a contiguous block range -> K/V L2 reuse across m-tiles of head\n    CHUNK: tl.constexpr = num_blocks_total // num_cores\n    EXTRA: tl.constexpr = num_blocks_total - CHUNK * num_cores\n    extra = (pid.to(tl.float32) < float(EXTRA)).to(tl.int32)\n    start_off = pid * CHUNK + extra\n    for i in range(CHUNK + extra):\n        block_idx = start_off + i\n        # scalar int div -> float32 div (exact for small ints)\n        f_idx = block_idx.to(tl.float32)\n        f_m = num_m_tiles.to(tl.float32)\n              ^\nAttributeError(\"'constexpr' object has no attribute 'to'\")\n"
+    },
+    {
+      "case_idx": 19,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            9,
+            83,
+            80
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            9,
+            113,
+            80
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            9,
+            113,
+            80
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "scalar",
+          "value": 0.11180339887498948
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card1/agent_workdir/output/verify/kernelbench_l4_13_ScaledDotProductAttention_triton_ascend_impl.py\", line 186, in forward\n    sdpa_fwd_kernel[grid](\n  File \"/usr/local/python3.11.14/\n... [truncated 670 chars] ...\nl/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 51:14:\n\n    # checklist: contiguous (non-interleaved) task partition; each program\n    # handles a contiguous block range -> K/V L2 reuse across m-tiles of head\n    CHUNK: tl.constexpr = num_blocks_total // num_cores\n    EXTRA: tl.constexpr = num_blocks_total - CHUNK * num_cores\n    extra = (pid.to(tl.float32) < float(EXTRA)).to(tl.int32)\n    start_off = pid * CHUNK + extra\n    for i in range(CHUNK + extra):\n        block_idx = start_off + i\n        # scalar int div -> float32 div (exact for small ints)\n        f_idx = block_idx.to(tl.float32)\n        f_m = num_m_tiles.to(tl.float32)\n              ^\nAttributeError(\"'constexpr' object has no attribute 'to'\")\n"
+    },
+    {
+      "case_idx": 20,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            9,
+            89,
+            64
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            9,
+            125,
+            64
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            9,
+            125,
+            56
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": 0.125
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card1/agent_workdir/output/verify/kernelbench_l4_13_ScaledDotProductAttention_triton_ascend_impl.py\", line 186, in forward\n    sdpa_fwd_kernel[grid](\n  File \"/usr/local/python3.11.14/\n... [truncated 670 chars] ...\nl/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 51:14:\n\n    # checklist: contiguous (non-interleaved) task partition; each program\n    # handles a contiguous block range -> K/V L2 reuse across m-tiles of head\n    CHUNK: tl.constexpr = num_blocks_total // num_cores\n    EXTRA: tl.constexpr = num_blocks_total - CHUNK * num_cores\n    extra = (pid.to(tl.float32) < float(EXTRA)).to(tl.int32)\n    start_off = pid * CHUNK + extra\n    for i in range(CHUNK + extra):\n        block_idx = start_off + i\n        # scalar int div -> float32 div (exact for small ints)\n        f_idx = block_idx.to(tl.float32)\n        f_m = num_m_tiles.to(tl.float32)\n              ^\nAttributeError(\"'constexpr' object has no attribute 'to'\")\n"
+    },
+    {
+      "case_idx": 21,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            10,
+            97,
+            64
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            10,
+            99,
+            64
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            10,
+            99,
+            72
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 0.125
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card1/agent_workdir/output/verify/kernelbench_l4_13_ScaledDotProductAttention_triton_ascend_impl.py\", line 186, in forward\n    sdpa_fwd_kernel[grid](\n  File \"/usr/local/python3.11.14/\n... [truncated 670 chars] ...\nl/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 51:14:\n\n    # checklist: contiguous (non-interleaved) task partition; each program\n    # handles a contiguous block range -> K/V L2 reuse across m-tiles of head\n    CHUNK: tl.constexpr = num_blocks_total // num_cores\n    EXTRA: tl.constexpr = num_blocks_total - CHUNK * num_cores\n    extra = (pid.to(tl.float32) < float(EXTRA)).to(tl.int32)\n    start_off = pid * CHUNK + extra\n    for i in range(CHUNK + extra):\n        block_idx = start_off + i\n        # scalar int div -> float32 div (exact for small ints)\n        f_idx = block_idx.to(tl.float32)\n        f_m = num_m_tiles.to(tl.float32)\n              ^\nAttributeError(\"'constexpr' object has no attribute 'to'\")\n"
+    },
+    {
+      "case_idx": 22,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            10,
+            101,
+            80
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            10,
+            105,
+            80
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            10,
+            105,
+            80
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "scalar",
+          "value": 0.11180339887498948
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card1/agent_workdir/output/verify/kernelbench_l4_13_ScaledDotProductAttention_triton_ascend_impl.py\", line 186, in forward\n    sdpa_fwd_kernel[grid](\n  File \"/usr/local/python3.11.14/\n... [truncated 670 chars] ...\nl/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 51:14:\n\n    # checklist: contiguous (non-interleaved) task partition; each program\n    # handles a contiguous block range -> K/V L2 reuse across m-tiles of head\n    CHUNK: tl.constexpr = num_blocks_total // num_cores\n    EXTRA: tl.constexpr = num_blocks_total - CHUNK * num_cores\n    extra = (pid.to(tl.float32) < float(EXTRA)).to(tl.int32)\n    start_off = pid * CHUNK + extra\n    for i in range(CHUNK + extra):\n        block_idx = start_off + i\n        # scalar int div -> float32 div (exact for small ints)\n        f_idx = block_idx.to(tl.float32)\n        f_m = num_m_tiles.to(tl.float32)\n              ^\nAttributeError(\"'constexpr' object has no attribute 'to'\")\n"
+    },
+    {
+      "case_idx": 23,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            12,
+            107,
+            64
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            12,
+            113,
+            64
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            12,
+            113,
+            56
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": 0.125
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card1/agent_workdir/output/verify/kernelbench_l4_13_ScaledDotProductAttention_triton_ascend_impl.py\", line 186, in forward\n    sdpa_fwd_kernel[grid](\n  File \"/usr/local/python3.11.14/\n... [truncated 670 chars] ...\nl/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 51:14:\n\n    # checklist: contiguous (non-interleaved) task partition; each program\n    # handles a contiguous block range -> K/V L2 reuse across m-tiles of head\n    CHUNK: tl.constexpr = num_blocks_total // num_cores\n    EXTRA: tl.constexpr = num_blocks_total - CHUNK * num_cores\n    extra = (pid.to(tl.float32) < float(EXTRA)).to(tl.int32)\n    start_off = pid * CHUNK + extra\n    for i in range(CHUNK + extra):\n        block_idx = start_off + i\n        # scalar int div -> float32 div (exact for small ints)\n        f_idx = block_idx.to(tl.float32)\n        f_m = num_m_tiles.to(tl.float32)\n              ^\nAttributeError(\"'constexpr' object has no attribute 'to'\")\n"
+    },
+    {
+      "case_idx": 24,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            11,
+            113,
+            64
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            11,
+            123,
+            64
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            11,
+            123,
+            72
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 0.125
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card1/agent_workdir/output/verify/kernelbench_l4_13_ScaledDotProductAttention_triton_ascend_impl.py\", line 186, in forward\n    sdpa_fwd_kernel[grid](\n  File \"/usr/local/python3.11.14/\n... [truncated 670 chars] ...\nl/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 51:14:\n\n    # checklist: contiguous (non-interleaved) task partition; each program\n    # handles a contiguous block range -> K/V L2 reuse across m-tiles of head\n    CHUNK: tl.constexpr = num_blocks_total // num_cores\n    EXTRA: tl.constexpr = num_blocks_total - CHUNK * num_cores\n    extra = (pid.to(tl.float32) < float(EXTRA)).to(tl.int32)\n    start_off = pid * CHUNK + extra\n    for i in range(CHUNK + extra):\n        block_idx = start_off + i\n        # scalar int div -> float32 div (exact for small ints)\n        f_idx = block_idx.to(tl.float32)\n        f_m = num_m_tiles.to(tl.float32)\n              ^\nAttributeError(\"'constexpr' object has no attribute 'to'\")\n"
+    },
+    {
+      "case_idx": 25,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            12,
+            127,
+            64
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            12,
+            139,
+            64
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            12,
+            139,
+            64
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "scalar",
+          "value": 0.125
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card1/agent_workdir/output/verify/kernelbench_l4_13_ScaledDotProductAttention_triton_ascend_impl.py\", line 186, in forward\n    sdpa_fwd_kernel[grid](\n  File \"/usr/local/python3.11.14/\n... [truncated 670 chars] ...\nl/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 51:14:\n\n    # checklist: contiguous (non-interleaved) task partition; each program\n    # handles a contiguous block range -> K/V L2 reuse across m-tiles of head\n    CHUNK: tl.constexpr = num_blocks_total // num_cores\n    EXTRA: tl.constexpr = num_blocks_total - CHUNK * num_cores\n    extra = (pid.to(tl.float32) < float(EXTRA)).to(tl.int32)\n    start_off = pid * CHUNK + extra\n    for i in range(CHUNK + extra):\n        block_idx = start_off + i\n        # scalar int div -> float32 div (exact for small ints)\n        f_idx = block_idx.to(tl.float32)\n        f_m = num_m_tiles.to(tl.float32)\n              ^\nAttributeError(\"'constexpr' object has no attribute 'to'\")\n"
+    },
+    {
+      "case_idx": 26,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            3,
+            12,
+            131,
+            96
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            3,
+            12,
+            147,
+            96
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            3,
+            12,
+            147,
+            88
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": 0.10206207261596577
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card1/agent_workdir/output/verify/kernelbench_l4_13_ScaledDotProductAttention_triton_ascend_impl.py\", line 186, in forward\n    sdpa_fwd_kernel[grid](\n  File \"/usr/local/python3.11.14/\n... [truncated 670 chars] ...\nl/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 51:14:\n\n    # checklist: contiguous (non-interleaved) task partition; each program\n    # handles a contiguous block range -> K/V L2 reuse across m-tiles of head\n    CHUNK: tl.constexpr = num_blocks_total // num_cores\n    EXTRA: tl.constexpr = num_blocks_total - CHUNK * num_cores\n    extra = (pid.to(tl.float32) < float(EXTRA)).to(tl.int32)\n    start_off = pid * CHUNK + extra\n    for i in range(CHUNK + extra):\n        block_idx = start_off + i\n        # scalar int div -> float32 div (exact for small ints)\n        f_idx = block_idx.to(tl.float32)\n        f_m = num_m_tiles.to(tl.float32)\n              ^\nAttributeError(\"'constexpr' object has no attribute 'to'\")\n"
+    },
+    {
+      "case_idx": 27,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            3,
+            10,
+            137,
+            96
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            3,
+            10,
+            157,
+            96
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            3,
+            10,
+            157,
+            104
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 0.10206207261596577
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card1/agent_workdir/output/verify/kernelbench_l4_13_ScaledDotProductAttention_triton_ascend_impl.py\", line 186, in forward\n    sdpa_fwd_kernel[grid](\n  File \"/usr/local/python3.11.14/\n... [truncated 670 chars] ...\nl/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 51:14:\n\n    # checklist: contiguous (non-interleaved) task partition; each program\n    # handles a contiguous block range -> K/V L2 reuse across m-tiles of head\n    CHUNK: tl.constexpr = num_blocks_total // num_cores\n    EXTRA: tl.constexpr = num_blocks_total - CHUNK * num_cores\n    extra = (pid.to(tl.float32) < float(EXTRA)).to(tl.int32)\n    start_off = pid * CHUNK + extra\n    for i in range(CHUNK + extra):\n        block_idx = start_off + i\n        # scalar int div -> float32 div (exact for small ints)\n        f_idx = block_idx.to(tl.float32)\n        f_m = num_m_tiles.to(tl.float32)\n              ^\nAttributeError(\"'constexpr' object has no attribute 'to'\")\n"
+    },
+    {
+      "case_idx": 28,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            13,
+            149,
+            80
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            13,
+            173,
+            80
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            13,
+            173,
+            80
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "scalar",
+          "value": 0.11180339887498948
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card1/agent_workdir/output/verify/kernelbench_l4_13_ScaledDotProductAttention_triton_ascend_impl.py\", line 186, in forward\n    sdpa_fwd_kernel[grid](\n  File \"/usr/local/python3.11.14/\n... [truncated 670 chars] ...\nl/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 51:14:\n\n    # checklist: contiguous (non-interleaved) task partition; each program\n    # handles a contiguous block range -> K/V L2 reuse across m-tiles of head\n    CHUNK: tl.constexpr = num_blocks_total // num_cores\n    EXTRA: tl.constexpr = num_blocks_total - CHUNK * num_cores\n    extra = (pid.to(tl.float32) < float(EXTRA)).to(tl.int32)\n    start_off = pid * CHUNK + extra\n    for i in range(CHUNK + extra):\n        block_idx = start_off + i\n        # scalar int div -> float32 div (exact for small ints)\n        f_idx = block_idx.to(tl.float32)\n        f_m = num_m_tiles.to(tl.float32)\n              ^\nAttributeError(\"'constexpr' object has no attribute 'to'\")\n"
+    },
+    {
+      "case_idx": 29,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            12,
+            157,
+            80
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            12,
+            187,
+            80
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            12,
+            187,
+            72
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": 0.11180339887498948
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card1/agent_workdir/output/verify/kernelbench_l4_13_ScaledDotProductAttention_triton_ascend_impl.py\", line 186, in forward\n    sdpa_fwd_kernel[grid](\n  File \"/usr/local/python3.11.14/\n... [truncated 670 chars] ...\nl/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 51:14:\n\n    # checklist: contiguous (non-interleaved) task partition; each program\n    # handles a contiguous block range -> K/V L2 reuse across m-tiles of head\n    CHUNK: tl.constexpr = num_blocks_total // num_cores\n    EXTRA: tl.constexpr = num_blocks_total - CHUNK * num_cores\n    extra = (pid.to(tl.float32) < float(EXTRA)).to(tl.int32)\n    start_off = pid * CHUNK + extra\n    for i in range(CHUNK + extra):\n        block_idx = start_off + i\n        # scalar int div -> float32 div (exact for small ints)\n        f_idx = block_idx.to(tl.float32)\n        f_m = num_m_tiles.to(tl.float32)\n              ^\nAttributeError(\"'constexpr' object has no attribute 'to'\")\n"
+    },
+    {
+      "case_idx": 30,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            14,
+            167,
+            64
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            14,
+            203,
+            64
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            14,
+            203,
+            72
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 0.125
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card1/agent_workdir/output/verify/kernelbench_l4_13_ScaledDotProductAttention_triton_ascend_impl.py\", line 186, in forward\n    sdpa_fwd_kernel[grid](\n  File \"/usr/local/python3.11.14/\n... [truncated 670 chars] ...\nl/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 51:14:\n\n    # checklist: contiguous (non-interleaved) task partition; each program\n    # handles a contiguous block range -> K/V L2 reuse across m-tiles of head\n    CHUNK: tl.constexpr = num_blocks_total // num_cores\n    EXTRA: tl.constexpr = num_blocks_total - CHUNK * num_cores\n    extra = (pid.to(tl.float32) < float(EXTRA)).to(tl.int32)\n    start_off = pid * CHUNK + extra\n    for i in range(CHUNK + extra):\n        block_idx = start_off + i\n        # scalar int div -> float32 div (exact for small ints)\n        f_idx = block_idx.to(tl.float32)\n        f_m = num_m_tiles.to(tl.float32)\n              ^\nAttributeError(\"'constexpr' object has no attribute 'to'\")\n"
+    },
+    {
+      "case_idx": 31,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            3,
+            15,
+            179,
+            64
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            3,
+            15,
+            181,
+            64
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            3,
+            15,
+            181,
+            64
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "scalar",
+          "value": 0.125
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card1/agent_workdir/output/verify/kernelbench_l4_13_ScaledDotProductAttention_triton_ascend_impl.py\", line 186, in forward\n    sdpa_fwd_kernel[grid](\n  File \"/usr/local/python3.11.14/\n... [truncated 670 chars] ...\nl/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 51:14:\n\n    # checklist: contiguous (non-interleaved) task partition; each program\n    # handles a contiguous block range -> K/V L2 reuse across m-tiles of head\n    CHUNK: tl.constexpr = num_blocks_total // num_cores\n    EXTRA: tl.constexpr = num_blocks_total - CHUNK * num_cores\n    extra = (pid.to(tl.float32) < float(EXTRA)).to(tl.int32)\n    start_off = pid * CHUNK + extra\n    for i in range(CHUNK + extra):\n        block_idx = start_off + i\n        # scalar int div -> float32 div (exact for small ints)\n        f_idx = block_idx.to(tl.float32)\n        f_m = num_m_tiles.to(tl.float32)\n              ^\nAttributeError(\"'constexpr' object has no attribute 'to'\")\n"
+    },
+    {
+      "case_idx": 32,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            16,
+            191,
+            128
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            16,
+            195,
+            128
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            16,
+            195,
+            120
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": 0.08838834764831843
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card1/agent_workdir/output/verify/kernelbench_l4_13_ScaledDotProductAttention_triton_ascend_impl.py\", line 186, in forward\n    sdpa_fwd_kernel[grid](\n  File \"/usr/local/python3.11.14/\n... [truncated 670 chars] ...\nl/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 51:14:\n\n    # checklist: contiguous (non-interleaved) task partition; each program\n    # handles a contiguous block range -> K/V L2 reuse across m-tiles of head\n    CHUNK: tl.constexpr = num_blocks_total // num_cores\n    EXTRA: tl.constexpr = num_blocks_total - CHUNK * num_cores\n    extra = (pid.to(tl.float32) < float(EXTRA)).to(tl.int32)\n    start_off = pid * CHUNK + extra\n    for i in range(CHUNK + extra):\n        block_idx = start_off + i\n        # scalar int div -> float32 div (exact for small ints)\n        f_idx = block_idx.to(tl.float32)\n        f_m = num_m_tiles.to(tl.float32)\n              ^\nAttributeError(\"'constexpr' object has no attribute 'to'\")\n"
+    },
+    {
+      "case_idx": 33,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            17,
+            211,
+            96
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            17,
+            217,
+            96
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            17,
+            217,
+            104
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 0.10206207261596577
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card1/agent_workdir/output/verify/kernelbench_l4_13_ScaledDotProductAttention_triton_ascend_impl.py\", line 186, in forward\n    sdpa_fwd_kernel[grid](\n  File \"/usr/local/python3.11.14/\n... [truncated 670 chars] ...\nl/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 51:14:\n\n    # checklist: contiguous (non-interleaved) task partition; each program\n    # handles a contiguous block range -> K/V L2 reuse across m-tiles of head\n    CHUNK: tl.constexpr = num_blocks_total // num_cores\n    EXTRA: tl.constexpr = num_blocks_total - CHUNK * num_cores\n    extra = (pid.to(tl.float32) < float(EXTRA)).to(tl.int32)\n    start_off = pid * CHUNK + extra\n    for i in range(CHUNK + extra):\n        block_idx = start_off + i\n        # scalar int div -> float32 div (exact for small ints)\n        f_idx = block_idx.to(tl.float32)\n        f_m = num_m_tiles.to(tl.float32)\n              ^\nAttributeError(\"'constexpr' object has no attribute 'to'\")\n"
+    },
+    {
+      "case_idx": 34,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            6,
+            61,
+            80
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            6,
+            71,
+            80
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            6,
+            71,
+            80
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "scalar",
+          "value": 0.11180339887498948
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card1/agent_workdir/output/verify/kernelbench_l4_13_ScaledDotProductAttention_triton_ascend_impl.py\", line 186, in forward\n    sdpa_fwd_kernel[grid](\n  File \"/usr/local/python3.11.14/\n... [truncated 670 chars] ...\nl/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 51:14:\n\n    # checklist: contiguous (non-interleaved) task partition; each program\n    # handles a contiguous block range -> K/V L2 reuse across m-tiles of head\n    CHUNK: tl.constexpr = num_blocks_total // num_cores\n    EXTRA: tl.constexpr = num_blocks_total - CHUNK * num_cores\n    extra = (pid.to(tl.float32) < float(EXTRA)).to(tl.int32)\n    start_off = pid * CHUNK + extra\n    for i in range(CHUNK + extra):\n        block_idx = start_off + i\n        # scalar int div -> float32 div (exact for small ints)\n        f_idx = block_idx.to(tl.float32)\n        f_m = num_m_tiles.to(tl.float32)\n              ^\nAttributeError(\"'constexpr' object has no attribute 'to'\")\n"
+    },
+    {
+      "case_idx": 35,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            7,
+            67,
+            128
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            7,
+            79,
+            128
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            7,
+            79,
+            120
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": 0.08838834764831843
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card1/agent_workdir/output/verify/kernelbench_l4_13_ScaledDotProductAttention_triton_ascend_impl.py\", line 186, in forward\n    sdpa_fwd_kernel[grid](\n  File \"/usr/local/python3.11.14/\n... [truncated 670 chars] ...\nl/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 51:14:\n\n    # checklist: contiguous (non-interleaved) task partition; each program\n    # handles a contiguous block range -> K/V L2 reuse across m-tiles of head\n    CHUNK: tl.constexpr = num_blocks_total // num_cores\n    EXTRA: tl.constexpr = num_blocks_total - CHUNK * num_cores\n    extra = (pid.to(tl.float32) < float(EXTRA)).to(tl.int32)\n    start_off = pid * CHUNK + extra\n    for i in range(CHUNK + extra):\n        block_idx = start_off + i\n        # scalar int div -> float32 div (exact for small ints)\n        f_idx = block_idx.to(tl.float32)\n        f_m = num_m_tiles.to(tl.float32)\n              ^\nAttributeError(\"'constexpr' object has no attribute 'to'\")\n"
+    },
+    {
+      "case_idx": 36,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            16,
+            257,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            16,
+            273,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            16,
+            273,
+            136
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 0.08838834764831843
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card1/agent_workdir/output/verify/kernelbench_l4_13_ScaledDotProductAttention_triton_ascend_impl.py\", line 186, in forward\n    sdpa_fwd_kernel[grid](\n  File \"/usr/local/python3.11.14/\n... [truncated 670 chars] ...\nl/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 51:14:\n\n    # checklist: contiguous (non-interleaved) task partition; each program\n    # handles a contiguous block range -> K/V L2 reuse across m-tiles of head\n    CHUNK: tl.constexpr = num_blocks_total // num_cores\n    EXTRA: tl.constexpr = num_blocks_total - CHUNK * num_cores\n    extra = (pid.to(tl.float32) < float(EXTRA)).to(tl.int32)\n    start_off = pid * CHUNK + extra\n    for i in range(CHUNK + extra):\n        block_idx = start_off + i\n        # scalar int div -> float32 div (exact for small ints)\n        f_idx = block_idx.to(tl.float32)\n        f_m = num_m_tiles.to(tl.float32)\n              ^\nAttributeError(\"'constexpr' object has no attribute 'to'\")\n"
+    },
+    {
+      "case_idx": 37,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            20,
+            277,
+            128
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            20,
+            297,
+            128
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            20,
+            297,
+            128
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "scalar",
+          "value": 0.08838834764831843
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card1/agent_workdir/output/verify/kernelbench_l4_13_ScaledDotProductAttention_triton_ascend_impl.py\", line 186, in forward\n    sdpa_fwd_kernel[grid](\n  File \"/usr/local/python3.11.14/\n... [truncated 670 chars] ...\nl/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 51:14:\n\n    # checklist: contiguous (non-interleaved) task partition; each program\n    # handles a contiguous block range -> K/V L2 reuse across m-tiles of head\n    CHUNK: tl.constexpr = num_blocks_total // num_cores\n    EXTRA: tl.constexpr = num_blocks_total - CHUNK * num_cores\n    extra = (pid.to(tl.float32) < float(EXTRA)).to(tl.int32)\n    start_off = pid * CHUNK + extra\n    for i in range(CHUNK + extra):\n        block_idx = start_off + i\n        # scalar int div -> float32 div (exact for small ints)\n        f_idx = block_idx.to(tl.float32)\n        f_m = num_m_tiles.to(tl.float32)\n              ^\nAttributeError(\"'constexpr' object has no attribute 'to'\")\n"
+    },
+    {
+      "case_idx": 38,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            21,
+            293,
+            128
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            21,
+            317,
+            128
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            21,
+            317,
+            120
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": 0.08838834764831843
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card1/agent_workdir/output/verify/kernelbench_l4_13_ScaledDotProductAttention_triton_ascend_impl.py\", line 186, in forward\n    sdpa_fwd_kernel[grid](\n  File \"/usr/local/python3.11.14/\n... [truncated 670 chars] ...\nl/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 51:14:\n\n    # checklist: contiguous (non-interleaved) task partition; each program\n    # handles a contiguous block range -> K/V L2 reuse across m-tiles of head\n    CHUNK: tl.constexpr = num_blocks_total // num_cores\n    EXTRA: tl.constexpr = num_blocks_total - CHUNK * num_cores\n    extra = (pid.to(tl.float32) < float(EXTRA)).to(tl.int32)\n    start_off = pid * CHUNK + extra\n    for i in range(CHUNK + extra):\n        block_idx = start_off + i\n        # scalar int div -> float32 div (exact for small ints)\n        f_idx = block_idx.to(tl.float32)\n        f_m = num_m_tiles.to(tl.float32)\n              ^\nAttributeError(\"'constexpr' object has no attribute 'to'\")\n"
+    },
+    {
+      "case_idx": 39,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            22,
+            317,
+            96
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            22,
+            347,
+            96
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            22,
+            347,
+            104
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 0.10206207261596577
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card1/agent_workdir/output/verify/kernelbench_l4_13_ScaledDotProductAttention_triton_ascend_impl.py\", line 186, in forward\n    sdpa_fwd_kernel[grid](\n  File \"/usr/local/python3.11.14/\n... [truncated 670 chars] ...\nl/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 51:14:\n\n    # checklist: contiguous (non-interleaved) task partition; each program\n    # handles a contiguous block range -> K/V L2 reuse across m-tiles of head\n    CHUNK: tl.constexpr = num_blocks_total // num_cores\n    EXTRA: tl.constexpr = num_blocks_total - CHUNK * num_cores\n    extra = (pid.to(tl.float32) < float(EXTRA)).to(tl.int32)\n    start_off = pid * CHUNK + extra\n    for i in range(CHUNK + extra):\n        block_idx = start_off + i\n        # scalar int div -> float32 div (exact for small ints)\n        f_idx = block_idx.to(tl.float32)\n        f_m = num_m_tiles.to(tl.float32)\n              ^\nAttributeError(\"'constexpr' object has no attribute 'to'\")\n"
+    },
+    {
+      "case_idx": 40,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            18,
+            347,
+            128
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            18,
+            383,
+            128
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            18,
+            383,
+            128
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "scalar",
+          "value": 0.08838834764831843
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card1/agent_workdir/output/verify/kernelbench_l4_13_ScaledDotProductAttention_triton_ascend_impl.py\", line 186, in forward\n    sdpa_fwd_kernel[grid](\n  File \"/usr/local/python3.11.14/\n... [truncated 670 chars] ...\nl/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 51:14:\n\n    # checklist: contiguous (non-interleaved) task partition; each program\n    # handles a contiguous block range -> K/V L2 reuse across m-tiles of head\n    CHUNK: tl.constexpr = num_blocks_total // num_cores\n    EXTRA: tl.constexpr = num_blocks_total - CHUNK * num_cores\n    extra = (pid.to(tl.float32) < float(EXTRA)).to(tl.int32)\n    start_off = pid * CHUNK + extra\n    for i in range(CHUNK + extra):\n        block_idx = start_off + i\n        # scalar int div -> float32 div (exact for small ints)\n        f_idx = block_idx.to(tl.float32)\n        f_m = num_m_tiles.to(tl.float32)\n              ^\nAttributeError(\"'constexpr' object has no attribute 'to'\")\n"
+    },
+    {
+      "case_idx": 41,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            23,
+            383,
+            96
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            23,
+            385,
+            96
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            23,
+            385,
+            88
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": 0.10206207261596577
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card1/agent_workdir/output/verify/kernelbench_l4_13_ScaledDotProductAttention_triton_ascend_impl.py\", line 186, in forward\n    sdpa_fwd_kernel[grid](\n  File \"/usr/local/python3.11.14/\n... [truncated 670 chars] ...\nl/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 51:14:\n\n    # checklist: contiguous (non-interleaved) task partition; each program\n    # handles a contiguous block range -> K/V L2 reuse across m-tiles of head\n    CHUNK: tl.constexpr = num_blocks_total // num_cores\n    EXTRA: tl.constexpr = num_blocks_total - CHUNK * num_cores\n    extra = (pid.to(tl.float32) < float(EXTRA)).to(tl.int32)\n    start_off = pid * CHUNK + extra\n    for i in range(CHUNK + extra):\n        block_idx = start_off + i\n        # scalar int div -> float32 div (exact for small ints)\n        f_idx = block_idx.to(tl.float32)\n        f_m = num_m_tiles.to(tl.float32)\n              ^\nAttributeError(\"'constexpr' object has no attribute 'to'\")\n"
+    },
+    {
+      "case_idx": 42,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            24,
+            419,
+            96
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            24,
+            423,
+            96
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            24,
+            423,
+            104
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 0.10206207261596577
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card1/agent_workdir/output/verify/kernelbench_l4_13_ScaledDotProductAttention_triton_ascend_impl.py\", line 186, in forward\n    sdpa_fwd_kernel[grid](\n  File \"/usr/local/python3.11.14/\n... [truncated 670 chars] ...\nl/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 51:14:\n\n    # checklist: contiguous (non-interleaved) task partition; each program\n    # handles a contiguous block range -> K/V L2 reuse across m-tiles of head\n    CHUNK: tl.constexpr = num_blocks_total // num_cores\n    EXTRA: tl.constexpr = num_blocks_total - CHUNK * num_cores\n    extra = (pid.to(tl.float32) < float(EXTRA)).to(tl.int32)\n    start_off = pid * CHUNK + extra\n    for i in range(CHUNK + extra):\n        block_idx = start_off + i\n        # scalar int div -> float32 div (exact for small ints)\n        f_idx = block_idx.to(tl.float32)\n        f_m = num_m_tiles.to(tl.float32)\n              ^\nAttributeError(\"'constexpr' object has no attribute 'to'\")\n"
+    },
+    {
+      "case_idx": 43,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            16,
+            463,
+            128
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            16,
+            469,
+            128
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            16,
+            469,
+            128
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "scalar",
+          "value": 0.08838834764831843
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card1/agent_workdir/output/verify/kernelbench_l4_13_ScaledDotProductAttention_triton_ascend_impl.py\", line 186, in forward\n    sdpa_fwd_kernel[grid](\n  File \"/usr/local/python3.11.14/\n... [truncated 670 chars] ...\nl/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 51:14:\n\n    # checklist: contiguous (non-interleaved) task partition; each program\n    # handles a contiguous block range -> K/V L2 reuse across m-tiles of head\n    CHUNK: tl.constexpr = num_blocks_total // num_cores\n    EXTRA: tl.constexpr = num_blocks_total - CHUNK * num_cores\n    extra = (pid.to(tl.float32) < float(EXTRA)).to(tl.int32)\n    start_off = pid * CHUNK + extra\n    for i in range(CHUNK + extra):\n        block_idx = start_off + i\n        # scalar int div -> float32 div (exact for small ints)\n        f_idx = block_idx.to(tl.float32)\n        f_m = num_m_tiles.to(tl.float32)\n              ^\nAttributeError(\"'constexpr' object has no attribute 'to'\")\n"
+    },
+    {
+      "case_idx": 44,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            16,
+            509,
+            160
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            16,
+            519,
+            160
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            16,
+            519,
+            152
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": 0.07905694150420949
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card1/agent_workdir/output/verify/kernelbench_l4_13_ScaledDotProductAttention_triton_ascend_impl.py\", line 186, in forward\n    sdpa_fwd_kernel[grid](\n  File \"/usr/local/python3.11.14/\n... [truncated 670 chars] ...\nl/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 51:14:\n\n    # checklist: contiguous (non-interleaved) task partition; each program\n    # handles a contiguous block range -> K/V L2 reuse across m-tiles of head\n    CHUNK: tl.constexpr = num_blocks_total // num_cores\n    EXTRA: tl.constexpr = num_blocks_total - CHUNK * num_cores\n    extra = (pid.to(tl.float32) < float(EXTRA)).to(tl.int32)\n    start_off = pid * CHUNK + extra\n    for i in range(CHUNK + extra):\n        block_idx = start_off + i\n        # scalar int div -> float32 div (exact for small ints)\n        f_idx = block_idx.to(tl.float32)\n        f_m = num_m_tiles.to(tl.float32)\n              ^\nAttributeError(\"'constexpr' object has no attribute 'to'\")\n"
+    },
+    {
+      "case_idx": 45,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            14,
+            577,
+            160
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            14,
+            589,
+            160
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            14,
+            589,
+            168
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 0.07905694150420949
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card1/agent_workdir/output/verify/kernelbench_l4_13_ScaledDotProductAttention_triton_ascend_impl.py\", line 186, in forward\n    sdpa_fwd_kernel[grid](\n  File \"/usr/local/python3.11.14/\n... [truncated 670 chars] ...\nl/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 51:14:\n\n    # checklist: contiguous (non-interleaved) task partition; each program\n    # handles a contiguous block range -> K/V L2 reuse across m-tiles of head\n    CHUNK: tl.constexpr = num_blocks_total // num_cores\n    EXTRA: tl.constexpr = num_blocks_total - CHUNK * num_cores\n    extra = (pid.to(tl.float32) < float(EXTRA)).to(tl.int32)\n    start_off = pid * CHUNK + extra\n    for i in range(CHUNK + extra):\n        block_idx = start_off + i\n        # scalar int div -> float32 div (exact for small ints)\n        f_idx = block_idx.to(tl.float32)\n        f_m = num_m_tiles.to(tl.float32)\n              ^\nAttributeError(\"'constexpr' object has no attribute 'to'\")\n"
+    },
+    {
+      "case_idx": 46,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            12,
+            641,
+            128
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            12,
+            657,
+            128
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            12,
+            657,
+            128
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "scalar",
+          "value": 0.08838834764831843
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card1/agent_workdir/output/verify/kernelbench_l4_13_ScaledDotProductAttention_triton_ascend_impl.py\", line 186, in forward\n    sdpa_fwd_kernel[grid](\n  File \"/usr/local/python3.11.14/\n... [truncated 670 chars] ...\nl/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 51:14:\n\n    # checklist: contiguous (non-interleaved) task partition; each program\n    # handles a contiguous block range -> K/V L2 reuse across m-tiles of head\n    CHUNK: tl.constexpr = num_blocks_total // num_cores\n    EXTRA: tl.constexpr = num_blocks_total - CHUNK * num_cores\n    extra = (pid.to(tl.float32) < float(EXTRA)).to(tl.int32)\n    start_off = pid * CHUNK + extra\n    for i in range(CHUNK + extra):\n        block_idx = start_off + i\n        # scalar int div -> float32 div (exact for small ints)\n        f_idx = block_idx.to(tl.float32)\n        f_m = num_m_tiles.to(tl.float32)\n              ^\nAttributeError(\"'constexpr' object has no attribute 'to'\")\n"
+    },
+    {
+      "case_idx": 47,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            10,
+            769,
+            96
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            10,
+            789,
+            96
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            10,
+            789,
+            88
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": 0.10206207261596577
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card1/agent_workdir/output/verify/kernelbench_l4_13_ScaledDotProductAttention_triton_ascend_impl.py\", line 186, in forward\n    sdpa_fwd_kernel[grid](\n  File \"/usr/local/python3.11.14/\n... [truncated 670 chars] ...\nl/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 51:14:\n\n    # checklist: contiguous (non-interleaved) task partition; each program\n    # handles a contiguous block range -> K/V L2 reuse across m-tiles of head\n    CHUNK: tl.constexpr = num_blocks_total // num_cores\n    EXTRA: tl.constexpr = num_blocks_total - CHUNK * num_cores\n    extra = (pid.to(tl.float32) < float(EXTRA)).to(tl.int32)\n    start_off = pid * CHUNK + extra\n    for i in range(CHUNK + extra):\n        block_idx = start_off + i\n        # scalar int div -> float32 div (exact for small ints)\n        f_idx = block_idx.to(tl.float32)\n        f_m = num_m_tiles.to(tl.float32)\n              ^\nAttributeError(\"'constexpr' object has no attribute 'to'\")\n"
+    },
+    {
+      "case_idx": 48,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            8,
+            897,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            8,
+            921,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            8,
+            921,
+            136
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 0.08838834764831843
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card1/agent_workdir/output/verify/kernelbench_l4_13_ScaledDotProductAttention_triton_ascend_impl.py\", line 186, in forward\n    sdpa_fwd_kernel[grid](\n  File \"/usr/local/python3.11.14/\n... [truncated 670 chars] ...\nl/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 51:14:\n\n    # checklist: contiguous (non-interleaved) task partition; each program\n    # handles a contiguous block range -> K/V L2 reuse across m-tiles of head\n    CHUNK: tl.constexpr = num_blocks_total // num_cores\n    EXTRA: tl.constexpr = num_blocks_total - CHUNK * num_cores\n    extra = (pid.to(tl.float32) < float(EXTRA)).to(tl.int32)\n    start_off = pid * CHUNK + extra\n    for i in range(CHUNK + extra):\n        block_idx = start_off + i\n        # scalar int div -> float32 div (exact for small ints)\n        f_idx = block_idx.to(tl.float32)\n        f_m = num_m_tiles.to(tl.float32)\n              ^\nAttributeError(\"'constexpr' object has no attribute 'to'\")\n"
+    },
+    {
+      "case_idx": 49,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            18,
+            223,
+            128
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            18,
+            253,
+            128
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            18,
+            253,
+            128
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "scalar",
+          "value": 0.08838834764831843
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card1/agent_workdir/output/verify/kernelbench_l4_13_ScaledDotProductAttention_triton_ascend_impl.py\", line 186, in forward\n    sdpa_fwd_kernel[grid](\n  File \"/usr/local/python3.11.14/\n... [truncated 670 chars] ...\nl/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 51:14:\n\n    # checklist: contiguous (non-interleaved) task partition; each program\n    # handles a contiguous block range -> K/V L2 reuse across m-tiles of head\n    CHUNK: tl.constexpr = num_blocks_total // num_cores\n    EXTRA: tl.constexpr = num_blocks_total - CHUNK * num_cores\n    extra = (pid.to(tl.float32) < float(EXTRA)).to(tl.int32)\n    start_off = pid * CHUNK + extra\n    for i in range(CHUNK + extra):\n        block_idx = start_off + i\n        # scalar int div -> float32 div (exact for small ints)\n        f_idx = block_idx.to(tl.float32)\n        f_m = num_m_tiles.to(tl.float32)\n              ^\nAttributeError(\"'constexpr' object has no attribute 'to'\")\n"
+    },
+    {
+      "case_idx": 50,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            15,
+            239,
+            192
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            15,
+            275,
+            192
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            15,
+            275,
+            184
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": 0.07216878364870323
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card1/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card1/agent_workdir/output/verify/kernelbench_l4_13_ScaledDotProductAttention_triton_ascend_impl.py\", line 186, in forward\n    sdpa_fwd_kernel[grid](\n  File \"/usr/local/python3.11.14/\n... [truncated 670 chars] ...\nl/python3.11.14/lib/python3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 51:14:\n\n    # checklist: contiguous (non-interleaved) task partition; each program\n    # handles a contiguous block range -> K/V L2 reuse across m-tiles of head\n    CHUNK: tl.constexpr = num_blocks_total // num_cores\n    EXTRA: tl.constexpr = num_blocks_total - CHUNK * num_cores\n    extra = (pid.to(tl.float32) < float(EXTRA)).to(tl.int32)\n    start_off = pid * CHUNK + extra\n    for i in range(CHUNK + extra):\n        block_idx = start_off + i\n        # scalar int div -> float32 div (exact for small ints)\n        f_idx = block_idx.to(tl.float32)\n        f_m = num_m_tiles.to(tl.float32)\n              ^\nAttributeError(\"'constexpr' object has no attribute 'to'\")\n"
+    }
+  ]
+}

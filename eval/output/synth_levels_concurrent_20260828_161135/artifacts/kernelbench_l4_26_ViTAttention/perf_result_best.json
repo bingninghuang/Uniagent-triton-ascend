@@ -1,0 +1,2562 @@
+{
+  "op_name": "kernelbench_l4_26_ViTAttention",
+  "warmup": 5,
+  "repeats": 20,
+  "max_retries": 3,
+  "total_cases": 50,
+  "passed_cases": 50,
+  "failed_cases": 0,
+  "skipped_cases": 0,
+  "skip_indices": [],
+  "nan_indices": [],
+  "inf_indices": [],
+  "zero_indices": [],
+  "negative_indices": [],
+  "none_indices": [],
+  "framework": {
+    "avg_latency_ms": 0.4165,
+    "peak_memory_mb": 423.98,
+    "operators": {
+      "aclnnDivs_RealDivAiCore_RealDiv": 79.0136,
+      "aclnnInplaceCopy_TransposeAiCore_Transpose": 16.9835,
+      "aclnnMatmul_BatchMatMulNd_BatchMatMulV2": 149.8234,
+      "aclnnMatmul_MatMulCommon_MatMulV2": 20.822,
+      "aclnnMatmul_TransposeAiCore_Transpose": 6.4519,
+      "aclnnSoftmax_SoftmaxAiCore_SoftmaxV2": 127.881,
+      "aclnnCast_CastAiCore_Cast": 3.677,
+      "aclnnCast_TransposeAiCore_Transpose": 11.8352
+    },
+    "kernel_metrics": {}
+  },
+  "implementation": {
+    "avg_latency_ms": 7.8471,
+    "peak_memory_mb": 324.77,
+    "operators": {
+      "_attn_kernel": 6979.3499,
+      "_proj_mm_kernel": 867.7528
+    },
+    "kernel_metrics": {
+      "_attn_kernel": {
+        "aiv_vec_ratio": 0.0833,
+        "aiv_mte2_ratio": 0.7053,
+        "aiv_mte3_ratio": 0.0216,
+        "aiv_scalar_ratio": 0.5037,
+        "aic_mac_ratio": 0.011,
+        "aic_mte1_ratio": 0.0098,
+        "cube_utilization(%)": 85.9443
+      },
+      "_proj_mm_kernel": {
+        "aiv_vec_ratio": 0.1183,
+        "aiv_mte2_ratio": 0.8233,
+        "aiv_mte3_ratio": 0.0094,
+        "aiv_scalar_ratio": 0.6645,
+        "aic_mac_ratio": 0.0158,
+        "aic_mte1_ratio": 0.0104,
+        "cube_utilization(%)": 76.1664
+      }
+    }
+  },
+  "speedup_vs_torch": 0.0748,
+  "per_shape_results": [
+    {
+      "case_idx": 1,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            5,
+            192
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": 3
+        }
+      ],
+      "status": "pass",
+      "framework": {
+        "avg_latency_ms": 0.0414,
+        "peak_memory_mb": 307.22
+      },
+      "implementation": {
+        "avg_latency_ms": 0.0453,
+        "peak_memory_mb": 307.53,
+        "kernel_metrics": {
+          "_attn_kernel": {
+            "aiv_vec_ratio": 0.1719,
+            "aiv_mte2_ratio": 0.4516,
+            "aiv_mte3_ratio": 0.0414,
+            "aiv_scalar_ratio": 0.7289,
+            "aic_mac_ratio": 0.0281,
+            "aic_mte1_ratio": 0.0249,
+            "cube_utilization(%)": 13.4844
+          },
+          "_proj_mm_kernel": {
+            "aiv_vec_ratio": 0.1007,
+            "aiv_mte2_ratio": 0.4952,
+            "aiv_mte3_ratio": 0.0128,
+            "aiv_scalar_ratio": 0.637,
+            "aic_mac_ratio": 0.0096,
+            "aic_mte1_ratio": 0.0128,
+            "cube_utilization(%)": 18.079
+          }
+        }
+      },
+      "speedup_vs_torch": 0.9139,
+      "error_type": null,
+      "error_msg": null
+    },
+    {
+      "case_idx": 2,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            10,
+            256
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 4
+        }
+      ],
+      "status": "pass",
+      "framework": {
+        "avg_latency_ms": 0.0522,
+        "peak_memory_mb": 307.18
+      },
+      "implementation": {
+        "avg_latency_ms": 0.1077,
+        "peak_memory_mb": 307.53,
+        "kernel_metrics": {
+          "_attn_kernel": {
+            "aiv_vec_ratio": 0.0738,
+            "aiv_mte2_ratio": 0.7645,
+            "aiv_mte3_ratio": 0.0296,
+            "aiv_scalar_ratio": 0.8786,
+            "aic_mac_ratio": 0.0065,
+            "aic_mte1_ratio": 0.0056,
+            "cube_utilization(%)": 18.4061
+          },
+          "_proj_mm_kernel": {
+            "aiv_vec_ratio": 0.115,
+            "aiv_mte2_ratio": 0.6803,
+            "aiv_mte3_ratio": 0.0136,
+            "aiv_scalar_ratio": 0.7785,
+            "aic_mac_ratio": 0.0054,
+            "aic_mte1_ratio": 0.0099,
+            "cube_utilization(%)": 20.9776
+          }
+        }
+      },
+      "speedup_vs_torch": 0.4847,
+      "error_type": null,
+      "error_msg": null
+    },
+    {
+      "case_idx": 3,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            17,
+            384
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "scalar",
+          "value": 6
+        }
+      ],
+      "status": "pass",
+      "framework": {
+        "avg_latency_ms": 0.0516,
+        "peak_memory_mb": 307.87
+      },
+      "implementation": {
+        "avg_latency_ms": 0.1437,
+        "peak_memory_mb": 308.38,
+        "kernel_metrics": {
+          "_attn_kernel": {
+            "aiv_vec_ratio": 0.0571,
+            "aiv_mte2_ratio": 0.8058,
+            "aiv_mte3_ratio": 0.029,
+            "aiv_scalar_ratio": 0.8989,
+            "aic_mac_ratio": 0.0051,
+            "aic_mte1_ratio": 0.0042,
+            "cube_utilization(%)": 27.862
+          },
+          "_proj_mm_kernel": {
+            "aiv_vec_ratio": 0.1298,
+            "aiv_mte2_ratio": 0.7675,
+            "aiv_mte3_ratio": 0.0155,
+            "aiv_scalar_ratio": 0.7935,
+            "aic_mac_ratio": 0.006,
+            "aic_mte1_ratio": 0.0109,
+            "cube_utilization(%)": 29.1947
+          }
+        }
+      },
+      "speedup_vs_torch": 0.3591,
+      "error_type": null,
+      "error_msg": null
+    },
+    {
+      "case_idx": 4,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            3,
+            26,
+            512
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": 8
+        }
+      ],
+      "status": "pass",
+      "framework": {
+        "avg_latency_ms": 0.0621,
+        "peak_memory_mb": 311.64
+      },
+      "implementation": {
+        "avg_latency_ms": 0.2427,
+        "peak_memory_mb": 312.61,
+        "kernel_metrics": {
+          "_attn_kernel": {
+            "aiv_vec_ratio": 0.0464,
+            "aiv_mte2_ratio": 0.6793,
+            "aiv_mte3_ratio": 0.0366,
+            "aiv_scalar_ratio": 0.7373,
+            "aic_mac_ratio": 0.0077,
+            "aic_mte1_ratio": 0.0069,
+            "cube_utilization(%)": 70.0666
+          },
+          "_proj_mm_kernel": {
+            "aiv_vec_ratio": 0.1191,
+            "aiv_mte2_ratio": 0.8271,
+            "aiv_mte3_ratio": 0.0151,
+            "aiv_scalar_ratio": 0.7038,
+            "aic_mac_ratio": 0.011,
+            "aic_mte1_ratio": 0.0144,
+            "cube_utilization(%)": 65.2284
+          }
+        }
+      },
+      "speedup_vs_torch": 0.2559,
+      "error_type": null,
+      "error_msg": null
+    },
+    {
+      "case_idx": 5,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            37,
+            640
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 10
+        }
+      ],
+      "status": "pass",
+      "framework": {
+        "avg_latency_ms": 0.064,
+        "peak_memory_mb": 310.61
+      },
+      "implementation": {
+        "avg_latency_ms": 0.395,
+        "peak_memory_mb": 312.0,
+        "kernel_metrics": {
+          "_attn_kernel": {
+            "aiv_vec_ratio": 0.0236,
+            "aiv_mte2_ratio": 0.8498,
+            "aiv_mte3_ratio": 0.0278,
+            "aiv_scalar_ratio": 0.5243,
+            "aic_mac_ratio": 0.002,
+            "aic_mte1_ratio": 0.002,
+            "cube_utilization(%)": 94.9673
+          },
+          "_proj_mm_kernel": {
+            "aiv_vec_ratio": 0.1297,
+            "aiv_mte2_ratio": 0.83,
+            "aiv_mte3_ratio": 0.0159,
+            "aiv_scalar_ratio": 0.7,
+            "aic_mac_ratio": 0.006,
+            "aic_mte1_ratio": 0.011,
+            "cube_utilization(%)": 74.8355
+          }
+        }
+      },
+      "speedup_vs_torch": 0.162,
+      "error_type": null,
+      "error_msg": null
+    },
+    {
+      "case_idx": 6,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            50,
+            896
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "scalar",
+          "value": 14
+        }
+      ],
+      "status": "pass",
+      "framework": {
+        "avg_latency_ms": 0.0711,
+        "peak_memory_mb": 313.63
+      },
+      "implementation": {
+        "avg_latency_ms": 0.4757,
+        "peak_memory_mb": 314.6,
+        "kernel_metrics": {
+          "_attn_kernel": {
+            "aiv_vec_ratio": 0.0232,
+            "aiv_mte2_ratio": 0.8448,
+            "aiv_mte3_ratio": 0.0232,
+            "aiv_scalar_ratio": 0.3757,
+            "aic_mac_ratio": 0.002,
+            "aic_mte1_ratio": 0.002,
+            "cube_utilization(%)": 64.8851
+          },
+          "_proj_mm_kernel": {
+            "aiv_vec_ratio": 0.1333,
+            "aiv_mte2_ratio": 0.8276,
+            "aiv_mte3_ratio": 0.016,
+            "aiv_scalar_ratio": 0.6817,
+            "aic_mac_ratio": 0.006,
+            "aic_mte1_ratio": 0.011,
+            "cube_utilization(%)": 69.6446
+          }
+        }
+      },
+      "speedup_vs_torch": 0.1495,
+      "error_type": null,
+      "error_msg": null
+    },
+    {
+      "case_idx": 7,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            3,
+            65,
+            1024
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": 16
+        }
+      ],
+      "status": "pass",
+      "framework": {
+        "avg_latency_ms": 0.0821,
+        "peak_memory_mb": 328.87
+      },
+      "implementation": {
+        "avg_latency_ms": 0.514,
+        "peak_memory_mb": 327.95,
+        "kernel_metrics": {
+          "_attn_kernel": {
+            "aiv_vec_ratio": 0.1168,
+            "aiv_mte2_ratio": 0.4341,
+            "aiv_mte3_ratio": 0.0735,
+            "aiv_scalar_ratio": 0.5599,
+            "aic_mac_ratio": 0.0205,
+            "aic_mte1_ratio": 0.0185,
+            "cube_utilization(%)": 91.308
+          },
+          "_proj_mm_kernel": {
+            "aiv_vec_ratio": 0.1295,
+            "aiv_mte2_ratio": 0.819,
+            "aiv_mte3_ratio": 0.0105,
+            "aiv_scalar_ratio": 0.6917,
+            "aic_mac_ratio": 0.034,
+            "aic_mte1_ratio": 0.0152,
+            "cube_utilization(%)": 78.6688
+          }
+        }
+      },
+      "speedup_vs_torch": 0.1597,
+      "error_type": null,
+      "error_msg": null
+    },
+    {
+      "case_idx": 8,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            82,
+            1152
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 18
+        }
+      ],
+      "status": "pass",
+      "framework": {
+        "avg_latency_ms": 0.0911,
+        "peak_memory_mb": 321.63
+      },
+      "implementation": {
+        "avg_latency_ms": 1.1889,
+        "peak_memory_mb": 320.58,
+        "kernel_metrics": {
+          "_attn_kernel": {
+            "aiv_vec_ratio": 0.0443,
+            "aiv_mte2_ratio": 0.7402,
+            "aiv_mte3_ratio": 0.03,
+            "aiv_scalar_ratio": 0.5815,
+            "aic_mac_ratio": 0.004,
+            "aic_mte1_ratio": 0.0038,
+            "cube_utilization(%)": 81.6758
+          },
+          "_proj_mm_kernel": {
+            "aiv_vec_ratio": 0.1307,
+            "aiv_mte2_ratio": 0.8283,
+            "aiv_mte3_ratio": 0.009,
+            "aiv_scalar_ratio": 0.7077,
+            "aic_mac_ratio": 0.01,
+            "aic_mte1_ratio": 0.009,
+            "cube_utilization(%)": 87.3961
+          }
+        }
+      },
+      "speedup_vs_torch": 0.0766,
+      "error_type": null,
+      "error_msg": null
+    },
+    {
+      "case_idx": 9,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            101,
+            1280
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "scalar",
+          "value": 20
+        }
+      ],
+      "status": "pass",
+      "framework": {
+        "avg_latency_ms": 0.075,
+        "peak_memory_mb": 325.71
+      },
+      "implementation": {
+        "avg_latency_ms": 1.4473,
+        "peak_memory_mb": 322.99,
+        "kernel_metrics": {
+          "_attn_kernel": {
+            "aiv_vec_ratio": 0.0347,
+            "aiv_mte2_ratio": 0.7681,
+            "aiv_mte3_ratio": 0.0277,
+            "aiv_scalar_ratio": 0.4961,
+            "aic_mac_ratio": 0.003,
+            "aic_mte1_ratio": 0.003,
+            "cube_utilization(%)": 92.246
+          },
+          "_proj_mm_kernel": {
+            "aiv_vec_ratio": 0.1302,
+            "aiv_mte2_ratio": 0.8473,
+            "aiv_mte3_ratio": 0.0089,
+            "aiv_scalar_ratio": 0.715,
+            "aic_mac_ratio": 0.01,
+            "aic_mte1_ratio": 0.009,
+            "cube_utilization(%)": 97.1131
+          }
+        }
+      },
+      "speedup_vs_torch": 0.0518,
+      "error_type": null,
+      "error_msg": null
+    },
+    {
+      "case_idx": 10,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            122,
+            192
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": 3
+        }
+      ],
+      "status": "pass",
+      "framework": {
+        "avg_latency_ms": 0.0537,
+        "peak_memory_mb": 308.78
+      },
+      "implementation": {
+        "avg_latency_ms": 0.0881,
+        "peak_memory_mb": 308.72,
+        "kernel_metrics": {
+          "_attn_kernel": {
+            "aiv_vec_ratio": 0.1204,
+            "aiv_mte2_ratio": 0.5997,
+            "aiv_mte3_ratio": 0.0216,
+            "aiv_scalar_ratio": 0.6434,
+            "aic_mac_ratio": 0.0209,
+            "aic_mte1_ratio": 0.0187,
+            "cube_utilization(%)": 55.4257
+          },
+          "_proj_mm_kernel": {
+            "aiv_vec_ratio": 0.1642,
+            "aiv_mte2_ratio": 0.5864,
+            "aiv_mte3_ratio": 0.0128,
+            "aiv_scalar_ratio": 0.6752,
+            "aic_mac_ratio": 0.0433,
+            "aic_mte1_ratio": 0.0199,
+            "cube_utilization(%)": 19.1756
+          }
+        }
+      },
+      "speedup_vs_torch": 0.6095,
+      "error_type": null,
+      "error_msg": null
+    },
+    {
+      "case_idx": 11,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            145,
+            256
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 4
+        }
+      ],
+      "status": "pass",
+      "framework": {
+        "avg_latency_ms": 0.0608,
+        "peak_memory_mb": 308.28
+      },
+      "implementation": {
+        "avg_latency_ms": 0.3747,
+        "peak_memory_mb": 308.55,
+        "kernel_metrics": {
+          "_attn_kernel": {
+            "aiv_vec_ratio": 0.0446,
+            "aiv_mte2_ratio": 0.7688,
+            "aiv_mte3_ratio": 0.0239,
+            "aiv_scalar_ratio": 0.5547,
+            "aic_mac_ratio": 0.004,
+            "aic_mte1_ratio": 0.0039,
+            "cube_utilization(%)": 56.348
+          },
+          "_proj_mm_kernel": {
+            "aiv_vec_ratio": 0.1213,
+            "aiv_mte2_ratio": 0.6724,
+            "aiv_mte3_ratio": 0.008,
+            "aiv_scalar_ratio": 0.6258,
+            "aic_mac_ratio": 0.0096,
+            "aic_mte1_ratio": 0.0086,
+            "cube_utilization(%)": 20.9158
+          }
+        }
+      },
+      "speedup_vs_torch": 0.1623,
+      "error_type": null,
+      "error_msg": null
+    },
+    {
+      "case_idx": 12,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            3,
+            170,
+            384
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "scalar",
+          "value": 6
+        }
+      ],
+      "status": "pass",
+      "framework": {
+        "avg_latency_ms": 0.0826,
+        "peak_memory_mb": 314.35
+      },
+      "implementation": {
+        "avg_latency_ms": 1.3615,
+        "peak_memory_mb": 311.13,
+        "kernel_metrics": {
+          "_attn_kernel": {
+            "aiv_vec_ratio": 0.0331,
+            "aiv_mte2_ratio": 0.7999,
+            "aiv_mte3_ratio": 0.02,
+            "aiv_scalar_ratio": 0.4345,
+            "aic_mac_ratio": 0.003,
+            "aic_mte1_ratio": 0.003,
+            "cube_utilization(%)": 82.4527
+          },
+          "_proj_mm_kernel": {
+            "aiv_vec_ratio": 0.1155,
+            "aiv_mte2_ratio": 0.816,
+            "aiv_mte3_ratio": 0.0074,
+            "aiv_scalar_ratio": 0.7082,
+            "aic_mac_ratio": 0.009,
+            "aic_mte1_ratio": 0.008,
+            "cube_utilization(%)": 59.2767
+          }
+        }
+      },
+      "speedup_vs_torch": 0.0607,
+      "error_type": null,
+      "error_msg": null
+    },
+    {
+      "case_idx": 13,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            197,
+            512
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": 8
+        }
+      ],
+      "status": "pass",
+      "framework": {
+        "avg_latency_ms": 0.1063,
+        "peak_memory_mb": 327.93
+      },
+      "implementation": {
+        "avg_latency_ms": 1.0553,
+        "peak_memory_mb": 319.08,
+        "kernel_metrics": {
+          "_attn_kernel": {
+            "aiv_vec_ratio": 0.0868,
+            "aiv_mte2_ratio": 0.5688,
+            "aiv_mte3_ratio": 0.0431,
+            "aiv_scalar_ratio": 0.577,
+            "aic_mac_ratio": 0.0156,
+            "aic_mte1_ratio": 0.014,
+            "cube_utilization(%)": 89.5767
+          },
+          "_proj_mm_kernel": {
+            "aiv_vec_ratio": 0.1152,
+            "aiv_mte2_ratio": 0.8492,
+            "aiv_mte3_ratio": 0.01,
+            "aiv_scalar_ratio": 0.7199,
+            "aic_mac_ratio": 0.0302,
+            "aic_mte1_ratio": 0.0139,
+            "cube_utilization(%)": 71.2363
+          }
+        }
+      },
+      "speedup_vs_torch": 0.1007,
+      "error_type": null,
+      "error_msg": null
+    },
+    {
+      "case_idx": 14,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            226,
+            640
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 10
+        }
+      ],
+      "status": "pass",
+      "framework": {
+        "avg_latency_ms": 0.0791,
+        "peak_memory_mb": 315.59
+      },
+      "implementation": {
+        "avg_latency_ms": 1.255,
+        "peak_memory_mb": 312.74,
+        "kernel_metrics": {
+          "_attn_kernel": {
+            "aiv_vec_ratio": 0.0352,
+            "aiv_mte2_ratio": 0.8069,
+            "aiv_mte3_ratio": 0.0174,
+            "aiv_scalar_ratio": 0.4343,
+            "aic_mac_ratio": 0.003,
+            "aic_mte1_ratio": 0.003,
+            "cube_utilization(%)": 88.3797
+          },
+          "_proj_mm_kernel": {
+            "aiv_vec_ratio": 0.1296,
+            "aiv_mte2_ratio": 0.798,
+            "aiv_mte3_ratio": 0.008,
+            "aiv_scalar_ratio": 0.694,
+            "aic_mac_ratio": 0.01,
+            "aic_mte1_ratio": 0.009,
+            "cube_utilization(%)": 48.6107
+          }
+        }
+      },
+      "speedup_vs_torch": 0.063,
+      "error_type": null,
+      "error_msg": null
+    },
+    {
+      "case_idx": 15,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            257,
+            768
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "scalar",
+          "value": 12
+        }
+      ],
+      "status": "pass",
+      "framework": {
+        "avg_latency_ms": 0.0917,
+        "peak_memory_mb": 320.6
+      },
+      "implementation": {
+        "avg_latency_ms": 1.5279,
+        "peak_memory_mb": 315.3,
+        "kernel_metrics": {
+          "_attn_kernel": {
+            "aiv_vec_ratio": 0.0509,
+            "aiv_mte2_ratio": 0.8087,
+            "aiv_mte3_ratio": 0.0161,
+            "aiv_scalar_ratio": 0.3907,
+            "aic_mac_ratio": 0.005,
+            "aic_mte1_ratio": 0.004,
+            "cube_utilization(%)": 93.6822
+          },
+          "_proj_mm_kernel": {
+            "aiv_vec_ratio": 0.1242,
+            "aiv_mte2_ratio": 0.8326,
+            "aiv_mte3_ratio": 0.008,
+            "aiv_scalar_ratio": 0.7137,
+            "aic_mac_ratio": 0.01,
+            "aic_mte1_ratio": 0.009,
+            "cube_utilization(%)": 88.2447
+          }
+        }
+      },
+      "speedup_vs_torch": 0.06,
+      "error_type": null,
+      "error_msg": null
+    },
+    {
+      "case_idx": 16,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            3,
+            290,
+            1024
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": 16
+        }
+      ],
+      "status": "pass",
+      "framework": {
+        "avg_latency_ms": 0.2069,
+        "peak_memory_mb": 372.51
+      },
+      "implementation": {
+        "avg_latency_ms": 1.9334,
+        "peak_memory_mb": 341.13,
+        "kernel_metrics": {
+          "_attn_kernel": {
+            "aiv_vec_ratio": 0.1384,
+            "aiv_mte2_ratio": 0.5767,
+            "aiv_mte3_ratio": 0.024,
+            "aiv_scalar_ratio": 0.6084,
+            "aic_mac_ratio": 0.0248,
+            "aic_mte1_ratio": 0.0223,
+            "cube_utilization(%)": 94.1743
+          },
+          "_proj_mm_kernel": {
+            "aiv_vec_ratio": 0.1308,
+            "aiv_mte2_ratio": 0.8297,
+            "aiv_mte3_ratio": 0.011,
+            "aiv_scalar_ratio": 0.6125,
+            "aic_mac_ratio": 0.0344,
+            "aic_mte1_ratio": 0.0158,
+            "cube_utilization(%)": 91.3045
+          }
+        }
+      },
+      "speedup_vs_torch": 0.107,
+      "error_type": null,
+      "error_msg": null
+    },
+    {
+      "case_idx": 17,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            325,
+            1152
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 18
+        }
+      ],
+      "status": "pass",
+      "framework": {
+        "avg_latency_ms": 0.2475,
+        "peak_memory_mb": 397.96
+      },
+      "implementation": {
+        "avg_latency_ms": 8.4974,
+        "peak_memory_mb": 332.56,
+        "kernel_metrics": {
+          "_attn_kernel": {
+            "aiv_vec_ratio": 0.0815,
+            "aiv_mte2_ratio": 0.7165,
+            "aiv_mte3_ratio": 0.0197,
+            "aiv_scalar_ratio": 0.4118,
+            "aic_mac_ratio": 0.008,
+            "aic_mte1_ratio": 0.007,
+            "cube_utilization(%)": 95.0994
+          },
+          "_proj_mm_kernel": {
+            "aiv_vec_ratio": 0.1357,
+            "aiv_mte2_ratio": 0.8315,
+            "aiv_mte3_ratio": 0.009,
+            "aiv_scalar_ratio": 0.5868,
+            "aic_mac_ratio": 0.0104,
+            "aic_mte1_ratio": 0.0091,
+            "cube_utilization(%)": 96.1582
+          }
+        }
+      },
+      "speedup_vs_torch": 0.0291,
+      "error_type": null,
+      "error_msg": null
+    },
+    {
+      "case_idx": 18,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            362,
+            1280
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "scalar",
+          "value": 20
+        }
+      ],
+      "status": "pass",
+      "framework": {
+        "avg_latency_ms": 0.1774,
+        "peak_memory_mb": 372.35
+      },
+      "implementation": {
+        "avg_latency_ms": 8.8905,
+        "peak_memory_mb": 329.13,
+        "kernel_metrics": {
+          "_attn_kernel": {
+            "aiv_vec_ratio": 0.0394,
+            "aiv_mte2_ratio": 0.8061,
+            "aiv_mte3_ratio": 0.0149,
+            "aiv_scalar_ratio": 0.3932,
+            "aic_mac_ratio": 0.004,
+            "aic_mte1_ratio": 0.003,
+            "cube_utilization(%)": 95.8531
+          },
+          "_proj_mm_kernel": {
+            "aiv_vec_ratio": 0.1358,
+            "aiv_mte2_ratio": 0.8341,
+            "aiv_mte3_ratio": 0.009,
+            "aiv_scalar_ratio": 0.619,
+            "aic_mac_ratio": 0.0106,
+            "aic_mte1_ratio": 0.009,
+            "cube_utilization(%)": 96.1047
+          }
+        }
+      },
+      "speedup_vs_torch": 0.02,
+      "error_type": null,
+      "error_msg": null
+    },
+    {
+      "case_idx": 19,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            401,
+            192
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": 3
+        }
+      ],
+      "status": "pass",
+      "framework": {
+        "avg_latency_ms": 0.0822,
+        "peak_memory_mb": 317.5
+      },
+      "implementation": {
+        "avg_latency_ms": 0.7664,
+        "peak_memory_mb": 310.8,
+        "kernel_metrics": {
+          "_attn_kernel": {
+            "aiv_vec_ratio": 0.0581,
+            "aiv_mte2_ratio": 0.7152,
+            "aiv_mte3_ratio": 0.0227,
+            "aiv_scalar_ratio": 0.6368,
+            "aic_mac_ratio": 0.0105,
+            "aic_mte1_ratio": 0.0094,
+            "cube_utilization(%)": 80.9996
+          },
+          "_proj_mm_kernel": {
+            "aiv_vec_ratio": 0.0959,
+            "aiv_mte2_ratio": 0.834,
+            "aiv_mte3_ratio": 0.0083,
+            "aiv_scalar_ratio": 0.7156,
+            "aic_mac_ratio": 0.0249,
+            "aic_mte1_ratio": 0.011,
+            "cube_utilization(%)": 60.7917
+          }
+        }
+      },
+      "speedup_vs_torch": 0.1073,
+      "error_type": null,
+      "error_msg": null
+    },
+    {
+      "case_idx": 20,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            3,
+            442,
+            256
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 4
+        }
+      ],
+      "status": "pass",
+      "framework": {
+        "avg_latency_ms": 0.1175,
+        "peak_memory_mb": 330.38
+      },
+      "implementation": {
+        "avg_latency_ms": 3.5627,
+        "peak_memory_mb": 311.6,
+        "kernel_metrics": {
+          "_attn_kernel": {
+            "aiv_vec_ratio": 0.0404,
+            "aiv_mte2_ratio": 0.8279,
+            "aiv_mte3_ratio": 0.0138,
+            "aiv_scalar_ratio": 0.3843,
+            "aic_mac_ratio": 0.004,
+            "aic_mte1_ratio": 0.0031,
+            "cube_utilization(%)": 87.5045
+          },
+          "_proj_mm_kernel": {
+            "aiv_vec_ratio": 0.0818,
+            "aiv_mte2_ratio": 0.883,
+            "aiv_mte3_ratio": 0.006,
+            "aiv_scalar_ratio": 0.7332,
+            "aic_mac_ratio": 0.0063,
+            "aic_mte1_ratio": 0.0055,
+            "cube_utilization(%)": 70.9378
+          }
+        }
+      },
+      "speedup_vs_torch": 0.033,
+      "error_type": null,
+      "error_msg": null
+    },
+    {
+      "case_idx": 21,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            485,
+            384
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "scalar",
+          "value": 6
+        }
+      ],
+      "status": "pass",
+      "framework": {
+        "avg_latency_ms": 0.2129,
+        "peak_memory_mb": 361.9
+      },
+      "implementation": {
+        "avg_latency_ms": 7.6237,
+        "peak_memory_mb": 315.51,
+        "kernel_metrics": {
+          "_attn_kernel": {
+            "aiv_vec_ratio": 0.0462,
+            "aiv_mte2_ratio": 0.8167,
+            "aiv_mte3_ratio": 0.0119,
+            "aiv_scalar_ratio": 0.3974,
+            "aic_mac_ratio": 0.0041,
+            "aic_mte1_ratio": 0.004,
+            "cube_utilization(%)": 93.2289
+          },
+          "_proj_mm_kernel": {
+            "aiv_vec_ratio": 0.1071,
+            "aiv_mte2_ratio": 0.8637,
+            "aiv_mte3_ratio": 0.007,
+            "aiv_scalar_ratio": 0.7025,
+            "aic_mac_ratio": 0.008,
+            "aic_mte1_ratio": 0.007,
+            "cube_utilization(%)": 82.0177
+          }
+        }
+      },
+      "speedup_vs_torch": 0.0279,
+      "error_type": null,
+      "error_msg": null
+    },
+    {
+      "case_idx": 22,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            530,
+            512
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": 8
+        }
+      ],
+      "status": "pass",
+      "framework": {
+        "avg_latency_ms": 0.1293,
+        "peak_memory_mb": 333.86
+      },
+      "implementation": {
+        "avg_latency_ms": 1.3848,
+        "peak_memory_mb": 316.56,
+        "kernel_metrics": {
+          "_attn_kernel": {
+            "aiv_vec_ratio": 0.0669,
+            "aiv_mte2_ratio": 0.6886,
+            "aiv_mte3_ratio": 0.0269,
+            "aiv_scalar_ratio": 0.6182,
+            "aic_mac_ratio": 0.0121,
+            "aic_mte1_ratio": 0.011,
+            "cube_utilization(%)": 86.96
+          },
+          "_proj_mm_kernel": {
+            "aiv_vec_ratio": 0.1092,
+            "aiv_mte2_ratio": 0.8666,
+            "aiv_mte3_ratio": 0.009,
+            "aiv_scalar_ratio": 0.7489,
+            "aic_mac_ratio": 0.0288,
+            "aic_mte1_ratio": 0.013,
+            "cube_utilization(%)": 98.1299
+          }
+        }
+      },
+      "speedup_vs_torch": 0.0934,
+      "error_type": null,
+      "error_msg": null
+    },
+    {
+      "case_idx": 23,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            577,
+            640
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 10
+        }
+      ],
+      "status": "pass",
+      "framework": {
+        "avg_latency_ms": 0.154,
+        "peak_memory_mb": 340.31
+      },
+      "implementation": {
+        "avg_latency_ms": 2.9341,
+        "peak_memory_mb": 314.46,
+        "kernel_metrics": {
+          "_attn_kernel": {
+            "aiv_vec_ratio": 0.0841,
+            "aiv_mte2_ratio": 0.7677,
+            "aiv_mte3_ratio": 0.0141,
+            "aiv_scalar_ratio": 0.403,
+            "aic_mac_ratio": 0.008,
+            "aic_mte1_ratio": 0.007,
+            "cube_utilization(%)": 94.5053
+          },
+          "_proj_mm_kernel": {
+            "aiv_vec_ratio": 0.1217,
+            "aiv_mte2_ratio": 0.8454,
+            "aiv_mte3_ratio": 0.008,
+            "aiv_scalar_ratio": 0.7134,
+            "aic_mac_ratio": 0.009,
+            "aic_mte1_ratio": 0.008,
+            "cube_utilization(%)": 65.1887
+          }
+        }
+      },
+      "speedup_vs_torch": 0.0525,
+      "error_type": null,
+      "error_msg": null
+    },
+    {
+      "case_idx": 24,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            626,
+            768
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "scalar",
+          "value": 12
+        }
+      ],
+      "status": "pass",
+      "framework": {
+        "avg_latency_ms": 0.1722,
+        "peak_memory_mb": 354.34
+      },
+      "implementation": {
+        "avg_latency_ms": 6.165,
+        "peak_memory_mb": 317.46,
+        "kernel_metrics": {
+          "_attn_kernel": {
+            "aiv_vec_ratio": 0.0451,
+            "aiv_mte2_ratio": 0.8159,
+            "aiv_mte3_ratio": 0.0119,
+            "aiv_scalar_ratio": 0.3844,
+            "aic_mac_ratio": 0.004,
+            "aic_mte1_ratio": 0.004,
+            "cube_utilization(%)": 94.6538
+          },
+          "_proj_mm_kernel": {
+            "aiv_vec_ratio": 0.126,
+            "aiv_mte2_ratio": 0.8377,
+            "aiv_mte3_ratio": 0.008,
+            "aiv_scalar_ratio": 0.6877,
+            "aic_mac_ratio": 0.01,
+            "aic_mte1_ratio": 0.009,
+            "cube_utilization(%)": 75.1857
+          }
+        }
+      },
+      "speedup_vs_torch": 0.0279,
+      "error_type": null,
+      "error_msg": null
+    },
+    {
+      "case_idx": 25,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            3,
+            677,
+            896
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": 14
+        }
+      ],
+      "status": "pass",
+      "framework": {
+        "avg_latency_ms": 0.6352,
+        "peak_memory_mb": 501.72
+      },
+      "implementation": {
+        "avg_latency_ms": 5.5966,
+        "peak_memory_mb": 354.34,
+        "kernel_metrics": {
+          "_attn_kernel": {
+            "aiv_vec_ratio": 0.1408,
+            "aiv_mte2_ratio": 0.5704,
+            "aiv_mte3_ratio": 0.023,
+            "aiv_scalar_ratio": 0.6036,
+            "aic_mac_ratio": 0.0254,
+            "aic_mte1_ratio": 0.023,
+            "cube_utilization(%)": 96.314
+          },
+          "_proj_mm_kernel": {
+            "aiv_vec_ratio": 0.137,
+            "aiv_mte2_ratio": 0.8182,
+            "aiv_mte3_ratio": 0.011,
+            "aiv_scalar_ratio": 0.5649,
+            "aic_mac_ratio": 0.0361,
+            "aic_mte1_ratio": 0.0162,
+            "cube_utilization(%)": 90.6334
+          }
+        }
+      },
+      "speedup_vs_torch": 0.1135,
+      "error_type": null,
+      "error_msg": null
+    },
+    {
+      "case_idx": 26,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            730,
+            1024
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 16
+        }
+      ],
+      "status": "pass",
+      "framework": {
+        "avg_latency_ms": 1.0957,
+        "peak_memory_mb": 615.95
+      },
+      "implementation": {
+        "avg_latency_ms": 32.6298,
+        "peak_memory_mb": 344.65,
+        "kernel_metrics": {
+          "_attn_kernel": {
+            "aiv_vec_ratio": 0.0641,
+            "aiv_mte2_ratio": 0.7292,
+            "aiv_mte3_ratio": 0.017,
+            "aiv_scalar_ratio": 0.3859,
+            "aic_mac_ratio": 0.006,
+            "aic_mte1_ratio": 0.0051,
+            "cube_utilization(%)": 97.9125
+          },
+          "_proj_mm_kernel": {
+            "aiv_vec_ratio": 0.1337,
+            "aiv_mte2_ratio": 0.8326,
+            "aiv_mte3_ratio": 0.009,
+            "aiv_scalar_ratio": 0.562,
+            "aic_mac_ratio": 0.01,
+            "aic_mte1_ratio": 0.009,
+            "cube_utilization(%)": 90.567
+          }
+        }
+      },
+      "speedup_vs_torch": 0.0336,
+      "error_type": null,
+      "error_msg": null
+    },
+    {
+      "case_idx": 27,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            785,
+            1152
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "scalar",
+          "value": 18
+        }
+      ],
+      "status": "pass",
+      "framework": {
+        "avg_latency_ms": 0.7018,
+        "peak_memory_mb": 510.66
+      },
+      "implementation": {
+        "avg_latency_ms": 18.2817,
+        "peak_memory_mb": 334.82,
+        "kernel_metrics": {
+          "_attn_kernel": {
+            "aiv_vec_ratio": 0.0778,
+            "aiv_mte2_ratio": 0.7495,
+            "aiv_mte3_ratio": 0.0151,
+            "aiv_scalar_ratio": 0.3913,
+            "aic_mac_ratio": 0.0074,
+            "aic_mte1_ratio": 0.0069,
+            "cube_utilization(%)": 96.811
+          },
+          "_proj_mm_kernel": {
+            "aiv_vec_ratio": 0.1369,
+            "aiv_mte2_ratio": 0.831,
+            "aiv_mte3_ratio": 0.009,
+            "aiv_scalar_ratio": 0.5793,
+            "aic_mac_ratio": 0.0109,
+            "aic_mte1_ratio": 0.0091,
+            "cube_utilization(%)": 95.2963
+          }
+        }
+      },
+      "speedup_vs_torch": 0.0384,
+      "error_type": null,
+      "error_msg": null
+    },
+    {
+      "case_idx": 28,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            842,
+            1280
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": 20
+        }
+      ],
+      "status": "pass",
+      "framework": {
+        "avg_latency_ms": 1.0581,
+        "peak_memory_mb": 589.11
+      },
+      "implementation": {
+        "avg_latency_ms": 10.5796,
+        "peak_memory_mb": 373.38,
+        "kernel_metrics": {
+          "_attn_kernel": {
+            "aiv_vec_ratio": 0.1081,
+            "aiv_mte2_ratio": 0.6008,
+            "aiv_mte3_ratio": 0.0262,
+            "aiv_scalar_ratio": 0.5784,
+            "aic_mac_ratio": 0.0194,
+            "aic_mte1_ratio": 0.0174,
+            "cube_utilization(%)": 97.4147
+          },
+          "_proj_mm_kernel": {
+            "aiv_vec_ratio": 0.1397,
+            "aiv_mte2_ratio": 0.8222,
+            "aiv_mte3_ratio": 0.011,
+            "aiv_scalar_ratio": 0.5575,
+            "aic_mac_ratio": 0.0368,
+            "aic_mte1_ratio": 0.017,
+            "cube_utilization(%)": 96.4968
+          }
+        }
+      },
+      "speedup_vs_torch": 0.1,
+      "error_type": null,
+      "error_msg": null
+    },
+    {
+      "case_idx": 29,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            901,
+            192
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 3
+        }
+      ],
+      "status": "pass",
+      "framework": {
+        "avg_latency_ms": 0.1911,
+        "peak_memory_mb": 348.9
+      },
+      "implementation": {
+        "avg_latency_ms": 6.5025,
+        "peak_memory_mb": 311.43,
+        "kernel_metrics": {
+          "_attn_kernel": {
+            "aiv_vec_ratio": 0.0481,
+            "aiv_mte2_ratio": 0.8257,
+            "aiv_mte3_ratio": 0.0107,
+            "aiv_scalar_ratio": 0.3804,
+            "aic_mac_ratio": 0.0048,
+            "aic_mte1_ratio": 0.004,
+            "cube_utilization(%)": 91.5727
+          },
+          "_proj_mm_kernel": {
+            "aiv_vec_ratio": 0.0468,
+            "aiv_mte2_ratio": 0.9276,
+            "aiv_mte3_ratio": 0.0057,
+            "aiv_scalar_ratio": 0.7135,
+            "aic_mac_ratio": 0.0038,
+            "aic_mte1_ratio": 0.003,
+            "cube_utilization(%)": 74.5914
+          }
+        }
+      },
+      "speedup_vs_torch": 0.0294,
+      "error_type": null,
+      "error_msg": null
+    },
+    {
+      "case_idx": 30,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            962,
+            256
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "scalar",
+          "value": 4
+        }
+      ],
+      "status": "pass",
+      "framework": {
+        "avg_latency_ms": 0.2316,
+        "peak_memory_mb": 370.2
+      },
+      "implementation": {
+        "avg_latency_ms": 4.3913,
+        "peak_memory_mb": 312.77,
+        "kernel_metrics": {
+          "_attn_kernel": {
+            "aiv_vec_ratio": 0.1097,
+            "aiv_mte2_ratio": 0.7074,
+            "aiv_mte3_ratio": 0.0143,
+            "aiv_scalar_ratio": 0.4096,
+            "aic_mac_ratio": 0.0106,
+            "aic_mte1_ratio": 0.0092,
+            "cube_utilization(%)": 90.3034
+          },
+          "_proj_mm_kernel": {
+            "aiv_vec_ratio": 0.0886,
+            "aiv_mte2_ratio": 0.8784,
+            "aiv_mte3_ratio": 0.006,
+            "aiv_scalar_ratio": 0.729,
+            "aic_mac_ratio": 0.007,
+            "aic_mte1_ratio": 0.006,
+            "cube_utilization(%)": 82.5041
+          }
+        }
+      },
+      "speedup_vs_torch": 0.0527,
+      "error_type": null,
+      "error_msg": null
+    },
+    {
+      "case_idx": 31,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            1025,
+            384
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": 6
+        }
+      ],
+      "status": "pass",
+      "framework": {
+        "avg_latency_ms": 0.202,
+        "peak_memory_mb": 365.42
+      },
+      "implementation": {
+        "avg_latency_ms": 2.2198,
+        "peak_memory_mb": 317.05,
+        "kernel_metrics": {
+          "_attn_kernel": {
+            "aiv_vec_ratio": 0.1053,
+            "aiv_mte2_ratio": 0.6329,
+            "aiv_mte3_ratio": 0.0254,
+            "aiv_scalar_ratio": 0.61,
+            "aic_mac_ratio": 0.0191,
+            "aic_mte1_ratio": 0.0171,
+            "cube_utilization(%)": 90.2684
+          },
+          "_proj_mm_kernel": {
+            "aiv_vec_ratio": 0.1076,
+            "aiv_mte2_ratio": 0.8587,
+            "aiv_mte3_ratio": 0.009,
+            "aiv_scalar_ratio": 0.724,
+            "aic_mac_ratio": 0.0282,
+            "aic_mte1_ratio": 0.0129,
+            "cube_utilization(%)": 71.2196
+          }
+        }
+      },
+      "speedup_vs_torch": 0.091,
+      "error_type": null,
+      "error_msg": null
+    },
+    {
+      "case_idx": 32,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            1090,
+            512
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 8
+        }
+      ],
+      "status": "pass",
+      "framework": {
+        "avg_latency_ms": 0.2501,
+        "peak_memory_mb": 389.53
+      },
+      "implementation": {
+        "avg_latency_ms": 5.5337,
+        "peak_memory_mb": 315.69,
+        "kernel_metrics": {
+          "_attn_kernel": {
+            "aiv_vec_ratio": 0.1096,
+            "aiv_mte2_ratio": 0.7101,
+            "aiv_mte3_ratio": 0.0141,
+            "aiv_scalar_ratio": 0.4101,
+            "aic_mac_ratio": 0.0106,
+            "aic_mte1_ratio": 0.0092,
+            "cube_utilization(%)": 91.7861
+          },
+          "_proj_mm_kernel": {
+            "aiv_vec_ratio": 0.1155,
+            "aiv_mte2_ratio": 0.8522,
+            "aiv_mte3_ratio": 0.008,
+            "aiv_scalar_ratio": 0.7042,
+            "aic_mac_ratio": 0.009,
+            "aic_mte1_ratio": 0.008,
+            "cube_utilization(%)": 88.8307
+          }
+        }
+      },
+      "speedup_vs_torch": 0.0452,
+      "error_type": null,
+      "error_msg": null
+    },
+    {
+      "case_idx": 33,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            1157,
+            640
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "scalar",
+          "value": 10
+        }
+      ],
+      "status": "pass",
+      "framework": {
+        "avg_latency_ms": 0.3634,
+        "peak_memory_mb": 423.85
+      },
+      "implementation": {
+        "avg_latency_ms": 7.6216,
+        "peak_memory_mb": 317.49,
+        "kernel_metrics": {
+          "_attn_kernel": {
+            "aiv_vec_ratio": 0.1113,
+            "aiv_mte2_ratio": 0.6952,
+            "aiv_mte3_ratio": 0.0147,
+            "aiv_scalar_ratio": 0.4118,
+            "aic_mac_ratio": 0.0108,
+            "aic_mte1_ratio": 0.0094,
+            "cube_utilization(%)": 93.0531
+          },
+          "_proj_mm_kernel": {
+            "aiv_vec_ratio": 0.1231,
+            "aiv_mte2_ratio": 0.8481,
+            "aiv_mte3_ratio": 0.008,
+            "aiv_scalar_ratio": 0.6688,
+            "aic_mac_ratio": 0.0096,
+            "aic_mte1_ratio": 0.0081,
+            "cube_utilization(%)": 83.3812
+          }
+        }
+      },
+      "speedup_vs_torch": 0.0477,
+      "error_type": null,
+      "error_msg": null
+    },
+    {
+      "case_idx": 34,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            1226,
+            768
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": 12
+        }
+      ],
+      "status": "pass",
+      "framework": {
+        "avg_latency_ms": 0.505,
+        "peak_memory_mb": 471.99
+      },
+      "implementation": {
+        "avg_latency_ms": 5.5455,
+        "peak_memory_mb": 335.0,
+        "kernel_metrics": {
+          "_attn_kernel": {
+            "aiv_vec_ratio": 0.111,
+            "aiv_mte2_ratio": 0.6056,
+            "aiv_mte3_ratio": 0.0233,
+            "aiv_scalar_ratio": 0.5875,
+            "aic_mac_ratio": 0.02,
+            "aic_mte1_ratio": 0.018,
+            "cube_utilization(%)": 96.315
+          },
+          "_proj_mm_kernel": {
+            "aiv_vec_ratio": 0.126,
+            "aiv_mte2_ratio": 0.8291,
+            "aiv_mte3_ratio": 0.01,
+            "aiv_scalar_ratio": 0.6196,
+            "aic_mac_ratio": 0.0331,
+            "aic_mte1_ratio": 0.015,
+            "cube_utilization(%)": 96.4359
+          }
+        }
+      },
+      "speedup_vs_torch": 0.0911,
+      "error_type": null,
+      "error_msg": null
+    },
+    {
+      "case_idx": 35,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            3,
+            1297,
+            896
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 14
+        }
+      ],
+      "status": "pass",
+      "framework": {
+        "avg_latency_ms": 2.1233,
+        "peak_memory_mb": 900.71
+      },
+      "implementation": {
+        "avg_latency_ms": 42.2795,
+        "peak_memory_mb": 347.73,
+        "kernel_metrics": {
+          "_attn_kernel": {
+            "aiv_vec_ratio": 0.0964,
+            "aiv_mte2_ratio": 0.7295,
+            "aiv_mte3_ratio": 0.014,
+            "aiv_scalar_ratio": 0.3898,
+            "aic_mac_ratio": 0.009,
+            "aic_mte1_ratio": 0.008,
+            "cube_utilization(%)": 98.2169
+          },
+          "_proj_mm_kernel": {
+            "aiv_vec_ratio": 0.1337,
+            "aiv_mte2_ratio": 0.8335,
+            "aiv_mte3_ratio": 0.009,
+            "aiv_scalar_ratio": 0.5635,
+            "aic_mac_ratio": 0.0101,
+            "aic_mte1_ratio": 0.009,
+            "cube_utilization(%)": 96.9056
+          }
+        }
+      },
+      "speedup_vs_torch": 0.0502,
+      "error_type": null,
+      "error_msg": null
+    },
+    {
+      "case_idx": 36,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            641,
+            1152
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "scalar",
+          "value": 18
+        }
+      ],
+      "status": "pass",
+      "framework": {
+        "avg_latency_ms": 0.2291,
+        "peak_memory_mb": 383.55
+      },
+      "implementation": {
+        "avg_latency_ms": 5.4014,
+        "peak_memory_mb": 324.77,
+        "kernel_metrics": {
+          "_attn_kernel": {
+            "aiv_vec_ratio": 0.1057,
+            "aiv_mte2_ratio": 0.7039,
+            "aiv_mte3_ratio": 0.016,
+            "aiv_scalar_ratio": 0.4092,
+            "aic_mac_ratio": 0.01,
+            "aic_mte1_ratio": 0.0089,
+            "cube_utilization(%)": 95.1497
+          },
+          "_proj_mm_kernel": {
+            "aiv_vec_ratio": 0.1338,
+            "aiv_mte2_ratio": 0.8342,
+            "aiv_mte3_ratio": 0.009,
+            "aiv_scalar_ratio": 0.6271,
+            "aic_mac_ratio": 0.01,
+            "aic_mte1_ratio": 0.009,
+            "cube_utilization(%)": 88.2301
+          }
+        }
+      },
+      "speedup_vs_torch": 0.0424,
+      "error_type": null,
+      "error_msg": null
+    },
+    {
+      "case_idx": 37,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            3,
+            677,
+            1280
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": 20
+        }
+      ],
+      "status": "pass",
+      "framework": {
+        "avg_latency_ms": 0.9526,
+        "peak_memory_mb": 591.36
+      },
+      "implementation": {
+        "avg_latency_ms": 8.3369,
+        "peak_memory_mb": 382.18,
+        "kernel_metrics": {
+          "_attn_kernel": {
+            "aiv_vec_ratio": 0.1494,
+            "aiv_mte2_ratio": 0.5501,
+            "aiv_mte3_ratio": 0.024,
+            "aiv_scalar_ratio": 0.5993,
+            "aic_mac_ratio": 0.027,
+            "aic_mte1_ratio": 0.0243,
+            "cube_utilization(%)": 96.6209
+          },
+          "_proj_mm_kernel": {
+            "aiv_vec_ratio": 0.1402,
+            "aiv_mte2_ratio": 0.8215,
+            "aiv_mte3_ratio": 0.011,
+            "aiv_scalar_ratio": 0.5575,
+            "aic_mac_ratio": 0.0369,
+            "aic_mte1_ratio": 0.017,
+            "cube_utilization(%)": 96.7858
+          }
+        }
+      },
+      "speedup_vs_torch": 0.1143,
+      "error_type": null,
+      "error_msg": null
+    },
+    {
+      "case_idx": 38,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            730,
+            192
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 3
+        }
+      ],
+      "status": "pass",
+      "framework": {
+        "avg_latency_ms": 0.0971,
+        "peak_memory_mb": 320.99
+      },
+      "implementation": {
+        "avg_latency_ms": 3.2217,
+        "peak_memory_mb": 309.86,
+        "kernel_metrics": {
+          "_attn_kernel": {
+            "aiv_vec_ratio": 0.0327,
+            "aiv_mte2_ratio": 0.8463,
+            "aiv_mte3_ratio": 0.0113,
+            "aiv_scalar_ratio": 0.3895,
+            "aic_mac_ratio": 0.003,
+            "aic_mte1_ratio": 0.003,
+            "cube_utilization(%)": 87.1156
+          },
+          "_proj_mm_kernel": {
+            "aiv_vec_ratio": 0.0618,
+            "aiv_mte2_ratio": 0.8723,
+            "aiv_mte3_ratio": 0.0053,
+            "aiv_scalar_ratio": 0.6972,
+            "aic_mac_ratio": 0.005,
+            "aic_mte1_ratio": 0.004,
+            "cube_utilization(%)": 51.549
+          }
+        }
+      },
+      "speedup_vs_torch": 0.0301,
+      "error_type": null,
+      "error_msg": null
+    },
+    {
+      "case_idx": 39,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            769,
+            256
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "scalar",
+          "value": 4
+        }
+      ],
+      "status": "pass",
+      "framework": {
+        "avg_latency_ms": 0.1069,
+        "peak_memory_mb": 327.82
+      },
+      "implementation": {
+        "avg_latency_ms": 2.1435,
+        "peak_memory_mb": 310.52,
+        "kernel_metrics": {
+          "_attn_kernel": {
+            "aiv_vec_ratio": 0.0758,
+            "aiv_mte2_ratio": 0.7892,
+            "aiv_mte3_ratio": 0.0109,
+            "aiv_scalar_ratio": 0.3883,
+            "aic_mac_ratio": 0.0073,
+            "aic_mte1_ratio": 0.0064,
+            "cube_utilization(%)": 88.3263
+          },
+          "_proj_mm_kernel": {
+            "aiv_vec_ratio": 0.1,
+            "aiv_mte2_ratio": 0.8363,
+            "aiv_mte3_ratio": 0.0067,
+            "aiv_scalar_ratio": 0.7085,
+            "aic_mac_ratio": 0.008,
+            "aic_mte1_ratio": 0.007,
+            "cube_utilization(%)": 68.8563
+          }
+        }
+      },
+      "speedup_vs_torch": 0.0499,
+      "error_type": null,
+      "error_msg": null
+    },
+    {
+      "case_idx": 40,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            3,
+            842,
+            384
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": 6
+        }
+      ],
+      "status": "pass",
+      "framework": {
+        "avg_latency_ms": 0.3423,
+        "peak_memory_mb": 424.75
+      },
+      "implementation": {
+        "avg_latency_ms": 4.3808,
+        "peak_memory_mb": 328.02,
+        "kernel_metrics": {
+          "_attn_kernel": {
+            "aiv_vec_ratio": 0.1006,
+            "aiv_mte2_ratio": 0.6228,
+            "aiv_mte3_ratio": 0.0241,
+            "aiv_scalar_ratio": 0.5868,
+            "aic_mac_ratio": 0.018,
+            "aic_mte1_ratio": 0.0161,
+            "cube_utilization(%)": 95.1296
+          },
+          "_proj_mm_kernel": {
+            "aiv_vec_ratio": 0.1065,
+            "aiv_mte2_ratio": 0.8572,
+            "aiv_mte3_ratio": 0.0089,
+            "aiv_scalar_ratio": 0.6654,
+            "aic_mac_ratio": 0.028,
+            "aic_mte1_ratio": 0.0129,
+            "cube_utilization(%)": 97.8912
+          }
+        }
+      },
+      "speedup_vs_torch": 0.0781,
+      "error_type": null,
+      "error_msg": null
+    },
+    {
+      "case_idx": 41,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            897,
+            512
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 8
+        }
+      ],
+      "status": "pass",
+      "framework": {
+        "avg_latency_ms": 0.2006,
+        "peak_memory_mb": 363.88
+      },
+      "implementation": {
+        "avg_latency_ms": 3.786,
+        "peak_memory_mb": 314.02,
+        "kernel_metrics": {
+          "_attn_kernel": {
+            "aiv_vec_ratio": 0.1118,
+            "aiv_mte2_ratio": 0.6866,
+            "aiv_mte3_ratio": 0.0148,
+            "aiv_scalar_ratio": 0.4035,
+            "aic_mac_ratio": 0.0109,
+            "aic_mte1_ratio": 0.0094,
+            "cube_utilization(%)": 94.0586
+          },
+          "_proj_mm_kernel": {
+            "aiv_vec_ratio": 0.1171,
+            "aiv_mte2_ratio": 0.8517,
+            "aiv_mte3_ratio": 0.008,
+            "aiv_scalar_ratio": 0.7158,
+            "aic_mac_ratio": 0.009,
+            "aic_mte1_ratio": 0.008,
+            "cube_utilization(%)": 80.1213
+          }
+        }
+      },
+      "speedup_vs_torch": 0.053,
+      "error_type": null,
+      "error_msg": null
+    },
+    {
+      "case_idx": 42,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            3,
+            962,
+            640
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "scalar",
+          "value": 10
+        }
+      ],
+      "status": "pass",
+      "framework": {
+        "avg_latency_ms": 0.8298,
+        "peak_memory_mb": 546.43
+      },
+      "implementation": {
+        "avg_latency_ms": 13.7959,
+        "peak_memory_mb": 327.69,
+        "kernel_metrics": {
+          "_attn_kernel": {
+            "aiv_vec_ratio": 0.1264,
+            "aiv_mte2_ratio": 0.6668,
+            "aiv_mte3_ratio": 0.0158,
+            "aiv_scalar_ratio": 0.4183,
+            "aic_mac_ratio": 0.012,
+            "aic_mte1_ratio": 0.0109,
+            "cube_utilization(%)": 97.3376
+          },
+          "_proj_mm_kernel": {
+            "aiv_vec_ratio": 0.1251,
+            "aiv_mte2_ratio": 0.8438,
+            "aiv_mte3_ratio": 0.008,
+            "aiv_scalar_ratio": 0.6029,
+            "aic_mac_ratio": 0.01,
+            "aic_mte1_ratio": 0.009,
+            "cube_utilization(%)": 93.7154
+          }
+        }
+      },
+      "speedup_vs_torch": 0.0601,
+      "error_type": null,
+      "error_msg": null
+    },
+    {
+      "case_idx": 43,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            1025,
+            768
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": 12
+        }
+      ],
+      "status": "pass",
+      "framework": {
+        "avg_latency_ms": 0.3464,
+        "peak_memory_mb": 427.62
+      },
+      "implementation": {
+        "avg_latency_ms": 3.852,
+        "peak_memory_mb": 332.06,
+        "kernel_metrics": {
+          "_attn_kernel": {
+            "aiv_vec_ratio": 0.1264,
+            "aiv_mte2_ratio": 0.5796,
+            "aiv_mte3_ratio": 0.0271,
+            "aiv_scalar_ratio": 0.5967,
+            "aic_mac_ratio": 0.0228,
+            "aic_mte1_ratio": 0.0206,
+            "cube_utilization(%)": 93.9604
+          },
+          "_proj_mm_kernel": {
+            "aiv_vec_ratio": 0.1267,
+            "aiv_mte2_ratio": 0.831,
+            "aiv_mte3_ratio": 0.01,
+            "aiv_scalar_ratio": 0.6305,
+            "aic_mac_ratio": 0.0331,
+            "aic_mte1_ratio": 0.015,
+            "cube_utilization(%)": 88.09
+          }
+        }
+      },
+      "speedup_vs_torch": 0.0899,
+      "error_type": null,
+      "error_msg": null
+    },
+    {
+      "case_idx": 44,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            1090,
+            896
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 14
+        }
+      ],
+      "status": "pass",
+      "framework": {
+        "avg_latency_ms": 0.4518,
+        "peak_memory_mb": 453.8
+      },
+      "implementation": {
+        "avg_latency_ms": 8.8108,
+        "peak_memory_mb": 322.39,
+        "kernel_metrics": {
+          "_attn_kernel": {
+            "aiv_vec_ratio": 0.1236,
+            "aiv_mte2_ratio": 0.6792,
+            "aiv_mte3_ratio": 0.0154,
+            "aiv_scalar_ratio": 0.4168,
+            "aic_mac_ratio": 0.012,
+            "aic_mte1_ratio": 0.0104,
+            "cube_utilization(%)": 94.9519
+          },
+          "_proj_mm_kernel": {
+            "aiv_vec_ratio": 0.1298,
+            "aiv_mte2_ratio": 0.8393,
+            "aiv_mte3_ratio": 0.0085,
+            "aiv_scalar_ratio": 0.6257,
+            "aic_mac_ratio": 0.01,
+            "aic_mte1_ratio": 0.009,
+            "cube_utilization(%)": 81.6831
+          }
+        }
+      },
+      "speedup_vs_torch": 0.0513,
+      "error_type": null,
+      "error_msg": null
+    },
+    {
+      "case_idx": 45,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            3,
+            1157,
+            1024
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "scalar",
+          "value": 16
+        }
+      ],
+      "status": "pass",
+      "framework": {
+        "avg_latency_ms": 1.9897,
+        "peak_memory_mb": 854.54
+      },
+      "implementation": {
+        "avg_latency_ms": 32.9624,
+        "peak_memory_mb": 349.29,
+        "kernel_metrics": {
+          "_attn_kernel": {
+            "aiv_vec_ratio": 0.1213,
+            "aiv_mte2_ratio": 0.6483,
+            "aiv_mte3_ratio": 0.0177,
+            "aiv_scalar_ratio": 0.4118,
+            "aic_mac_ratio": 0.012,
+            "aic_mte1_ratio": 0.01,
+            "cube_utilization(%)": 97.9025
+          },
+          "_proj_mm_kernel": {
+            "aiv_vec_ratio": 0.1345,
+            "aiv_mte2_ratio": 0.8288,
+            "aiv_mte3_ratio": 0.009,
+            "aiv_scalar_ratio": 0.5486,
+            "aic_mac_ratio": 0.0102,
+            "aic_mte1_ratio": 0.009,
+            "cube_utilization(%)": 91.626
+          }
+        }
+      },
+      "speedup_vs_torch": 0.0604,
+      "error_type": null,
+      "error_msg": null
+    },
+    {
+      "case_idx": 46,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            1226,
+            1152
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": 18
+        }
+      ],
+      "status": "pass",
+      "framework": {
+        "avg_latency_ms": 0.8374,
+        "peak_memory_mb": 561.83
+      },
+      "implementation": {
+        "avg_latency_ms": 8.6544,
+        "peak_memory_mb": 354.45,
+        "kernel_metrics": {
+          "_attn_kernel": {
+            "aiv_vec_ratio": 0.1133,
+            "aiv_mte2_ratio": 0.5979,
+            "aiv_mte3_ratio": 0.026,
+            "aiv_scalar_ratio": 0.5855,
+            "aic_mac_ratio": 0.0206,
+            "aic_mte1_ratio": 0.0182,
+            "cube_utilization(%)": 96.9383
+          },
+          "_proj_mm_kernel": {
+            "aiv_vec_ratio": 0.139,
+            "aiv_mte2_ratio": 0.8229,
+            "aiv_mte3_ratio": 0.011,
+            "aiv_scalar_ratio": 0.58,
+            "aic_mac_ratio": 0.0367,
+            "aic_mte1_ratio": 0.0167,
+            "cube_utilization(%)": 88.585
+          }
+        }
+      },
+      "speedup_vs_torch": 0.0968,
+      "error_type": null,
+      "error_msg": null
+    },
+    {
+      "case_idx": 47,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            3,
+            1297,
+            1280
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 20
+        }
+      ],
+      "status": "pass",
+      "framework": {
+        "avg_latency_ms": 2.8736,
+        "peak_memory_mb": 1158.64
+      },
+      "implementation": {
+        "avg_latency_ms": 60.5223,
+        "peak_memory_mb": 368.95,
+        "kernel_metrics": {
+          "_attn_kernel": {
+            "aiv_vec_ratio": 0.0987,
+            "aiv_mte2_ratio": 0.7141,
+            "aiv_mte3_ratio": 0.015,
+            "aiv_scalar_ratio": 0.3936,
+            "aic_mac_ratio": 0.0093,
+            "aic_mte1_ratio": 0.008,
+            "cube_utilization(%)": 98.5006
+          },
+          "_proj_mm_kernel": {
+            "aiv_vec_ratio": 0.1424,
+            "aiv_mte2_ratio": 0.822,
+            "aiv_mte3_ratio": 0.009,
+            "aiv_scalar_ratio": 0.5435,
+            "aic_mac_ratio": 0.011,
+            "aic_mte1_ratio": 0.01,
+            "cube_utilization(%)": 94.4877
+          }
+        }
+      },
+      "speedup_vs_torch": 0.0475,
+      "error_type": null,
+      "error_msg": null
+    },
+    {
+      "case_idx": 48,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            1370,
+            192
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "scalar",
+          "value": 3
+        }
+      ],
+      "status": "pass",
+      "framework": {
+        "avg_latency_ms": 0.1866,
+        "peak_memory_mb": 354.52
+      },
+      "implementation": {
+        "avg_latency_ms": 8.8539,
+        "peak_memory_mb": 310.8,
+        "kernel_metrics": {
+          "_attn_kernel": {
+            "aiv_vec_ratio": 0.0385,
+            "aiv_mte2_ratio": 0.8322,
+            "aiv_mte3_ratio": 0.0101,
+            "aiv_scalar_ratio": 0.3768,
+            "aic_mac_ratio": 0.0036,
+            "aic_mte1_ratio": 0.0033,
+            "cube_utilization(%)": 89.3623
+          },
+          "_proj_mm_kernel": {
+            "aiv_vec_ratio": 0.0413,
+            "aiv_mte2_ratio": 0.9313,
+            "aiv_mte3_ratio": 0.0065,
+            "aiv_scalar_ratio": 0.7204,
+            "aic_mac_ratio": 0.003,
+            "aic_mte1_ratio": 0.003,
+            "cube_utilization(%)": 73.2892
+          }
+        }
+      },
+      "speedup_vs_torch": 0.0211,
+      "error_type": null,
+      "error_msg": null
+    },
+    {
+      "case_idx": 49,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            1445,
+            256
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": 4
+        }
+      ],
+      "status": "pass",
+      "framework": {
+        "avg_latency_ms": 0.234,
+        "peak_memory_mb": 378.9
+      },
+      "implementation": {
+        "avg_latency_ms": 2.1327,
+        "peak_memory_mb": 315.53,
+        "kernel_metrics": {
+          "_attn_kernel": {
+            "aiv_vec_ratio": 0.1281,
+            "aiv_mte2_ratio": 0.5974,
+            "aiv_mte3_ratio": 0.0209,
+            "aiv_scalar_ratio": 0.6089,
+            "aic_mac_ratio": 0.0232,
+            "aic_mte1_ratio": 0.0208,
+            "cube_utilization(%)": 91.2001
+          },
+          "_proj_mm_kernel": {
+            "aiv_vec_ratio": 0.087,
+            "aiv_mte2_ratio": 0.877,
+            "aiv_mte3_ratio": 0.0073,
+            "aiv_scalar_ratio": 0.7266,
+            "aic_mac_ratio": 0.0228,
+            "aic_mte1_ratio": 0.01,
+            "cube_utilization(%)": 71.6123
+          }
+        }
+      },
+      "speedup_vs_torch": 0.1097,
+      "error_type": null,
+      "error_msg": null
+    },
+    {
+      "case_idx": 50,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            3,
+            1522,
+            384
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 6
+        }
+      ],
+      "status": "pass",
+      "framework": {
+        "avg_latency_ms": 1.2244,
+        "peak_memory_mb": 651.33
+      },
+      "implementation": {
+        "avg_latency_ms": 32.3381,
+        "peak_memory_mb": 324.95,
+        "kernel_metrics": {
+          "_attn_kernel": {
+            "aiv_vec_ratio": 0.0682,
+            "aiv_mte2_ratio": 0.7707,
+            "aiv_mte3_ratio": 0.0121,
+            "aiv_scalar_ratio": 0.3885,
+            "aic_mac_ratio": 0.0069,
+            "aic_mte1_ratio": 0.006,
+            "cube_utilization(%)": 96.9452
+          },
+          "_proj_mm_kernel": {
+            "aiv_vec_ratio": 0.108,
+            "aiv_mte2_ratio": 0.8637,
+            "aiv_mte3_ratio": 0.007,
+            "aiv_scalar_ratio": 0.6257,
+            "aic_mac_ratio": 0.008,
+            "aic_mte1_ratio": 0.0071,
+            "cube_utilization(%)": 90.52
+          }
+        }
+      },
+      "speedup_vs_torch": 0.0379,
+      "error_type": null,
+      "error_msg": null
+    }
+  ]
+}

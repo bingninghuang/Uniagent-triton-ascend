@@ -1,0 +1,6858 @@
+{
+  "op_name": "kernelbench_l4_3_FusionAttention",
+  "total_cases": 61,
+  "passed_cases": 0,
+  "failed_cases": 61,
+  "failures": [
+    {
+      "case_idx": 1,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            128,
+            1024
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            128,
+            1024
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            128,
+            1024
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 8
+        },
+        {
+          "type": "scalar",
+          "value": "BSH"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": 1.0
+        },
+        {
+          "type": "scalar",
+          "value": 1.0
+        },
+        {
+          "type": "scalar",
+          "value": 2147483647
+        },
+        {
+          "type": "scalar",
+          "value": 2147483647
+        },
+        {
+          "type": "scalar",
+          "value": 0
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": 0
+        },
+        {
+          "type": "scalar",
+          "value": true
+        },
+        {
+          "type": "scalar",
+          "value": false
+        },
+        {
+          "type": "scalar",
+          "value": ""
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        }
+      ],
+      "error_type": "AccuracyError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 898, in run_single_case\n    compare(\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 677, in compare\n    _compare_float_output(fw_finite, impl_finite, ctx)\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 596, in _compare_float_output\n    _check_accuracy_npu_benchmark(fw_finite, impl_finite, ctx.data_type)\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 845, in _check_accuracy_npu_benchmark\n    raise AccuracyError(\nAccuracyError: 验证失败 dtype=torch.float16: max_error_cap_violations=63683/131072 (atol=9.000000e-02, rtol=9.765625e-04, max_abs_diff=5.000000e+00, ok=False), matched_ratio=0.499565 (req>=0.9, ok=False), MERE=5.000032e-01 (rel_thr=9.765625e-04, ok=False); small_count=2, normal_count=131070\n前 10 个 max_error_cap 违例位置:\n  位置\n... [truncated 4087 chars] ...\n通过位置:\n  位置[251] (正常域): framework=-1.910400e-02, impl=-1.907349e-02, 相对误差=1.597436e-03 (允许<=9.765625e-04)\n  位置[1969] (正常域): framework=-7.644653e-03, impl=-7.652283e-03, 相对误差=9.979910e-04 (允许<=9.765625e-04)\n  位置[2445] (正常域): framework=1.008911e-01, impl=1.007690e-01, 相对误差=1.209920e-03 (允许<=9.765625e-04)\n  位置[2492] (正常域): framework=-2.203369e-01, impl=-2.200928e-01, 相对误差=1.108033e-03 (允许<=9.765625e-04)\n  位置[2497] (正常域): framework=-1.182251e-01, impl=-1.183472e-01, 相对误差=1.032524e-03 (允许<=9.765625e-04)\n  位置[9373] (正常域): framework=-5.007935e-02, impl=-4.995728e-02, 相对误差=2.437533e-03 (允许<=9.765625e-04)\n  位置[9411] (正常域): framework=1.309204e-02, impl=1.315308e-02, 相对误差=4.661969e-03 (允许<=9.765625e-04)\n  位置[9468] (正常域): framework=6.481934e-02, impl=6.469727e-02, 相对误差=1.883236e-03 (允许<=9.765625e-04)\n  位置[10486] (正常域): framework=-1.536560e-02, impl=-1.534271e-02, 相对误差=1.489563e-03 (允许<=9.765625e-04)\n  位置[15497] (正常域): framework=2.238464e-02, impl=2.243042e-02, 相对误差=2.044981e-03 (允许<=9.765625e-04)\n\n",
+      "metrics": {
+        "matched_ratio": 0.49956512451171875,
+        "max_abs_diff": 5.0,
+        "MERE": 0.5000031590461731,
+        "rel_threshold": 0.0009765625,
+        "small_value_threshold": 0.00048828125,
+        "small_value_error": 1.52587890625e-05,
+        "atol": 0.09,
+        "rtol": 0.0009765625,
+        "max_error_cap_violation_count": 63683,
+        "required_matched_ratio": 0.9,
+        "total_finite": 131072,
+        "matched_count": 65479,
+        "small_count": 2,
+        "normal_count": 131070,
+        "checks": {
+          "max_error_cap": false,
+          "required_matched_ratio": false,
+          "MERE": false
+        }
+      }
+    },
+    {
+      "case_idx": 2,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            256,
+            2048
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            256,
+            2048
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            256,
+            2048
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 16
+        },
+        {
+          "type": "scalar",
+          "value": "BSH"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": 1.0
+        },
+        {
+          "type": "scalar",
+          "value": 1.0
+        },
+        {
+          "type": "scalar",
+          "value": 2147483647
+        },
+        {
+          "type": "scalar",
+          "value": 2147483647
+        },
+        {
+          "type": "scalar",
+          "value": 0
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": 0
+        },
+        {
+          "type": "scalar",
+          "value": true
+        },
+        {
+          "type": "scalar",
+          "value": false
+        },
+        {
+          "type": "scalar",
+          "value": ""
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        }
+      ],
+      "error_type": "AccuracyError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 898, in run_single_case\n    compare(\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 677, in compare\n    _compare_float_output(fw_finite, impl_finite, ctx)\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 596, in _compare_float_output\n    _check_accuracy_npu_benchmark(fw_finite, impl_finite, ctx.data_type)\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 845, in _check_accuracy_npu_benchmark\n    raise AccuracyError(\nAccuracyError: 验证失败 dtype=torch.float16: max_error_cap_violations=255987/524288 (atol=9.000000e-02, rtol=9.765625e-04, max_abs_diff=1.444642e+03, ok=False), matched_ratio=0.493378 (req>=0.9, ok=False), MERE=6.804449e-01 (rel_thr=9.765625e-04, ok=False); small_count=100, normal_count=524188\n前 10 个 max_error_cap 违例位置:\n \n... [truncated 4073 chars] ...\natched 未通过位置:\n  位置[540] (正常域): framework=-4.318237e-02, impl=-4.306030e-02, 相对误差=2.826849e-03 (允许<=9.765625e-04)\n  位置[560] (正常域): framework=9.985352e-02, impl=9.997559e-02, 相对误差=1.222493e-03 (允许<=9.765625e-04)\n  位置[569] (正常域): framework=5.938721e-02, impl=5.926514e-02, 相对误差=2.055495e-03 (允许<=9.765625e-04)\n  位置[590] (正常域): framework=-4.980469e-02, impl=-4.989624e-02, 相对误差=1.838232e-03 (允许<=9.765625e-04)\n  位置[599] (正常域): framework=4.809570e-02, impl=4.821777e-02, 相对误差=2.538066e-03 (允许<=9.765625e-04)\n  位置[681] (正常域): framework=1.359558e-02, impl=1.361084e-02, 相对误差=1.122326e-03 (允许<=9.765625e-04)\n  位置[844] (正常域): framework=-4.846191e-02, impl=-4.852295e-02, 相对误差=1.259443e-03 (允许<=9.765625e-04)\n  位置[1280] (正常域): framework=-1.061401e-01, impl=-1.062622e-01, 相对误差=1.150085e-03 (允许<=9.765625e-04)\n  位置[1318] (正常域): framework=-3.588867e-02, impl=-3.594971e-02, 相对误差=1.700675e-03 (允许<=9.765625e-04)\n  位置[1320] (正常域): framework=-2.157593e-02, impl=-2.153015e-02, 相对误差=2.121631e-03 (允许<=9.765625e-04)\n\n",
+      "metrics": {
+        "matched_ratio": 0.493377685546875,
+        "max_abs_diff": 1444.6416015625,
+        "MERE": 0.6804448962211609,
+        "rel_threshold": 0.0009765625,
+        "small_value_threshold": 0.00048828125,
+        "small_value_error": 1.52587890625e-05,
+        "atol": 0.09,
+        "rtol": 0.0009765625,
+        "max_error_cap_violation_count": 255987,
+        "required_matched_ratio": 0.9,
+        "total_finite": 524288,
+        "matched_count": 258672,
+        "small_count": 100,
+        "normal_count": 524188,
+        "checks": {
+          "max_error_cap": false,
+          "required_matched_ratio": false,
+          "MERE": false
+        }
+      }
+    },
+    {
+      "case_idx": 3,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            512,
+            4096
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            512,
+            4096
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            512,
+            4096
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 32
+        },
+        {
+          "type": "scalar",
+          "value": "BSH"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": 1.0
+        },
+        {
+          "type": "scalar",
+          "value": 1.0
+        },
+        {
+          "type": "scalar",
+          "value": 2147483647
+        },
+        {
+          "type": "scalar",
+          "value": 2147483647
+        },
+        {
+          "type": "scalar",
+          "value": 0
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": 0
+        },
+        {
+          "type": "scalar",
+          "value": true
+        },
+        {
+          "type": "scalar",
+          "value": false
+        },
+        {
+          "type": "scalar",
+          "value": ""
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        }
+      ],
+      "error_type": "AccuracyError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 898, in run_single_case\n    compare(\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 677, in compare\n    _compare_float_output(fw_finite, impl_finite, ctx)\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 596, in _compare_float_output\n    _check_accuracy_npu_benchmark(fw_finite, impl_finite, ctx.data_type)\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 845, in _check_accuracy_npu_benchmark\n    raise AccuracyError(\nAccuracyError: 验证失败 dtype=torch.float16: max_error_cap_violations=2506372/4194304 (atol=9.000000e-02, rtol=9.765625e-04, max_abs_diff=9.421875e+00, ok=False), matched_ratio=0.398607 (req>=0.9, ok=False), MERE=5.675852e-01 (rel_thr=9.765625e-04, ok=False); small_count=2, normal_count=4194302\n前 10 个 max_error_cap 违例位置:\n\n... [truncated 4159 chars] ...\n] (正常域): framework=-5.664062e+00, impl=0.000000e+00, 相对误差=1.000000e+00 (允许<=9.765625e-04)\n  位置[131073] (正常域): framework=-5.597656e+00, impl=0.000000e+00, 相对误差=1.000000e+00 (允许<=9.765625e-04)\n  位置[131074] (正常域): framework=-2.501953e+00, impl=0.000000e+00, 相对误差=1.000000e+00 (允许<=9.765625e-04)\n  位置[131075] (正常域): framework=-2.134766e+00, impl=0.000000e+00, 相对误差=1.000000e+00 (允许<=9.765625e-04)\n  位置[131076] (正常域): framework=-4.902344e+00, impl=0.000000e+00, 相对误差=1.000000e+00 (允许<=9.765625e-04)\n  位置[131077] (正常域): framework=-4.687500e+00, impl=0.000000e+00, 相对误差=1.000000e+00 (允许<=9.765625e-04)\n  位置[131078] (正常域): framework=-3.431641e+00, impl=0.000000e+00, 相对误差=1.000000e+00 (允许<=9.765625e-04)\n  位置[131079] (正常域): framework=-4.070312e+00, impl=0.000000e+00, 相对误差=1.000000e+00 (允许<=9.765625e-04)\n  位置[131080] (正常域): framework=-4.007812e+00, impl=0.000000e+00, 相对误差=1.000000e+00 (允许<=9.765625e-04)\n  位置[131081] (正常域): framework=-3.779297e+00, impl=0.000000e+00, 相对误差=1.000000e+00 (允许<=9.765625e-04)\n\n",
+      "metrics": {
+        "matched_ratio": 0.3986074924468994,
+        "max_abs_diff": 9.421875,
+        "MERE": 0.5675852298736572,
+        "rel_threshold": 0.0009765625,
+        "small_value_threshold": 0.00048828125,
+        "small_value_error": 1.52587890625e-05,
+        "atol": 0.09,
+        "rtol": 0.0009765625,
+        "max_error_cap_violation_count": 2506372,
+        "required_matched_ratio": 0.9,
+        "total_finite": 4194304,
+        "matched_count": 1671881,
+        "small_count": 2,
+        "normal_count": 4194302,
+        "checks": {
+          "max_error_cap": false,
+          "required_matched_ratio": false,
+          "MERE": false
+        }
+      }
+    },
+    {
+      "case_idx": 4,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            64,
+            512
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            64,
+            512
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            64,
+            512
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 8
+        },
+        {
+          "type": "scalar",
+          "value": "BSH"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": 1.0
+        },
+        {
+          "type": "scalar",
+          "value": 1.0
+        },
+        {
+          "type": "scalar",
+          "value": 2147483647
+        },
+        {
+          "type": "scalar",
+          "value": 2147483647
+        },
+        {
+          "type": "scalar",
+          "value": 0
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": 0
+        },
+        {
+          "type": "scalar",
+          "value": true
+        },
+        {
+          "type": "scalar",
+          "value": false
+        },
+        {
+          "type": "scalar",
+          "value": ""
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        }
+      ],
+      "error_type": "AccuracyError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 898, in run_single_case\n    compare(\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 677, in compare\n    _compare_float_output(fw_finite, impl_finite, ctx)\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 596, in _compare_float_output\n    _check_accuracy_npu_benchmark(fw_finite, impl_finite, ctx.data_type)\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 845, in _check_accuracy_npu_benchmark\n    raise AccuracyError(\nAccuracyError: 验证失败 dtype=torch.float16: max_error_cap_violations=80282/131072 (atol=9.000000e-02, rtol=9.765625e-04, max_abs_diff=9.816406e+00, ok=False), matched_ratio=0.375099 (req>=0.9, ok=False), MERE=1.146879e+00 (rel_thr=9.765625e-04, ok=False); small_count=17, normal_count=131055\n前 10 个 max_error_cap 违例位置:\n  位\n... [truncated 4093 chars] ...\n位置:\n  位置[16384] (正常域): framework=4.031250e+00, impl=0.000000e+00, 相对误差=1.000000e+00 (允许<=9.765625e-04)\n  位置[16385] (正常域): framework=-3.964844e+00, impl=0.000000e+00, 相对误差=1.000000e+00 (允许<=9.765625e-04)\n  位置[16386] (正常域): framework=-3.632812e+00, impl=0.000000e+00, 相对误差=1.000000e+00 (允许<=9.765625e-04)\n  位置[16387] (正常域): framework=1.542969e+00, impl=0.000000e+00, 相对误差=9.999999e-01 (允许<=9.765625e-04)\n  位置[16388] (正常域): framework=-2.636719e-01, impl=0.000000e+00, 相对误差=9.999996e-01 (允许<=9.765625e-04)\n  位置[16389] (正常域): framework=3.710938e-01, impl=0.000000e+00, 相对误差=9.999998e-01 (允许<=9.765625e-04)\n  位置[16390] (正常域): framework=-1.953125e+00, impl=0.000000e+00, 相对误差=9.999999e-01 (允许<=9.765625e-04)\n  位置[16391] (正常域): framework=-1.201172e+00, impl=0.000000e+00, 相对误差=9.999999e-01 (允许<=9.765625e-04)\n  位置[16392] (正常域): framework=4.863281e+00, impl=0.000000e+00, 相对误差=1.000000e+00 (允许<=9.765625e-04)\n  位置[16393] (正常域): framework=2.187500e+00, impl=0.000000e+00, 相对误差=1.000000e+00 (允许<=9.765625e-04)\n\n",
+      "metrics": {
+        "matched_ratio": 0.37509918212890625,
+        "max_abs_diff": 9.81640625,
+        "MERE": 1.1468794345855713,
+        "rel_threshold": 0.0009765625,
+        "small_value_threshold": 0.00048828125,
+        "small_value_error": 1.52587890625e-05,
+        "atol": 0.09,
+        "rtol": 0.0009765625,
+        "max_error_cap_violation_count": 80282,
+        "required_matched_ratio": 0.9,
+        "total_finite": 131072,
+        "matched_count": 49165,
+        "small_count": 17,
+        "normal_count": 131055,
+        "checks": {
+          "max_error_cap": false,
+          "required_matched_ratio": false,
+          "MERE": false
+        }
+      }
+    },
+    {
+      "case_idx": 5,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            128,
+            1,
+            1024
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            128,
+            1,
+            1024
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            128,
+            1,
+            1024
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 8
+        },
+        {
+          "type": "scalar",
+          "value": "SBH"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": 1.0
+        },
+        {
+          "type": "scalar",
+          "value": 1.0
+        },
+        {
+          "type": "scalar",
+          "value": 2147483647
+        },
+        {
+          "type": "scalar",
+          "value": 2147483647
+        },
+        {
+          "type": "scalar",
+          "value": 0
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": 0
+        },
+        {
+          "type": "scalar",
+          "value": true
+        },
+        {
+          "type": "scalar",
+          "value": false
+        },
+        {
+          "type": "scalar",
+          "value": ""
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        }
+      ],
+      "error_type": "AccuracyError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 898, in run_single_case\n    compare(\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 677, in compare\n    _compare_float_output(fw_finite, impl_finite, ctx)\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 596, in _compare_float_output\n    _check_accuracy_npu_benchmark(fw_finite, impl_finite, ctx.data_type)\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 845, in _check_accuracy_npu_benchmark\n    raise AccuracyError(\nAccuracyError: 验证失败 dtype=torch.float16: max_error_cap_violations=64322/131072 (atol=9.000000e-02, rtol=9.765625e-04, max_abs_diff=9.968750e+00, ok=False), matched_ratio=0.500000 (req>=0.9, ok=False), MERE=1.357327e+00 (rel_thr=9.765625e-04, ok=False); small_count=3, normal_count=131069\n前 10 个 max_error_cap 违例位置:\n  位置\n... [truncated 4115 chars] ...\n置[15309] (正常域): framework=8.422852e-03, impl=8.384705e-03, 相对误差=4.528932e-03 (允许<=9.765625e-04)\n  位置[19078] (正常域): framework=-1.919556e-02, impl=-1.924133e-02, 相对误差=2.384725e-03 (允许<=9.765625e-04)\n  位置[20620] (正常域): framework=-2.519226e-02, impl=-2.516174e-02, 相对误差=1.211382e-03 (允许<=9.765625e-04)\n  位置[20689] (正常域): framework=-1.686096e-02, impl=-1.683044e-02, 相对误差=1.809944e-03 (允许<=9.765625e-04)\n  位置[28438] (正常域): framework=1.522217e-01, impl=1.519775e-01, 相对误差=1.603848e-03 (允许<=9.765625e-04)\n  位置[28450] (正常域): framework=-6.152344e-02, impl=-6.134033e-02, 相对误差=2.976186e-03 (允许<=9.765625e-04)\n  位置[28456] (正常域): framework=3.195190e-02, impl=3.164673e-02, 相对误差=9.551069e-03 (允许<=9.765625e-04)\n  位置[28469] (正常域): framework=-6.475830e-02, impl=-6.500244e-02, 相对误差=3.770023e-03 (允许<=9.765625e-04)\n  位置[28470] (正常域): framework=-1.834717e-01, impl=-1.832275e-01, 相对误差=1.330671e-03 (允许<=9.765625e-04)\n  位置[28514] (正常域): framework=1.502686e-01, impl=1.500244e-01, 相对误差=1.624694e-03 (允许<=9.765625e-04)\n\n",
+      "metrics": {
+        "matched_ratio": 0.5,
+        "max_abs_diff": 9.96875,
+        "MERE": 1.3573274612426758,
+        "rel_threshold": 0.0009765625,
+        "small_value_threshold": 0.00048828125,
+        "small_value_error": 1.52587890625e-05,
+        "atol": 0.09,
+        "rtol": 0.0009765625,
+        "max_error_cap_violation_count": 64322,
+        "required_matched_ratio": 0.9,
+        "total_finite": 131072,
+        "matched_count": 65536,
+        "small_count": 3,
+        "normal_count": 131069,
+        "checks": {
+          "max_error_cap": false,
+          "required_matched_ratio": false,
+          "MERE": false
+        }
+      }
+    },
+    {
+      "case_idx": 6,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            256,
+            2,
+            2048
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            256,
+            2,
+            2048
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            256,
+            2,
+            2048
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 16
+        },
+        {
+          "type": "scalar",
+          "value": "SBH"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": 1.0
+        },
+        {
+          "type": "scalar",
+          "value": 1.0
+        },
+        {
+          "type": "scalar",
+          "value": 2147483647
+        },
+        {
+          "type": "scalar",
+          "value": 2147483647
+        },
+        {
+          "type": "scalar",
+          "value": 0
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": 0
+        },
+        {
+          "type": "scalar",
+          "value": true
+        },
+        {
+          "type": "scalar",
+          "value": false
+        },
+        {
+          "type": "scalar",
+          "value": ""
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        }
+      ],
+      "error_type": "AccuracyError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 898, in run_single_case\n    compare(\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 677, in compare\n    _compare_float_output(fw_finite, impl_finite, ctx)\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 596, in _compare_float_output\n    _check_accuracy_npu_benchmark(fw_finite, impl_finite, ctx.data_type)\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 845, in _check_accuracy_npu_benchmark\n    raise AccuracyError(\nAccuracyError: 验证失败 dtype=torch.float16: max_error_cap_violations=524079/1048576 (atol=9.000000e-02, rtol=9.765625e-04, max_abs_diff=7.383142e+03, ok=False), matched_ratio=0.495914 (req>=0.9, ok=False), MERE=1.407803e+01 (rel_thr=9.765625e-04, ok=False); small_count=184, normal_count=1048392\n前 10 个 max_error_cap 违例位置:\n... [truncated 4081 chars] ...\nd 未通过位置:\n  位置[3456] (正常域): framework=2.550781e+00, impl=-4.731445e-01, 相对误差=1.185490e+00 (允许<=9.765625e-04)\n  位置[3457] (正常域): framework=6.333008e-01, impl=-8.361816e-02, 相对误差=1.132035e+00 (允许<=9.765625e-04)\n  位置[3458] (正常域): framework=5.062866e-02, impl=-1.843750e+00, 相对误差=3.741705e+01 (允许<=9.765625e-04)\n  位置[3459] (正常域): framework=9.008789e-01, impl=-2.882812e+00, 相对误差=4.199999e+00 (允许<=9.765625e-04)\n  位置[3460] (正常域): framework=2.806641e+00, impl=-4.011719e+00, 相对误差=2.429367e+00 (允许<=9.765625e-04)\n  位置[3461] (正常域): framework=-1.280273e+00, impl=3.216797e+00, 相对误差=3.512585e+00 (允许<=9.765625e-04)\n  位置[3462] (正常域): framework=1.064453e-01, impl=1.296875e+00, 相对误差=1.118348e+01 (允许<=9.765625e-04)\n  位置[3463] (正常域): framework=-1.964844e+00, impl=-4.401855e-01, 相对误差=7.759691e-01 (允许<=9.765625e-04)\n  位置[3464] (正常域): framework=-2.007812e+00, impl=-2.066406e+00, 相对误差=2.918288e-02 (允许<=9.765625e-04)\n  位置[3465] (正常域): framework=1.188354e-01, impl=1.037109e+00, 相对误差=7.727266e+00 (允许<=9.765625e-04)\n\n",
+      "metrics": {
+        "matched_ratio": 0.4959135055541992,
+        "max_abs_diff": 7383.14208984375,
+        "MERE": 14.078033447265625,
+        "rel_threshold": 0.0009765625,
+        "small_value_threshold": 0.00048828125,
+        "small_value_error": 1.52587890625e-05,
+        "atol": 0.09,
+        "rtol": 0.0009765625,
+        "max_error_cap_violation_count": 524079,
+        "required_matched_ratio": 0.9,
+        "total_finite": 1048576,
+        "matched_count": 520003,
+        "small_count": 184,
+        "normal_count": 1048392,
+        "checks": {
+          "max_error_cap": false,
+          "required_matched_ratio": false,
+          "MERE": false
+        }
+      }
+    },
+    {
+      "case_idx": 7,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            8,
+            128,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            8,
+            128,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            8,
+            128,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 8
+        },
+        {
+          "type": "scalar",
+          "value": "BNSD"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": 1.0
+        },
+        {
+          "type": "scalar",
+          "value": 1.0
+        },
+        {
+          "type": "scalar",
+          "value": 2147483647
+        },
+        {
+          "type": "scalar",
+          "value": 2147483647
+        },
+        {
+          "type": "scalar",
+          "value": 0
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": 0
+        },
+        {
+          "type": "scalar",
+          "value": true
+        },
+        {
+          "type": "scalar",
+          "value": false
+        },
+        {
+          "type": "scalar",
+          "value": ""
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        }
+      ],
+      "error_type": "AccuracyError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 898, in run_single_case\n    compare(\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 677, in compare\n    _compare_float_output(fw_finite, impl_finite, ctx)\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 596, in _compare_float_output\n    _check_accuracy_npu_benchmark(fw_finite, impl_finite, ctx.data_type)\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 845, in _check_accuracy_npu_benchmark\n    raise AccuracyError(\nAccuracyError: 验证失败 dtype=torch.float16: max_error_cap_violations=64243/131072 (atol=9.000000e-02, rtol=9.765625e-04, max_abs_diff=9.960938e+00, ok=False), matched_ratio=0.497871 (req>=0.9, ok=False), MERE=2.055385e+02 (rel_thr=9.765625e-04, ok=False); small_count=20, normal_count=131052\n前 10 个 max_error_cap 违例位置:\n  位\n... [truncated 4071 chars] ...\nd 未通过位置:\n  位置[2567] (正常域): framework=5.679321e-02, impl=5.673218e-02, 相对误差=1.074689e-03 (允许<=9.765625e-04)\n  位置[2677] (正常域): framework=-9.093285e-04, impl=-8.845329e-04, 相对误差=2.726496e-02 (允许<=9.765625e-04)\n  位置[3778] (正常域): framework=-1.140594e-03, impl=-1.160622e-03, 相对误差=1.755699e-02 (允许<=9.765625e-04)\n  位置[4096] (正常域): framework=2.787109e+00, impl=-5.029297e-01, 相对误差=1.180449e+00 (允许<=9.765625e-04)\n  位置[4097] (正常域): framework=-9.965820e-01, impl=-5.468750e-01, 相对误差=4.512493e-01 (允许<=9.765625e-04)\n  位置[4098] (正常域): framework=1.355469e+00, impl=-3.636719e+00, 相对误差=3.682997e+00 (允许<=9.765625e-04)\n  位置[4099] (正常域): framework=-2.267578e+00, impl=2.769531e+00, 相对误差=2.221361e+00 (允许<=9.765625e-04)\n  位置[4100] (正常域): framework=1.820312e+00, impl=1.088867e+00, 相对误差=4.018240e-01 (允许<=9.765625e-04)\n  位置[4101] (正常域): framework=-1.719727e+00, impl=3.095703e+00, 相对误差=2.800113e+00 (允许<=9.765625e-04)\n  位置[4102] (正常域): framework=1.297852e+00, impl=3.535156e+00, 相对误差=1.723852e+00 (允许<=9.765625e-04)\n\n",
+      "metrics": {
+        "matched_ratio": 0.49787139892578125,
+        "max_abs_diff": 9.9609375,
+        "MERE": 205.53848266601562,
+        "rel_threshold": 0.0009765625,
+        "small_value_threshold": 0.00048828125,
+        "small_value_error": 1.52587890625e-05,
+        "atol": 0.09,
+        "rtol": 0.0009765625,
+        "max_error_cap_violation_count": 64243,
+        "required_matched_ratio": 0.9,
+        "total_finite": 131072,
+        "matched_count": 65257,
+        "small_count": 20,
+        "normal_count": 131052,
+        "checks": {
+          "max_error_cap": false,
+          "required_matched_ratio": false,
+          "MERE": false
+        }
+      }
+    },
+    {
+      "case_idx": 8,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            16,
+            256,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            16,
+            256,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            16,
+            256,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 16
+        },
+        {
+          "type": "scalar",
+          "value": "BNSD"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": 1.0
+        },
+        {
+          "type": "scalar",
+          "value": 1.0
+        },
+        {
+          "type": "scalar",
+          "value": 2147483647
+        },
+        {
+          "type": "scalar",
+          "value": 2147483647
+        },
+        {
+          "type": "scalar",
+          "value": 0
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": 0
+        },
+        {
+          "type": "scalar",
+          "value": true
+        },
+        {
+          "type": "scalar",
+          "value": false
+        },
+        {
+          "type": "scalar",
+          "value": ""
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        }
+      ],
+      "error_type": "AccuracyError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 898, in run_single_case\n    compare(\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 677, in compare\n    _compare_float_output(fw_finite, impl_finite, ctx)\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 596, in _compare_float_output\n    _check_accuracy_npu_benchmark(fw_finite, impl_finite, ctx.data_type)\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 845, in _check_accuracy_npu_benchmark\n    raise AccuracyError(\nAccuracyError: 验证失败 dtype=torch.float16: max_error_cap_violations=760154/1048576 (atol=9.000000e-02, rtol=9.765625e-04, max_abs_diff=1.364453e+01, ok=False), matched_ratio=0.258492 (req>=0.9, ok=False), MERE=2.622323e+01 (rel_thr=9.765625e-04, ok=False); small_count=164, normal_count=1048412\n前 10 个 max_error_cap 违例位置:\n... [truncated 4099 chars] ...\n过位置:\n  位置[618] (正常域): framework=-1.231384e-02, impl=-1.229858e-02, 相对误差=1.239147e-03 (允许<=9.765625e-04)\n  位置[4096] (正常域): framework=-8.935547e-01, impl=-1.385742e+00, 相对误差=5.508196e-01 (允许<=9.765625e-04)\n  位置[4097] (正常域): framework=-4.839844e+00, impl=-3.298340e-01, 相对误差=9.318503e-01 (允许<=9.765625e-04)\n  位置[4098] (正常域): framework=3.745117e-01, impl=-1.143555e+00, 相对误差=4.053454e+00 (允许<=9.765625e-04)\n  位置[4099] (正常域): framework=3.105469e-01, impl=2.634766e+00, 相对误差=7.484274e+00 (允许<=9.765625e-04)\n  位置[4100] (正常域): framework=-9.335938e-01, impl=-3.640137e-01, 相对误差=6.100941e-01 (允许<=9.765625e-04)\n  位置[4101] (正常域): framework=-8.959961e-02, impl=-2.861328e+00, 相对误差=3.093457e+01 (允许<=9.765625e-04)\n  位置[4102] (正常域): framework=-1.288086e+00, impl=1.482422e+00, 相对误差=2.150872e+00 (允许<=9.765625e-04)\n  位置[4103] (正常域): framework=-1.166016e+00, impl=1.822266e+00, 相对误差=2.562814e+00 (允许<=9.765625e-04)\n  位置[4104] (正常域): framework=-2.064453e+00, impl=-1.868164e+00, 相对误差=9.508041e-02 (允许<=9.765625e-04)\n\n",
+      "metrics": {
+        "matched_ratio": 0.25849246978759766,
+        "max_abs_diff": 13.64453125,
+        "MERE": 26.223234176635742,
+        "rel_threshold": 0.0009765625,
+        "small_value_threshold": 0.00048828125,
+        "small_value_error": 1.52587890625e-05,
+        "atol": 0.09,
+        "rtol": 0.0009765625,
+        "max_error_cap_violation_count": 760154,
+        "required_matched_ratio": 0.9,
+        "total_finite": 1048576,
+        "matched_count": 271049,
+        "small_count": 164,
+        "normal_count": 1048412,
+        "checks": {
+          "max_error_cap": false,
+          "required_matched_ratio": false,
+          "MERE": false
+        }
+      }
+    },
+    {
+      "case_idx": 9,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            32,
+            512,
+            64
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            32,
+            512,
+            64
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            32,
+            512,
+            64
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 32
+        },
+        {
+          "type": "scalar",
+          "value": "BNSD"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": 1.0
+        },
+        {
+          "type": "scalar",
+          "value": 1.0
+        },
+        {
+          "type": "scalar",
+          "value": 2147483647
+        },
+        {
+          "type": "scalar",
+          "value": 2147483647
+        },
+        {
+          "type": "scalar",
+          "value": 0
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": 0
+        },
+        {
+          "type": "scalar",
+          "value": true
+        },
+        {
+          "type": "scalar",
+          "value": false
+        },
+        {
+          "type": "scalar",
+          "value": ""
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        }
+      ],
+      "error_type": "AccuracyError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 898, in run_single_case\n    compare(\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 677, in compare\n    _compare_float_output(fw_finite, impl_finite, ctx)\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 596, in _compare_float_output\n    _check_accuracy_npu_benchmark(fw_finite, impl_finite, ctx.data_type)\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 845, in _check_accuracy_npu_benchmark\n    raise AccuracyError(\nAccuracyError: 验证失败 dtype=torch.float16: max_error_cap_violations=2855201/4194304 (atol=9.000000e-02, rtol=9.765625e-04, max_abs_diff=9.996094e+00, ok=False), matched_ratio=0.305935 (req>=0.9, ok=False), MERE=1.024195e+03 (rel_thr=9.765625e-04, ok=False); small_count=1487, normal_count=4192817\n前 10 个 max_error_cap 违例位\n... [truncated 4067 chars] ...\natched 未通过位置:\n  位置[257] (正常域): framework=-6.842041e-02, impl=-6.829834e-02, 相对误差=1.784119e-03 (允许<=9.765625e-04)\n  位置[261] (正常域): framework=5.236816e-02, impl=5.227661e-02, 相对误差=1.748248e-03 (允许<=9.765625e-04)\n  位置[288] (正常域): framework=-1.030884e-01, impl=-1.029663e-01, 相对误差=1.184131e-03 (允许<=9.765625e-04)\n  位置[854] (正常域): framework=9.570312e-02, impl=9.558105e-02, 相对误差=1.275509e-03 (允许<=9.765625e-04)\n  位置[2048] (正常域): framework=-3.886719e+00, impl=0.000000e+00, 相对误差=1.000000e+00 (允许<=9.765625e-04)\n  位置[2049] (正常域): framework=-3.088379e-01, impl=0.000000e+00, 相对误差=9.999997e-01 (允许<=9.765625e-04)\n  位置[2050] (正常域): framework=-3.955078e+00, impl=0.000000e+00, 相对误差=1.000000e+00 (允许<=9.765625e-04)\n  位置[2051] (正常域): framework=-6.318359e-01, impl=0.000000e+00, 相对误差=9.999998e-01 (允许<=9.765625e-04)\n  位置[2052] (正常域): framework=2.279297e+00, impl=0.000000e+00, 相对误差=1.000000e+00 (允许<=9.765625e-04)\n  位置[2053] (正常域): framework=-3.908691e-01, impl=0.000000e+00, 相对误差=9.999998e-01 (允许<=9.765625e-04)\n\n",
+      "metrics": {
+        "matched_ratio": 0.3059349060058594,
+        "max_abs_diff": 9.99609375,
+        "MERE": 1024.1954345703125,
+        "rel_threshold": 0.0009765625,
+        "small_value_threshold": 0.00048828125,
+        "small_value_error": 1.52587890625e-05,
+        "atol": 0.09,
+        "rtol": 0.0009765625,
+        "max_error_cap_violation_count": 2855201,
+        "required_matched_ratio": 0.9,
+        "total_finite": 4194304,
+        "matched_count": 1283184,
+        "small_count": 1487,
+        "normal_count": 4192817,
+        "checks": {
+          "max_error_cap": false,
+          "required_matched_ratio": false,
+          "MERE": false
+        }
+      }
+    },
+    {
+      "case_idx": 10,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            128,
+            8,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            128,
+            8,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            128,
+            8,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 8
+        },
+        {
+          "type": "scalar",
+          "value": "BSND"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": 1.0
+        },
+        {
+          "type": "scalar",
+          "value": 1.0
+        },
+        {
+          "type": "scalar",
+          "value": 2147483647
+        },
+        {
+          "type": "scalar",
+          "value": 2147483647
+        },
+        {
+          "type": "scalar",
+          "value": 0
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": 0
+        },
+        {
+          "type": "scalar",
+          "value": true
+        },
+        {
+          "type": "scalar",
+          "value": false
+        },
+        {
+          "type": "scalar",
+          "value": ""
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        }
+      ],
+      "error_type": "RuntimeError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 898, in run_single_case\n    compare(\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 625, in compare\n    fw_flat = fw_out.flatten().detach().cpu()\n              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nRuntimeError: copy_between_host_and_device_opapi:build/CMakeFiles/torch_npu.dir/compiler_depend.ts:58 NPU function error: SUSPECT REMOTE ERROR, error code is 507057\n[ERROR] 2026-08-30-06:21:20 (PID:2849921, Device:0, RankID:-1) ERR00100 PTA call acl api failed\n"
+    },
+    {
+      "case_idx": 11,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            256,
+            16,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            256,
+            16,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            256,
+            16,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 16
+        },
+        {
+          "type": "scalar",
+          "value": "BSND"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": 1.0
+        },
+        {
+          "type": "scalar",
+          "value": 1.0
+        },
+        {
+          "type": "scalar",
+          "value": 2147483647
+        },
+        {
+          "type": "scalar",
+          "value": 2147483647
+        },
+        {
+          "type": "scalar",
+          "value": 0
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": 0
+        },
+        {
+          "type": "scalar",
+          "value": true
+        },
+        {
+          "type": "scalar",
+          "value": false
+        },
+        {
+          "type": "scalar",
+          "value": ""
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        }
+      ],
+      "error_type": "RuntimeError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 862, in run_single_case\n    inputs_for_impl = [\n                      ^\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 863, in <listcomp>\n    x.to(device) if isinstance(x, torch.Tensor) else x\n    ^^^^^^^^^^^^\nRuntimeError: copy_between_host_and_device_opapi:build/CMakeFiles/torch_npu.dir/compiler_depend.ts:58 NPU function error: SUSPECT REMOTE ERROR, error code is 507057\n[ERROR] 2026-08-30-06:21:20 (PID:2849921, Device:0, RankID:-1) ERR00100 PTA call acl api failed\n"
+    },
+    {
+      "case_idx": 12,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            128,
+            1024
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            128,
+            1024
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            128,
+            1024
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "scalar",
+          "value": 8
+        },
+        {
+          "type": "scalar",
+          "value": "BSH"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": 1.0
+        },
+        {
+          "type": "scalar",
+          "value": 1.0
+        },
+        {
+          "type": "scalar",
+          "value": 2147483647
+        },
+        {
+          "type": "scalar",
+          "value": 2147483647
+        },
+        {
+          "type": "scalar",
+          "value": 0
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": 0
+        },
+        {
+          "type": "scalar",
+          "value": true
+        },
+        {
+          "type": "scalar",
+          "value": false
+        },
+        {
+          "type": "scalar",
+          "value": ""
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        }
+      ],
+      "error_type": "RuntimeError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 862, in run_single_case\n    inputs_for_impl = [\n                      ^\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 863, in <listcomp>\n    x.to(device) if isinstance(x, torch.Tensor) else x\n    ^^^^^^^^^^^^\nRuntimeError: copy_between_host_and_device_opapi:build/CMakeFiles/torch_npu.dir/compiler_depend.ts:58 NPU function error: SUSPECT REMOTE ERROR, error code is 507057\n[ERROR] 2026-08-30-06:21:20 (PID:2849921, Device:0, RankID:-1) ERR00100 PTA call acl api failed\n"
+    },
+    {
+      "case_idx": 13,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            256,
+            2048
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            256,
+            2048
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            256,
+            2048
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "scalar",
+          "value": 16
+        },
+        {
+          "type": "scalar",
+          "value": "BSH"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": 1.0
+        },
+        {
+          "type": "scalar",
+          "value": 1.0
+        },
+        {
+          "type": "scalar",
+          "value": 2147483647
+        },
+        {
+          "type": "scalar",
+          "value": 2147483647
+        },
+        {
+          "type": "scalar",
+          "value": 0
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": 0
+        },
+        {
+          "type": "scalar",
+          "value": true
+        },
+        {
+          "type": "scalar",
+          "value": false
+        },
+        {
+          "type": "scalar",
+          "value": ""
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        }
+      ],
+      "error_type": "RuntimeError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 862, in run_single_case\n    inputs_for_impl = [\n                      ^\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 863, in <listcomp>\n    x.to(device) if isinstance(x, torch.Tensor) else x\n    ^^^^^^^^^^^^\nRuntimeError: copy_between_host_and_device_opapi:build/CMakeFiles/torch_npu.dir/compiler_depend.ts:58 NPU function error: SUSPECT REMOTE ERROR, error code is 507057\n[ERROR] 2026-08-30-06:21:20 (PID:2849921, Device:0, RankID:-1) ERR00100 PTA call acl api failed\n"
+    },
+    {
+      "case_idx": 14,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            8,
+            128,
+            128
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            8,
+            128,
+            128
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            8,
+            128,
+            128
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "scalar",
+          "value": 8
+        },
+        {
+          "type": "scalar",
+          "value": "BNSD"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": 1.0
+        },
+        {
+          "type": "scalar",
+          "value": 1.0
+        },
+        {
+          "type": "scalar",
+          "value": 2147483647
+        },
+        {
+          "type": "scalar",
+          "value": 2147483647
+        },
+        {
+          "type": "scalar",
+          "value": 0
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": 0
+        },
+        {
+          "type": "scalar",
+          "value": true
+        },
+        {
+          "type": "scalar",
+          "value": false
+        },
+        {
+          "type": "scalar",
+          "value": ""
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        }
+      ],
+      "error_type": "RuntimeError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 862, in run_single_case\n    inputs_for_impl = [\n                      ^\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 863, in <listcomp>\n    x.to(device) if isinstance(x, torch.Tensor) else x\n    ^^^^^^^^^^^^\nRuntimeError: copy_between_host_and_device_opapi:build/CMakeFiles/torch_npu.dir/compiler_depend.ts:58 NPU function error: SUSPECT REMOTE ERROR, error code is 507057\n[ERROR] 2026-08-30-06:21:20 (PID:2849921, Device:0, RankID:-1) ERR00100 PTA call acl api failed\n"
+    },
+    {
+      "case_idx": 15,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            32,
+            512,
+            64
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            32,
+            512,
+            64
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            32,
+            512,
+            64
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "scalar",
+          "value": 32
+        },
+        {
+          "type": "scalar",
+          "value": "BNSD"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": 1.0
+        },
+        {
+          "type": "scalar",
+          "value": 1.0
+        },
+        {
+          "type": "scalar",
+          "value": 2147483647
+        },
+        {
+          "type": "scalar",
+          "value": 2147483647
+        },
+        {
+          "type": "scalar",
+          "value": 0
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": 0
+        },
+        {
+          "type": "scalar",
+          "value": true
+        },
+        {
+          "type": "scalar",
+          "value": false
+        },
+        {
+          "type": "scalar",
+          "value": ""
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        }
+      ],
+      "error_type": "RuntimeError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 862, in run_single_case\n    inputs_for_impl = [\n                      ^\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 863, in <listcomp>\n    x.to(device) if isinstance(x, torch.Tensor) else x\n    ^^^^^^^^^^^^\nRuntimeError: copy_between_host_and_device_opapi:build/CMakeFiles/torch_npu.dir/compiler_depend.ts:58 NPU function error: SUSPECT REMOTE ERROR, error code is 507057\n[ERROR] 2026-08-30-06:21:21 (PID:2849921, Device:0, RankID:-1) ERR00100 PTA call acl api failed\n"
+    },
+    {
+      "case_idx": 16,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            64,
+            512
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            64,
+            512
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            64,
+            512
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": 8
+        },
+        {
+          "type": "scalar",
+          "value": "BSH"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": 1.0
+        },
+        {
+          "type": "scalar",
+          "value": 1.0
+        },
+        {
+          "type": "scalar",
+          "value": 2147483647
+        },
+        {
+          "type": "scalar",
+          "value": 2147483647
+        },
+        {
+          "type": "scalar",
+          "value": 0
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": 0
+        },
+        {
+          "type": "scalar",
+          "value": true
+        },
+        {
+          "type": "scalar",
+          "value": false
+        },
+        {
+          "type": "scalar",
+          "value": ""
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        }
+      ],
+      "error_type": "RuntimeError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 862, in run_single_case\n    inputs_for_impl = [\n                      ^\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 863, in <listcomp>\n    x.to(device) if isinstance(x, torch.Tensor) else x\n    ^^^^^^^^^^^^\nRuntimeError: copy_between_host_and_device_opapi:build/CMakeFiles/torch_npu.dir/compiler_depend.ts:58 NPU function error: SUSPECT REMOTE ERROR, error code is 507057\n[ERROR] 2026-08-30-06:21:21 (PID:2849921, Device:0, RankID:-1) ERR00100 PTA call acl api failed\n"
+    },
+    {
+      "case_idx": 17,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            128,
+            1024
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            128,
+            1024
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            128,
+            1024
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": 16
+        },
+        {
+          "type": "scalar",
+          "value": "BSH"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": 1.0
+        },
+        {
+          "type": "scalar",
+          "value": 1.0
+        },
+        {
+          "type": "scalar",
+          "value": 2147483647
+        },
+        {
+          "type": "scalar",
+          "value": 2147483647
+        },
+        {
+          "type": "scalar",
+          "value": 0
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": 0
+        },
+        {
+          "type": "scalar",
+          "value": true
+        },
+        {
+          "type": "scalar",
+          "value": false
+        },
+        {
+          "type": "scalar",
+          "value": ""
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        }
+      ],
+      "error_type": "RuntimeError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 862, in run_single_case\n    inputs_for_impl = [\n                      ^\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 863, in <listcomp>\n    x.to(device) if isinstance(x, torch.Tensor) else x\n    ^^^^^^^^^^^^\nRuntimeError: copy_between_host_and_device_opapi:build/CMakeFiles/torch_npu.dir/compiler_depend.ts:58 NPU function error: SUSPECT REMOTE ERROR, error code is 507057\n[ERROR] 2026-08-30-06:21:21 (PID:2849921, Device:0, RankID:-1) ERR00100 PTA call acl api failed\n"
+    },
+    {
+      "case_idx": 18,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            8,
+            64,
+            64
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            8,
+            64,
+            64
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            8,
+            64,
+            64
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": 8
+        },
+        {
+          "type": "scalar",
+          "value": "BNSD"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": 1.0
+        },
+        {
+          "type": "scalar",
+          "value": 1.0
+        },
+        {
+          "type": "scalar",
+          "value": 2147483647
+        },
+        {
+          "type": "scalar",
+          "value": 2147483647
+        },
+        {
+          "type": "scalar",
+          "value": 0
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": 0
+        },
+        {
+          "type": "scalar",
+          "value": true
+        },
+        {
+          "type": "scalar",
+          "value": false
+        },
+        {
+          "type": "scalar",
+          "value": ""
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        }
+      ],
+      "error_type": "RuntimeError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 862, in run_single_case\n    inputs_for_impl = [\n                      ^\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 863, in <listcomp>\n    x.to(device) if isinstance(x, torch.Tensor) else x\n    ^^^^^^^^^^^^\nRuntimeError: copy_between_host_and_device_opapi:build/CMakeFiles/torch_npu.dir/compiler_depend.ts:58 NPU function error: SUSPECT REMOTE ERROR, error code is 507057\n[ERROR] 2026-08-30-06:21:21 (PID:2849921, Device:0, RankID:-1) ERR00100 PTA call acl api failed\n"
+    },
+    {
+      "case_idx": 19,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            128,
+            1024
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            128,
+            1024
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            128,
+            1024
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 8
+        },
+        {
+          "type": "scalar",
+          "value": "BSH"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": 0.08838
+        },
+        {
+          "type": "scalar",
+          "value": 1.0
+        },
+        {
+          "type": "scalar",
+          "value": 2147483647
+        },
+        {
+          "type": "scalar",
+          "value": 2147483647
+        },
+        {
+          "type": "scalar",
+          "value": 0
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": 0
+        },
+        {
+          "type": "scalar",
+          "value": true
+        },
+        {
+          "type": "scalar",
+          "value": false
+        },
+        {
+          "type": "scalar",
+          "value": ""
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        }
+      ],
+      "error_type": "RuntimeError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 862, in run_single_case\n    inputs_for_impl = [\n                      ^\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 863, in <listcomp>\n    x.to(device) if isinstance(x, torch.Tensor) else x\n    ^^^^^^^^^^^^\nRuntimeError: copy_between_host_and_device_opapi:build/CMakeFiles/torch_npu.dir/compiler_depend.ts:58 NPU function error: SUSPECT REMOTE ERROR, error code is 507057\n[ERROR] 2026-08-30-06:21:21 (PID:2849921, Device:0, RankID:-1) ERR00100 PTA call acl api failed\n"
+    },
+    {
+      "case_idx": 20,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            256,
+            2048
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            256,
+            2048
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            256,
+            2048
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 16
+        },
+        {
+          "type": "scalar",
+          "value": "BSH"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": 0.0625
+        },
+        {
+          "type": "scalar",
+          "value": 1.0
+        },
+        {
+          "type": "scalar",
+          "value": 2147483647
+        },
+        {
+          "type": "scalar",
+          "value": 2147483647
+        },
+        {
+          "type": "scalar",
+          "value": 0
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": 0
+        },
+        {
+          "type": "scalar",
+          "value": true
+        },
+        {
+          "type": "scalar",
+          "value": false
+        },
+        {
+          "type": "scalar",
+          "value": ""
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        }
+      ],
+      "error_type": "RuntimeError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 862, in run_single_case\n    inputs_for_impl = [\n                      ^\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 863, in <listcomp>\n    x.to(device) if isinstance(x, torch.Tensor) else x\n    ^^^^^^^^^^^^\nRuntimeError: copy_between_host_and_device_opapi:build/CMakeFiles/torch_npu.dir/compiler_depend.ts:58 NPU function error: SUSPECT REMOTE ERROR, error code is 507057\n[ERROR] 2026-08-30-06:21:21 (PID:2849921, Device:0, RankID:-1) ERR00100 PTA call acl api failed\n"
+    },
+    {
+      "case_idx": 21,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            8,
+            128,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            8,
+            128,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            8,
+            128,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 8
+        },
+        {
+          "type": "scalar",
+          "value": "BNSD"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": 0.08838
+        },
+        {
+          "type": "scalar",
+          "value": 1.0
+        },
+        {
+          "type": "scalar",
+          "value": 2147483647
+        },
+        {
+          "type": "scalar",
+          "value": 2147483647
+        },
+        {
+          "type": "scalar",
+          "value": 2
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": 0
+        },
+        {
+          "type": "scalar",
+          "value": true
+        },
+        {
+          "type": "scalar",
+          "value": false
+        },
+        {
+          "type": "scalar",
+          "value": ""
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        }
+      ],
+      "error_type": "RuntimeError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 862, in run_single_case\n    inputs_for_impl = [\n                      ^\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 863, in <listcomp>\n    x.to(device) if isinstance(x, torch.Tensor) else x\n    ^^^^^^^^^^^^\nRuntimeError: copy_between_host_and_device_opapi:build/CMakeFiles/torch_npu.dir/compiler_depend.ts:58 NPU function error: SUSPECT REMOTE ERROR, error code is 507057\n[ERROR] 2026-08-30-06:21:21 (PID:2849921, Device:0, RankID:-1) ERR00100 PTA call acl api failed\n"
+    },
+    {
+      "case_idx": 22,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            128,
+            1024
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            128,
+            1024
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            128,
+            1024
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 8
+        },
+        {
+          "type": "scalar",
+          "value": "BSH"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": 1.0
+        },
+        {
+          "type": "scalar",
+          "value": 1.0
+        },
+        {
+          "type": "scalar",
+          "value": 2147483647
+        },
+        {
+          "type": "scalar",
+          "value": 2147483647
+        },
+        {
+          "type": "scalar",
+          "value": 2
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": 0
+        },
+        {
+          "type": "scalar",
+          "value": true
+        },
+        {
+          "type": "scalar",
+          "value": false
+        },
+        {
+          "type": "scalar",
+          "value": ""
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        }
+      ],
+      "error_type": "RuntimeError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 862, in run_single_case\n    inputs_for_impl = [\n                      ^\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 863, in <listcomp>\n    x.to(device) if isinstance(x, torch.Tensor) else x\n    ^^^^^^^^^^^^\nRuntimeError: copy_between_host_and_device_opapi:build/CMakeFiles/torch_npu.dir/compiler_depend.ts:58 NPU function error: SUSPECT REMOTE ERROR, error code is 507057\n[ERROR] 2026-08-30-06:21:21 (PID:2849921, Device:0, RankID:-1) ERR00100 PTA call acl api failed\n"
+    },
+    {
+      "case_idx": 23,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            128,
+            1024
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            128,
+            1024
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            128,
+            1024
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "scalar",
+          "value": 8
+        },
+        {
+          "type": "scalar",
+          "value": "BSH"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": 1.0
+        },
+        {
+          "type": "scalar",
+          "value": 1.0
+        },
+        {
+          "type": "scalar",
+          "value": 2147483647
+        },
+        {
+          "type": "scalar",
+          "value": 2147483647
+        },
+        {
+          "type": "scalar",
+          "value": 0
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": 0
+        },
+        {
+          "type": "scalar",
+          "value": true
+        },
+        {
+          "type": "scalar",
+          "value": false
+        },
+        {
+          "type": "scalar",
+          "value": ""
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        }
+      ],
+      "error_type": "RuntimeError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 862, in run_single_case\n    inputs_for_impl = [\n                      ^\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 863, in <listcomp>\n    x.to(device) if isinstance(x, torch.Tensor) else x\n    ^^^^^^^^^^^^\nRuntimeError: copy_between_host_and_device_opapi:build/CMakeFiles/torch_npu.dir/compiler_depend.ts:58 NPU function error: SUSPECT REMOTE ERROR, error code is 507057\n[ERROR] 2026-08-30-06:21:21 (PID:2849921, Device:0, RankID:-1) ERR00100 PTA call acl api failed\n"
+    },
+    {
+      "case_idx": 24,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            128,
+            1024
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            128,
+            1024
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            128,
+            1024
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 8
+        },
+        {
+          "type": "scalar",
+          "value": "BSH"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            8,
+            128,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": 1.0
+        },
+        {
+          "type": "scalar",
+          "value": 1.0
+        },
+        {
+          "type": "scalar",
+          "value": 2147483647
+        },
+        {
+          "type": "scalar",
+          "value": 2147483647
+        },
+        {
+          "type": "scalar",
+          "value": 0
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": 0
+        },
+        {
+          "type": "scalar",
+          "value": true
+        },
+        {
+          "type": "scalar",
+          "value": false
+        },
+        {
+          "type": "scalar",
+          "value": ""
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        }
+      ],
+      "error_type": "RuntimeError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 862, in run_single_case\n    inputs_for_impl = [\n                      ^\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 863, in <listcomp>\n    x.to(device) if isinstance(x, torch.Tensor) else x\n    ^^^^^^^^^^^^\nRuntimeError: copy_between_host_and_device_opapi:build/CMakeFiles/torch_npu.dir/compiler_depend.ts:58 NPU function error: SUSPECT REMOTE ERROR, error code is 507057\n[ERROR] 2026-08-30-06:21:21 (PID:2849921, Device:0, RankID:-1) ERR00100 PTA call acl api failed\n"
+    },
+    {
+      "case_idx": 25,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            256,
+            2048
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            256,
+            2048
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            256,
+            2048
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 16
+        },
+        {
+          "type": "scalar",
+          "value": "BSH"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            16,
+            256,
+            256
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": 1.0
+        },
+        {
+          "type": "scalar",
+          "value": 1.0
+        },
+        {
+          "type": "scalar",
+          "value": 2147483647
+        },
+        {
+          "type": "scalar",
+          "value": 2147483647
+        },
+        {
+          "type": "scalar",
+          "value": 0
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": 0
+        },
+        {
+          "type": "scalar",
+          "value": true
+        },
+        {
+          "type": "scalar",
+          "value": false
+        },
+        {
+          "type": "scalar",
+          "value": ""
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        }
+      ],
+      "error_type": "RuntimeError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 862, in run_single_case\n    inputs_for_impl = [\n                      ^\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 863, in <listcomp>\n    x.to(device) if isinstance(x, torch.Tensor) else x\n    ^^^^^^^^^^^^\nRuntimeError: copy_between_host_and_device_opapi:build/CMakeFiles/torch_npu.dir/compiler_depend.ts:58 NPU function error: SUSPECT REMOTE ERROR, error code is 507057\n[ERROR] 2026-08-30-06:21:22 (PID:2849921, Device:0, RankID:-1) ERR00100 PTA call acl api failed\n"
+    },
+    {
+      "case_idx": 26,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            128,
+            1024
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            128,
+            1024
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            128,
+            1024
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "scalar",
+          "value": 8
+        },
+        {
+          "type": "scalar",
+          "value": "BSH"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            8,
+            128,
+            128
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": 1.0
+        },
+        {
+          "type": "scalar",
+          "value": 1.0
+        },
+        {
+          "type": "scalar",
+          "value": 2147483647
+        },
+        {
+          "type": "scalar",
+          "value": 2147483647
+        },
+        {
+          "type": "scalar",
+          "value": 0
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": 0
+        },
+        {
+          "type": "scalar",
+          "value": true
+        },
+        {
+          "type": "scalar",
+          "value": false
+        },
+        {
+          "type": "scalar",
+          "value": ""
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        }
+      ],
+      "error_type": "RuntimeError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 862, in run_single_case\n    inputs_for_impl = [\n                      ^\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 863, in <listcomp>\n    x.to(device) if isinstance(x, torch.Tensor) else x\n    ^^^^^^^^^^^^\nRuntimeError: copy_between_host_and_device_opapi:build/CMakeFiles/torch_npu.dir/compiler_depend.ts:58 NPU function error: SUSPECT REMOTE ERROR, error code is 507057\n[ERROR] 2026-08-30-06:21:22 (PID:2849921, Device:0, RankID:-1) ERR00100 PTA call acl api failed\n"
+    },
+    {
+      "case_idx": 27,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            8,
+            128,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            8,
+            128,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            8,
+            128,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 8
+        },
+        {
+          "type": "scalar",
+          "value": "BNSD"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            8,
+            128,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": 1.0
+        },
+        {
+          "type": "scalar",
+          "value": 1.0
+        },
+        {
+          "type": "scalar",
+          "value": 2147483647
+        },
+        {
+          "type": "scalar",
+          "value": 2147483647
+        },
+        {
+          "type": "scalar",
+          "value": 0
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": 0
+        },
+        {
+          "type": "scalar",
+          "value": true
+        },
+        {
+          "type": "scalar",
+          "value": false
+        },
+        {
+          "type": "scalar",
+          "value": ""
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        }
+      ],
+      "error_type": "RuntimeError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 862, in run_single_case\n    inputs_for_impl = [\n                      ^\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 863, in <listcomp>\n    x.to(device) if isinstance(x, torch.Tensor) else x\n    ^^^^^^^^^^^^\nRuntimeError: copy_between_host_and_device_opapi:build/CMakeFiles/torch_npu.dir/compiler_depend.ts:58 NPU function error: SUSPECT REMOTE ERROR, error code is 507057\n[ERROR] 2026-08-30-06:21:22 (PID:2849921, Device:0, RankID:-1) ERR00100 PTA call acl api failed\n"
+    },
+    {
+      "case_idx": 28,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            128,
+            1024
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            128,
+            1024
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            128,
+            1024
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 8
+        },
+        {
+          "type": "scalar",
+          "value": "BSH"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": 1.0
+        },
+        {
+          "type": "scalar",
+          "value": 1.0
+        },
+        {
+          "type": "scalar",
+          "value": 2147483647
+        },
+        {
+          "type": "scalar",
+          "value": 2147483647
+        },
+        {
+          "type": "scalar",
+          "value": 0
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": 0
+        },
+        {
+          "type": "scalar",
+          "value": true
+        },
+        {
+          "type": "scalar",
+          "value": false
+        },
+        {
+          "type": "scalar",
+          "value": ""
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            8
+          ],
+          "dtype": "torch.float32"
+        }
+      ],
+      "error_type": "RuntimeError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 862, in run_single_case\n    inputs_for_impl = [\n                      ^\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 863, in <listcomp>\n    x.to(device) if isinstance(x, torch.Tensor) else x\n    ^^^^^^^^^^^^\nRuntimeError: copy_between_host_and_device_opapi:build/CMakeFiles/torch_npu.dir/compiler_depend.ts:58 NPU function error: SUSPECT REMOTE ERROR, error code is 507057\n[ERROR] 2026-08-30-06:21:22 (PID:2849921, Device:0, RankID:-1) ERR00100 PTA call acl api failed\n"
+    },
+    {
+      "case_idx": 29,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            256,
+            2048
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            256,
+            2048
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            256,
+            2048
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 16
+        },
+        {
+          "type": "scalar",
+          "value": "BSH"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": 1.0
+        },
+        {
+          "type": "scalar",
+          "value": 1.0
+        },
+        {
+          "type": "scalar",
+          "value": 2147483647
+        },
+        {
+          "type": "scalar",
+          "value": 2147483647
+        },
+        {
+          "type": "scalar",
+          "value": 0
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": 0
+        },
+        {
+          "type": "scalar",
+          "value": true
+        },
+        {
+          "type": "scalar",
+          "value": false
+        },
+        {
+          "type": "scalar",
+          "value": ""
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            16
+          ],
+          "dtype": "torch.float32"
+        }
+      ],
+      "error_type": "RuntimeError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 862, in run_single_case\n    inputs_for_impl = [\n                      ^\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 863, in <listcomp>\n    x.to(device) if isinstance(x, torch.Tensor) else x\n    ^^^^^^^^^^^^\nRuntimeError: copy_between_host_and_device_opapi:build/CMakeFiles/torch_npu.dir/compiler_depend.ts:58 NPU function error: SUSPECT REMOTE ERROR, error code is 507057\n[ERROR] 2026-08-30-06:21:22 (PID:2849921, Device:0, RankID:-1) ERR00100 PTA call acl api failed\n"
+    },
+    {
+      "case_idx": 30,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            8,
+            128,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            8,
+            128,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            8,
+            128,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 8
+        },
+        {
+          "type": "scalar",
+          "value": "BNSD"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": 1.0
+        },
+        {
+          "type": "scalar",
+          "value": 1.0
+        },
+        {
+          "type": "scalar",
+          "value": 2147483647
+        },
+        {
+          "type": "scalar",
+          "value": 2147483647
+        },
+        {
+          "type": "scalar",
+          "value": 0
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": 0
+        },
+        {
+          "type": "scalar",
+          "value": true
+        },
+        {
+          "type": "scalar",
+          "value": false
+        },
+        {
+          "type": "scalar",
+          "value": ""
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            8
+          ],
+          "dtype": "torch.float32"
+        }
+      ],
+      "error_type": "RuntimeError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 862, in run_single_case\n    inputs_for_impl = [\n                      ^\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 863, in <listcomp>\n    x.to(device) if isinstance(x, torch.Tensor) else x\n    ^^^^^^^^^^^^\nRuntimeError: copy_between_host_and_device_opapi:build/CMakeFiles/torch_npu.dir/compiler_depend.ts:58 NPU function error: SUSPECT REMOTE ERROR, error code is 507057\n[ERROR] 2026-08-30-06:21:22 (PID:2849921, Device:0, RankID:-1) ERR00100 PTA call acl api failed\n"
+    },
+    {
+      "case_idx": 31,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            8,
+            128,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            8,
+            128,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            8,
+            128,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 8
+        },
+        {
+          "type": "scalar",
+          "value": "BNSD"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            8,
+            128,
+            128
+          ],
+          "dtype": "torch.bool"
+        },
+        {
+          "type": "scalar",
+          "value": 1.0
+        },
+        {
+          "type": "scalar",
+          "value": 1.0
+        },
+        {
+          "type": "scalar",
+          "value": 2147483647
+        },
+        {
+          "type": "scalar",
+          "value": 2147483647
+        },
+        {
+          "type": "scalar",
+          "value": 0
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        },
+        {
+          "type": "scalar",
+          "value": true
+        },
+        {
+          "type": "scalar",
+          "value": false
+        },
+        {
+          "type": "scalar",
+          "value": ""
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        }
+      ],
+      "error_type": "RuntimeError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 862, in run_single_case\n    inputs_for_impl = [\n                      ^\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 863, in <listcomp>\n    x.to(device) if isinstance(x, torch.Tensor) else x\n    ^^^^^^^^^^^^\nRuntimeError: copy_between_host_and_device_opapi:build/CMakeFiles/torch_npu.dir/compiler_depend.ts:58 NPU function error: SUSPECT REMOTE ERROR, error code is 507057\n[ERROR] 2026-08-30-06:21:22 (PID:2849921, Device:0, RankID:-1) ERR00100 PTA call acl api failed\n"
+    },
+    {
+      "case_idx": 32,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            16,
+            256,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            16,
+            256,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            16,
+            256,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 16
+        },
+        {
+          "type": "scalar",
+          "value": "BNSD"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            16,
+            256,
+            256
+          ],
+          "dtype": "torch.bool"
+        },
+        {
+          "type": "scalar",
+          "value": 1.0
+        },
+        {
+          "type": "scalar",
+          "value": 1.0
+        },
+        {
+          "type": "scalar",
+          "value": 2147483647
+        },
+        {
+          "type": "scalar",
+          "value": 2147483647
+        },
+        {
+          "type": "scalar",
+          "value": 0
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        },
+        {
+          "type": "scalar",
+          "value": true
+        },
+        {
+          "type": "scalar",
+          "value": false
+        },
+        {
+          "type": "scalar",
+          "value": ""
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        }
+      ],
+      "error_type": "RuntimeError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 862, in run_single_case\n    inputs_for_impl = [\n                      ^\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 863, in <listcomp>\n    x.to(device) if isinstance(x, torch.Tensor) else x\n    ^^^^^^^^^^^^\nRuntimeError: copy_between_host_and_device_opapi:build/CMakeFiles/torch_npu.dir/compiler_depend.ts:58 NPU function error: SUSPECT REMOTE ERROR, error code is 507057\n[ERROR] 2026-08-30-06:21:22 (PID:2849921, Device:0, RankID:-1) ERR00100 PTA call acl api failed\n"
+    },
+    {
+      "case_idx": 33,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            8,
+            128,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            8,
+            128,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            8,
+            128,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 8
+        },
+        {
+          "type": "scalar",
+          "value": "BNSD"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": 0.08838
+        },
+        {
+          "type": "scalar",
+          "value": 1.0
+        },
+        {
+          "type": "scalar",
+          "value": 128
+        },
+        {
+          "type": "scalar",
+          "value": 0
+        },
+        {
+          "type": "scalar",
+          "value": 0
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": 0
+        },
+        {
+          "type": "scalar",
+          "value": true
+        },
+        {
+          "type": "scalar",
+          "value": false
+        },
+        {
+          "type": "scalar",
+          "value": ""
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        }
+      ],
+      "error_type": "RuntimeError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 862, in run_single_case\n    inputs_for_impl = [\n                      ^\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 863, in <listcomp>\n    x.to(device) if isinstance(x, torch.Tensor) else x\n    ^^^^^^^^^^^^\nRuntimeError: copy_between_host_and_device_opapi:build/CMakeFiles/torch_npu.dir/compiler_depend.ts:58 NPU function error: SUSPECT REMOTE ERROR, error code is 507057\n[ERROR] 2026-08-30-06:21:22 (PID:2849921, Device:0, RankID:-1) ERR00100 PTA call acl api failed\n"
+    },
+    {
+      "case_idx": 34,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            16,
+            256,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            16,
+            256,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            16,
+            256,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 16
+        },
+        {
+          "type": "scalar",
+          "value": "BNSD"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": 0.0625
+        },
+        {
+          "type": "scalar",
+          "value": 1.0
+        },
+        {
+          "type": "scalar",
+          "value": 256
+        },
+        {
+          "type": "scalar",
+          "value": 0
+        },
+        {
+          "type": "scalar",
+          "value": 0
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": 0
+        },
+        {
+          "type": "scalar",
+          "value": true
+        },
+        {
+          "type": "scalar",
+          "value": false
+        },
+        {
+          "type": "scalar",
+          "value": ""
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        }
+      ],
+      "error_type": "RuntimeError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 862, in run_single_case\n    inputs_for_impl = [\n                      ^\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 863, in <listcomp>\n    x.to(device) if isinstance(x, torch.Tensor) else x\n    ^^^^^^^^^^^^\nRuntimeError: copy_between_host_and_device_opapi:build/CMakeFiles/torch_npu.dir/compiler_depend.ts:58 NPU function error: SUSPECT REMOTE ERROR, error code is 507057\n[ERROR] 2026-08-30-06:21:22 (PID:2849921, Device:0, RankID:-1) ERR00100 PTA call acl api failed\n"
+    },
+    {
+      "case_idx": 35,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            8,
+            128,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            8,
+            128,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            8,
+            128,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 8
+        },
+        {
+          "type": "scalar",
+          "value": "BNSD"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": 0.08838
+        },
+        {
+          "type": "scalar",
+          "value": 1.0
+        },
+        {
+          "type": "scalar",
+          "value": 64
+        },
+        {
+          "type": "scalar",
+          "value": 64
+        },
+        {
+          "type": "scalar",
+          "value": 0
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": 0
+        },
+        {
+          "type": "scalar",
+          "value": true
+        },
+        {
+          "type": "scalar",
+          "value": false
+        },
+        {
+          "type": "scalar",
+          "value": ""
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        }
+      ],
+      "error_type": "RuntimeError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 862, in run_single_case\n    inputs_for_impl = [\n                      ^\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 863, in <listcomp>\n    x.to(device) if isinstance(x, torch.Tensor) else x\n    ^^^^^^^^^^^^\nRuntimeError: copy_between_host_and_device_opapi:build/CMakeFiles/torch_npu.dir/compiler_depend.ts:58 NPU function error: SUSPECT REMOTE ERROR, error code is 507057\n[ERROR] 2026-08-30-06:21:22 (PID:2849921, Device:0, RankID:-1) ERR00100 PTA call acl api failed\n"
+    },
+    {
+      "case_idx": 36,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            8,
+            128,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            8,
+            128,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            8,
+            128,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 8
+        },
+        {
+          "type": "scalar",
+          "value": "BNSD"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": 0.08838
+        },
+        {
+          "type": "scalar",
+          "value": 1.0
+        },
+        {
+          "type": "scalar",
+          "value": 64
+        },
+        {
+          "type": "scalar",
+          "value": 64
+        },
+        {
+          "type": "scalar",
+          "value": 0
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": 4
+        },
+        {
+          "type": "scalar",
+          "value": true
+        },
+        {
+          "type": "scalar",
+          "value": false
+        },
+        {
+          "type": "scalar",
+          "value": ""
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        }
+      ],
+      "error_type": "RuntimeError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 862, in run_single_case\n    inputs_for_impl = [\n                      ^\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 863, in <listcomp>\n    x.to(device) if isinstance(x, torch.Tensor) else x\n    ^^^^^^^^^^^^\nRuntimeError: copy_between_host_and_device_opapi:build/CMakeFiles/torch_npu.dir/compiler_depend.ts:58 NPU function error: SUSPECT REMOTE ERROR, error code is 507057\n[ERROR] 2026-08-30-06:21:23 (PID:2849921, Device:0, RankID:-1) ERR00100 PTA call acl api failed\n"
+    },
+    {
+      "case_idx": 37,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            8,
+            128,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            8,
+            128,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            8,
+            128,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 8
+        },
+        {
+          "type": "scalar",
+          "value": "BNSD"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": 0.08838
+        },
+        {
+          "type": "scalar",
+          "value": 1.0
+        },
+        {
+          "type": "scalar",
+          "value": 128
+        },
+        {
+          "type": "scalar",
+          "value": 128
+        },
+        {
+          "type": "scalar",
+          "value": 0
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": 0
+        },
+        {
+          "type": "scalar",
+          "value": true
+        },
+        {
+          "type": "scalar",
+          "value": false
+        },
+        {
+          "type": "scalar",
+          "value": ""
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        }
+      ],
+      "error_type": "RuntimeError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 862, in run_single_case\n    inputs_for_impl = [\n                      ^\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 863, in <listcomp>\n    x.to(device) if isinstance(x, torch.Tensor) else x\n    ^^^^^^^^^^^^\nRuntimeError: copy_between_host_and_device_opapi:build/CMakeFiles/torch_npu.dir/compiler_depend.ts:58 NPU function error: SUSPECT REMOTE ERROR, error code is 507057\n[ERROR] 2026-08-30-06:21:23 (PID:2849921, Device:0, RankID:-1) ERR00100 PTA call acl api failed\n"
+    },
+    {
+      "case_idx": 38,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            128,
+            4096
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            128,
+            1024
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            128,
+            1024
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 8
+        },
+        {
+          "type": "scalar",
+          "value": "BSH"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": 0.08838
+        },
+        {
+          "type": "scalar",
+          "value": 1.0
+        },
+        {
+          "type": "scalar",
+          "value": 2147483647
+        },
+        {
+          "type": "scalar",
+          "value": 2147483647
+        },
+        {
+          "type": "scalar",
+          "value": 0
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": 0
+        },
+        {
+          "type": "scalar",
+          "value": true
+        },
+        {
+          "type": "scalar",
+          "value": false
+        },
+        {
+          "type": "scalar",
+          "value": ""
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        }
+      ],
+      "error_type": "RuntimeError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 862, in run_single_case\n    inputs_for_impl = [\n                      ^\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 863, in <listcomp>\n    x.to(device) if isinstance(x, torch.Tensor) else x\n    ^^^^^^^^^^^^\nRuntimeError: copy_between_host_and_device_opapi:build/CMakeFiles/torch_npu.dir/compiler_depend.ts:58 NPU function error: SUSPECT REMOTE ERROR, error code is 507057\n[ERROR] 2026-08-30-06:21:23 (PID:2849921, Device:0, RankID:-1) ERR00100 PTA call acl api failed\n"
+    },
+    {
+      "case_idx": 39,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            256,
+            8192
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            256,
+            2048
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            256,
+            2048
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 16
+        },
+        {
+          "type": "scalar",
+          "value": "BSH"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": 0.0625
+        },
+        {
+          "type": "scalar",
+          "value": 1.0
+        },
+        {
+          "type": "scalar",
+          "value": 2147483647
+        },
+        {
+          "type": "scalar",
+          "value": 2147483647
+        },
+        {
+          "type": "scalar",
+          "value": 0
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": 0
+        },
+        {
+          "type": "scalar",
+          "value": true
+        },
+        {
+          "type": "scalar",
+          "value": false
+        },
+        {
+          "type": "scalar",
+          "value": ""
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        }
+      ],
+      "error_type": "RuntimeError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 862, in run_single_case\n    inputs_for_impl = [\n                      ^\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 863, in <listcomp>\n    x.to(device) if isinstance(x, torch.Tensor) else x\n    ^^^^^^^^^^^^\nRuntimeError: copy_between_host_and_device_opapi:build/CMakeFiles/torch_npu.dir/compiler_depend.ts:58 NPU function error: SUSPECT REMOTE ERROR, error code is 507057\n[ERROR] 2026-08-30-06:21:23 (PID:2849921, Device:0, RankID:-1) ERR00100 PTA call acl api failed\n"
+    },
+    {
+      "case_idx": 40,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            128,
+            4096
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            128,
+            1024
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            128,
+            1024
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "scalar",
+          "value": 8
+        },
+        {
+          "type": "scalar",
+          "value": "BSH"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": 1.0
+        },
+        {
+          "type": "scalar",
+          "value": 1.0
+        },
+        {
+          "type": "scalar",
+          "value": 2147483647
+        },
+        {
+          "type": "scalar",
+          "value": 2147483647
+        },
+        {
+          "type": "scalar",
+          "value": 0
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": 0
+        },
+        {
+          "type": "scalar",
+          "value": true
+        },
+        {
+          "type": "scalar",
+          "value": false
+        },
+        {
+          "type": "scalar",
+          "value": ""
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        }
+      ],
+      "error_type": "RuntimeError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 862, in run_single_case\n    inputs_for_impl = [\n                      ^\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 863, in <listcomp>\n    x.to(device) if isinstance(x, torch.Tensor) else x\n    ^^^^^^^^^^^^\nRuntimeError: copy_between_host_and_device_opapi:build/CMakeFiles/torch_npu.dir/compiler_depend.ts:58 NPU function error: SUSPECT REMOTE ERROR, error code is 507057\n[ERROR] 2026-08-30-06:21:23 (PID:2849921, Device:0, RankID:-1) ERR00100 PTA call acl api failed\n"
+    },
+    {
+      "case_idx": 41,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            128,
+            4096
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            128,
+            1024
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            128,
+            1024
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 8
+        },
+        {
+          "type": "scalar",
+          "value": "BSH"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": 0.08838
+        },
+        {
+          "type": "scalar",
+          "value": 1.0
+        },
+        {
+          "type": "scalar",
+          "value": 2147483647
+        },
+        {
+          "type": "scalar",
+          "value": 2147483647
+        },
+        {
+          "type": "scalar",
+          "value": 2
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": 0
+        },
+        {
+          "type": "scalar",
+          "value": true
+        },
+        {
+          "type": "scalar",
+          "value": false
+        },
+        {
+          "type": "scalar",
+          "value": ""
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        }
+      ],
+      "error_type": "RuntimeError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 862, in run_single_case\n    inputs_for_impl = [\n                      ^\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 863, in <listcomp>\n    x.to(device) if isinstance(x, torch.Tensor) else x\n    ^^^^^^^^^^^^\nRuntimeError: copy_between_host_and_device_opapi:build/CMakeFiles/torch_npu.dir/compiler_depend.ts:58 NPU function error: SUSPECT REMOTE ERROR, error code is 507057\n[ERROR] 2026-08-30-06:21:23 (PID:2849921, Device:0, RankID:-1) ERR00100 PTA call acl api failed\n"
+    },
+    {
+      "case_idx": 42,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            128,
+            1024
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            128,
+            1024
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            128,
+            1024
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 8
+        },
+        {
+          "type": "scalar",
+          "value": "BSH"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": 1.0
+        },
+        {
+          "type": "scalar",
+          "value": 0.9
+        },
+        {
+          "type": "scalar",
+          "value": 2147483647
+        },
+        {
+          "type": "scalar",
+          "value": 2147483647
+        },
+        {
+          "type": "scalar",
+          "value": 0
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": 0
+        },
+        {
+          "type": "scalar",
+          "value": true
+        },
+        {
+          "type": "scalar",
+          "value": false
+        },
+        {
+          "type": "scalar",
+          "value": ""
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        }
+      ],
+      "error_type": "RuntimeError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 862, in run_single_case\n    inputs_for_impl = [\n                      ^\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 863, in <listcomp>\n    x.to(device) if isinstance(x, torch.Tensor) else x\n    ^^^^^^^^^^^^\nRuntimeError: copy_between_host_and_device_opapi:build/CMakeFiles/torch_npu.dir/compiler_depend.ts:58 NPU function error: SUSPECT REMOTE ERROR, error code is 507057\n[ERROR] 2026-08-30-06:21:23 (PID:2849921, Device:0, RankID:-1) ERR00100 PTA call acl api failed\n"
+    },
+    {
+      "case_idx": 43,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            256,
+            2048
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            256,
+            2048
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            256,
+            2048
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 16
+        },
+        {
+          "type": "scalar",
+          "value": "BSH"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": 1.0
+        },
+        {
+          "type": "scalar",
+          "value": 0.85
+        },
+        {
+          "type": "scalar",
+          "value": 2147483647
+        },
+        {
+          "type": "scalar",
+          "value": 2147483647
+        },
+        {
+          "type": "scalar",
+          "value": 0
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": 0
+        },
+        {
+          "type": "scalar",
+          "value": true
+        },
+        {
+          "type": "scalar",
+          "value": false
+        },
+        {
+          "type": "scalar",
+          "value": ""
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        }
+      ],
+      "error_type": "RuntimeError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 862, in run_single_case\n    inputs_for_impl = [\n                      ^\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 863, in <listcomp>\n    x.to(device) if isinstance(x, torch.Tensor) else x\n    ^^^^^^^^^^^^\nRuntimeError: copy_between_host_and_device_opapi:build/CMakeFiles/torch_npu.dir/compiler_depend.ts:58 NPU function error: SUSPECT REMOTE ERROR, error code is 507057\n[ERROR] 2026-08-30-06:21:23 (PID:2849921, Device:0, RankID:-1) ERR00100 PTA call acl api failed\n"
+    },
+    {
+      "case_idx": 44,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            8,
+            128,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            8,
+            128,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            8,
+            128,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 8
+        },
+        {
+          "type": "scalar",
+          "value": "BNSD"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": 1.0
+        },
+        {
+          "type": "scalar",
+          "value": 0.9
+        },
+        {
+          "type": "scalar",
+          "value": 2147483647
+        },
+        {
+          "type": "scalar",
+          "value": 2147483647
+        },
+        {
+          "type": "scalar",
+          "value": 0
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": 0
+        },
+        {
+          "type": "scalar",
+          "value": true
+        },
+        {
+          "type": "scalar",
+          "value": false
+        },
+        {
+          "type": "scalar",
+          "value": ""
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        }
+      ],
+      "error_type": "RuntimeError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 862, in run_single_case\n    inputs_for_impl = [\n                      ^\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 863, in <listcomp>\n    x.to(device) if isinstance(x, torch.Tensor) else x\n    ^^^^^^^^^^^^\nRuntimeError: copy_between_host_and_device_opapi:build/CMakeFiles/torch_npu.dir/compiler_depend.ts:58 NPU function error: SUSPECT REMOTE ERROR, error code is 507057\n[ERROR] 2026-08-30-06:21:23 (PID:2849921, Device:0, RankID:-1) ERR00100 PTA call acl api failed\n"
+    },
+    {
+      "case_idx": 45,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            8,
+            128,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            8,
+            128,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            8,
+            128,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 8
+        },
+        {
+          "type": "scalar",
+          "value": "BNSD"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": 1.0
+        },
+        {
+          "type": "scalar",
+          "value": 0.9
+        },
+        {
+          "type": "scalar",
+          "value": 2147483647
+        },
+        {
+          "type": "scalar",
+          "value": 2147483647
+        },
+        {
+          "type": "scalar",
+          "value": 0
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": 0
+        },
+        {
+          "type": "scalar",
+          "value": false
+        },
+        {
+          "type": "scalar",
+          "value": true
+        },
+        {
+          "type": "scalar",
+          "value": ""
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        }
+      ],
+      "error_type": "RuntimeError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 862, in run_single_case\n    inputs_for_impl = [\n                      ^\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 863, in <listcomp>\n    x.to(device) if isinstance(x, torch.Tensor) else x\n    ^^^^^^^^^^^^\nRuntimeError: copy_between_host_and_device_opapi:build/CMakeFiles/torch_npu.dir/compiler_depend.ts:58 NPU function error: SUSPECT REMOTE ERROR, error code is 507057\n[ERROR] 2026-08-30-06:21:23 (PID:2849921, Device:0, RankID:-1) ERR00100 PTA call acl api failed\n"
+    },
+    {
+      "case_idx": 46,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            8,
+            128,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            8,
+            128,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            8,
+            128,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 8
+        },
+        {
+          "type": "scalar",
+          "value": "BNSD"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            8,
+            128,
+            128
+          ],
+          "dtype": "torch.bool"
+        },
+        {
+          "type": "scalar",
+          "value": 1.0
+        },
+        {
+          "type": "scalar",
+          "value": 1.0
+        },
+        {
+          "type": "scalar",
+          "value": 2147483647
+        },
+        {
+          "type": "scalar",
+          "value": 2147483647
+        },
+        {
+          "type": "scalar",
+          "value": 0
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        },
+        {
+          "type": "scalar",
+          "value": true
+        },
+        {
+          "type": "scalar",
+          "value": false
+        },
+        {
+          "type": "scalar",
+          "value": ""
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            8
+          ],
+          "dtype": "torch.float32"
+        }
+      ],
+      "error_type": "RuntimeError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 862, in run_single_case\n    inputs_for_impl = [\n                      ^\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 863, in <listcomp>\n    x.to(device) if isinstance(x, torch.Tensor) else x\n    ^^^^^^^^^^^^\nRuntimeError: copy_between_host_and_device_opapi:build/CMakeFiles/torch_npu.dir/compiler_depend.ts:58 NPU function error: SUSPECT REMOTE ERROR, error code is 507057\n[ERROR] 2026-08-30-06:21:23 (PID:2849921, Device:0, RankID:-1) ERR00100 PTA call acl api failed\n"
+    },
+    {
+      "case_idx": 47,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            8,
+            128,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            8,
+            128,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            8,
+            128,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 8
+        },
+        {
+          "type": "scalar",
+          "value": "BNSD"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            8,
+            128,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": 1.0
+        },
+        {
+          "type": "scalar",
+          "value": 1.0
+        },
+        {
+          "type": "scalar",
+          "value": 2147483647
+        },
+        {
+          "type": "scalar",
+          "value": 2147483647
+        },
+        {
+          "type": "scalar",
+          "value": 0
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": 0
+        },
+        {
+          "type": "scalar",
+          "value": true
+        },
+        {
+          "type": "scalar",
+          "value": false
+        },
+        {
+          "type": "scalar",
+          "value": ""
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            8
+          ],
+          "dtype": "torch.float32"
+        }
+      ],
+      "error_type": "RuntimeError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 862, in run_single_case\n    inputs_for_impl = [\n                      ^\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 863, in <listcomp>\n    x.to(device) if isinstance(x, torch.Tensor) else x\n    ^^^^^^^^^^^^\nRuntimeError: copy_between_host_and_device_opapi:build/CMakeFiles/torch_npu.dir/compiler_depend.ts:58 NPU function error: SUSPECT REMOTE ERROR, error code is 507057\n[ERROR] 2026-08-30-06:21:24 (PID:2849921, Device:0, RankID:-1) ERR00100 PTA call acl api failed\n"
+    },
+    {
+      "case_idx": 48,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            8,
+            128,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            8,
+            128,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            8,
+            128,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 8
+        },
+        {
+          "type": "scalar",
+          "value": "BNSD"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            8,
+            128,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": 0.08838
+        },
+        {
+          "type": "scalar",
+          "value": 1.0
+        },
+        {
+          "type": "scalar",
+          "value": 2147483647
+        },
+        {
+          "type": "scalar",
+          "value": 2147483647
+        },
+        {
+          "type": "scalar",
+          "value": 2
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": 0
+        },
+        {
+          "type": "scalar",
+          "value": true
+        },
+        {
+          "type": "scalar",
+          "value": false
+        },
+        {
+          "type": "scalar",
+          "value": ""
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        }
+      ],
+      "error_type": "RuntimeError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 862, in run_single_case\n    inputs_for_impl = [\n                      ^\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 863, in <listcomp>\n    x.to(device) if isinstance(x, torch.Tensor) else x\n    ^^^^^^^^^^^^\nRuntimeError: copy_between_host_and_device_opapi:build/CMakeFiles/torch_npu.dir/compiler_depend.ts:58 NPU function error: SUSPECT REMOTE ERROR, error code is 507057\n[ERROR] 2026-08-30-06:21:24 (PID:2849921, Device:0, RankID:-1) ERR00100 PTA call acl api failed\n"
+    },
+    {
+      "case_idx": 49,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            128,
+            4096
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            128,
+            1024
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            128,
+            1024
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 8
+        },
+        {
+          "type": "scalar",
+          "value": "BSH"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": 0.08838
+        },
+        {
+          "type": "scalar",
+          "value": 1.0
+        },
+        {
+          "type": "scalar",
+          "value": 2147483647
+        },
+        {
+          "type": "scalar",
+          "value": 2147483647
+        },
+        {
+          "type": "scalar",
+          "value": 2
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": 0
+        },
+        {
+          "type": "scalar",
+          "value": true
+        },
+        {
+          "type": "scalar",
+          "value": false
+        },
+        {
+          "type": "scalar",
+          "value": ""
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        }
+      ],
+      "error_type": "RuntimeError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 862, in run_single_case\n    inputs_for_impl = [\n                      ^\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 863, in <listcomp>\n    x.to(device) if isinstance(x, torch.Tensor) else x\n    ^^^^^^^^^^^^\nRuntimeError: copy_between_host_and_device_opapi:build/CMakeFiles/torch_npu.dir/compiler_depend.ts:58 NPU function error: SUSPECT REMOTE ERROR, error code is 507057\n[ERROR] 2026-08-30-06:21:24 (PID:2849921, Device:0, RankID:-1) ERR00100 PTA call acl api failed\n"
+    },
+    {
+      "case_idx": 50,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            8,
+            128,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            8,
+            128,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            8,
+            128,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 8
+        },
+        {
+          "type": "scalar",
+          "value": "BNSD"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": 1.0
+        },
+        {
+          "type": "scalar",
+          "value": 1.0
+        },
+        {
+          "type": "scalar",
+          "value": 2147483647
+        },
+        {
+          "type": "scalar",
+          "value": 2147483647
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": 0
+        },
+        {
+          "type": "scalar",
+          "value": true
+        },
+        {
+          "type": "scalar",
+          "value": false
+        },
+        {
+          "type": "scalar",
+          "value": ""
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        }
+      ],
+      "error_type": "RuntimeError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 862, in run_single_case\n    inputs_for_impl = [\n                      ^\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 863, in <listcomp>\n    x.to(device) if isinstance(x, torch.Tensor) else x\n    ^^^^^^^^^^^^\nRuntimeError: copy_between_host_and_device_opapi:build/CMakeFiles/torch_npu.dir/compiler_depend.ts:58 NPU function error: SUSPECT REMOTE ERROR, error code is 507057\n[ERROR] 2026-08-30-06:21:24 (PID:2849921, Device:0, RankID:-1) ERR00100 PTA call acl api failed\n"
+    },
+    {
+      "case_idx": 51,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            128,
+            1024
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            128,
+            1024
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            128,
+            1024
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 8
+        },
+        {
+          "type": "scalar",
+          "value": "BSH"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": 1.0
+        },
+        {
+          "type": "scalar",
+          "value": 1.0
+        },
+        {
+          "type": "scalar",
+          "value": 2147483647
+        },
+        {
+          "type": "scalar",
+          "value": 2147483647
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": 0
+        },
+        {
+          "type": "scalar",
+          "value": true
+        },
+        {
+          "type": "scalar",
+          "value": false
+        },
+        {
+          "type": "scalar",
+          "value": ""
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        }
+      ],
+      "error_type": "RuntimeError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 862, in run_single_case\n    inputs_for_impl = [\n                      ^\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 863, in <listcomp>\n    x.to(device) if isinstance(x, torch.Tensor) else x\n    ^^^^^^^^^^^^\nRuntimeError: copy_between_host_and_device_opapi:build/CMakeFiles/torch_npu.dir/compiler_depend.ts:58 NPU function error: SUSPECT REMOTE ERROR, error code is 507057\n[ERROR] 2026-08-30-06:21:24 (PID:2849921, Device:0, RankID:-1) ERR00100 PTA call acl api failed\n"
+    },
+    {
+      "case_idx": 52,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            8,
+            128,
+            128
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            8,
+            128,
+            128
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            8,
+            128,
+            128
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "scalar",
+          "value": 8
+        },
+        {
+          "type": "scalar",
+          "value": "BNSD"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": 1.0
+        },
+        {
+          "type": "scalar",
+          "value": 1.0
+        },
+        {
+          "type": "scalar",
+          "value": 2147483647
+        },
+        {
+          "type": "scalar",
+          "value": 2147483647
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": 0
+        },
+        {
+          "type": "scalar",
+          "value": true
+        },
+        {
+          "type": "scalar",
+          "value": false
+        },
+        {
+          "type": "scalar",
+          "value": ""
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        }
+      ],
+      "error_type": "RuntimeError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 862, in run_single_case\n    inputs_for_impl = [\n                      ^\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 863, in <listcomp>\n    x.to(device) if isinstance(x, torch.Tensor) else x\n    ^^^^^^^^^^^^\nRuntimeError: copy_between_host_and_device_opapi:build/CMakeFiles/torch_npu.dir/compiler_depend.ts:58 NPU function error: SUSPECT REMOTE ERROR, error code is 507057\n[ERROR] 2026-08-30-06:21:24 (PID:2849921, Device:0, RankID:-1) ERR00100 PTA call acl api failed\n"
+    },
+    {
+      "case_idx": 53,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            8,
+            128,
+            64
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            8,
+            128,
+            64
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            8,
+            128,
+            64
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 8
+        },
+        {
+          "type": "scalar",
+          "value": "BNSD"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": 1.0
+        },
+        {
+          "type": "scalar",
+          "value": 1.0
+        },
+        {
+          "type": "scalar",
+          "value": 2147483647
+        },
+        {
+          "type": "scalar",
+          "value": 2147483647
+        },
+        {
+          "type": "scalar",
+          "value": 0
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": 0
+        },
+        {
+          "type": "scalar",
+          "value": true
+        },
+        {
+          "type": "scalar",
+          "value": false
+        },
+        {
+          "type": "scalar",
+          "value": ""
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        }
+      ],
+      "error_type": "RuntimeError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 862, in run_single_case\n    inputs_for_impl = [\n                      ^\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 863, in <listcomp>\n    x.to(device) if isinstance(x, torch.Tensor) else x\n    ^^^^^^^^^^^^\nRuntimeError: copy_between_host_and_device_opapi:build/CMakeFiles/torch_npu.dir/compiler_depend.ts:58 NPU function error: SUSPECT REMOTE ERROR, error code is 507057\n[ERROR] 2026-08-30-06:21:24 (PID:2849921, Device:0, RankID:-1) ERR00100 PTA call acl api failed\n"
+    },
+    {
+      "case_idx": 54,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            16,
+            256,
+            64
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            16,
+            256,
+            64
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            16,
+            256,
+            64
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 16
+        },
+        {
+          "type": "scalar",
+          "value": "BNSD"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": 1.0
+        },
+        {
+          "type": "scalar",
+          "value": 1.0
+        },
+        {
+          "type": "scalar",
+          "value": 2147483647
+        },
+        {
+          "type": "scalar",
+          "value": 2147483647
+        },
+        {
+          "type": "scalar",
+          "value": 0
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": 0
+        },
+        {
+          "type": "scalar",
+          "value": true
+        },
+        {
+          "type": "scalar",
+          "value": false
+        },
+        {
+          "type": "scalar",
+          "value": ""
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        }
+      ],
+      "error_type": "RuntimeError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 862, in run_single_case\n    inputs_for_impl = [\n                      ^\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 863, in <listcomp>\n    x.to(device) if isinstance(x, torch.Tensor) else x\n    ^^^^^^^^^^^^\nRuntimeError: copy_between_host_and_device_opapi:build/CMakeFiles/torch_npu.dir/compiler_depend.ts:58 NPU function error: SUSPECT REMOTE ERROR, error code is 507057\n[ERROR] 2026-08-30-06:21:24 (PID:2849921, Device:0, RankID:-1) ERR00100 PTA call acl api failed\n"
+    },
+    {
+      "case_idx": 55,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            32,
+            512,
+            64
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            32,
+            512,
+            64
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            32,
+            512,
+            64
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 32
+        },
+        {
+          "type": "scalar",
+          "value": "BNSD"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": 0.125
+        },
+        {
+          "type": "scalar",
+          "value": 1.0
+        },
+        {
+          "type": "scalar",
+          "value": 2147483647
+        },
+        {
+          "type": "scalar",
+          "value": 2147483647
+        },
+        {
+          "type": "scalar",
+          "value": 0
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": 0
+        },
+        {
+          "type": "scalar",
+          "value": true
+        },
+        {
+          "type": "scalar",
+          "value": false
+        },
+        {
+          "type": "scalar",
+          "value": ""
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        }
+      ],
+      "error_type": "RuntimeError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 862, in run_single_case\n    inputs_for_impl = [\n                      ^\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 863, in <listcomp>\n    x.to(device) if isinstance(x, torch.Tensor) else x\n    ^^^^^^^^^^^^\nRuntimeError: copy_between_host_and_device_opapi:build/CMakeFiles/torch_npu.dir/compiler_depend.ts:58 NPU function error: SUSPECT REMOTE ERROR, error code is 507057\n[ERROR] 2026-08-30-06:21:24 (PID:2849921, Device:0, RankID:-1) ERR00100 PTA call acl api failed\n"
+    },
+    {
+      "case_idx": 56,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            32,
+            512,
+            64
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            32,
+            512,
+            64
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            32,
+            512,
+            64
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "scalar",
+          "value": 32
+        },
+        {
+          "type": "scalar",
+          "value": "BNSD"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": 0.125
+        },
+        {
+          "type": "scalar",
+          "value": 1.0
+        },
+        {
+          "type": "scalar",
+          "value": 2147483647
+        },
+        {
+          "type": "scalar",
+          "value": 2147483647
+        },
+        {
+          "type": "scalar",
+          "value": 0
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": 0
+        },
+        {
+          "type": "scalar",
+          "value": true
+        },
+        {
+          "type": "scalar",
+          "value": false
+        },
+        {
+          "type": "scalar",
+          "value": ""
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        }
+      ],
+      "error_type": "RuntimeError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 862, in run_single_case\n    inputs_for_impl = [\n                      ^\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 863, in <listcomp>\n    x.to(device) if isinstance(x, torch.Tensor) else x\n    ^^^^^^^^^^^^\nRuntimeError: copy_between_host_and_device_opapi:build/CMakeFiles/torch_npu.dir/compiler_depend.ts:58 NPU function error: SUSPECT REMOTE ERROR, error code is 507057\n[ERROR] 2026-08-30-06:21:24 (PID:2849921, Device:0, RankID:-1) ERR00100 PTA call acl api failed\n"
+    },
+    {
+      "case_idx": 57,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            8,
+            64,
+            64
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            8,
+            64,
+            64
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            8,
+            64,
+            64
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 8
+        },
+        {
+          "type": "scalar",
+          "value": "BNSD"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": 0.125
+        },
+        {
+          "type": "scalar",
+          "value": 1.0
+        },
+        {
+          "type": "scalar",
+          "value": 2147483647
+        },
+        {
+          "type": "scalar",
+          "value": 2147483647
+        },
+        {
+          "type": "scalar",
+          "value": 2
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": 0
+        },
+        {
+          "type": "scalar",
+          "value": true
+        },
+        {
+          "type": "scalar",
+          "value": false
+        },
+        {
+          "type": "scalar",
+          "value": ""
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        }
+      ],
+      "error_type": "RuntimeError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 862, in run_single_case\n    inputs_for_impl = [\n                      ^\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 863, in <listcomp>\n    x.to(device) if isinstance(x, torch.Tensor) else x\n    ^^^^^^^^^^^^\nRuntimeError: copy_between_host_and_device_opapi:build/CMakeFiles/torch_npu.dir/compiler_depend.ts:58 NPU function error: SUSPECT REMOTE ERROR, error code is 507057\n[ERROR] 2026-08-30-06:21:24 (PID:2849921, Device:0, RankID:-1) ERR00100 PTA call acl api failed\n"
+    },
+    {
+      "case_idx": 58,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            8,
+            128,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            8,
+            128,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            8,
+            128,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 8
+        },
+        {
+          "type": "scalar",
+          "value": "BNSD"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            8,
+            128,
+            128
+          ],
+          "dtype": "torch.uint8"
+        },
+        {
+          "type": "scalar",
+          "value": 1.0
+        },
+        {
+          "type": "scalar",
+          "value": 1.0
+        },
+        {
+          "type": "scalar",
+          "value": 2147483647
+        },
+        {
+          "type": "scalar",
+          "value": 2147483647
+        },
+        {
+          "type": "scalar",
+          "value": 0
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": 1
+        },
+        {
+          "type": "scalar",
+          "value": true
+        },
+        {
+          "type": "scalar",
+          "value": false
+        },
+        {
+          "type": "scalar",
+          "value": ""
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        }
+      ],
+      "error_type": "RuntimeError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 862, in run_single_case\n    inputs_for_impl = [\n                      ^\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 863, in <listcomp>\n    x.to(device) if isinstance(x, torch.Tensor) else x\n    ^^^^^^^^^^^^\nRuntimeError: copy_between_host_and_device_opapi:build/CMakeFiles/torch_npu.dir/compiler_depend.ts:58 NPU function error: SUSPECT REMOTE ERROR, error code is 507057\n[ERROR] 2026-08-30-06:21:24 (PID:2849921, Device:0, RankID:-1) ERR00100 PTA call acl api failed\n"
+    },
+    {
+      "case_idx": 59,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            64,
+            1024
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            64,
+            1024
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            64,
+            1024
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 8
+        },
+        {
+          "type": "scalar",
+          "value": "BSH"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            8,
+            64,
+            64
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": 1.0
+        },
+        {
+          "type": "scalar",
+          "value": 1.0
+        },
+        {
+          "type": "scalar",
+          "value": 2147483647
+        },
+        {
+          "type": "scalar",
+          "value": 2147483647
+        },
+        {
+          "type": "scalar",
+          "value": 0
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": 0
+        },
+        {
+          "type": "scalar",
+          "value": true
+        },
+        {
+          "type": "scalar",
+          "value": false
+        },
+        {
+          "type": "scalar",
+          "value": ""
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        }
+      ],
+      "error_type": "RuntimeError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 862, in run_single_case\n    inputs_for_impl = [\n                      ^\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 863, in <listcomp>\n    x.to(device) if isinstance(x, torch.Tensor) else x\n    ^^^^^^^^^^^^\nRuntimeError: copy_between_host_and_device_opapi:build/CMakeFiles/torch_npu.dir/compiler_depend.ts:58 NPU function error: SUSPECT REMOTE ERROR, error code is 507057\n[ERROR] 2026-08-30-06:21:25 (PID:2849921, Device:0, RankID:-1) ERR00100 PTA call acl api failed\n"
+    },
+    {
+      "case_idx": 60,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            8,
+            128,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            8,
+            128,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            8,
+            128,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 8
+        },
+        {
+          "type": "scalar",
+          "value": "BNSD"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            8,
+            1,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": 1.0
+        },
+        {
+          "type": "scalar",
+          "value": 1.0
+        },
+        {
+          "type": "scalar",
+          "value": 2147483647
+        },
+        {
+          "type": "scalar",
+          "value": 2147483647
+        },
+        {
+          "type": "scalar",
+          "value": 0
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": 0
+        },
+        {
+          "type": "scalar",
+          "value": true
+        },
+        {
+          "type": "scalar",
+          "value": false
+        },
+        {
+          "type": "scalar",
+          "value": ""
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        }
+      ],
+      "error_type": "RuntimeError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 862, in run_single_case\n    inputs_for_impl = [\n                      ^\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 863, in <listcomp>\n    x.to(device) if isinstance(x, torch.Tensor) else x\n    ^^^^^^^^^^^^\nRuntimeError: copy_between_host_and_device_opapi:build/CMakeFiles/torch_npu.dir/compiler_depend.ts:58 NPU function error: SUSPECT REMOTE ERROR, error code is 507057\n[ERROR] 2026-08-30-06:21:25 (PID:2849921, Device:0, RankID:-1) ERR00100 PTA call acl api failed\n"
+    },
+    {
+      "case_idx": 61,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            8,
+            128,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            8,
+            128,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            8,
+            128,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 8
+        },
+        {
+          "type": "scalar",
+          "value": "BNSD"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            8,
+            128,
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": 0.08838
+        },
+        {
+          "type": "scalar",
+          "value": 1.0
+        },
+        {
+          "type": "scalar",
+          "value": 2147483647
+        },
+        {
+          "type": "scalar",
+          "value": 2147483647
+        },
+        {
+          "type": "scalar",
+          "value": 0
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "scalar",
+          "value": 0
+        },
+        {
+          "type": "scalar",
+          "value": true
+        },
+        {
+          "type": "scalar",
+          "value": false
+        },
+        {
+          "type": "scalar",
+          "value": ""
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            8
+          ],
+          "dtype": "torch.float32"
+        }
+      ],
+      "error_type": "RuntimeError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 862, in run_single_case\n    inputs_for_impl = [\n                      ^\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 863, in <listcomp>\n    x.to(device) if isinstance(x, torch.Tensor) else x\n    ^^^^^^^^^^^^\nRuntimeError: copy_between_host_and_device_opapi:build/CMakeFiles/torch_npu.dir/compiler_depend.ts:58 NPU function error: SUSPECT REMOTE ERROR, error code is 507057\n[ERROR] 2026-08-30-06:21:25 (PID:2849921, Device:0, RankID:-1) ERR00100 PTA call acl api failed\n"
+    }
+  ]
+}

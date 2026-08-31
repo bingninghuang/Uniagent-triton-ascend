@@ -10,6 +10,16 @@ class MaxTokenExceededError(Exception):
     pass
 
 
+def _is_context_overflow_error(exc: BaseException) -> bool:
+    """vLLM / gateway 400 when prompt already fills max_model_len."""
+    text = str(exc)
+    return (
+        "leaves no room to generate" in text
+        or "exceeds the model's maximum context length" in text
+        or ("Prompt length" in text and "maximum context length" in text)
+    )
+
+
 class AgentChatModel:
     client: Any
     """AsyncLLM server manager"""
@@ -308,13 +318,22 @@ class OpenAICompatibleChatModel:
         extra_body = {k: v for k, v in sampling_params.items() if k not in self._OPENAI_TOP_LEVEL_SAMPLING_FIELDS}
 
         with simple_timer("generate_sequences", rollout_cache["metrics"]):
-            chat_completion = await self.client.chat.completions.create(
-                model=self.model_name,
-                messages=api_messages,
-                tools=self.tools_schemas,
-                extra_body=extra_body or None,
-                **top_level,
-            )
+            try:
+                chat_completion = await self.client.chat.completions.create(
+                    model=self.model_name,
+                    messages=api_messages,
+                    tools=self.tools_schemas,
+                    extra_body=extra_body or None,
+                    **top_level,
+                )
+            except Exception as exc:
+                if _is_context_overflow_error(exc):
+                    max_len = getattr(self, "max_model_len", None)
+                    raise MaxTokenExceededError(
+                        "[context_overflow] vLLM refused generate: the prompt already fills "
+                        f"the model context window (max_model_len={max_len}). {exc}"
+                    ) from exc
+                raise
 
         response_message = chat_completion.choices[0].message
         response_content = response_message.content or ""

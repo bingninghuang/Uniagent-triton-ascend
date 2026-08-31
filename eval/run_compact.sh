@@ -16,15 +16,15 @@
 # =============================================================================
 set -euo pipefail
 
-REPO_ROOT="${REPO_ROOT:-/home/Uniagent-triton-ascend-compact}"
-DATASET="${DATASET:-/home/ascendc-kernelgen-data/npu_benchmark}"
-OUT_ROOT="${OUT_ROOT:-/home/Uniagent-triton-ascend-compact/eval/output}"
+REPO_ROOT="${REPO_ROOT:-/home/h00961522/Uniagent-triton-ascend-compact}"
+DATASET="${DATASET:-/dev/shm/h00961522/ascendc-kernelgen-data/npu_benchmark}"
+OUT_ROOT="${OUT_ROOT:-/home/h00961522/Uniagent-triton-ascend-compact/eval/output}"
 
 # --- vLLM server (shared by all workers) -------------------------------------
-VLLM_HOST="${VLLM_HOST:-192.169.0.176}"
+VLLM_HOST="${VLLM_HOST:-127.0.0.1}"
 PORT="${PORT:-7777}"
 SERVED_MODEL_NAME="${SERVED_MODEL_NAME:-triton-synth}"
-
+MAX_MODEL_LEN="${MAX_MODEL_LEN:-40960}"
 # --- Task selection ----------------------------------------------------------
 MAX_ROWS="${MAX_ROWS:-1024}"
 FILTER_MODE="${FILTER_MODE:-all}"
@@ -42,7 +42,7 @@ MAX_TURNS="${MAX_TURNS:-150}"
 
 # --- Concurrency: cards / sandboxes ------------------------------------------
 # Comma-separated NPU device ids, e.g. "0,1,2,3,4,5,6,7". Defaults to 8 cards.
-EVAL_DEVICE_IDS="${EVAL_DEVICE_IDS:-0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15}"
+EVAL_DEVICE_IDS="${EVAL_DEVICE_IDS:-8,9,10,11,12,13,14,15}"
 # Base swerex attach port; card i uses PORT_BASE + i.
 TRITON_ATTACH_PORT_BASE="${TRITON_ATTACH_PORT_BASE:-18000}"
 # Base workspace dir; card i uses /opt/workspace_card{i}/agent_workdir.
@@ -287,6 +287,7 @@ run_worker() {
         --port '${PORT}' \
         --host '${VLLM_HOST}' \
         --served-model-name '${SERVED_MODEL_NAME}' \
+        --max-model-len '${MAX_MODEL_LEN}' \
         --eval-device-ids '${card}' \
         --output '${result_file}' \
         --artifacts-dir '${ARTIFACT_DIR}' \

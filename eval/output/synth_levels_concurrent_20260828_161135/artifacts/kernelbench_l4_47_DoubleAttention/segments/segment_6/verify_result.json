@@ -1,0 +1,883 @@
+{
+  "op_name": "kernelbench_l4_47_DoubleAttention",
+  "total_cases": 50,
+  "passed_cases": 1,
+  "failed_cases": 49,
+  "failures": [
+    {
+      "case_idx": 1,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            384,
+            5,
+            83
+          ],
+          "dtype": "torch.float16"
+        }
+      ],
+      "error_type": "AccuracyError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 898, in run_single_case\n    compare(\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 677, in compare\n    _compare_float_output(fw_finite, impl_finite, ctx)\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 596, in _compare_float_output\n    _check_accuracy_npu_benchmark(fw_finite, impl_finite, ctx.data_type)\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 845, in _check_accuracy_npu_benchmark\n    raise AccuracyError(\nAccuracyError: 验证失败 dtype=torch.float16: max_error_cap_violations=3448/159360 (atol=9.000000e-02, rtol=9.765625e-04, max_abs_diff=8.622887e+00, ok=False), matched_ratio=0.001839 (req>=0.9, ok=False), MERE=8.631945e+00 (rel_thr=9.765625e-04, ok=False); small_count=1758, normal_count=157602\n前 10 个 max_error_cap 违例位置:\n  \n... [truncated 4005 chars] ...\n|=9.019408e-02)\n前 10 个 matched 未通过位置:\n  位置[0] (正常域): framework=-4.615784e-03, impl=0.000000e+00, 相对误差=9.999783e-01 (允许<=9.765625e-04)\n  位置[1] (正常域): framework=-5.699158e-03, impl=8.617188e+00, 相对误差=1.512984e+03 (允许<=9.765625e-04)\n  位置[2] (正常域): framework=-9.140015e-03, impl=0.000000e+00, 相对误差=9.999891e-01 (允许<=9.765625e-04)\n  位置[3] (小值域): framework=-4.684925e-04, impl=7.414062e+00, |diff|=7.414531e+00 (允许<=1.525879e-05)\n  位置[4] (正常域): framework=-2.910614e-03, impl=0.000000e+00, 相对误差=9.999657e-01 (允许<=9.765625e-04)\n  位置[5] (正常域): framework=4.684448e-03, impl=7.050781e+00, 相对误差=1.504114e+03 (允许<=9.765625e-04)\n  位置[6] (正常域): framework=-8.155823e-03, impl=0.000000e+00, 相对误差=9.999878e-01 (允许<=9.765625e-04)\n  位置[7] (正常域): framework=-2.046585e-03, impl=2.882812e+00, 相对误差=1.409528e+03 (允许<=9.765625e-04)\n  位置[8] (正常域): framework=1.410675e-02, impl=0.000000e+00, 相对误差=9.999929e-01 (允许<=9.765625e-04)\n  位置[9] (正常域): framework=-3.137207e-02, impl=-3.347778e-02, 相对误差=6.712041e-02 (允许<=9.765625e-04)\n\n",
+      "metrics": {
+        "matched_ratio": 0.0018386044176706827,
+        "max_abs_diff": 8.622886657714844,
+        "MERE": 8.63194465637207,
+        "rel_threshold": 0.0009765625,
+        "small_value_threshold": 0.00048828125,
+        "small_value_error": 1.52587890625e-05,
+        "atol": 0.09,
+        "rtol": 0.0009765625,
+        "max_error_cap_violation_count": 3448,
+        "required_matched_ratio": 0.9,
+        "total_finite": 159360,
+        "matched_count": 293,
+        "small_count": 1758,
+        "normal_count": 157602,
+        "checks": {
+          "max_error_cap": false,
+          "required_matched_ratio": false,
+          "MERE": false
+        }
+      }
+    },
+    {
+      "case_idx": 2,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            32,
+            11,
+            43
+          ],
+          "dtype": "torch.float16"
+        }
+      ],
+      "error_type": "AccuracyError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 898, in run_single_case\n    compare(\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 677, in compare\n    _compare_float_output(fw_finite, impl_finite, ctx)\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 596, in _compare_float_output\n    _check_accuracy_npu_benchmark(fw_finite, impl_finite, ctx.data_type)\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 845, in _check_accuracy_npu_benchmark\n    raise AccuracyError(\nAccuracyError: 验证失败 dtype=torch.float16: max_error_cap_violations=4/60544 (atol=9.000000e-02, rtol=9.765625e-04, max_abs_diff=7.732651e+00, ok=False), matched_ratio=0.384382 (req>=0.9, ok=False), MERE=8.191611e-02 (rel_thr=9.765625e-04, ok=False); small_count=126, normal_count=60418\n前 4 个 max_error_cap 违例位置:\n  位置[1]: \n... [truncated 2585 chars] ...\nl*|golden|=9.001454e-02)\n前 10 个 matched 未通过位置:\n  位置[0] (正常域): framework=1.423645e-02, impl=0.000000e+00, 相对误差=9.999930e-01 (允许<=9.765625e-04)\n  位置[1] (正常域): framework=2.125549e-02, impl=7.753906e+00, 相对误差=3.637937e+02 (允许<=9.765625e-04)\n  位置[2] (正常域): framework=1.412201e-02, impl=0.000000e+00, 相对误差=9.999930e-01 (允许<=9.765625e-04)\n  位置[3] (正常域): framework=1.623535e-02, impl=4.378906e+00, 相对误差=2.687126e+02 (允许<=9.765625e-04)\n  位置[4] (正常域): framework=1.753235e-02, impl=0.000000e+00, 相对误差=9.999943e-01 (允许<=9.765625e-04)\n  位置[5] (正常域): framework=1.765442e-02, impl=4.585938e+00, 相对误差=2.587600e+02 (允许<=9.765625e-04)\n  位置[6] (正常域): framework=1.684570e-02, impl=0.000000e+00, 相对误差=9.999940e-01 (允许<=9.765625e-04)\n  位置[7] (正常域): framework=1.488495e-02, impl=6.687500e+00, 相对误差=4.482763e+02 (允许<=9.765625e-04)\n  位置[8] (正常域): framework=1.768494e-02, impl=0.000000e+00, 相对误差=9.999943e-01 (允许<=9.765625e-04)\n  位置[313] (正常域): framework=1.068878e-02, impl=1.070404e-02, 相对误差=1.427538e-03 (允许<=9.765625e-04)\n\n",
+      "metrics": {
+        "matched_ratio": 0.3843816067653277,
+        "max_abs_diff": 7.7326507568359375,
+        "MERE": 0.08191610872745514,
+        "rel_threshold": 0.0009765625,
+        "small_value_threshold": 0.00048828125,
+        "small_value_error": 1.52587890625e-05,
+        "atol": 0.09,
+        "rtol": 0.0009765625,
+        "max_error_cap_violation_count": 4,
+        "required_matched_ratio": 0.9,
+        "total_finite": 60544,
+        "matched_count": 23272,
+        "small_count": 126,
+        "normal_count": 60418,
+        "checks": {
+          "max_error_cap": false,
+          "required_matched_ratio": false,
+          "MERE": false
+        }
+      }
+    },
+    {
+      "case_idx": 3,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            6,
+            256,
+            25,
+            5
+          ],
+          "dtype": "torch.float32"
+        }
+      ],
+      "error_type": "RuntimeError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card3/agent_workdir/output/verify/kernelbench_l4_47_DoubleAttention_triton_ascend_impl.py\", line 273, in forward\n    diag_stats_kernel[(1,)](B, b * c_n * M, stats, 2, BM=8192)\n  File \n... [truncated 1681 chars] ...\naaaaeb8ad280, ccu error info: 0xaaa61e1c00000000, cube error info: 0, biu error info: 0, aic error mask: 0x6500020bd00028c, para base: 0x12c100001080.[FUNC:PrintCoreInfo][FILE:device_error_core_proc.cc][LINE:645]\n        TraceBack (most recent call last):\n       The extend info: errcode:(0x800000, 0, 0) errorStr: The DDR address of the MTE instruction is out of range. fixp_error0 info: 0x600006a, fixp_error1 info: 0xb3, fsmId:0, tslot:4, thread:0, ctxid:0, blk:5, sublk:0, subErrType:4.[FUNC:PrintCoreInfo][FILE:device_error_core_proc.cc][LINE:658]\n       Kernel task happen error, retCode=0x26, [aicore exception].[FUNC:PreCheckTaskErr][FILE:davinci_kernel_task.cc][LINE:1729]\n       Failed to submit kernel task, retCode=0x7150026.[FUNC:LaunchKernelSubmit][FILE:context.cc][LINE:1223]\n       kernel launch submit failed.[FUNC:LaunchKernel][FILE:context.cc][LINE:1349]\n       rtKernelLaunch execution failed, reason=aicore exception[FUNC:FuncErrorReason][FILE:error_message_manage.cc][LINE:65]\n\n"
+    },
+    {
+      "case_idx": 4,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            1024,
+            14,
+            141
+          ],
+          "dtype": "torch.float16"
+        }
+      ],
+      "error_type": "RuntimeError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 862, in run_single_case\n    inputs_for_impl = [\n                      ^\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 863, in <listcomp>\n    x.to(device) if isinstance(x, torch.Tensor) else x\n    ^^^^^^^^^^^^\nRuntimeError: ACL stream synchronize failed, error code:507015\n"
+    },
+    {
+      "case_idx": 5,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            192,
+            173,
+            27
+          ],
+          "dtype": "torch.float16"
+        }
+      ],
+      "error_type": "RuntimeError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 862, in run_single_case\n    inputs_for_impl = [\n                      ^\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 863, in <listcomp>\n    x.to(device) if isinstance(x, torch.Tensor) else x\n    ^^^^^^^^^^^^\nRuntimeError: ACL stream synchronize failed, error code:507015\n"
+    },
+    {
+      "case_idx": 6,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            3,
+            1024,
+            31,
+            21
+          ],
+          "dtype": "torch.float16"
+        }
+      ],
+      "error_type": "RuntimeError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 862, in run_single_case\n    inputs_for_impl = [\n                      ^\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 863, in <listcomp>\n    x.to(device) if isinstance(x, torch.Tensor) else x\n    ^^^^^^^^^^^^\nRuntimeError: ACL stream synchronize failed, error code:507015\n"
+    },
+    {
+      "case_idx": 7,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            768,
+            9,
+            53
+          ],
+          "dtype": "torch.bfloat16"
+        }
+      ],
+      "error_type": "RuntimeError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 862, in run_single_case\n    inputs_for_impl = [\n                      ^\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 863, in <listcomp>\n    x.to(device) if isinstance(x, torch.Tensor) else x\n    ^^^^^^^^^^^^\nRuntimeError: ACL stream synchronize failed, error code:507015\n"
+    },
+    {
+      "case_idx": 8,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            3,
+            1280,
+            37,
+            9
+          ],
+          "dtype": "torch.bfloat16"
+        }
+      ],
+      "error_type": "RuntimeError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 862, in run_single_case\n    inputs_for_impl = [\n                      ^\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 863, in <listcomp>\n    x.to(device) if isinstance(x, torch.Tensor) else x\n    ^^^^^^^^^^^^\nRuntimeError: ACL stream synchronize failed, error code:507015\n"
+    },
+    {
+      "case_idx": 9,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            5,
+            384,
+            19,
+            89
+          ],
+          "dtype": "torch.bfloat16"
+        }
+      ],
+      "error_type": "RuntimeError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 862, in run_single_case\n    inputs_for_impl = [\n                      ^\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 863, in <listcomp>\n    x.to(device) if isinstance(x, torch.Tensor) else x\n    ^^^^^^^^^^^^\nRuntimeError: ACL stream synchronize failed, error code:507015\n"
+    },
+    {
+      "case_idx": 10,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            5,
+            512,
+            43,
+            31
+          ],
+          "dtype": "torch.float32"
+        }
+      ],
+      "error_type": "RuntimeError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 862, in run_single_case\n    inputs_for_impl = [\n                      ^\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 863, in <listcomp>\n    x.to(device) if isinstance(x, torch.Tensor) else x\n    ^^^^^^^^^^^^\nRuntimeError: ACL stream synchronize failed, error code:507015\n"
+    },
+    {
+      "case_idx": 11,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            256,
+            65,
+            65
+          ],
+          "dtype": "torch.float32"
+        }
+      ],
+      "error_type": "RuntimeError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 862, in run_single_case\n    inputs_for_impl = [\n                      ^\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 863, in <listcomp>\n    x.to(device) if isinstance(x, torch.Tensor) else x\n    ^^^^^^^^^^^^\nRuntimeError: ACL stream synchronize failed, error code:507015\n"
+    },
+    {
+      "case_idx": 12,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            6,
+            1024,
+            31,
+            43
+          ],
+          "dtype": "torch.float16"
+        }
+      ],
+      "error_type": "RuntimeError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 862, in run_single_case\n    inputs_for_impl = [\n                      ^\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 863, in <listcomp>\n    x.to(device) if isinstance(x, torch.Tensor) else x\n    ^^^^^^^^^^^^\nRuntimeError: ACL stream synchronize failed, error code:507015\n"
+    },
+    {
+      "case_idx": 13,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            1280,
+            13,
+            97
+          ],
+          "dtype": "torch.float16"
+        }
+      ],
+      "error_type": "RuntimeError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 862, in run_single_case\n    inputs_for_impl = [\n                      ^\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 863, in <listcomp>\n    x.to(device) if isinstance(x, torch.Tensor) else x\n    ^^^^^^^^^^^^\nRuntimeError: ACL stream synchronize failed, error code:507015\n"
+    },
+    {
+      "case_idx": 14,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            8,
+            2048,
+            13,
+            14
+          ],
+          "dtype": "torch.float16"
+        }
+      ],
+      "error_type": "RuntimeError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 862, in run_single_case\n    inputs_for_impl = [\n                      ^\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 863, in <listcomp>\n    x.to(device) if isinstance(x, torch.Tensor) else x\n    ^^^^^^^^^^^^\nRuntimeError: ACL stream synchronize failed, error code:507015\n"
+    },
+    {
+      "case_idx": 15,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            3,
+            640,
+            61,
+            79
+          ],
+          "dtype": "torch.float16"
+        }
+      ],
+      "error_type": "RuntimeError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 862, in run_single_case\n    inputs_for_impl = [\n                      ^\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 863, in <listcomp>\n    x.to(device) if isinstance(x, torch.Tensor) else x\n    ^^^^^^^^^^^^\nRuntimeError: ACL stream synchronize failed, error code:507015\n"
+    },
+    {
+      "case_idx": 16,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            1280,
+            57,
+            73
+          ],
+          "dtype": "torch.float16"
+        }
+      ],
+      "error_type": "RuntimeError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 862, in run_single_case\n    inputs_for_impl = [\n                      ^\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 863, in <listcomp>\n    x.to(device) if isinstance(x, torch.Tensor) else x\n    ^^^^^^^^^^^^\nRuntimeError: ACL stream synchronize failed, error code:507015\n"
+    },
+    {
+      "case_idx": 17,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            5,
+            1024,
+            69,
+            14
+          ],
+          "dtype": "torch.float16"
+        }
+      ],
+      "error_type": "RuntimeError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 862, in run_single_case\n    inputs_for_impl = [\n                      ^\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 863, in <listcomp>\n    x.to(device) if isinstance(x, torch.Tensor) else x\n    ^^^^^^^^^^^^\nRuntimeError: ACL stream synchronize failed, error code:507015\n"
+    },
+    {
+      "case_idx": 18,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            1024,
+            101,
+            21
+          ],
+          "dtype": "torch.float16"
+        }
+      ],
+      "error_type": "RuntimeError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 862, in run_single_case\n    inputs_for_impl = [\n                      ^\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 863, in <listcomp>\n    x.to(device) if isinstance(x, torch.Tensor) else x\n    ^^^^^^^^^^^^\nRuntimeError: ACL stream synchronize failed, error code:507015\n"
+    },
+    {
+      "case_idx": 19,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            8,
+            512,
+            65,
+            43
+          ],
+          "dtype": "torch.float16"
+        }
+      ],
+      "error_type": "RuntimeError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 862, in run_single_case\n    inputs_for_impl = [\n                      ^\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 863, in <listcomp>\n    x.to(device) if isinstance(x, torch.Tensor) else x\n    ^^^^^^^^^^^^\nRuntimeError: ACL stream synchronize failed, error code:507015\n"
+    },
+    {
+      "case_idx": 20,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            8,
+            320,
+            97,
+            61
+          ],
+          "dtype": "torch.float16"
+        }
+      ],
+      "error_type": "RuntimeError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 862, in run_single_case\n    inputs_for_impl = [\n                      ^\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 863, in <listcomp>\n    x.to(device) if isinstance(x, torch.Tensor) else x\n    ^^^^^^^^^^^^\nRuntimeError: ACL stream synchronize failed, error code:507015\n"
+    },
+    {
+      "case_idx": 21,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            5,
+            1280,
+            23,
+            25
+          ],
+          "dtype": "torch.bfloat16"
+        }
+      ],
+      "error_type": "RuntimeError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 862, in run_single_case\n    inputs_for_impl = [\n                      ^\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 863, in <listcomp>\n    x.to(device) if isinstance(x, torch.Tensor) else x\n    ^^^^^^^^^^^^\nRuntimeError: ACL stream synchronize failed, error code:507015\n"
+    },
+    {
+      "case_idx": 22,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            3,
+            448,
+            79,
+            89
+          ],
+          "dtype": "torch.bfloat16"
+        }
+      ],
+      "error_type": "RuntimeError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 862, in run_single_case\n    inputs_for_impl = [\n                      ^\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 863, in <listcomp>\n    x.to(device) if isinstance(x, torch.Tensor) else x\n    ^^^^^^^^^^^^\nRuntimeError: ACL stream synchronize failed, error code:507015\n"
+    },
+    {
+      "case_idx": 23,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            3,
+            2048,
+            5,
+            97
+          ],
+          "dtype": "torch.bfloat16"
+        }
+      ],
+      "error_type": "RuntimeError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 862, in run_single_case\n    inputs_for_impl = [\n                      ^\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 863, in <listcomp>\n    x.to(device) if isinstance(x, torch.Tensor) else x\n    ^^^^^^^^^^^^\nRuntimeError: ACL stream synchronize failed, error code:507015\n"
+    },
+    {
+      "case_idx": 24,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            6,
+            320,
+            79,
+            101
+          ],
+          "dtype": "torch.bfloat16"
+        }
+      ],
+      "error_type": "RuntimeError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 862, in run_single_case\n    inputs_for_impl = [\n                      ^\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 863, in <listcomp>\n    x.to(device) if isinstance(x, torch.Tensor) else x\n    ^^^^^^^^^^^^\nRuntimeError: ACL stream synchronize failed, error code:507015\n"
+    },
+    {
+      "case_idx": 25,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            5,
+            1280,
+            7,
+            141
+          ],
+          "dtype": "torch.bfloat16"
+        }
+      ],
+      "error_type": "RuntimeError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 862, in run_single_case\n    inputs_for_impl = [\n                      ^\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 863, in <listcomp>\n    x.to(device) if isinstance(x, torch.Tensor) else x\n    ^^^^^^^^^^^^\nRuntimeError: ACL stream synchronize failed, error code:507015\n"
+    },
+    {
+      "case_idx": 26,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            1024,
+            55,
+            79
+          ],
+          "dtype": "torch.bfloat16"
+        }
+      ],
+      "error_type": "RuntimeError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 862, in run_single_case\n    inputs_for_impl = [\n                      ^\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 863, in <listcomp>\n    x.to(device) if isinstance(x, torch.Tensor) else x\n    ^^^^^^^^^^^^\nRuntimeError: ACL stream synchronize failed, error code:507015\n"
+    },
+    {
+      "case_idx": 27,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            2048,
+            14,
+            49
+          ],
+          "dtype": "torch.bfloat16"
+        }
+      ],
+      "error_type": "RuntimeError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 862, in run_single_case\n    inputs_for_impl = [\n                      ^\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 863, in <listcomp>\n    x.to(device) if isinstance(x, torch.Tensor) else x\n    ^^^^^^^^^^^^\nRuntimeError: ACL stream synchronize failed, error code:507015\n"
+    },
+    {
+      "case_idx": 28,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            1024,
+            79,
+            19
+          ],
+          "dtype": "torch.float32"
+        }
+      ],
+      "error_type": "RuntimeError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 862, in run_single_case\n    inputs_for_impl = [\n                      ^\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 863, in <listcomp>\n    x.to(device) if isinstance(x, torch.Tensor) else x\n    ^^^^^^^^^^^^\nRuntimeError: ACL stream synchronize failed, error code:507015\n"
+    },
+    {
+      "case_idx": 29,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            3,
+            1536,
+            5,
+            111
+          ],
+          "dtype": "torch.float32"
+        }
+      ],
+      "error_type": "RuntimeError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 862, in run_single_case\n    inputs_for_impl = [\n                      ^\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 863, in <listcomp>\n    x.to(device) if isinstance(x, torch.Tensor) else x\n    ^^^^^^^^^^^^\nRuntimeError: ACL stream synchronize failed, error code:507015\n"
+    },
+    {
+      "case_idx": 30,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            8,
+            384,
+            41,
+            43
+          ],
+          "dtype": "torch.float32"
+        }
+      ],
+      "error_type": "RuntimeError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 862, in run_single_case\n    inputs_for_impl = [\n                      ^\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 863, in <listcomp>\n    x.to(device) if isinstance(x, torch.Tensor) else x\n    ^^^^^^^^^^^^\nRuntimeError: ACL stream synchronize failed, error code:507015\n"
+    },
+    {
+      "case_idx": 31,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            3,
+            448,
+            79,
+            49
+          ],
+          "dtype": "torch.float32"
+        }
+      ],
+      "error_type": "RuntimeError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 862, in run_single_case\n    inputs_for_impl = [\n                      ^\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 863, in <listcomp>\n    x.to(device) if isinstance(x, torch.Tensor) else x\n    ^^^^^^^^^^^^\nRuntimeError: ACL stream synchronize failed, error code:507015\n"
+    },
+    {
+      "case_idx": 32,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            896,
+            49,
+            73
+          ],
+          "dtype": "torch.float16"
+        }
+      ],
+      "error_type": "RuntimeError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 862, in run_single_case\n    inputs_for_impl = [\n                      ^\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 863, in <listcomp>\n    x.to(device) if isinstance(x, torch.Tensor) else x\n    ^^^^^^^^^^^^\nRuntimeError: ACL stream synchronize failed, error code:507015\n"
+    },
+    {
+      "case_idx": 33,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            3,
+            1024,
+            97,
+            73
+          ],
+          "dtype": "torch.float16"
+        }
+      ],
+      "error_type": "RuntimeError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 862, in run_single_case\n    inputs_for_impl = [\n                      ^\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 863, in <listcomp>\n    x.to(device) if isinstance(x, torch.Tensor) else x\n    ^^^^^^^^^^^^\nRuntimeError: ACL stream synchronize failed, error code:507015\n"
+    },
+    {
+      "case_idx": 34,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            5,
+            896,
+            65,
+            41
+          ],
+          "dtype": "torch.float16"
+        }
+      ],
+      "error_type": "RuntimeError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 862, in run_single_case\n    inputs_for_impl = [\n                      ^\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 863, in <listcomp>\n    x.to(device) if isinstance(x, torch.Tensor) else x\n    ^^^^^^^^^^^^\nRuntimeError: ACL stream synchronize failed, error code:507015\n"
+    },
+    {
+      "case_idx": 35,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            8,
+            896,
+            55,
+            27
+          ],
+          "dtype": "torch.float16"
+        }
+      ],
+      "error_type": "RuntimeError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 862, in run_single_case\n    inputs_for_impl = [\n                      ^\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 863, in <listcomp>\n    x.to(device) if isinstance(x, torch.Tensor) else x\n    ^^^^^^^^^^^^\nRuntimeError: ACL stream synchronize failed, error code:507015\n"
+    },
+    {
+      "case_idx": 36,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            8,
+            896,
+            29,
+            173
+          ],
+          "dtype": "torch.float16"
+        }
+      ],
+      "error_type": "RuntimeError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 862, in run_single_case\n    inputs_for_impl = [\n                      ^\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 863, in <listcomp>\n    x.to(device) if isinstance(x, torch.Tensor) else x\n    ^^^^^^^^^^^^\nRuntimeError: ACL stream synchronize failed, error code:507015\n"
+    },
+    {
+      "case_idx": 37,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            5,
+            640,
+            173,
+            55
+          ],
+          "dtype": "torch.float16"
+        }
+      ],
+      "error_type": "RuntimeError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 862, in run_single_case\n    inputs_for_impl = [\n                      ^\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 863, in <listcomp>\n    x.to(device) if isinstance(x, torch.Tensor) else x\n    ^^^^^^^^^^^^\nRuntimeError: ACL stream synchronize failed, error code:507015\n"
+    },
+    {
+      "case_idx": 38,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            8,
+            512,
+            83,
+            61
+          ],
+          "dtype": "torch.bfloat16"
+        }
+      ],
+      "error_type": "RuntimeError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 862, in run_single_case\n    inputs_for_impl = [\n                      ^\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 863, in <listcomp>\n    x.to(device) if isinstance(x, torch.Tensor) else x\n    ^^^^^^^^^^^^\nRuntimeError: ACL stream synchronize failed, error code:507015\n"
+    },
+    {
+      "case_idx": 39,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            1280,
+            141,
+            19
+          ],
+          "dtype": "torch.bfloat16"
+        }
+      ],
+      "error_type": "RuntimeError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 862, in run_single_case\n    inputs_for_impl = [\n                      ^\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 863, in <listcomp>\n    x.to(device) if isinstance(x, torch.Tensor) else x\n    ^^^^^^^^^^^^\nRuntimeError: ACL stream synchronize failed, error code:507015\n"
+    },
+    {
+      "case_idx": 40,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            3,
+            768,
+            141,
+            43
+          ],
+          "dtype": "torch.bfloat16"
+        }
+      ],
+      "error_type": "RuntimeError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 862, in run_single_case\n    inputs_for_impl = [\n                      ^\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 863, in <listcomp>\n    x.to(device) if isinstance(x, torch.Tensor) else x\n    ^^^^^^^^^^^^\nRuntimeError: ACL stream synchronize failed, error code:507015\n"
+    },
+    {
+      "case_idx": 41,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            768,
+            125,
+            113
+          ],
+          "dtype": "torch.bfloat16"
+        }
+      ],
+      "error_type": "RuntimeError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 862, in run_single_case\n    inputs_for_impl = [\n                      ^\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 863, in <listcomp>\n    x.to(device) if isinstance(x, torch.Tensor) else x\n    ^^^^^^^^^^^^\nRuntimeError: ACL stream synchronize failed, error code:507015\n"
+    },
+    {
+      "case_idx": 42,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            8,
+            448,
+            61,
+            173
+          ],
+          "dtype": "torch.bfloat16"
+        }
+      ],
+      "error_type": "RuntimeError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 862, in run_single_case\n    inputs_for_impl = [\n                      ^\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 863, in <listcomp>\n    x.to(device) if isinstance(x, torch.Tensor) else x\n    ^^^^^^^^^^^^\nRuntimeError: ACL stream synchronize failed, error code:507015\n"
+    },
+    {
+      "case_idx": 43,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            1280,
+            65,
+            23
+          ],
+          "dtype": "torch.float32"
+        }
+      ],
+      "error_type": "RuntimeError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 862, in run_single_case\n    inputs_for_impl = [\n                      ^\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 863, in <listcomp>\n    x.to(device) if isinstance(x, torch.Tensor) else x\n    ^^^^^^^^^^^^\nRuntimeError: ACL stream synchronize failed, error code:507015\n"
+    },
+    {
+      "case_idx": 44,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            5,
+            448,
+            113,
+            57
+          ],
+          "dtype": "torch.float32"
+        }
+      ],
+      "error_type": "RuntimeError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 862, in run_single_case\n    inputs_for_impl = [\n                      ^\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 863, in <listcomp>\n    x.to(device) if isinstance(x, torch.Tensor) else x\n    ^^^^^^^^^^^^\nRuntimeError: ACL stream synchronize failed, error code:507015\n"
+    },
+    {
+      "case_idx": 45,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            768,
+            141,
+            55
+          ],
+          "dtype": "torch.float32"
+        }
+      ],
+      "error_type": "RuntimeError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 862, in run_single_case\n    inputs_for_impl = [\n                      ^\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 863, in <listcomp>\n    x.to(device) if isinstance(x, torch.Tensor) else x\n    ^^^^^^^^^^^^\nRuntimeError: ACL stream synchronize failed, error code:507015\n"
+    },
+    {
+      "case_idx": 46,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "dtype": "torch.float16"
+        }
+      ],
+      "error_type": "RuntimeError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 862, in run_single_case\n    inputs_for_impl = [\n                      ^\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 863, in <listcomp>\n    x.to(device) if isinstance(x, torch.Tensor) else x\n    ^^^^^^^^^^^^\nRuntimeError: ACL stream synchronize failed, error code:507015\n"
+    },
+    {
+      "case_idx": 47,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            8,
+            2048,
+            7,
+            5
+          ],
+          "dtype": "torch.float16"
+        }
+      ],
+      "error_type": "RuntimeError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 862, in run_single_case\n    inputs_for_impl = [\n                      ^\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 863, in <listcomp>\n    x.to(device) if isinstance(x, torch.Tensor) else x\n    ^^^^^^^^^^^^\nRuntimeError: ACL stream synchronize failed, error code:507015\n"
+    },
+    {
+      "case_idx": 48,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            640,
+            97,
+            89
+          ],
+          "dtype": "torch.float16"
+        }
+      ],
+      "error_type": "RuntimeError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 862, in run_single_case\n    inputs_for_impl = [\n                      ^\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 863, in <listcomp>\n    x.to(device) if isinstance(x, torch.Tensor) else x\n    ^^^^^^^^^^^^\nRuntimeError: ACL stream synchronize failed, error code:507015\n"
+    },
+    {
+      "case_idx": 50,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            512,
+            37,
+            43
+          ],
+          "dtype": "torch.float16"
+        }
+      ],
+      "error_type": "RuntimeError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 862, in run_single_case\n    inputs_for_impl = [\n                      ^\n  File \"/opt/workspace_card3/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 863, in <listcomp>\n    x.to(device) if isinstance(x, torch.Tensor) else x\n    ^^^^^^^^^^^^\nRuntimeError: ACL stream synchronize failed, error code:507015\n"
+    }
+  ]
+}

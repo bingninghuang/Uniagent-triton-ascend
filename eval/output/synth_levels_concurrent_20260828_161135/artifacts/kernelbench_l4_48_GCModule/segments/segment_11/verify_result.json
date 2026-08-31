@@ -1,0 +1,1870 @@
+{
+  "op_name": "kernelbench_l4_48_GCModule",
+  "total_cases": 50,
+  "passed_cases": 31,
+  "failed_cases": 19,
+  "failures": [
+    {
+      "case_idx": 13,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            256,
+            5,
+            7
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": 256
+        },
+        {
+          "type": "scalar",
+          "value": 2
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            256,
+            1,
+            1
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            128,
+            256,
+            1,
+            1
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            128
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            128,
+            1,
+            1
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            128,
+            1,
+            1
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            256,
+            128,
+            1,
+            1
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            256
+          ],
+          "dtype": "torch.float32"
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card5/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card5/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card5/agent_workdir/output/verify/kernelbench_l4_48_GCModule_triton_ascend_impl.py\", line 231, in forward\n    _k2b_ctx_transform[(b,)](\n  File \"/usr/local/python3.11.14/lib/python3.11\n... [truncated 681 chars] ...\nn3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 22:4:\n    ctx = tl.zeros((CP,), dtype=tl.float32)\n    for nc0 in range(0, NC1, NCC):\n        nc_off = nc0 + tl.arange(0, NCC)\n        nc_mask = nc_off < NC1\n        sl = tl.load(ctx_ws_ptr + (b * NC1 + nc_off[:, None]) * C + c_off[None, :],\n                     mask=nc_mask[:, None] & c_mask[None, :], other=0.0)\n        ctx += tl.sum(sl, axis=0)\n    ctx = ctx.to(RET_T).to(tl.float32)\n    k_off = tl.arange(0, KCP)\n    k_mask = k_off < K\n    z_all = tl.zeros((KCP,), dtype=tl.float32)\n    for kt in range(0, KT):\n    ^\nAssertionError('Loop-carried variable z_all has initial type <[128], fp32> but is re-assigned to <[32], fp32> in loop! Please make sure that the type stays consistent.')\n"
+    },
+    {
+      "case_idx": 14,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            512,
+            5,
+            7
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 512
+        },
+        {
+          "type": "scalar",
+          "value": 2
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            512,
+            1,
+            1
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            256,
+            512,
+            1,
+            1
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            256
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            256,
+            1,
+            1
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            256,
+            1,
+            1
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            512,
+            256,
+            1,
+            1
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            512
+          ],
+          "dtype": "torch.float16"
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card5/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card5/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card5/agent_workdir/output/verify/kernelbench_l4_48_GCModule_triton_ascend_impl.py\", line 231, in forward\n    _k2b_ctx_transform[(b,)](\n  File \"/usr/local/python3.11.14/lib/python3.11\n... [truncated 681 chars] ...\nn3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 22:4:\n    ctx = tl.zeros((CP,), dtype=tl.float32)\n    for nc0 in range(0, NC1, NCC):\n        nc_off = nc0 + tl.arange(0, NCC)\n        nc_mask = nc_off < NC1\n        sl = tl.load(ctx_ws_ptr + (b * NC1 + nc_off[:, None]) * C + c_off[None, :],\n                     mask=nc_mask[:, None] & c_mask[None, :], other=0.0)\n        ctx += tl.sum(sl, axis=0)\n    ctx = ctx.to(RET_T).to(tl.float32)\n    k_off = tl.arange(0, KCP)\n    k_mask = k_off < K\n    z_all = tl.zeros((KCP,), dtype=tl.float32)\n    for kt in range(0, KT):\n    ^\nAssertionError('Loop-carried variable z_all has initial type <[256], fp32> but is re-assigned to <[16], fp32> in loop! Please make sure that the type stays consistent.')\n"
+    },
+    {
+      "case_idx": 18,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            256,
+            11,
+            7
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "scalar",
+          "value": 256
+        },
+        {
+          "type": "scalar",
+          "value": 4
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            256,
+            1,
+            1
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            64,
+            256,
+            1,
+            1
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            64
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            64,
+            1,
+            1
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            64,
+            1,
+            1
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            256,
+            64,
+            1,
+            1
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            256
+          ],
+          "dtype": "torch.bfloat16"
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card5/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card5/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card5/agent_workdir/output/verify/kernelbench_l4_48_GCModule_triton_ascend_impl.py\", line 231, in forward\n    _k2b_ctx_transform[(b,)](\n  File \"/usr/local/python3.11.14/lib/python3.11\n... [truncated 680 chars] ...\non3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 22:4:\n    ctx = tl.zeros((CP,), dtype=tl.float32)\n    for nc0 in range(0, NC1, NCC):\n        nc_off = nc0 + tl.arange(0, NCC)\n        nc_mask = nc_off < NC1\n        sl = tl.load(ctx_ws_ptr + (b * NC1 + nc_off[:, None]) * C + c_off[None, :],\n                     mask=nc_mask[:, None] & c_mask[None, :], other=0.0)\n        ctx += tl.sum(sl, axis=0)\n    ctx = ctx.to(RET_T).to(tl.float32)\n    k_off = tl.arange(0, KCP)\n    k_mask = k_off < K\n    z_all = tl.zeros((KCP,), dtype=tl.float32)\n    for kt in range(0, KT):\n    ^\nAssertionError('Loop-carried variable z_all has initial type <[64], fp32> but is re-assigned to <[32], fp32> in loop! Please make sure that the type stays consistent.')\n"
+    },
+    {
+      "case_idx": 23,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            512,
+            5,
+            7
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 512
+        },
+        {
+          "type": "scalar",
+          "value": 4
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            512,
+            1,
+            1
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            128,
+            512,
+            1,
+            1
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            128,
+            1,
+            1
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            128,
+            1,
+            1
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            512,
+            128,
+            1,
+            1
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            512
+          ],
+          "dtype": "torch.float16"
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card5/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card5/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card5/agent_workdir/output/verify/kernelbench_l4_48_GCModule_triton_ascend_impl.py\", line 231, in forward\n    _k2b_ctx_transform[(b,)](\n  File \"/usr/local/python3.11.14/lib/python3.11\n... [truncated 681 chars] ...\nn3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 22:4:\n    ctx = tl.zeros((CP,), dtype=tl.float32)\n    for nc0 in range(0, NC1, NCC):\n        nc_off = nc0 + tl.arange(0, NCC)\n        nc_mask = nc_off < NC1\n        sl = tl.load(ctx_ws_ptr + (b * NC1 + nc_off[:, None]) * C + c_off[None, :],\n                     mask=nc_mask[:, None] & c_mask[None, :], other=0.0)\n        ctx += tl.sum(sl, axis=0)\n    ctx = ctx.to(RET_T).to(tl.float32)\n    k_off = tl.arange(0, KCP)\n    k_mask = k_off < K\n    z_all = tl.zeros((KCP,), dtype=tl.float32)\n    for kt in range(0, KT):\n    ^\nAssertionError('Loop-carried variable z_all has initial type <[128], fp32> but is re-assigned to <[16], fp32> in loop! Please make sure that the type stays consistent.')\n"
+    },
+    {
+      "case_idx": 24,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            256,
+            9,
+            17
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "scalar",
+          "value": 256
+        },
+        {
+          "type": "scalar",
+          "value": 2
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            256,
+            1,
+            1
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            128,
+            256,
+            1,
+            1
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            128
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            128,
+            1,
+            1
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            128,
+            1,
+            1
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            256,
+            128,
+            1,
+            1
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            256
+          ],
+          "dtype": "torch.bfloat16"
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card5/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card5/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card5/agent_workdir/output/verify/kernelbench_l4_48_GCModule_triton_ascend_impl.py\", line 231, in forward\n    _k2b_ctx_transform[(b,)](\n  File \"/usr/local/python3.11.14/lib/python3.11\n... [truncated 681 chars] ...\nn3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 22:4:\n    ctx = tl.zeros((CP,), dtype=tl.float32)\n    for nc0 in range(0, NC1, NCC):\n        nc_off = nc0 + tl.arange(0, NCC)\n        nc_mask = nc_off < NC1\n        sl = tl.load(ctx_ws_ptr + (b * NC1 + nc_off[:, None]) * C + c_off[None, :],\n                     mask=nc_mask[:, None] & c_mask[None, :], other=0.0)\n        ctx += tl.sum(sl, axis=0)\n    ctx = ctx.to(RET_T).to(tl.float32)\n    k_off = tl.arange(0, KCP)\n    k_mask = k_off < K\n    z_all = tl.zeros((KCP,), dtype=tl.float32)\n    for kt in range(0, KT):\n    ^\nAssertionError('Loop-carried variable z_all has initial type <[128], fp32> but is re-assigned to <[32], fp32> in loop! Please make sure that the type stays consistent.')\n"
+    },
+    {
+      "case_idx": 25,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            512,
+            7,
+            11
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": 512
+        },
+        {
+          "type": "scalar",
+          "value": 4
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            512,
+            1,
+            1
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            128,
+            512,
+            1,
+            1
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            128
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            128,
+            1,
+            1
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            128,
+            1,
+            1
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            512,
+            128,
+            1,
+            1
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            512
+          ],
+          "dtype": "torch.float32"
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card5/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card5/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card5/agent_workdir/output/verify/kernelbench_l4_48_GCModule_triton_ascend_impl.py\", line 231, in forward\n    _k2b_ctx_transform[(b,)](\n  File \"/usr/local/python3.11.14/lib/python3.11\n... [truncated 681 chars] ...\nn3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 22:4:\n    ctx = tl.zeros((CP,), dtype=tl.float32)\n    for nc0 in range(0, NC1, NCC):\n        nc_off = nc0 + tl.arange(0, NCC)\n        nc_mask = nc_off < NC1\n        sl = tl.load(ctx_ws_ptr + (b * NC1 + nc_off[:, None]) * C + c_off[None, :],\n                     mask=nc_mask[:, None] & c_mask[None, :], other=0.0)\n        ctx += tl.sum(sl, axis=0)\n    ctx = ctx.to(RET_T).to(tl.float32)\n    k_off = tl.arange(0, KCP)\n    k_mask = k_off < K\n    z_all = tl.zeros((KCP,), dtype=tl.float32)\n    for kt in range(0, KT):\n    ^\nAssertionError('Loop-carried variable z_all has initial type <[128], fp32> but is re-assigned to <[16], fp32> in loop! Please make sure that the type stays consistent.')\n"
+    },
+    {
+      "case_idx": 27,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            256,
+            11,
+            7
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "scalar",
+          "value": 256
+        },
+        {
+          "type": "scalar",
+          "value": 4
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            256,
+            1,
+            1
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            64,
+            256,
+            1,
+            1
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            64
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            64,
+            1,
+            1
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            64,
+            1,
+            1
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            256,
+            64,
+            1,
+            1
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            256
+          ],
+          "dtype": "torch.bfloat16"
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card5/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card5/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card5/agent_workdir/output/verify/kernelbench_l4_48_GCModule_triton_ascend_impl.py\", line 231, in forward\n    _k2b_ctx_transform[(b,)](\n  File \"/usr/local/python3.11.14/lib/python3.11\n... [truncated 680 chars] ...\non3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 22:4:\n    ctx = tl.zeros((CP,), dtype=tl.float32)\n    for nc0 in range(0, NC1, NCC):\n        nc_off = nc0 + tl.arange(0, NCC)\n        nc_mask = nc_off < NC1\n        sl = tl.load(ctx_ws_ptr + (b * NC1 + nc_off[:, None]) * C + c_off[None, :],\n                     mask=nc_mask[:, None] & c_mask[None, :], other=0.0)\n        ctx += tl.sum(sl, axis=0)\n    ctx = ctx.to(RET_T).to(tl.float32)\n    k_off = tl.arange(0, KCP)\n    k_mask = k_off < K\n    z_all = tl.zeros((KCP,), dtype=tl.float32)\n    for kt in range(0, KT):\n    ^\nAssertionError('Loop-carried variable z_all has initial type <[64], fp32> but is re-assigned to <[32], fp32> in loop! Please make sure that the type stays consistent.')\n"
+    },
+    {
+      "case_idx": 28,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            256,
+            7,
+            11
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": 256
+        },
+        {
+          "type": "scalar",
+          "value": 4
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            256,
+            1,
+            1
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            64,
+            256,
+            1,
+            1
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            64
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            64,
+            1,
+            1
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            64,
+            1,
+            1
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            256,
+            64,
+            1,
+            1
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            256
+          ],
+          "dtype": "torch.float32"
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card5/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card5/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card5/agent_workdir/output/verify/kernelbench_l4_48_GCModule_triton_ascend_impl.py\", line 231, in forward\n    _k2b_ctx_transform[(b,)](\n  File \"/usr/local/python3.11.14/lib/python3.11\n... [truncated 680 chars] ...\non3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 22:4:\n    ctx = tl.zeros((CP,), dtype=tl.float32)\n    for nc0 in range(0, NC1, NCC):\n        nc_off = nc0 + tl.arange(0, NCC)\n        nc_mask = nc_off < NC1\n        sl = tl.load(ctx_ws_ptr + (b * NC1 + nc_off[:, None]) * C + c_off[None, :],\n                     mask=nc_mask[:, None] & c_mask[None, :], other=0.0)\n        ctx += tl.sum(sl, axis=0)\n    ctx = ctx.to(RET_T).to(tl.float32)\n    k_off = tl.arange(0, KCP)\n    k_mask = k_off < K\n    z_all = tl.zeros((KCP,), dtype=tl.float32)\n    for kt in range(0, KT):\n    ^\nAssertionError('Loop-carried variable z_all has initial type <[64], fp32> but is re-assigned to <[32], fp32> in loop! Please make sure that the type stays consistent.')\n"
+    },
+    {
+      "case_idx": 30,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            256,
+            13,
+            13
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "scalar",
+          "value": 256
+        },
+        {
+          "type": "scalar",
+          "value": 4
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            256,
+            1,
+            1
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            64,
+            256,
+            1,
+            1
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            64
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            64,
+            1,
+            1
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            64,
+            1,
+            1
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            256,
+            64,
+            1,
+            1
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            256
+          ],
+          "dtype": "torch.bfloat16"
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card5/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card5/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card5/agent_workdir/output/verify/kernelbench_l4_48_GCModule_triton_ascend_impl.py\", line 231, in forward\n    _k2b_ctx_transform[(b,)](\n  File \"/usr/local/python3.11.14/lib/python3.11\n... [truncated 680 chars] ...\non3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 22:4:\n    ctx = tl.zeros((CP,), dtype=tl.float32)\n    for nc0 in range(0, NC1, NCC):\n        nc_off = nc0 + tl.arange(0, NCC)\n        nc_mask = nc_off < NC1\n        sl = tl.load(ctx_ws_ptr + (b * NC1 + nc_off[:, None]) * C + c_off[None, :],\n                     mask=nc_mask[:, None] & c_mask[None, :], other=0.0)\n        ctx += tl.sum(sl, axis=0)\n    ctx = ctx.to(RET_T).to(tl.float32)\n    k_off = tl.arange(0, KCP)\n    k_mask = k_off < K\n    z_all = tl.zeros((KCP,), dtype=tl.float32)\n    for kt in range(0, KT):\n    ^\nAssertionError('Loop-carried variable z_all has initial type <[64], fp32> but is re-assigned to <[32], fp32> in loop! Please make sure that the type stays consistent.')\n"
+    },
+    {
+      "case_idx": 35,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            512,
+            7,
+            11
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 512
+        },
+        {
+          "type": "scalar",
+          "value": 2
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            512,
+            1,
+            1
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            256,
+            512,
+            1,
+            1
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            256
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            256,
+            1,
+            1
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            256,
+            1,
+            1
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            512,
+            256,
+            1,
+            1
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            512
+          ],
+          "dtype": "torch.float16"
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card5/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card5/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card5/agent_workdir/output/verify/kernelbench_l4_48_GCModule_triton_ascend_impl.py\", line 231, in forward\n    _k2b_ctx_transform[(b,)](\n  File \"/usr/local/python3.11.14/lib/python3.11\n... [truncated 681 chars] ...\nn3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 22:4:\n    ctx = tl.zeros((CP,), dtype=tl.float32)\n    for nc0 in range(0, NC1, NCC):\n        nc_off = nc0 + tl.arange(0, NCC)\n        nc_mask = nc_off < NC1\n        sl = tl.load(ctx_ws_ptr + (b * NC1 + nc_off[:, None]) * C + c_off[None, :],\n                     mask=nc_mask[:, None] & c_mask[None, :], other=0.0)\n        ctx += tl.sum(sl, axis=0)\n    ctx = ctx.to(RET_T).to(tl.float32)\n    k_off = tl.arange(0, KCP)\n    k_mask = k_off < K\n    z_all = tl.zeros((KCP,), dtype=tl.float32)\n    for kt in range(0, KT):\n    ^\nAssertionError('Loop-carried variable z_all has initial type <[256], fp32> but is re-assigned to <[16], fp32> in loop! Please make sure that the type stays consistent.')\n"
+    },
+    {
+      "case_idx": 37,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            256,
+            7,
+            11
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": 256
+        },
+        {
+          "type": "scalar",
+          "value": 4
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            256,
+            1,
+            1
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            64,
+            256,
+            1,
+            1
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            64
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            64,
+            1,
+            1
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            64,
+            1,
+            1
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            256,
+            64,
+            1,
+            1
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            256
+          ],
+          "dtype": "torch.float32"
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card5/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card5/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card5/agent_workdir/output/verify/kernelbench_l4_48_GCModule_triton_ascend_impl.py\", line 231, in forward\n    _k2b_ctx_transform[(b,)](\n  File \"/usr/local/python3.11.14/lib/python3.11\n... [truncated 680 chars] ...\non3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 22:4:\n    ctx = tl.zeros((CP,), dtype=tl.float32)\n    for nc0 in range(0, NC1, NCC):\n        nc_off = nc0 + tl.arange(0, NCC)\n        nc_mask = nc_off < NC1\n        sl = tl.load(ctx_ws_ptr + (b * NC1 + nc_off[:, None]) * C + c_off[None, :],\n                     mask=nc_mask[:, None] & c_mask[None, :], other=0.0)\n        ctx += tl.sum(sl, axis=0)\n    ctx = ctx.to(RET_T).to(tl.float32)\n    k_off = tl.arange(0, KCP)\n    k_mask = k_off < K\n    z_all = tl.zeros((KCP,), dtype=tl.float32)\n    for kt in range(0, KT):\n    ^\nAssertionError('Loop-carried variable z_all has initial type <[64], fp32> but is re-assigned to <[32], fp32> in loop! Please make sure that the type stays consistent.')\n"
+    },
+    {
+      "case_idx": 39,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            256,
+            31,
+            11
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "scalar",
+          "value": 256
+        },
+        {
+          "type": "scalar",
+          "value": 4
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            256,
+            1,
+            1
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            64,
+            256,
+            1,
+            1
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            64
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            64,
+            1,
+            1
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            64,
+            1,
+            1
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            256,
+            64,
+            1,
+            1
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            256
+          ],
+          "dtype": "torch.bfloat16"
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card5/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card5/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card5/agent_workdir/output/verify/kernelbench_l4_48_GCModule_triton_ascend_impl.py\", line 231, in forward\n    _k2b_ctx_transform[(b,)](\n  File \"/usr/local/python3.11.14/lib/python3.11\n... [truncated 680 chars] ...\non3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 22:4:\n    ctx = tl.zeros((CP,), dtype=tl.float32)\n    for nc0 in range(0, NC1, NCC):\n        nc_off = nc0 + tl.arange(0, NCC)\n        nc_mask = nc_off < NC1\n        sl = tl.load(ctx_ws_ptr + (b * NC1 + nc_off[:, None]) * C + c_off[None, :],\n                     mask=nc_mask[:, None] & c_mask[None, :], other=0.0)\n        ctx += tl.sum(sl, axis=0)\n    ctx = ctx.to(RET_T).to(tl.float32)\n    k_off = tl.arange(0, KCP)\n    k_mask = k_off < K\n    z_all = tl.zeros((KCP,), dtype=tl.float32)\n    for kt in range(0, KT):\n    ^\nAssertionError('Loop-carried variable z_all has initial type <[64], fp32> but is re-assigned to <[32], fp32> in loop! Please make sure that the type stays consistent.')\n"
+    },
+    {
+      "case_idx": 42,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            512,
+            9,
+            17
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "scalar",
+          "value": 512
+        },
+        {
+          "type": "scalar",
+          "value": 8
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            512,
+            1,
+            1
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            64,
+            512,
+            1,
+            1
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            64
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            64,
+            1,
+            1
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            64,
+            1,
+            1
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            512,
+            64,
+            1,
+            1
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            512
+          ],
+          "dtype": "torch.bfloat16"
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card5/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card5/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card5/agent_workdir/output/verify/kernelbench_l4_48_GCModule_triton_ascend_impl.py\", line 231, in forward\n    _k2b_ctx_transform[(b,)](\n  File \"/usr/local/python3.11.14/lib/python3.11\n... [truncated 680 chars] ...\non3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 22:4:\n    ctx = tl.zeros((CP,), dtype=tl.float32)\n    for nc0 in range(0, NC1, NCC):\n        nc_off = nc0 + tl.arange(0, NCC)\n        nc_mask = nc_off < NC1\n        sl = tl.load(ctx_ws_ptr + (b * NC1 + nc_off[:, None]) * C + c_off[None, :],\n                     mask=nc_mask[:, None] & c_mask[None, :], other=0.0)\n        ctx += tl.sum(sl, axis=0)\n    ctx = ctx.to(RET_T).to(tl.float32)\n    k_off = tl.arange(0, KCP)\n    k_mask = k_off < K\n    z_all = tl.zeros((KCP,), dtype=tl.float32)\n    for kt in range(0, KT):\n    ^\nAssertionError('Loop-carried variable z_all has initial type <[64], fp32> but is re-assigned to <[16], fp32> in loop! Please make sure that the type stays consistent.')\n"
+    },
+    {
+      "case_idx": 43,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            512,
+            31,
+            11
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": 512
+        },
+        {
+          "type": "scalar",
+          "value": 4
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            512,
+            1,
+            1
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            128,
+            512,
+            1,
+            1
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            128
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            128,
+            1,
+            1
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            128,
+            1,
+            1
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            512,
+            128,
+            1,
+            1
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            512
+          ],
+          "dtype": "torch.float32"
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card5/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card5/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card5/agent_workdir/output/verify/kernelbench_l4_48_GCModule_triton_ascend_impl.py\", line 231, in forward\n    _k2b_ctx_transform[(b,)](\n  File \"/usr/local/python3.11.14/lib/python3.11\n... [truncated 681 chars] ...\nn3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 22:4:\n    ctx = tl.zeros((CP,), dtype=tl.float32)\n    for nc0 in range(0, NC1, NCC):\n        nc_off = nc0 + tl.arange(0, NCC)\n        nc_mask = nc_off < NC1\n        sl = tl.load(ctx_ws_ptr + (b * NC1 + nc_off[:, None]) * C + c_off[None, :],\n                     mask=nc_mask[:, None] & c_mask[None, :], other=0.0)\n        ctx += tl.sum(sl, axis=0)\n    ctx = ctx.to(RET_T).to(tl.float32)\n    k_off = tl.arange(0, KCP)\n    k_mask = k_off < K\n    z_all = tl.zeros((KCP,), dtype=tl.float32)\n    for kt in range(0, KT):\n    ^\nAssertionError('Loop-carried variable z_all has initial type <[128], fp32> but is re-assigned to <[16], fp32> in loop! Please make sure that the type stays consistent.')\n"
+    },
+    {
+      "case_idx": 45,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            512,
+            25,
+            15
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "scalar",
+          "value": 512
+        },
+        {
+          "type": "scalar",
+          "value": 2
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            512,
+            1,
+            1
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            256,
+            512,
+            1,
+            1
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            256
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            256,
+            1,
+            1
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            256,
+            1,
+            1
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            512,
+            256,
+            1,
+            1
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            512
+          ],
+          "dtype": "torch.bfloat16"
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card5/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card5/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card5/agent_workdir/output/verify/kernelbench_l4_48_GCModule_triton_ascend_impl.py\", line 231, in forward\n    _k2b_ctx_transform[(b,)](\n  File \"/usr/local/python3.11.14/lib/python3.11\n... [truncated 681 chars] ...\nn3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 22:4:\n    ctx = tl.zeros((CP,), dtype=tl.float32)\n    for nc0 in range(0, NC1, NCC):\n        nc_off = nc0 + tl.arange(0, NCC)\n        nc_mask = nc_off < NC1\n        sl = tl.load(ctx_ws_ptr + (b * NC1 + nc_off[:, None]) * C + c_off[None, :],\n                     mask=nc_mask[:, None] & c_mask[None, :], other=0.0)\n        ctx += tl.sum(sl, axis=0)\n    ctx = ctx.to(RET_T).to(tl.float32)\n    k_off = tl.arange(0, KCP)\n    k_mask = k_off < K\n    z_all = tl.zeros((KCP,), dtype=tl.float32)\n    for kt in range(0, KT):\n    ^\nAssertionError('Loop-carried variable z_all has initial type <[256], fp32> but is re-assigned to <[16], fp32> in loop! Please make sure that the type stays consistent.')\n"
+    },
+    {
+      "case_idx": 47,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            256,
+            17,
+            19
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 256
+        },
+        {
+          "type": "scalar",
+          "value": 2
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            256,
+            1,
+            1
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            128,
+            256,
+            1,
+            1
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            128,
+            1,
+            1
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            128,
+            1,
+            1
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            256,
+            128,
+            1,
+            1
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            256
+          ],
+          "dtype": "torch.float16"
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card5/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card5/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card5/agent_workdir/output/verify/kernelbench_l4_48_GCModule_triton_ascend_impl.py\", line 231, in forward\n    _k2b_ctx_transform[(b,)](\n  File \"/usr/local/python3.11.14/lib/python3.11\n... [truncated 681 chars] ...\nn3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 22:4:\n    ctx = tl.zeros((CP,), dtype=tl.float32)\n    for nc0 in range(0, NC1, NCC):\n        nc_off = nc0 + tl.arange(0, NCC)\n        nc_mask = nc_off < NC1\n        sl = tl.load(ctx_ws_ptr + (b * NC1 + nc_off[:, None]) * C + c_off[None, :],\n                     mask=nc_mask[:, None] & c_mask[None, :], other=0.0)\n        ctx += tl.sum(sl, axis=0)\n    ctx = ctx.to(RET_T).to(tl.float32)\n    k_off = tl.arange(0, KCP)\n    k_mask = k_off < K\n    z_all = tl.zeros((KCP,), dtype=tl.float32)\n    for kt in range(0, KT):\n    ^\nAssertionError('Loop-carried variable z_all has initial type <[128], fp32> but is re-assigned to <[32], fp32> in loop! Please make sure that the type stays consistent.')\n"
+    },
+    {
+      "case_idx": 48,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            256,
+            31,
+            11
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "scalar",
+          "value": 256
+        },
+        {
+          "type": "scalar",
+          "value": 4
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            256,
+            1,
+            1
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            64,
+            256,
+            1,
+            1
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            64
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            64,
+            1,
+            1
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            64,
+            1,
+            1
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            256,
+            64,
+            1,
+            1
+          ],
+          "dtype": "torch.bfloat16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            256
+          ],
+          "dtype": "torch.bfloat16"
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card5/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card5/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card5/agent_workdir/output/verify/kernelbench_l4_48_GCModule_triton_ascend_impl.py\", line 231, in forward\n    _k2b_ctx_transform[(b,)](\n  File \"/usr/local/python3.11.14/lib/python3.11\n... [truncated 680 chars] ...\non3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 22:4:\n    ctx = tl.zeros((CP,), dtype=tl.float32)\n    for nc0 in range(0, NC1, NCC):\n        nc_off = nc0 + tl.arange(0, NCC)\n        nc_mask = nc_off < NC1\n        sl = tl.load(ctx_ws_ptr + (b * NC1 + nc_off[:, None]) * C + c_off[None, :],\n                     mask=nc_mask[:, None] & c_mask[None, :], other=0.0)\n        ctx += tl.sum(sl, axis=0)\n    ctx = ctx.to(RET_T).to(tl.float32)\n    k_off = tl.arange(0, KCP)\n    k_mask = k_off < K\n    z_all = tl.zeros((KCP,), dtype=tl.float32)\n    for kt in range(0, KT):\n    ^\nAssertionError('Loop-carried variable z_all has initial type <[64], fp32> but is re-assigned to <[32], fp32> in loop! Please make sure that the type stays consistent.')\n"
+    },
+    {
+      "case_idx": 49,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            2,
+            512,
+            31,
+            11
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "scalar",
+          "value": 512
+        },
+        {
+          "type": "scalar",
+          "value": 2
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            512,
+            1,
+            1
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            256,
+            512,
+            1,
+            1
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            256
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            256,
+            1,
+            1
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            256,
+            1,
+            1
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            512,
+            256,
+            1,
+            1
+          ],
+          "dtype": "torch.float32"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            512
+          ],
+          "dtype": "torch.float32"
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card5/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card5/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card5/agent_workdir/output/verify/kernelbench_l4_48_GCModule_triton_ascend_impl.py\", line 231, in forward\n    _k2b_ctx_transform[(b,)](\n  File \"/usr/local/python3.11.14/lib/python3.11\n... [truncated 681 chars] ...\nn3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 22:4:\n    ctx = tl.zeros((CP,), dtype=tl.float32)\n    for nc0 in range(0, NC1, NCC):\n        nc_off = nc0 + tl.arange(0, NCC)\n        nc_mask = nc_off < NC1\n        sl = tl.load(ctx_ws_ptr + (b * NC1 + nc_off[:, None]) * C + c_off[None, :],\n                     mask=nc_mask[:, None] & c_mask[None, :], other=0.0)\n        ctx += tl.sum(sl, axis=0)\n    ctx = ctx.to(RET_T).to(tl.float32)\n    k_off = tl.arange(0, KCP)\n    k_mask = k_off < K\n    z_all = tl.zeros((KCP,), dtype=tl.float32)\n    for kt in range(0, KT):\n    ^\nAssertionError('Loop-carried variable z_all has initial type <[256], fp32> but is re-assigned to <[16], fp32> in loop! Please make sure that the type stays consistent.')\n"
+    },
+    {
+      "case_idx": 50,
+      "input_desc": [
+        {
+          "type": "tensor",
+          "shape": [
+            4,
+            512,
+            21,
+            23
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "scalar",
+          "value": 512
+        },
+        {
+          "type": "scalar",
+          "value": 4
+        },
+        {
+          "type": "scalar",
+          "value": "None"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1,
+            512,
+            1,
+            1
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            1
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            128,
+            512,
+            1,
+            1
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            128
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            128,
+            1,
+            1
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            128,
+            1,
+            1
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            512,
+            128,
+            1,
+            1
+          ],
+          "dtype": "torch.float16"
+        },
+        {
+          "type": "tensor",
+          "shape": [
+            512
+          ],
+          "dtype": "torch.float16"
+        }
+      ],
+      "error_type": "CompilationError",
+      "error_msg": "Traceback (most recent call last):\n  File \"/opt/workspace_card5/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 946, in _try_run_case\n    run_single_case(\n  File \"/opt/workspace_card5/agent_workdir/tools/triton-op-verifier/scripts/verify.py\", line 872, in run_single_case\n    impl_output = models.impl(*inputs_for_impl)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1775, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/python3.11.14/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1786, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/workspace_card5/agent_workdir/output/verify/kernelbench_l4_48_GCModule_triton_ascend_impl.py\", line 231, in forward\n    _k2b_ctx_transform[(b,)](\n  File \"/usr/local/python3.11.14/lib/python3.11\n... [truncated 681 chars] ...\nn3.11/site-packages/triton/compiler/compiler.py\", line 124, in make_ir\n    return ast_to_ttir(self.fn, self, context=context, options=options, codegen_fns=codegen_fns,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\ntriton.compiler.errors.CompilationError: at 22:4:\n    ctx = tl.zeros((CP,), dtype=tl.float32)\n    for nc0 in range(0, NC1, NCC):\n        nc_off = nc0 + tl.arange(0, NCC)\n        nc_mask = nc_off < NC1\n        sl = tl.load(ctx_ws_ptr + (b * NC1 + nc_off[:, None]) * C + c_off[None, :],\n                     mask=nc_mask[:, None] & c_mask[None, :], other=0.0)\n        ctx += tl.sum(sl, axis=0)\n    ctx = ctx.to(RET_T).to(tl.float32)\n    k_off = tl.arange(0, KCP)\n    k_mask = k_off < K\n    z_all = tl.zeros((KCP,), dtype=tl.float32)\n    for kt in range(0, KT):\n    ^\nAssertionError('Loop-carried variable z_all has initial type <[128], fp32> but is re-assigned to <[16], fp32> in loop! Please make sure that the type stays consistent.')\n"
+    }
+  ]
+}

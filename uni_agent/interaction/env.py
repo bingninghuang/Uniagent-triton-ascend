@@ -1,3 +1,4 @@
+import asyncio
 import re
 import shlex
 from pathlib import Path, PurePath
@@ -173,9 +174,12 @@ class AgentEnv:
             else:
                 observation = f"Observation:\n{observation}"
             return observation
-        except CommandTimeoutError:
-            # interrupt timeout action
-            # if terminal is still alive after interrupt, raise error
+        except (CommandTimeoutError, TimeoutError, asyncio.TimeoutError) as exc:
+            # CommandTimeoutError: swerex waited action_timeout then cancelled.
+            # TimeoutError / asyncio.TimeoutError: aiohttp ClientTimeout on the
+            # remote-sandbox HTTP POST fired first (runtime.timeout < action_timeout).
+            # Both must become ActionTimeoutError so the trajectory keeps the
+            # tool name + bash command instead of an empty unknown_error.
             try:
                 await self.interrupt_session()
             except Exception:
@@ -197,13 +201,15 @@ class AgentEnv:
                     raise TerminalNotAliveError(error_message) from None
 
             # if terminal is still alive, return timeout observation
+            timeout_kind = type(exc).__name__
             observation = (
-                f"The command '{action_cmd}' was cancelled because it took more than {action_timeout} seconds. "
+                f"The command '{action_cmd}' was cancelled because it took more than {action_timeout} seconds "
+                f"({timeout_kind}). "
                 "Please try a different command that completes more quickly. Note: A common source of this error is "
                 "if the command is interactive or requires user input (it is impossible to receive user input "
                 "in the current environment, so the command will never complete)."
             )
-            raise ActionTimeoutError(observation) from None
+            raise ActionTimeoutError(observation) from exc
 
         except BashIncorrectSyntaxError as e:
             # this should not happen, so add critical logs here
